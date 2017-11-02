@@ -64,7 +64,6 @@ encounter Infiniband frames.
     - [Stackoverflow explaining the topology ](https://stackoverflow.com/questions/45473475/understanding-dpdk-pktgens-destination-addressing)
     - [examples of running pktgen](https://github.com/danieltt/pktgen/tree/master/examples)
     - [official documentation](http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html)
-    - one of the very confusing thing is that it should not show ip address but it shows.
     - [in depth understanding of packet-gen](https://people.kth.se/~danieltt/pktgen/docs/DanielTurull-thesis.pdf)
 
 <br>
