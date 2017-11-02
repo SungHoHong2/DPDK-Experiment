@@ -7,7 +7,7 @@
 
 <br>
 
-- **[failed]**
+- **[failed] using iperf as a dpdk benchmark**
     - [using dpdk-iperf](https://github.com/ansyun/dpdk-iperf)
     - Iperf already saturated the line speed of the card so there was no improvement to be made.
     - Using this will also not be fair because the dpdk uses a special stack while Infiniband does not use it
