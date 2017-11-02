@@ -1,9 +1,9 @@
 ### Netperf with DPDK
 
 - **PREFACE**
-    - currently testing on dpdk-child
-    - it is certain that the dpdk has been tested with iperf uperf and netperf
-    - and iperf uperf netperf denfinitedly can be tested on RDMA
+    - testing on VM dpdk-child
+    - dpdk is tested with iperf uperf and netperf
+    - INFINIBAND is tested with iperf uperf netperf
 
 <br>
 
@@ -25,7 +25,7 @@
     - create a virtual interface, attach it to OVS
     - give it an IP, and direct your netperf traffic
 
-    <br>
+<br>
 
 - **comments of IFNINIBAND working with OpenVSwitch**
 
@@ -67,7 +67,6 @@ encounter Infiniband frames.
     - [in depth understanding of packet-gen](https://people.kth.se/~danieltt/pktgen/docs/DanielTurull-thesis.pdf)
 
 <br>
-
 
 - **Connecting PKTGEN with IFNIBAND & DPDK**
     - [official documentation](https://community.mellanox.com/docs/DOC-2506)
