@@ -67,11 +67,8 @@ encounter Infiniband frames.
     - one of the very confusing thing is that it should not show ip address but it shows.
     - [in depth understanding of packet-gen](https://people.kth.se/~danieltt/pktgen/docs/DanielTurull-thesis.pdf)
 
-
-
-
-
-
-
-
 <br>
+
+
+- **Connecting PKTGEN with IFNIBAND & DPDK**
+    - [official documentation](https://community.mellanox.com/docs/DOC-2506)
