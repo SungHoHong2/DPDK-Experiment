@@ -15,6 +15,7 @@
 <br>
 
 - **Implementing DPDK with OPEN V SWITCH**
+    - https://wiki.openstack.org/wiki/Mellanox-Neutron-Juno-Redhat-InfiniBand
     - netperf definitedly works for RDMA
     - netperf Iperf all works for OPEN V SWITCH
     - netperf and netserver should both be on the traffic generator.
@@ -23,9 +24,9 @@
     - create a virtual interface, attach it to OVS
     - give it an IP, and direct your netperf traffic
 
-- **OpenVSwitch working on INFINIBAND**
-    - It is not certain and only the one document claim the feasibility
-    - https://wiki.openstack.org/wiki/Mellanox-Neutron-Juno-Redhat-InfiniBand
+    <br>
+
+- **comments of IFNINIBAND working with OpenVSwitch**
 
 ```
 It would probably not be too hard to modify OVS to support 20-byte MAC
@@ -49,24 +50,24 @@ switching, then why not skip going through the bridge or OVS entirely?
 Just configure the network device directly.
 ```
 
-
-
-
-- **Connecting PKTGEN - DPDK**
-    - [Stackoverflow explaining the topology ](https://stackoverflow.com/questions/45473475/understanding-dpdk-pktgens-destination-addressing)
-    - [examples of running pktgen](https://github.com/danieltt/pktgen/tree/master/examples)
-    - [official documentation](http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html)
-    - one of the very confusing thing is that it should not show ip address but it shows.
-
-- [in depth understanding of packet-gen](https://people.kth.se/~danieltt/pktgen/docs/DanielTurull-thesis.pdf)
-
-
 ```
 OVS forwards Ethernet packets, which contain 6-byte MAC addresses.
 OVS has some support for forwarding IPv4 and IPv6 as well, which don't
 contain any MAC addresses at all.  I don't know how OVS would even
 encounter Infiniband frames.
 ```
+
+<br>
+
+- **Connecting PKTGEN - DPDK**
+    - [Stackoverflow explaining the topology ](https://stackoverflow.com/questions/45473475/understanding-dpdk-pktgens-destination-addressing)
+    - [examples of running pktgen](https://github.com/danieltt/pktgen/tree/master/examples)
+    - [official documentation](http://pktgen-dpdk.readthedocs.io/en/latest/getting_started.html)
+    - one of the very confusing thing is that it should not show ip address but it shows.
+    - [in depth understanding of packet-gen](https://people.kth.se/~danieltt/pktgen/docs/DanielTurull-thesis.pdf)
+
+
+
 
 
 
