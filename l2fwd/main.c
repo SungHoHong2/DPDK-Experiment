@@ -44,7 +44,10 @@
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
 
+
+static volatile bool force_quit;
 #include "signal_handler.h"
+
 
 int main(int argc, char **argv){
 
