@@ -17,11 +17,10 @@ int main(int argc, char **argv) {
 		rte_eal_remote_launch(lcore_hello, NULL, lcore_id);
 	}
 ```
-- function for slave cores
-- arg1: function to be called
-- arg2: argument for the function
-- arg3: lcores
-
+> function for slave cores <br>
+> arg1: function to be called <br>
+> arg2: argument for the function <br>
+> arg3: lcores
 
 <br>
 
@@ -34,7 +33,9 @@ int main(int argc, char **argv) {
 }
 ```
 
-- function for master cores
+> the lcore_hello function has the rte_lcore_id which will get the id <br>
+> in this case all the lcores are invoked so the master core is the final one to be invoked <br>
+
 
 <br>
 
@@ -49,4 +50,4 @@ lcore_hello(__attribute__((unused)) void *arg)
 }
 ```
 
-- thread function of each cores
+> thread function of each cores
