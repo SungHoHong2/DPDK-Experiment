@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
   	rte_exit(EXIT_FAILURE, "Error: number of ports must be even\n");
   }
 
-  printf("number of ports: %u\n", nb_ports);
+  printf("number of ports: %u\n", rte_eth_dev_count());
 
 
   /* Creates a new mempool in memory to hold the mbufs. */
