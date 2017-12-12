@@ -7,8 +7,8 @@ int main(int argc, char **argv) {
 		rte_panic("Cannot init EAL\n");
 ```
 
-- get the data for logical cores and memory
-- initialize the Environment Abstraction Layer (EAL)
+> get the data for logical cores and memory <br>
+> initialize the Environment Abstraction Layer (EAL)
 
 <br>
 
