@@ -54,7 +54,7 @@ lcore_hello(__attribute__((unused)) void *arg)
 
 > thread function of each cores <br>
 > the slave cores are running due to the pthread function
-> the master is invoked because the function runs at the very final
+> the master is invoked because the default is run by master core thread
 
 
 

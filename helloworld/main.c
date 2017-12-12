@@ -66,7 +66,7 @@ main(int argc, char **argv)
 
 
 	lcore_id = rte_lcore_id();
-	printf("testing core %u\n", lcore_id);
+	printf("default is master core %u\n", lcore_id);
 
 
 
