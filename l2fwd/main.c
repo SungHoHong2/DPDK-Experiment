@@ -48,6 +48,10 @@
 #define MAX_TIMER_PERIOD 86400 /* 1 day max */
 
 
+
+/* list of enabled ports */
+static uint32_t l2fwd_dst_ports[RTE_MAX_ETHPORTS];
+
 /* mask of enabled ports */
 static uint32_t l2fwd_enabled_port_mask = 0;
 static unsigned int l2fwd_rx_queue_per_lcore = 1;
@@ -103,6 +107,38 @@ int main(int argc, char **argv){
 		rte_socket_id());
 
   nb_ports = rte_eth_dev_count();
+
+  /* reset l2fwd_dst_ports */
+	for (portid = 0; portid < RTE_MAX_ETHPORTS; portid++)
+		l2fwd_dst_ports[portid] = 0;
+	last_port = 0;
+
+
+  /*
+	 * Each logical core is assigned a dedicated TX queue on each port.
+	 */
+   for (portid = 0; portid < nb_ports; portid++) {
+ 		/* skip ports that are not enabled */
+ 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
+ 			continue;
+
+ 		if (nb_ports_in_mask % 2) {
+ 			l2fwd_dst_ports[portid] = last_port;
+ 			l2fwd_dst_ports[last_port] = portid;
+ 		}
+ 		else
+ 			last_port = portid;
+
+ 		nb_ports_in_mask++;
+ 		rte_eth_dev_info_get(portid, &dev_info);
+ 	}
+
+  if (nb_ports_in_mask % 2) {
+		printf("Notice: odd number of ports in portmask.\n");
+		l2fwd_dst_ports[last_port] = last_port;
+	}
+
+
 
 
 
