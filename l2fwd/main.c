@@ -66,6 +66,11 @@ static volatile bool force_quit;
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
 
+struct lcore_queue_conf {
+	unsigned n_rx_port;
+	unsigned rx_port_list[MAX_RX_QUEUE_PER_LCORE];
+} __rte_cache_aligned;
+
 struct lcore_queue_conf lcore_queue_conf[RTE_MAX_LCORE];
 
 
