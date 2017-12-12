@@ -108,6 +108,10 @@ int main(int argc, char **argv){
 
   nb_ports = rte_eth_dev_count();
 
+
+
+  // setting destination port for each ports BEGIN
+
   /* reset l2fwd_dst_ports */
 	for (portid = 0; portid < RTE_MAX_ETHPORTS; portid++)
 		l2fwd_dst_ports[portid] = 0;
@@ -116,6 +120,7 @@ int main(int argc, char **argv){
 
   /*
 	 * Each logical core is assigned a dedicated TX queue on each port.
+     allocate destination port id array
 	 */
    for (portid = 0; portid < nb_ports; portid++) {
  		/* skip ports that are not enabled */
@@ -138,9 +143,31 @@ int main(int argc, char **argv){
 		l2fwd_dst_ports[last_port] = last_port;
 	}
 
+  // setting destination port for each ports EBD
 
 
+  	rx_lcore_id = 0;
+  	qconf = NULL;
 
+    /* Initialize the port/queue configuration of each logical core */
+    for (portid = 0; portid < nb_ports; portid++) {
+
+      /* skip ports that are not enabled */
+  		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
+  			continue;
+
+      /* get the lcore_id for this port */
+    		while (rte_lcore_is_enabled(rx_lcore_id) == 0 || lcore_queue_conf[rx_lcore_id].n_rx_port == l2fwd_rx_queue_per_lcore) {
+    			    rx_lcore_id++;
+
+    			if (rx_lcore_id >= RTE_MAX_LCORE)
+    				  rte_exit(EXIT_FAILURE, "Not enough cores\n");
+    		}
+
+        qconf->rx_port_list[qconf->n_rx_port] = portid;
+    		qconf->n_rx_port++;
+    		printf("Lcore %u: RX port %u\n", rx_lcore_id, (unsigned) portid);
+    }
 
   return 0;
 }
