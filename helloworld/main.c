@@ -64,6 +64,12 @@ main(int argc, char **argv)
 	if (ret < 0)
 		rte_panic("Cannot init EAL\n");
 
+
+	lcore_id = rte_lcore_id();
+	printf("testing core %u\n", lcore_id);
+
+
+
 	/* call lcore_hello() on every slave lcore */
 	RTE_LCORE_FOREACH_SLAVE(lcore_id) {
 		rte_eal_remote_launch(lcore_hello, NULL, lcore_id);

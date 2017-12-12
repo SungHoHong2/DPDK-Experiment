@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
 		rte_panic("Cannot init EAL\n");
 ```
 
-> get the data for logical cores and memory <br>
-> initialize the Environment Abstraction Layer (EAL)
+> initialize the Environment Abstraction Layer (EAL) <br>
+> initialize the number of pthreads and map the memory based on the huge pages <br>
 
 <br>
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 		rte_eal_remote_launch(lcore_hello, NULL, lcore_id);
 	}
 ```
-> function for slave cores <br>
+> plug pthread function for slave cores <br>
 > arg1: function to be called <br>
 > arg2: argument for the function <br>
 > arg3: lcores
@@ -29,9 +29,7 @@ int main(int argc, char **argv) {
 <br>
 
 ```c
-	/* call it on master lcore too */
 	lcore_hello(NULL);
-
 	rte_eal_mp_wait_lcore();
 	return 0;
 }
@@ -54,7 +52,10 @@ lcore_hello(__attribute__((unused)) void *arg)
 }
 ```
 
-> thread function of each cores
+> thread function of each cores <br>
+> the slave cores are running due to the pthread function
+> the master is invoked because the function runs at the very final
+
 
 
 <br>
