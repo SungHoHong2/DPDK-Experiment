@@ -16,6 +16,8 @@
 #define MBUF_CACHE_SIZE 250
 #define BURST_SIZE 32
 
+#include "lcore.h"
+
 
 int main(int argc, char *argv[]){
 
