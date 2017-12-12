@@ -52,12 +52,12 @@
 static uint32_t l2fwd_enabled_port_mask = 0;
 static unsigned int l2fwd_rx_queue_per_lcore = 1;
 
+struct rte_mempool * l2fwd_pktmbuf_pool = NULL;
+
+
 /* MAC updating enabled by default */
 static int mac_updating = 1;
 static uint64_t timer_period = 10; /* default period is 10 seconds */
-
-
-
 
 static volatile bool force_quit;
 #include "signal_handler.h"
@@ -93,11 +93,16 @@ int main(int argc, char **argv){
 
   printf("MAC updating %s\n", mac_updating ? "enabled" : "disabled");
 
+  /* convert to number of cycles */
+	timer_period *= rte_get_timer_hz();
 
 
+  /* create the mbuf pool */
+	l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", NB_MBUF,
+		MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE,
+		rte_socket_id());
 
-
-
+  nb_ports = rte_eth_dev_count();
 
 
 
