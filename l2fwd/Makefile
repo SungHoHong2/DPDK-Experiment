@@ -13,6 +13,6 @@ APP = l2fwd
 # all source are stored in SRCS-y
 SRCS-y := main.c
 
-CFLAGS += -O3
+CFLAGS += -O3 -g 
 
 include $(RTE_SDK)/mk/rte.extapp.mk
