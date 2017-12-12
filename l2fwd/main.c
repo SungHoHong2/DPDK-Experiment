@@ -38,6 +38,13 @@
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
 
+#define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
+#define NB_MBUF   8192
+#define MAX_PKT_BURST 32
+#define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
+#define MEMPOOL_CACHE_SIZE 256
+
+#include "signal_handler.h"
 
 int main(int argc, char **argv){
 
@@ -49,6 +56,18 @@ int main(int argc, char **argv){
 	uint8_t portid, last_port;
 	unsigned lcore_id, rx_lcore_id;
 	unsigned nb_ports_in_mask = 0;
+
+
+  /* init EAL */
+	ret = rte_eal_init(argc, argv);
+	if (ret < 0)
+		rte_exit(EXIT_FAILURE, "Invalid EAL arguments\n");
+	argc -= ret;
+	argv += ret;
+
+	force_quit = false;
+	signal(SIGINT, signal_handler);
+	signal(SIGTERM, signal_handler);
 
 
 
