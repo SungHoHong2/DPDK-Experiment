@@ -58,7 +58,6 @@ static unsigned int l2fwd_rx_queue_per_lcore = 1;
 
 struct rte_mempool * l2fwd_pktmbuf_pool = NULL;
 
-
 /* MAC updating enabled by default */
 static int mac_updating = 1;
 static uint64_t timer_period = 10; /* default period is 10 seconds */
@@ -66,6 +65,8 @@ static uint64_t timer_period = 10; /* default period is 10 seconds */
 static volatile bool force_quit;
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
+
+struct lcore_queue_conf lcore_queue_conf[RTE_MAX_LCORE];
 
 
 int main(int argc, char **argv){
