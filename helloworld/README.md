@@ -17,8 +17,11 @@ int main(int argc, char **argv) {
 		rte_eal_remote_launch(lcore_hello, NULL, lcore_id);
 	}
 ```
-
 - function for slave cores
+- arg1: function to be called
+- arg2: argument for the function
+- arg3: lcores
+
 
 <br>
 
