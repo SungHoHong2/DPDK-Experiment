@@ -5,11 +5,12 @@
 #include <rte_cycles.h>
 #include <rte_lcore.h>
 #include <rte_mbuf.h>
-#include "ports.h"
 
 
 #define RX_RING_SIZE 128
 #define TX_RING_SIZE 512
+
+#include "ports.h"
 
 #define NUM_MBUFS 8191
 #define MBUF_CACHE_SIZE 250
