@@ -5,6 +5,8 @@
 #include <rte_cycles.h>
 #include <rte_lcore.h>
 #include <rte_mbuf.h>
+#include "ports.h"
+
 
 #define RX_RING_SIZE 128
 #define TX_RING_SIZE 512
@@ -36,24 +38,34 @@ int main(int argc, char *argv[]){
   	rte_exit(EXIT_FAILURE, "Error: number of ports must be even\n");
   }
 
-  printf("number of ports: %u\n", rte_eth_dev_count());
+  printf("number of ports: %u\n", rte_eth_dev_count()); // got two ports
 
 
   /* Creates a new mempool in memory to hold the mbufs. */
-	mbuf_pool = rte_pktmbuf_pool_create("MBUF_POOL", NUM_MBUFS * nb_ports,
-		MBUF_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, rte_socket_id()); // this is the master core
+
+	mbuf_pool = rte_pktmbuf_pool_create("MBUF_POOL", // name of the packet pool
+                                       NUM_MBUFS * nb_ports, // number of elements in mbuf pool
+		                                   MBUF_CACHE_SIZE, // per core cache size
+                                       0, // private data size
+                                       RTE_MBUF_DEFAULT_BUF_SIZE, // size of the data buffer in each mbuf
+                                       rte_socket_id()); // this is the master core
 
   // rte_socket_id -> invoking here will get the master core
   // the ID of current lcoreid's physical socket
   // printf("current lcore's id %u\n", rte_socket_id());
-  // printf("current lcore's id %u\n", rte_socket_id());
-  // printf("current lcore's id %u\n", rte_socket_id());
+
+  if (mbuf_pool == NULL)
+		rte_exit(EXIT_FAILURE, "Cannot create mbuf pool\n");
+
+  /* Initialize all ports. */
+  // each ports will be allocated in the single pool
+	for (portid = 0; portid < nb_ports; portid++)
+		if (port_init(portid, mbuf_pool) != 0)
+			rte_exit(EXIT_FAILURE, "Cannot init port %"PRIu8 "\n",portid);
 
 
-
-
-
-
+  /* Call lcore_main on the master core only. */
+	// lcore_main();
 
   return 0;
 
