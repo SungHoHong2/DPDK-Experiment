@@ -37,7 +37,7 @@ for (portid = 0; portid < nb_ports; portid++)
 ```
 > first initialize all the pthreads for each logical cores <br>
 > secondly count the number of available NICs
-> thirdly, create a memory pool that can contain the packets from all the used ports
+> thirdly, create a memory pool with the capacity of handling all the packets from the enabled ports
 
 
 
@@ -130,5 +130,5 @@ for (;;) {
 ```
 
 > set the number of packets that will be received from the rx-queue <br>
-> set the number of packets that will be sent by the tx-queue <br> 
+> set the number of packets that will be sent by the tx-queue <br>
 > free the packets that was ignored by the above process
