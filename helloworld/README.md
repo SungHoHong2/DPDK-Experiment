@@ -66,14 +66,16 @@ EAL: Probing VFIO support...
 ===****Initial memory for socket 0
 ===****Initial memory for socket 0
 ===****Initial memory for socket 0
-hello from core 1                 
-hello from core 2                 
-hello from core 3                 
-hello from core 4                 
-hello from core 5                 
-hello from core 6                 
-hello from core 7                 
-hello from core 0                
+
+default is master core 0
+hello from slave core 1                 
+hello from slave core 2                 
+hello from slave core 3                 
+hello from slave core 4                 
+hello from slave core 5                 
+hello from slave core 6                 
+hello from slave core 7                 
+hello from master core 0                
 ```
 
 > the master core id is always zero and initiated at the very last
