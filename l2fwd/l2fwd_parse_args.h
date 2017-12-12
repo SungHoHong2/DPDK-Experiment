@@ -59,6 +59,15 @@ static const char short_options[] =
 	"T:"  /* timer period */
 	;
 
+#define CMD_LINE_OPT_MAC_UPDATING "mac-updating"
+#define CMD_LINE_OPT_NO_MAC_UPDATING "no-mac-updating"
+
+static const struct option lgopts[] = {
+	{ CMD_LINE_OPT_MAC_UPDATING, no_argument, &mac_updating, 1},
+	{ CMD_LINE_OPT_NO_MAC_UPDATING, no_argument, &mac_updating, 0},
+	{NULL, 0, 0, 0}
+};
+
 
 /* Parse the argument given in the command line of the application */
 static int

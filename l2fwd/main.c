@@ -52,6 +52,9 @@
 static uint32_t l2fwd_enabled_port_mask = 0;
 static unsigned int l2fwd_rx_queue_per_lcore = 1;
 
+/* MAC updating enabled by default */
+static int mac_updating = 1;
+static uint64_t timer_period = 10; /* default period is 10 seconds */
 
 
 
