@@ -35,6 +35,11 @@ for (portid = 0; portid < nb_ports; portid++)
       port_init(portid, mbuf_pool);
 
 ```
+> first initialize all the pthreads for each logical cores <br>
+> secondly count the number of available NICs
+> thirdly, create a memory pool that can contain the packets from all the used ports
+
+
 
 <br>
 
@@ -71,12 +76,19 @@ for (portid = 0; portid < nb_ports; portid++)
                                NULL);
 
   /* Start the Ethernet port. */
- 	retval = rte_eth_dev_start(port);
+ 	rte_eth_dev_start(port);
 
   /* Enable RX in promiscuous mode for the Ethernet device. */
 	rte_eth_promiscuous_enable(port);
 
 ```
+
+> each port will be set with the configuration <br>
+> each port will be signed with rx and tx rings (queues) <br>
+> the rx queue will have the pointer of the memory pool because it needs the space for saving the received RTE-BUFF <br>
+> initiate the port <br>
+> intiate the promiscuous mode <br>
+
 
 <br>
 
@@ -116,3 +128,7 @@ for (;;) {
 }
 
 ```
+
+> set the number of packets that will be received from the rx-queue <br>
+> set the number of packets that will be sent by the tx-queue <br> 
+> free the packets that was ignored by the above process
