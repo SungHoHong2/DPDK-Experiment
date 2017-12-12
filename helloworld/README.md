@@ -13,11 +13,16 @@ int main(int argc, char **argv) {
 <br>
 
 ```c
-	/* call lcore_hello() on every slave lcore */
 	RTE_LCORE_FOREACH_SLAVE(lcore_id) {
 		rte_eal_remote_launch(lcore_hello, NULL, lcore_id);
 	}
+```
 
+- function for slave cores
+
+<br>
+
+```c
 	/* call it on master lcore too */
 	lcore_hello(NULL);
 
@@ -25,6 +30,8 @@ int main(int argc, char **argv) {
 	return 0;
 }
 ```
+
+- function for master cores
 
 <br>
 
