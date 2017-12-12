@@ -53,6 +53,12 @@ l2fwd_parse_timer_period(const char *q_arg)
 }
 
 
+static const char short_options[] =
+	"p:"  /* portmask */
+	"q:"  /* number of queues */
+	"T:"  /* timer period */
+	;
+
 
 /* Parse the argument given in the command line of the application */
 static int
@@ -115,5 +121,6 @@ l2fwd_parse_args(int argc, char **argv){
 	ret = optind-1;
 	optind = 1; /* reset getopt lib */
 	return ret;
+
 
 }
