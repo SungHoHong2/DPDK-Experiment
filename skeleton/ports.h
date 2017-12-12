@@ -80,6 +80,8 @@ port_init(uint8_t port, struct rte_mempool *mbuf_pool){
 			addr.addr_bytes[2], addr.addr_bytes[3],
 			addr.addr_bytes[4], addr.addr_bytes[5]);
 
+  /* Enable RX in promiscuous mode for the Ethernet device. */
+	rte_eth_promiscuous_enable(port);
 
   return 0;
 

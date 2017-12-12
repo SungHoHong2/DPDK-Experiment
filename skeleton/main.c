@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 
 
   /* Call lcore_main on the master core only. */
-	// lcore_main();
+	lcore_main();
 
   return 0;
 
