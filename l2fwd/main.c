@@ -44,9 +44,17 @@
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
 
+/* mask of enabled ports */
+static uint32_t l2fwd_enabled_port_mask = 0;
+static unsigned int l2fwd_rx_queue_per_lcore = 1;
+
+
+
+
 
 static volatile bool force_quit;
 #include "signal_handler.h"
+#include "l2fwd_parse_args.h"
 
 
 int main(int argc, char **argv){
@@ -60,7 +68,6 @@ int main(int argc, char **argv){
 	unsigned lcore_id, rx_lcore_id;
 	unsigned nb_ports_in_mask = 0;
 
-
   /* init EAL */
 	ret = rte_eal_init(argc, argv);
 	if (ret < 0)
@@ -71,6 +78,15 @@ int main(int argc, char **argv){
 	force_quit = false;
 	signal(SIGINT, signal_handler);
 	signal(SIGTERM, signal_handler);
+
+  /* parse application arguments (after the EAL ones) */
+	ret = l2fwd_parse_args(argc, argv);
+	if (ret < 0)
+		rte_exit(EXIT_FAILURE, "Invalid L2FWD arguments\n");
+
+  printf("MAC updating %s\n", mac_updating ? "enabled" : "disabled");
+
+
 
 
 
