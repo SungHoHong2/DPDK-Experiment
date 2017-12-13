@@ -99,6 +99,8 @@ static const struct rte_eth_conf port_conf = {
 /* ethernet addresses of ports */
 static struct ether_addr l2fwd_ports_eth_addr[RTE_MAX_ETHPORTS];
 
+#include "l2fwd_launch_one_lcore.h"
+
 
 int main(int argc, char **argv){
 
