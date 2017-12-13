@@ -67,7 +67,7 @@ struct rte_mempool * l2fwd_pktmbuf_pool = NULL;
 
 /* MAC updating enabled by default */
 static int mac_updating = 1;
-static uint64_t timer_period = 10; /* default period is 10 seconds */
+static uint64_t timer_period = 60; /* default period is 10 seconds */
 
 static volatile bool force_quit;
 #include "signal_handler.h"
@@ -177,7 +177,7 @@ int main(int argc, char **argv){
  			last_port = portid;
 
  		nb_ports_in_mask++;
- 		// rte_eth_dev_info_get(portid, &dev_info); 
+ 		// rte_eth_dev_info_get(portid, &dev_info);
  	}
 
   if (nb_ports_in_mask % 2) {

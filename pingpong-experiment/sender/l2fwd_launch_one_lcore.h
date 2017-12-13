@@ -130,7 +130,8 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						print_stats();
+      						// print_stats();
+									force_quit = 1;
       						/* reset the timer */
 									timer_tsc = 0;
       					}
