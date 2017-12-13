@@ -49,20 +49,28 @@ static void print_stats(void){
 }
 
 
-static void
-l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
-	struct ether_hdr *eth;
-	void *tmp;
-
-	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
-
-	/* 02:00:00:00:00:xx */
-	tmp = &eth->d_addr.addr_bytes[0];
-	*((uint64_t *)tmp) = 0x000000000002 + ((uint64_t)dest_portid << 40);
-
-	/* src addr */
-	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
-}
+// static void
+// l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
+// 	struct ether_hdr *eth;
+// 	void *tmp;
+//
+// 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
+//
+// 	/* 02:00:00:00:00:xx */
+// 	tmp = &eth->d_addr.addr_bytes[0];
+// 	*((uint64_t *)tmp) = 0x000000000002 + ((uint64_t)dest_portid << 40);
+//
+// 	/* src addr */
+// 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
+//
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[0] = 0;
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[1] = 27;
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[2] = 33;
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[3] = 166;
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[4] = 212;
+// 	l2fwd_ports_eth_addr[dest_portid].addr_bytes[5] = 212;
+//
+// }
 
 
 static void
@@ -77,7 +85,7 @@ l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
 		l2fwd_mac_updating(m, dst_port);
 
   buffer = tx_buffer[dst_port];
-	sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
+	sent = rte_eth_tx_buffer(0, 0, buffer, m);
 	if (sent)
 		port_statistics[dst_port].tx += sent;
 }
@@ -130,12 +138,12 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						// print_stats();
-									if(!first_start){
-											first_start = 1;
-									} else {
-											force_quit = 1;
-									}
+      						print_stats();
+									// if(!first_start){
+									// 		first_start = 1;
+									// } else {
+									// 		force_quit = 1;
+									// }
       						/* reset the timer */
 									timer_tsc = 0;
       					}
@@ -154,12 +162,34 @@ static void l2fwd_main_loop(void){
 
           port_statistics[portid].rx += nb_rx;
 
+
           for (j = 0; j < nb_rx; j++) {
             m = pkts_burst[j];
             rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-            l2fwd_simple_forward(m, portid);
+
+						l2fwd_ports_eth_addr[portid].addr_bytes[0] = 0;
+						l2fwd_ports_eth_addr[portid].addr_bytes[1] = 27;
+						l2fwd_ports_eth_addr[portid].addr_bytes[2] = 33;
+						l2fwd_ports_eth_addr[portid].addr_bytes[3] = 166;
+						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 212;
+						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 212;
+
+						buffer = tx_buffer[dst_port];
+						sent = rte_eth_tx_buffer(0, 0, buffer, m);
+						if (sent)
+							port_statistics[dst_port].tx += sent;
+
+						// l2fwd_simple_forward(m, portid);
           }
+
+
+
+
+
         }
+
+
+
       }
 
 }
