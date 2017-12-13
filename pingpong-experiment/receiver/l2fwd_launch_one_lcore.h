@@ -130,17 +130,18 @@ static void l2fwd_main_loop(void){
           	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
-								m = pkts_burst[j];
-								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+								// m = pkts_burst[j];
+								sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
 
-								buffer = tx_buffer[portid];
-								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
+								// rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+								// buffer = tx_buffer[portid];
+								// sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
 
 								if (sent){
-										port_statistics[portid].tx += sent;
+										port_statistics[dst_port].tx += sent;
 									}
 
-								// rte_pktmbuf_free(pkts_burst[j]);
+								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
 
