@@ -1,7 +1,11 @@
 /* Print out statistics on packets dropped */
 static void print_stats(void){
 	uint64_t total_packets_dropped, total_packets_tx, total_packets_rx;
+  uint64_t curr_time, duration;
 	unsigned portid;
+
+
+  curr_time = rte_rdtsc();
 
 	total_packets_dropped = 0;
 	total_packets_tx = 0;
@@ -35,10 +39,12 @@ static void print_stats(void){
 	printf("\nAggregate statistics ==============================="
 		   "\nTotal packets sent: %18"PRIu64
 		   "\nTotal packets received: %14"PRIu64
-		   "\nTotal packets dropped: %15"PRIu64,
+		   "\nTotal packets dropped: %15"PRIu64
+       "\nTotal duration: %u"PRIu64,
 		   total_packets_tx,
 		   total_packets_rx,
-		   total_packets_dropped);
+		   total_packets_dropped,
+       curr_time);
 	printf("\n====================================================\n");
 }
 
@@ -150,18 +156,13 @@ static void l2fwd_main_loop(void){
             l2fwd_simple_forward(m, portid);
           }
         }
-
-    }
-
-
-
+      }
 
 }
 
 
 static int
-l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy)
-{
+l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy){
 	l2fwd_main_loop();
 	return 0;
 }

@@ -278,6 +278,8 @@ int main(int argc, char **argv){
   		}
   	}
 
+	// chara
+	print_stats();
 
   for (portid = 0; portid < nb_ports; portid++) {
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
@@ -287,6 +289,7 @@ int main(int argc, char **argv){
 		rte_eth_dev_close(portid);
 		printf(" Done\n");
 	}
+
 
   return ret;
 }
