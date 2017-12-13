@@ -14,16 +14,21 @@ ret = rte_eal_init(argc, argv);
 
 /* arguments of port, queue and time */
 ret = l2fwd_parse_args(argc, argv);
+      l2fwd_enabled_port_mask = l2fwd_parse_portmask(optarg);
+      l2fwd_rx_queue_per_lcore = l2fwd_parse_nqueue(optarg);
+      timer_secs = l2fwd_parse_timer_period(optarg);
+
 
 /* create the mbuf pool */
-l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", NB_MBUF,
-  MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE,
-  rte_socket_id());
-
+l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", // name
+                                              NB_MBUF, // number of elements
+                                              MEMPOOL_CACHE_SIZE, //cache size
+                                              0, //private data size
+                                              RTE_MBUF_DEFAULT_BUF_SIZE, //each of the rte-mbuf size
+                                              rte_socket_id()); // master: 0
 ```
 
 > the basic initialization for packet forwarding
-
 
 <br>
 
@@ -31,7 +36,7 @@ l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", NB_MBUF,
 ```c
 /* reset l2fwd_dst_ports */
 for (portid = 0; portid < RTE_MAX_ETHPORTS; portid++)
-  l2fwd_dst_ports[portid] = 0;
+    l2fwd_dst_ports[portid] = 0;
 last_port = 0;
 
 
@@ -49,7 +54,7 @@ last_port = 0;
     last_port = portid;
 
   nb_ports_in_mask++;
-  rte_eth_dev_info_get(portid, &dev_info);
+  rte_eth_dev_info_get(portid, &dev_info); 
 }
 
 
