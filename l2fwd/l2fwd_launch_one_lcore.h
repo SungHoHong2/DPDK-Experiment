@@ -1,11 +1,11 @@
+#include <time.h>
+
 /* Print out statistics on packets dropped */
 static void print_stats(void){
 	uint64_t total_packets_dropped, total_packets_tx, total_packets_rx;
   uint64_t curr_time, duration;
 	unsigned portid;
 
-
-  curr_time = rte_rdtsc();
 
 	total_packets_dropped = 0;
 	total_packets_tx = 0;
