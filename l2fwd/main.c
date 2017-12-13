@@ -75,6 +75,23 @@ struct lcore_queue_conf lcore_queue_conf[RTE_MAX_LCORE];
 
 static struct rte_eth_dev_tx_buffer *tx_buffer[RTE_MAX_ETHPORTS];
 
+static const struct rte_eth_conf port_conf = {
+	.rxmode = {
+		.split_hdr_size = 0,
+		.header_split   = 0, /**< Header Split disabled */
+		.hw_ip_checksum = 0, /**< IP checksum offload disabled */
+		.hw_vlan_filter = 0, /**< VLAN filtering disabled */
+		.jumbo_frame    = 0, /**< Jumbo Frame Support disabled */
+		.hw_strip_crc   = 1, /**< CRC stripped by hardware */
+	},
+	.txmode = {
+		.mq_mode = ETH_MQ_TX_NONE,
+	},
+};
+
+/* ethernet addresses of ports */
+static struct ether_addr l2fwd_ports_eth_addr[RTE_MAX_ETHPORTS];
+
 
 int main(int argc, char **argv){
 
