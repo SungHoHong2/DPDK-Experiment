@@ -271,14 +271,12 @@ int main(int argc, char **argv){
     ret = 0;
   	/* launch per-lcore init on every lcore */
   	rte_eal_mp_remote_launch(l2fwd_launch_one_lcore, NULL, CALL_MASTER);
-
-  	// RTE_LCORE_FOREACH_SLAVE(lcore_id) {
-  	// 	if (rte_eal_wait_lcore(lcore_id) < 0) {
-  	// 		ret = -1;
-  	// 		break;
-  	// 	}
-  	// }
-
+  	RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+  		if (rte_eal_wait_lcore(lcore_id) < 0) {
+  			ret = -1;
+  			break;
+  		}
+  	}
 
 
   for (portid = 0; portid < nb_ports; portid++) {
