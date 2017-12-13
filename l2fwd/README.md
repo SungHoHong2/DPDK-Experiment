@@ -56,12 +56,23 @@ last_port = 0;
   nb_ports_in_mask++;
   rte_eth_dev_info_get(portid, &dev_info); // this function is not necessary
 }
+```
+
+> match destination array for each of the ports
+
+<br>
 
 
-
+```c
 /*
  * save the list of port id in the global configuration struct
  */
+
+struct lcore_queue_conf {
+	  unsigned n_rx_port;
+	  unsigned rx_port_list[MAX_RX_QUEUE_PER_LCORE];
+} __rte_cache_aligned;
+struct lcore_queue_conf lcore_queue_conf[RTE_MAX_LCORE];
 
 struct lcore_queue_conf *qconf;
 for (portid = 0; portid < nb_ports; portid++) {
@@ -90,8 +101,8 @@ for (portid = 0; portid < nb_ports; portid++) {
 nb_ports_available = nb_ports;
 ```
 
-> overall configuration of ports <br>
-> this configuration file is used in the thread loop
+> lcore_queue_conf <br>
+> add the number of rx queues for the global configuration file
 
 
 <br>
@@ -100,36 +111,63 @@ nb_ports_available = nb_ports;
 ```c
 /* Initialise each port */
 for (portid = 0; portid < nb_ports; portid++) {
-  /* skip ports that are not enabled */
+
+  // skip ports that are not enabled
   if ((l2fwd_enabled_port_mask & (1 << portid)) == 0) {
     printf("Skipping disabled port %u\n", (unsigned) portid);
     nb_ports_available--;
     continue;
   }
 
-  /* init port */
+  // init port
   printf("Initializing port %u... ", (unsigned) portid);
   fflush(stdout);
 
   ret = rte_eth_dev_configure(portid, 1, 1, &port_conf);
+
+
+  // ethernet addresses of ports
   rte_eth_macaddr_get(portid,&l2fwd_ports_eth_addr[portid]);
 
+  // static struct ether_addr l2fwd_ports_eth_addr[RTE_MAX_ETHPORTS];
+  // l2fwd_ports_eth_addr[portid].addr_bytes[0],
+  // l2fwd_ports_eth_addr[portid].addr_bytes[1],
+  // l2fwd_ports_eth_addr[portid].addr_bytes[2],
 
-  /* init one RX queue */
+
+  // init one RX queue
   fflush(stdout);
-  ret = rte_eth_rx_queue_setup(portid, 0, nb_rxd, rte_eth_dev_socket_id(portid), NULL, l2fwd_pktmbuf_pool);
-  /* init one TX queue on each port */
+  ret = rte_eth_rx_queue_setup(portid, // The port identifier of the Ethernet device.
+                               0, // 	The index of the receive queue to set up.
+                               nb_rxd, // The number of receive descriptors to allocate for the receive ring.
+                               rte_eth_dev_socket_id(portid), // The socket_id argument is the socket identifier in case of NUMA.
+                               NULL, // The pointer to the configuration data to be used for the receive queue
+                               l2fwd_pktmbuf_pool); // The pointer to the memory pool  
+
+  // init one TX queue on each port
   fflush(stdout);
   ret = rte_eth_tx_queue_setup(portid, 0, nb_txd, rte_eth_dev_socket_id(portid), NULL);
 
-  /* Initialize TX buffers */
-  tx_buffer[portid] = rte_zmalloc_socket("tx_buffer", RTE_ETH_TX_BUFFER_SIZE(MAX_PKT_BURST), 0, rte_eth_dev_socket_id(portid));
-  rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
-  /* read the packet loss */
+  // static struct rte_eth_dev_tx_buffer * tx_buffer[RTE_MAX_ETHPORTS];
+  // Structure used to buffer packets for future TX Used by APIs rte_eth_tx_buffer and rte_eth_tx_buffer_flush
+  // Initialize TX buffers
+  tx_buffer[portid] = rte_zmalloc_socket(
+                              "tx_buffer", // name
+                              RTE_ETH_TX_BUFFER_SIZE(MAX_PKT_BURST), // Size (in bytes) to be allocated
+                              0, // if 0, the return is a pointer that is suitably aligned for any kind of variable
+                              rte_eth_dev_socket_id(portid) // NUMA socket to allocate memory on.
+                      );
+
+  rte_eth_tx_buffer_init(
+                          tx_buffer[portid], // Tx buffer to be initialized
+                          MAX_PKT_BURST // Buffer size
+                         );
+
+  // read the packet loss
   ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
-  /* Start device */
+  // Start device
   ret = rte_eth_dev_start(portid);
 
   rte_eth_promiscuous_enable(portid);
@@ -142,7 +180,7 @@ for (portid = 0; portid < nb_ports; portid++) {
       l2fwd_ports_eth_addr[portid].addr_bytes[4],
       l2fwd_ports_eth_addr[portid].addr_bytes[5]);
 
-  /* initialize port stats */
+  // initialize port stats
   memset(&port_statistics, 0, sizeof(port_statistics));
 }
 
