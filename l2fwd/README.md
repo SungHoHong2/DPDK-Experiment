@@ -268,7 +268,12 @@ while (!force_quit) {
 
       for (j = 0; j < nb_rx; j++) {
         m = pkts_burst[j];
-        rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+        rte_prefetch0( // Prefetch a cache line into all cache levels.
+                rte_pktmbuf_mtod(
+                                 m, // The packet mbuf.
+                                 void * // The type to cast the result into
+                                )
+        );
         l2fwd_simple_forward(m, portid);
       }
     }
