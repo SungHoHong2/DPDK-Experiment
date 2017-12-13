@@ -170,10 +170,19 @@ int main(int argc, char **argv){
     				  rte_exit(EXIT_FAILURE, "Not enough cores\n");
     		}
 
+      if (qconf != &lcore_queue_conf[rx_lcore_id])
+    			/* Assigned a new logical core in the loop above. */
+    			qconf = &lcore_queue_conf[rx_lcore_id];
+
         qconf->rx_port_list[qconf->n_rx_port] = portid;
     		qconf->n_rx_port++;
     		printf("Lcore %u: RX port %u\n", rx_lcore_id, (unsigned) portid);
     }
+
+    nb_ports_available = nb_ports;
+
+
+
 
   return 0;
 }
