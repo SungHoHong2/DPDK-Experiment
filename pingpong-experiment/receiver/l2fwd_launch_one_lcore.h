@@ -131,7 +131,7 @@ static void l2fwd_main_loop(void){
 
 						for (j = 0; j < nb_rx; j++) {
 						// 		// m = pkts_burst[j];
-						// 		sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
+						 		sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
             //
 						// 		// rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 						// 		// buffer = tx_buffer[portid];
