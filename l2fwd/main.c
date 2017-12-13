@@ -234,14 +234,40 @@ int main(int argc, char **argv){
 
       /* Initialize TX buffers */
   		tx_buffer[portid] = rte_zmalloc_socket("tx_buffer", RTE_ETH_TX_BUFFER_SIZE(MAX_PKT_BURST), 0, rte_eth_dev_socket_id(portid));
-
       rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
-      // ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
+      /* read the packet loss */
+      ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
+      /* Start device */
+  		ret = rte_eth_dev_start(portid);
 
+      rte_eth_promiscuous_enable(portid);
+      printf("Port %u, MAC address: %02X:%02X:%02X:%02X:%02X:%02X\n\n",
+  				(unsigned) portid,
+  				l2fwd_ports_eth_addr[portid].addr_bytes[0],
+  				l2fwd_ports_eth_addr[portid].addr_bytes[1],
+  				l2fwd_ports_eth_addr[portid].addr_bytes[2],
+  				l2fwd_ports_eth_addr[portid].addr_bytes[3],
+  				l2fwd_ports_eth_addr[portid].addr_bytes[4],
+  				l2fwd_ports_eth_addr[portid].addr_bytes[5]);
 
+      /* initialize port stats */
+  		memset(&port_statistics, 0, sizeof(port_statistics));
     }
+
+    check_all_ports_link_status(nb_ports, l2fwd_enabled_port_mask);
+
+    ret = 0;
+  	/* launch per-lcore init on every lcore */
+  	rte_eal_mp_remote_launch(l2fwd_launch_one_lcore, NULL, CALL_MASTER);
+
+  	// RTE_LCORE_FOREACH_SLAVE(lcore_id) {
+  	// 	if (rte_eal_wait_lcore(lcore_id) < 0) {
+  	// 		ret = -1;
+  	// 		break;
+  	// 	}
+  	// }
 
 
 
