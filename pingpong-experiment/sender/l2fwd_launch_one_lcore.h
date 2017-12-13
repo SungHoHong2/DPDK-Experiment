@@ -131,7 +131,11 @@ static void l2fwd_main_loop(void){
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
-									force_quit = 1;
+									if(!first_start){
+											first_start = 1;
+									} else {
+											force_quit = 1;
+									}
       						/* reset the timer */
 									timer_tsc = 0;
       					}
