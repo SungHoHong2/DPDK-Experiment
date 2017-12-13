@@ -72,6 +72,15 @@ static void l2fwd_main_loop(void){
   		return;
   	}
 
+
+		l2fwd_ports_eth_addr[0].addr_bytes[0] = 0;
+		l2fwd_ports_eth_addr[0].addr_bytes[1] = 27;
+		l2fwd_ports_eth_addr[0].addr_bytes[2] = 33;
+		l2fwd_ports_eth_addr[0].addr_bytes[3] = 166;
+		l2fwd_ports_eth_addr[0].addr_bytes[4] = 212;
+		l2fwd_ports_eth_addr[0].addr_bytes[5] = 212;
+
+
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
         /*
@@ -123,15 +132,6 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
-
-
-						l2fwd_ports_eth_addr[portid].addr_bytes[0] = 0;
-						l2fwd_ports_eth_addr[portid].addr_bytes[1] = 27;
-						l2fwd_ports_eth_addr[portid].addr_bytes[2] = 33;
-						l2fwd_ports_eth_addr[portid].addr_bytes[3] = 166;
-						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 212;
-						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 212;
-
 
 
 						struct rte_mbuf *rm[NB_MBUF];

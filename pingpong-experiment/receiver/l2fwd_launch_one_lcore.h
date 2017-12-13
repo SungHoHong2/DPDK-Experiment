@@ -72,6 +72,15 @@ static void l2fwd_main_loop(void){
   		return;
   	}
 
+
+		l2fwd_ports_eth_addr[0].addr_bytes[0] = 160;
+		l2fwd_ports_eth_addr[0].addr_bytes[1] = 54;
+		l2fwd_ports_eth_addr[0].addr_bytes[2] = 159;
+		l2fwd_ports_eth_addr[0].addr_bytes[3] = 131;
+		l2fwd_ports_eth_addr[0].addr_bytes[4] = 171;
+		l2fwd_ports_eth_addr[0].addr_bytes[5] = 188;
+
+
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
         /*
@@ -121,31 +130,34 @@ static void l2fwd_main_loop(void){
           	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
-								rte_pktmbuf_free(pkts_burst[j]);
+								m = pkts_burst[j];
+								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+
+								buffer = tx_buffer[portid];
+								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
+
+								if (sent){
+										port_statistics[portid].tx += sent;
+									}
+
+								// rte_pktmbuf_free(pkts_burst[j]);
 						}
 
 
-						l2fwd_ports_eth_addr[portid].addr_bytes[0] = 160;
-						l2fwd_ports_eth_addr[portid].addr_bytes[1] = 54;
-						l2fwd_ports_eth_addr[portid].addr_bytes[2] = 159;
-						l2fwd_ports_eth_addr[portid].addr_bytes[3] = 131;
-						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 171;
-						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 188;
 
-
-						struct rte_mbuf *rm[NB_MBUF];
-						int sent;
-						char *data;
-						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-						data = rte_pktmbuf_append(rm[0], 1464);
-						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
-						sent = rte_eth_tx_burst(portid, 0, rm, 1);
-
-						if (sent){
-							port_statistics[portid].tx += sent;
-						}
-
-						rte_pktmbuf_free(rm[0]);
+						// struct rte_mbuf *rm[NB_MBUF];
+						// int sent;
+						// char *data;
+						// rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
+						// data = rte_pktmbuf_append(rm[0], 1464);
+						// memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
+						// sent = rte_eth_tx_burst(portid, 0, rm, 1);
+            //
+						// if (sent){
+						// 	port_statistics[portid].tx += sent;
+						// }
+            //
+						// rte_pktmbuf_free(rm[0]);
 
 
         }
