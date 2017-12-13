@@ -125,13 +125,12 @@ static void l2fwd_main_loop(void){
 						}
 
 
-						l2fwd_ports_eth_addr[portid].addr_bytes[0] = 0;
-						l2fwd_ports_eth_addr[portid].addr_bytes[1] = 27;
-						l2fwd_ports_eth_addr[portid].addr_bytes[2] = 33;
-						l2fwd_ports_eth_addr[portid].addr_bytes[3] = 166;
-						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 212;
-						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 212;
-
+						l2fwd_ports_eth_addr[portid].addr_bytes[0] = 160;
+						l2fwd_ports_eth_addr[portid].addr_bytes[1] = 54;
+						l2fwd_ports_eth_addr[portid].addr_bytes[2] = 159;
+						l2fwd_ports_eth_addr[portid].addr_bytes[3] = 131;
+						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 171;
+						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 188;
 
 
 						struct rte_mbuf *rm[NB_MBUF];
