@@ -47,6 +47,13 @@
 #define MAX_TX_QUEUE_PER_PORT 16
 #define MAX_TIMER_PERIOD 86400 /* 1 day max */
 
+/*
+ * Configurable number of RX/TX ring descriptors
+ */
+#define RTE_TEST_RX_DESC_DEFAULT 128
+#define RTE_TEST_TX_DESC_DEFAULT 512
+static uint16_t nb_rxd = RTE_TEST_RX_DESC_DEFAULT;
+static uint16_t nb_txd = RTE_TEST_TX_DESC_DEFAULT;
 
 
 /* list of enabled ports */
