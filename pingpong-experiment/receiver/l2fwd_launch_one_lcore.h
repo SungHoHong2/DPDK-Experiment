@@ -129,20 +129,35 @@ static void l2fwd_main_loop(void){
 
           	port_statistics[portid].rx += nb_rx;
 
-						for (j = 0; j < nb_rx; j++) {
-						// 		// m = pkts_burst[j];
-						 		sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
-            //
-						// 		// rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-						// 		// buffer = tx_buffer[portid];
-						// 		// sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
-            //
-						// 		if (sent){
-						// 				port_statistics[portid].tx += sent;
-						// 			}
-            //
-								rte_pktmbuf_free(pkts_burst[j]);
+
+						int sent=0;
+						sent = rte_eth_tx_burst(portid, 0, pkts_burst, nb_rx);
+
+						if (sent){
+								port_statistics[portid].tx += sent;
+							}
+
+						if (unlikely(nb_tx < nb_rx)) {
+						  				uint16_t buf;
+						  				for (buf = nb_tx; buf < nb_rx; buf++)
+						  					rte_pktmbuf_free(pkts_burst[buf]);
 						}
+
+
+						// for (j = 0; j < nb_rx; j++) {
+						// // 		// m = pkts_burst[j];
+						//  		sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
+            // //
+						// // 		// rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+						// // 		// buffer = tx_buffer[portid];
+						// // 		// sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
+            // //
+						// 	if (sent){
+						// 			port_statistics[portid].tx += sent;
+						// 		}
+            // //
+						// 		rte_pktmbuf_free(pkts_burst[j]);
+						// }
 
 
 
