@@ -148,33 +148,6 @@ static void l2fwd_main_loop(void){
 						rte_pktmbuf_free(rm[0]);
 
 
-          //
-          // 	for (j = 0; j < nb_rx; j++) {
-          //   		m = pkts_burst[j];
-          //   		rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-          //
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[0] = 0;
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[1] = 27;
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[2] = 33;
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[3] = 166;
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[4] = 212;
-					// 			l2fwd_ports_eth_addr[portid].addr_bytes[5] = 212;
-          //
-					// 			int sent = 0;
-					// 			buffer = tx_buffer[portid];
-					// 			sent = rte_eth_tx_buffer(0, 0, buffer, m);
-          //
-          //
-					// 			if (sent)
-					// 				port_statistics[portid].tx += sent;
-          //
-					// 	// l2fwd_simple_forward(m, portid);
-          // }
-
-
-
-
-
         }
 
 
