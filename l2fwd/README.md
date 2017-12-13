@@ -54,7 +54,7 @@ last_port = 0;
     last_port = portid;
 
   nb_ports_in_mask++;
-  rte_eth_dev_info_get(portid, &dev_info); 
+  rte_eth_dev_info_get(portid, &dev_info); // this function is not necessary
 }
 
 
@@ -63,20 +63,20 @@ last_port = 0;
  * save the list of port id in the global configuration struct
  */
 
- struct lcore_queue_conf *qconf;
- for (portid = 0; portid < nb_ports; portid++) {
+struct lcore_queue_conf *qconf;
+for (portid = 0; portid < nb_ports; portid++) {
 
-   // skip ports that are not enabled
-   if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
-     continue;
+       // skip ports that are not enabled
+       if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
+         continue;
 
-   // get the lcore_id for this port
-     while (rte_lcore_is_enabled(rx_lcore_id) == 0 || lcore_queue_conf[rx_lcore_id].n_rx_port == l2fwd_rx_queue_per_lcore) {
-           rx_lcore_id++;
+       // get the lcore_id for this port
+         while (rte_lcore_is_enabled(rx_lcore_id) == 0 || lcore_queue_conf[rx_lcore_id].n_rx_port == l2fwd_rx_queue_per_lcore) {
+               rx_lcore_id++;
 
-       if (rx_lcore_id >= RTE_MAX_LCORE)
-           rte_exit(EXIT_FAILURE, "Not enough cores\n");
-     }
+           if (rx_lcore_id >= RTE_MAX_LCORE)
+               rte_exit(EXIT_FAILURE, "Not enough cores\n");
+         }
 
    if (qconf != &lcore_queue_conf[rx_lcore_id])
        // Assigned a new logical core in the loop above.
@@ -85,10 +85,9 @@ last_port = 0;
      qconf->rx_port_list[qconf->n_rx_port] = portid;
      qconf->n_rx_port++;
      printf("Lcore %u: RX port %u\n", rx_lcore_id, (unsigned) portid);
- }
- nb_ports_available = nb_ports;
+}
 
-
+nb_ports_available = nb_ports;
 ```
 
 > overall configuration of ports <br>
