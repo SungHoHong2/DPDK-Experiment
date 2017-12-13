@@ -73,22 +73,22 @@ static void print_stats(void){
 // }
 
 
-static void
-l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
-	unsigned dst_port;
-	int sent;
-	struct rte_eth_dev_tx_buffer *buffer;
-
-	dst_port = l2fwd_dst_ports[portid];
-
-	if (mac_updating)
-		l2fwd_mac_updating(m, dst_port);
-
-  buffer = tx_buffer[dst_port];
-	sent = rte_eth_tx_buffer(0, 0, buffer, m);
-	if (sent)
-		port_statistics[dst_port].tx += sent;
-}
+// static void
+// l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
+// 	unsigned dst_port;
+// 	int sent;
+// 	struct rte_eth_dev_tx_buffer *buffer;
+//
+// 	dst_port = l2fwd_dst_ports[portid];
+//
+// 	if (mac_updating)
+// 		l2fwd_mac_updating(m, dst_port);
+//
+//   buffer = tx_buffer[dst_port];
+// 	sent = rte_eth_tx_buffer(0, 0, buffer, m);
+// 	if (sent)
+// 		port_statistics[dst_port].tx += sent;
+// }
 
 
 /* main processing loop */
@@ -174,10 +174,11 @@ static void l2fwd_main_loop(void){
 						l2fwd_ports_eth_addr[portid].addr_bytes[4] = 212;
 						l2fwd_ports_eth_addr[portid].addr_bytes[5] = 212;
 
-						buffer = tx_buffer[dst_port];
+						int sent = 0;
+						buffer = tx_buffer[portid];
 						sent = rte_eth_tx_buffer(0, 0, buffer, m);
 						if (sent)
-							port_statistics[dst_port].tx += sent;
+							port_statistics[portid].tx += sent;
 
 						// l2fwd_simple_forward(m, portid);
           }
