@@ -40,7 +40,7 @@ static void print_stats(void){
 		   "\nTotal packets sent: %18"PRIu64
 		   "\nTotal packets received: %14"PRIu64
 		   "\nTotal packets dropped: %15"PRIu64
-       "\nTotal duration: %ld"PRIu64,
+       "\nTotal duration: %ld",
 		   total_packets_tx,
 		   total_packets_rx,
 		   total_packets_dropped,
