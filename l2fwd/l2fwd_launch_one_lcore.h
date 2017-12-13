@@ -92,8 +92,7 @@ static void l2fwd_main_loop(void){
   	uint64_t prev_tsc, diff_tsc, cur_tsc, timer_tsc;
   	unsigned i, j, portid, nb_rx;
   	struct lcore_queue_conf *qconf;
-  	const uint64_t drain_tsc = (rte_get_tsc_hz() + US_PER_S - 1) / US_PER_S *
-  			BURST_TX_DRAIN_US;
+  	const uint64_t drain_tsc = (rte_get_tsc_hz() + US_PER_S - 1) / US_PER_S * BURST_TX_DRAIN_US;
   	struct rte_eth_dev_tx_buffer *buffer;
 
     prev_tsc = 0;

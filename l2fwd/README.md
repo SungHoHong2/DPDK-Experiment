@@ -191,7 +191,6 @@ check_all_ports_link_status(nb_ports, l2fwd_enabled_port_mask);
 <br>
 
 
-- running the main thread loops
 ```c
 ret = 0;
 /* launch per-lcore init on every lcore */
@@ -208,8 +207,8 @@ RTE_LCORE_FOREACH_SLAVE(lcore_id) {
 prev_tsc = 0;
 timer_tsc = 0;
 
-lcore_id = rte_lcore_id();
-qconf = &lcore_queue_conf[lcore_id];
+lcore_id = rte_lcore_id(); // get the current core id
+qconf = &lcore_queue_conf[lcore_id]; // get the configuration file of the core id
 
 
 if (qconf->n_rx_port == 0) {
@@ -219,10 +218,10 @@ if (qconf->n_rx_port == 0) {
 
 while (!force_quit) {
     cur_tsc = rte_rdtsc();
-    /*
-     * TX burst queue drain
-     */
+
+    // TX burst queue drain
     diff_tsc = cur_tsc - prev_tsc;
+
     if (unlikely(diff_tsc > drain_tsc)) {
 
         for (i = 0; i < qconf->n_rx_port; i++) {
@@ -233,26 +232,33 @@ while (!force_quit) {
               port_statistics[portid].tx += sent;
         }
 
-        /* if timer is enabled */
+        // if timer is enabled
   			if (timer_period > 0) {
-  				/* advance the timer */
+  				// advance the timer
   				timer_tsc += diff_tsc;
-  				/* if timer has reached its timeout */
+  				// if timer has reached its timeout
   				if (unlikely(timer_tsc >= timer_period)) {
-  					/* do this only on master core */
+  					// do this only on master core
   					if (lcore_id == rte_get_master_lcore()) {
   						print_stats();
-  						/* reset the timer */
+  						// reset the timer
   						timer_tsc = 0;
   					}
   				}
   			}
   			prev_tsc = cur_tsc;
     }
+```
 
-    /*
-     * Read packet from RX queues
-     */
+> run when printing the status <br>
+> it seems that it also drains the tx queue if necessary
+
+
+<br>
+
+```c
+     // Read packet from RX queues
+
     for (i = 0; i < qconf->n_rx_port; i++) {
       portid = qconf->rx_port_list[i];
       nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
