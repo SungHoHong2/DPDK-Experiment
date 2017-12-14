@@ -176,13 +176,20 @@ static void l2fwd_main_loop(void){
 
           	port_statistics[portid].rx += nb_rx;
 
-						for (j = 0; j < nb_rx; j++) {
-							m = pkts_burst[j];
 
-							rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-							l2fwd_simple_forward(m, portid);
+						buffer = tx_buffer[portid];
+						sent = rte_eth_tx_buffer_flush(portid, 0, buffer);
+						if (sent)
+							port_statistics[portid].tx += sent;
 
-						}
+
+						// for (j = 0; j < nb_rx; j++) {
+						// 	m = pkts_burst[j];
+            //
+						// 	rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+						// 	l2fwd_simple_forward(m, portid);
+            //
+						// }
 
         }
 
