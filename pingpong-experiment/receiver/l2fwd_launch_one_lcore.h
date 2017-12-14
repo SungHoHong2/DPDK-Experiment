@@ -56,7 +56,7 @@ static void l2fwd_main_loop(void){
   	int sent;
   	unsigned lcore_id;
   	uint64_t prev_tsc, diff_tsc, cur_tsc, timer_tsc;
-  	unsigned i, j, portid, nb_rx;
+  	unsigned i, j, portid, nb_rx, nb_tx;
   	struct lcore_queue_conf *qconf;
   	const uint64_t drain_tsc = (rte_get_tsc_hz() + US_PER_S - 1) / US_PER_S * BURST_TX_DRAIN_US;
   	struct rte_eth_dev_tx_buffer *buffer;
@@ -130,11 +130,10 @@ static void l2fwd_main_loop(void){
           	port_statistics[portid].rx += nb_rx;
 
 
-						int sent=0;
-						sent = rte_eth_tx_burst(portid, 0, pkts_burst, nb_rx);
+						nb_tx = rte_eth_tx_burst(portid, 0, pkts_burst, nb_rx);
 
-						if (sent){
-								port_statistics[portid].tx += sent;
+						if (nb_tx){
+								port_statistics[portid].tx += nb_tx;
 							}
 
 						if (unlikely(nb_tx < nb_rx)) {
