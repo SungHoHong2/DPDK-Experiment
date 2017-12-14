@@ -63,12 +63,6 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[0] = 160;
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[1] = 54;
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[2] = 159;
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[3] = 131;
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[4] = 171;
-	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[5] = 188;
 }
 
 
@@ -94,7 +88,6 @@ static void l2fwd_main_loop(void){
   		RTE_LOG(INFO, L2FWD, "lcore %u has nothing to do\n", lcore_id);
   		return;
   	}
-
 
 		l2fwd_ports_eth_addr[0].addr_bytes[0] = 160;
 		l2fwd_ports_eth_addr[0].addr_bytes[1] = 54;
@@ -154,8 +147,6 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-							// l2fwd_simple_forward(m, portid);
-								// dst_port = l2fwd_dst_ports[portid];
 								l2fwd_mac_updating(m, portid); // this is crucial
 						    buffer = tx_buffer[portid];
 								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
