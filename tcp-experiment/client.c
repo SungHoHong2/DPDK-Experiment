@@ -86,10 +86,8 @@ int main(int argc, char *argv[])
     // CHARA begin
 
 
-    char *data;
-    data = (char *)malloc(MAXDATASIZE * sizeof(char));
+    char data[MAXDATASIZE];
     memset( data, '\0', MAXDATASIZE * sizeof(char) );
-
     printf("%ld\n", sizeof(buf));
 
     printf("%ld\n", sizeof(data));
