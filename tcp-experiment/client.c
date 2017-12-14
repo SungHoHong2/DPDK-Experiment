@@ -1,7 +1,3 @@
-/*
-** client.c -- a stream socket client demo
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,12 +7,16 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
 #include <arpa/inet.h>
+#include <time.h>
 
 #define PORT "3490" // the port client will be connecting to
-
 #define MAXDATASIZE 1464 // max number of bytes we can get at once
+
+
+const char clr[] = { 27, '[', '2', 'J', '\0' };
+const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
+
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
@@ -76,20 +76,31 @@ int main(int argc, char *argv[])
     // }
     // CHARA begin
 
-    char *data;
-    data = (char *)malloc(MAXDATASIZE * sizeof(char));
-    memset( data, '\0', MAXDATASIZE * sizeof(char) );
 
-    send(sockfd, data, MAXDATASIZE, 0);
-    // CHARA end
+    for(int i=0; i<10; i++){
+                char *data;
+                data = (char *)malloc(MAXDATASIZE * sizeof(char));
+                memset( data, '\0', MAXDATASIZE * sizeof(char) );
 
-    if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-        perror("recv");
-        exit(1);
+                send(sockfd, data, MAXDATASIZE, 0);
+                // CHARA end
+
+                if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
+                    perror("recv");
+                    exit(1);
+                }
+
+              	/* Clear screen and move to top left */
+              	printf("%s%s", clr, topLeft);
+                printf("\nTCP Pingpong Client ====================================");
+                buf[numbytes] = '\0';
+
+                printf("\nStatistics for port %u ------------------------------"
+            			   "\nPackets sent: %ld"
+            			   sizeof(buf));
+                printf("\n====================================================\n");
+
     }
-
-    buf[numbytes] = '\0';
-    printf("client: received '%ld'\n",sizeof(buf));
 
     close(sockfd);
     return 0;
