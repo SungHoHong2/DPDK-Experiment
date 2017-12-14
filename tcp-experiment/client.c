@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     for(int i=0; i<10; i++){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
-                memset( data, '\0', MAXDATASIZE * sizeof(char) );
+                memset( data, '*', MAXDATASIZE * sizeof(char) );
 
                 send(sockfd, data, MAXDATASIZE, 0);
                 // CHARA end
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
               	/* Clear screen and move to top left */
               	printf("%s%s", clr, topLeft);
                 printf("\nTCP Pingpong Client ====================================");
-                buf[numbytes] = '*';
+                buf[numbytes] = '\0';
 
                 printf("\nStatistics for port  ------------------------------"
                      "\nPackets send: %ld"
