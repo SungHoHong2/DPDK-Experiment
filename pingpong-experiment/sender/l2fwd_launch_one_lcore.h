@@ -17,7 +17,7 @@ static void print_stats(void){
 		/* Clear screen and move to top left */
 	printf("%s%s", clr, topLeft);
 
-	printf("\nPort statistics ====================================");
+	printf("\nDPDK Pingpong Client ====================================");
 
 	for (portid = 0; portid < RTE_MAX_ETHPORTS; portid++) {
 		/* skip disabled ports */
