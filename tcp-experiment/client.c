@@ -77,14 +77,22 @@ int main(int argc, char *argv[])
     // }
     // CHARA begin
 
+    while(1) {  // main accept() loop
+
+        sin_size = sizeof their_addr;
+        new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+        if (new_fd == -1) {
+            perror("accept");
+            continue;
+
+    }
+
+
     char *data;
     data = (char *)malloc(MAXDATASIZE * sizeof(char));
     memset( data, '*', MAXDATASIZE * sizeof(char) );
 
     send(sockfd, data, MAXDATASIZE, 0);
-    send(sockfd, data, MAXDATASIZE, 0);
-    send(sockfd, data, MAXDATASIZE, 0);
-
 
     if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
         perror("recv");
