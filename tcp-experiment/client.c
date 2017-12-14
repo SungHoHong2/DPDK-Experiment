@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     freeaddrinfo(servinfo); // all done with this structure
 
     // CHARA begin
-    send(sockfd, "Hello, world! from client", 200, 0);
+    send(sockfd, "Hello, world! from client", 100, 0);
 
     // CHARA end
 
