@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     }
 
 
-    while(1){
+    for(int i =0; i<10; i++){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
                 memset( data, '*', MAXDATASIZE * sizeof(char) );
