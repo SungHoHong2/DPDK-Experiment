@@ -131,8 +131,8 @@ int main(void){
         printf("\nStatistics for port  ------------------------------"
              "\nRX: %ld"
         	   "\nTX: %ld"
-             ,strlen(data)
-             ,strlen(buf));
+             ,strlen(rx_throughput)
+             ,strlen(tx_throughput));
         printf("\n====================================================\n");
 
     }
