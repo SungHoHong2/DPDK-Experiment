@@ -16,7 +16,7 @@
 #include <signal.h>
 
 #define PORT "3490"  // the port users will be connecting to
-#define MAXDATASIZE 100 // max number of bytes we can get at once
+#define MAXDATASIZE 1464 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
 
 void sigchld_handler(int s){
@@ -120,7 +120,7 @@ int main(void){
         }
         buf[numbytes] = '\0';
         printf("server: received '%s'\n",buf);
-        send(new_fd, buf, 100, 0);
+        send(new_fd, buf, MAXDATASIZE, 0);
 
         close(new_fd);  // parent doesn't need this
     }

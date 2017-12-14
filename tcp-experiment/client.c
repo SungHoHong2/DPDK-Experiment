@@ -16,15 +16,13 @@
 
 #define PORT "3490" // the port client will be connecting to
 
-#define MAXDATASIZE 100 // max number of bytes we can get at once
+#define MAXDATASIZE 1464 // max number of bytes we can get at once
 
 // get sockaddr, IPv4 or IPv6:
-void *get_in_addr(struct sockaddr *sa)
-{
+void *get_in_addr(struct sockaddr *sa){
     if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in*)sa)->sin_addr);
     }
-
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
@@ -40,6 +38,7 @@ int main(int argc, char *argv[])
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
+    // get information of the server
     if ((rv = getaddrinfo("lab01", PORT, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
@@ -58,7 +57,6 @@ int main(int argc, char *argv[])
             perror("client: connect");
             continue;
         }
-
         break;
     }
 
@@ -72,16 +70,17 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-
-
     //
     // while(1){
     //   send(sockfd, "Hello, world! from client", 100, 0);
     // }
-
-
     // CHARA begin
-    send(sockfd, "Hello, world! from client", 100, 0);
+
+    char *data;
+    data = (char *)malloc(MAXDATASIZE * sizeof(char));
+    memset( data, '*', MAXDATASIZE * sizeof(char) );
+
+    send(sockfd, data, MAXDATASIZE, 0);
     // CHARA end
 
     if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
@@ -90,10 +89,8 @@ int main(int argc, char *argv[])
     }
 
     buf[numbytes] = '\0';
-
     printf("client: received '%s'\n",buf);
 
     close(sockfd);
-
     return 0;
 }
