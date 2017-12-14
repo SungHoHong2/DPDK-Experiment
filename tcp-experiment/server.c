@@ -14,10 +14,12 @@
 #include <arpa/inet.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <time.h>
 
 #define PORT "3490"  // the port users will be connecting to
 #define MAXDATASIZE 1464 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
+
 
 void sigchld_handler(int s){
     // waitpid() might overwrite errno, so we save and restore it:
@@ -45,7 +47,10 @@ int main(void){
     char s[INET6_ADDRSTRLEN];
     int rv;
     char buf[MAXDATASIZE];
+    long int tx_throughput;
+    long int rx_throughput;
 
+    tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -108,21 +113,28 @@ int main(void){
     }
 
     while(1) {  // main accept() loop
-
-        inet_ntop(their_addr.ss_family,
-            get_in_addr((struct sockaddr *)&their_addr),
-            s, sizeof s);
-        printf("server: got connection from %s\n", s);
-
+        inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1) {
             perror("recv");
             exit(1);
         }
-        printf("server: received '%ld'\n",strlen(buf));
+        rx_throughput+=numbytes;
+        //printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
+        tx_throughput+=strlen(buf);
+
+
+        /* Clear screen and move to top left */
+        printf("%s%s", clr, topLeft);
+        printf("\nTCP Pingpong Server ====================================");
+        printf("\nStatistics for port  ------------------------------"
+             "\nRX: %ld"
+        	   "\nTX: %ld"
+             ,strlen(data)
+             ,strlen(buf));
+        printf("\n====================================================\n");
 
     }
-
     close(new_fd);  // parent doesn't need this
     return 0;
 }

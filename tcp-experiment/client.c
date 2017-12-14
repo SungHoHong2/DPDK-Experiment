@@ -34,6 +34,10 @@ int main(int argc, char *argv[])
     int rv;
     char s[INET6_ADDRSTRLEN];
     socklen_t sin_size;
+    long int tx_throughput;
+    long int rx_throughput;
+    double latency;
+    double latency_timelimit = 10.0;
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
