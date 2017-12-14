@@ -83,11 +83,15 @@ int main(int argc, char *argv[])
     }
 
 
+
     for(int i =0; i<10; i++){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
                 memset( data, '*', MAXDATASIZE * sizeof(char) );
 
+                send(sockfd, data, MAXDATASIZE, 0);
+                send(sockfd, data, MAXDATASIZE, 0);
+                send(sockfd, data, MAXDATASIZE, 0);
                 send(sockfd, data, MAXDATASIZE, 0);
 
 
