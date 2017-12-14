@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
                 rx_throughput+=numbytes;
                 latency = difftime( time(0), start);
 
-                if(++intervals==10){
+                if(++intervals==1000){
                     /* Clear screen and move to top left */
                     printf("%s%s", clr, topLeft);
                     printf("\nTCP Pingpong Server ====================================");
@@ -117,10 +117,10 @@ int main(int argc, char *argv[])
                          ,latency);
                     printf("\n====================================================\n");
                     intervals = 0;
+
+                    if(latency==10) break;
                 }
             }
-
-
 
     close(sockfd);
     return 0;
