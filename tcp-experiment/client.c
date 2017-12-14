@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
                 printf("\nTCP Pingpong Client ====================================");
                 buf[numbytes] = '\0';
 
-                printf("\nStatistics for port %u ------------------------------"
+                printf("\nStatistics for port  ------------------------------"
             			   "\nPackets sent: %ld"
             			   ,sizeof(buf));
                 printf("\n====================================================\n");
