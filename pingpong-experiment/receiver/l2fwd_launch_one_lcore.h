@@ -55,7 +55,6 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	struct ether_hdr *eth;
 	void *tmp;
 
-
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
 
 	/* 02:00:00:00:00:xx */
@@ -64,7 +63,12 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
-
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[0] = 160;
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[1] = 54;
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[2] = 159;
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[3] = 131;
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[4] = 171;
+	l2fwd_ports_eth_addr[dst_port].addr_bytes[5] = 188;
 }
 
 
@@ -76,17 +80,8 @@ l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
 
 	dst_port = l2fwd_dst_ports[portid];
 
-	// if (mac_updating)
-	// 	l2fwd_mac_updating(m, dst_port);
-
-		// all port 0 and 1 both transfer data to themselves
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[0] = 160;
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[1] = 54;
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[2] = 159;
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[3] = 131;
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[4] = 171;
-			// l2fwd_ports_eth_addr[dst_port].addr_bytes[5] = 188;
-
+	if (mac_updating)
+		l2fwd_mac_updating(m, dst_port); // this is crucial
     buffer = tx_buffer[dst_port];
 		sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
 
@@ -176,23 +171,19 @@ static void l2fwd_main_loop(void){
 
           	port_statistics[portid].rx += nb_rx;
 
-
-						// buffer = tx_buffer[portid];
-						// sent = rte_eth_tx_buffer_flush(portid, 0, buffer);
-						// if (sent)
-						// 	port_statistics[portid].tx += sent;
-
-
 						for (j = 0; j < nb_rx; j++) {
-							m = pkts_burst[j];
+								m = pkts_burst[j];
+								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+							// l2fwd_simple_forward(m, portid);
+								// dst_port = l2fwd_dst_ports[portid];
+								l2fwd_mac_updating(m, portid); // this is crucial
+						    buffer = tx_buffer[portid];
+								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
 
-							rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-							l2fwd_simple_forward(m, portid);
-
+								if(sent)
+								port_statistics[dst_port].tx += sent;
 						}
-
         }
-
       }
 
 }
