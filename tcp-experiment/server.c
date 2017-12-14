@@ -135,10 +135,9 @@ int main(void){
             printf("\nStatistics for port  ------------------------------"
                  "\nRX: %ld"
                  "\nTX: %ld"
-                 "\nLatency: %f"
                  ,rx_throughput
                  ,tx_throughput
-                 ,latency);
+                 );
             printf("\n====================================================\n");
             intervals = 0;
         }
