@@ -52,6 +52,7 @@ static void print_stats(void){
 /* main processing loop */
 static void l2fwd_main_loop(void){
     struct rte_mbuf *pkts_burst[MAX_PKT_BURST];
+		struct rte_mbuf *rm[1];
   	struct rte_mbuf *m;
   	int sent;
   	unsigned lcore_id;
@@ -105,12 +106,12 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						print_stats();
-									// if(!first_start){
-									// 		first_start = 1;
-									// } else {
-									// 		force_quit = 1;
-									// }
+      						// print_stats();
+									if(!first_start){
+											first_start = 1;
+									} else {
+											force_quit = 1;
+									}
       						/* reset the timer */
 									timer_tsc = 0;
       					}
@@ -134,7 +135,6 @@ static void l2fwd_main_loop(void){
 						}
 
 
-						struct rte_mbuf *rm[NB_MBUF];
 						int sent;
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);

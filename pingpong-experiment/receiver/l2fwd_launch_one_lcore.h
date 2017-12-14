@@ -147,7 +147,7 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-								l2fwd_mac_updating(m, portid); // this is crucial
+								l2fwd_mac_updating(m, portid);
 						    buffer = tx_buffer[portid];
 								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
 
