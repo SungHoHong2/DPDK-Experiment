@@ -96,10 +96,10 @@ int main(int argc, char *argv[])
                 buf[numbytes] = '\0';
 
                 printf("\nStatistics for port  ------------------------------"
-                     "\nPackets received: %ld"
+                     "\nPackets send: %ld"
             			   "\nPackets received: %ld"
                      ,sizeof(data)
-            			   ,sizeof(buf));
+            			   ,len(buf));
                 printf("\n====================================================\n");
 
     }
