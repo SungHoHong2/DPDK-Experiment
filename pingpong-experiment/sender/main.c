@@ -75,7 +75,7 @@ static volatile bool force_quit;
 
 
 static time_t start, end; //adding timer
-
+static double time_limit = 10.0
 
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"

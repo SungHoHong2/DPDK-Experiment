@@ -115,6 +115,8 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						print_stats();
       						/* reset the timer */
+									if(diff>=time_limit) force_quit=1;
+
 									timer_tsc = 0;
       					}
       				}
