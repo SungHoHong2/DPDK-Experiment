@@ -77,44 +77,29 @@ int main(int argc, char *argv[])
     // }
     // CHARA begin
 
+    char *data;
+    data = (char *)malloc(MAXDATASIZE * sizeof(char));
+    memset( data, '*', MAXDATASIZE * sizeof(char) );
 
-    for(int i =0; i<10; i++){
-        printf("1 ");
+    send(sockfd, data, MAXDATASIZE, 0);
+
+    if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
+        perror("recv");
+        exit(1);
     }
 
-
-
-    for(int i =0; i<10; i++){
-                char *data;
-                data = (char *)malloc(MAXDATASIZE * sizeof(char));
-                memset( data, '*', MAXDATASIZE * sizeof(char) );
-
-                send(sockfd, data, MAXDATASIZE, 0);
-                send(sockfd, data, MAXDATASIZE, 0);
-                send(sockfd, data, MAXDATASIZE, 0);
-                send(sockfd, data, MAXDATASIZE, 0);
-
-
-                if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-                    perror("recv");
-                    exit(1);
-                }
-
-                sleep(1);
-
-                printf("%ld\n",sizeof(buf));
-              	/* Clear screen and move to top left */
-              	// printf("%s%s", clr, topLeft);
-                // printf("\nTCP Pingpong Client ====================================");
-                // printf("\nStatistics for port  ------------------------------"
-                //      "\nPackets send: %ld"
-            		// 	   "\nPackets received: %ld"
-                //      "\n %s"
-                //      ,strlen(data)
-                //      ,strlen(buf)
-            		// 	   ,buf);
-                // printf("\n====================================================\n");
-    }
+    printf("%ld\n",sizeof(buf));
+  	/* Clear screen and move to top left */
+  	// printf("%s%s", clr, topLeft);
+    // printf("\nTCP Pingpong Client ====================================");
+    // printf("\nStatistics for port  ------------------------------"
+    //      "\nPackets send: %ld"
+		// 	   "\nPackets received: %ld"
+    //      "\n %s"
+    //      ,strlen(data)
+    //      ,strlen(buf)
+		// 	   ,buf);
+    // printf("\n====================================================\n");
     close(sockfd);
     return 0;
 }
