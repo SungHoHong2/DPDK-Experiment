@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
                 //      ,strlen(buf)
             		// 	   ,buf);
                 // printf("\n====================================================\n");
+                close(sockfd);
     }
 
-    close(sockfd);
     return 0;
 }
