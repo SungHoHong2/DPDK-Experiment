@@ -115,7 +115,13 @@ int main(void)
 		printf("howdy before 2 \n");
 
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+
+		printf("howdy before 3 \n");
+
 		if (new_fd == -1) {
+
+			printf("howdy before 4 \n");
+
 			perror("accept");
 			continue;
 		}
