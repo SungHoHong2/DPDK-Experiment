@@ -28,11 +28,12 @@ void *get_in_addr(struct sockaddr *sa){
 
 int main(int argc, char *argv[])
 {
-    int sockfd, numbytes;
+    int sockfd, numbytes, new_fd;
     char buf[MAXDATASIZE];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
+    socklen_t sin_size;
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -75,6 +76,14 @@ int main(int argc, char *argv[])
     //   send(sockfd, "Hello, world! from client", 100, 0);
     // }
     // CHARA begin
+
+
+    for(int i =0; i<10; i++){
+        printf("1 ");
+    }
+
+
+
 
 
     while(1){
