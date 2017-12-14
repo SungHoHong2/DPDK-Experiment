@@ -118,8 +118,7 @@ int main(void){
             perror("recv");
             exit(1);
         }
-        buf[numbytes] = '\0';
-        printf("server: received '%ld'\n",sizeof(buf));
+        printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
 
         close(new_fd);  // parent doesn't need this
