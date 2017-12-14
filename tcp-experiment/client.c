@@ -84,10 +84,10 @@ int main(int argc, char *argv[])
         if (new_fd == -1) {
             perror("accept");
             continue;
-
+          }
     }
 
-
+    
     char *data;
     data = (char *)malloc(MAXDATASIZE * sizeof(char));
     memset( data, '*', MAXDATASIZE * sizeof(char) );
