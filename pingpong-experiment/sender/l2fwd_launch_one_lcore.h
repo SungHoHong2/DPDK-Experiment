@@ -38,7 +38,7 @@ static void print_stats(void){
 	}
 
 
-	double diff = difftime( time(0), start);
+	diff = difftime( time(0), start);
 
 	printf("\nAggregate statistics ==============================="
 		   "\nTotal packets sent: %18"PRIu64

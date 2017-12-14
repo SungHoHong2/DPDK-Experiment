@@ -75,6 +75,7 @@ static volatile bool force_quit;
 
 
 static time_t start, end; //adding timer
+static double diff = 10.0
 static double time_limit = 10.0
 
 #include "signal_handler.h"
