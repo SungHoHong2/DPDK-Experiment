@@ -79,30 +79,11 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-    //
-    // while(1){
-    //   send(sockfd, "Hello, world! from client", 100, 0);
-    // }
-    // CHARA begin
-
-
-    char data[MAXDATASIZE];
-    memset( data, '\0', MAXDATASIZE * sizeof(char) );
-    printf("%ld\n", sizeof(buf));
-
-    printf("%ld\n", sizeof(data));
-
-    while(1){}
-
-
-
     time (&start); //useful call
     while(1){
 
-                char *data;
-                data = (char *)malloc(MAXDATASIZE * sizeof(char));
-                memset( data, '\0', MAXDATASIZE * sizeof(char) );
-
+                char data[MAXDATASIZE];
+                memset( data, '*', MAXDATASIZE * sizeof(char) );
                 send(sockfd, data, MAXDATASIZE, 0);
 
                 tx_throughput+=sizeof(data);
