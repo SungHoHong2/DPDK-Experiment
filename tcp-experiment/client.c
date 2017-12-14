@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     // CHARA begin
 
 
-    while(true){
+    while(1){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
                 memset( data, '*', MAXDATASIZE * sizeof(char) );
