@@ -19,29 +19,23 @@
 #define MAXDATASIZE 100 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
 
-void sigchld_handler(int s)
-{
+void sigchld_handler(int s){
     // waitpid() might overwrite errno, so we save and restore it:
     int saved_errno = errno;
-
     while(waitpid(-1, NULL, WNOHANG) > 0);
-
     errno = saved_errno;
 }
 
 
 // get sockaddr, IPv4 or IPv6:
-void *get_in_addr(struct sockaddr *sa)
-{
+void *get_in_addr(struct sockaddr *sa){
     if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in*)sa)->sin_addr);
     }
-
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main(void)
-{
+int main(void){
     int sockfd, new_fd, numbytes;  // listen on sock_fd, new connection on new_fd
     struct addrinfo hints, *servinfo, *p;
     struct sockaddr_storage their_addr; // connector's address information
@@ -126,15 +120,14 @@ int main(void)
         }
         buf[numbytes] = '\0';
         printf("server: received '%s'\n",buf);
-
-
-        if (!fork()) { // this is the child process
-            close(sockfd); // child doesn't need the listener
-            if (send(new_fd, buf, 100, 0) == -1)
-                perror("send");
-            close(new_fd);
-            exit(0);
-        }
+        send(new_fd, buf, 100, 0);
+        // if (!fork()) { // this is the child process
+        //     close(sockfd); // child doesn't need the listener
+        //     if (send(new_fd, buf, 100, 0) == -1)
+        //         perror("send");
+        //     close(new_fd);
+        //     exit(0);
+        // }
         close(new_fd);  // parent doesn't need this
     }
 
