@@ -104,10 +104,10 @@ int main(int argc, char *argv[])
                 rx_throughput+=numbytes;
                 latency = difftime( time(0), start);
 
-                if(++intervals==1000){
+                if(++intervals==2000){
                     /* Clear screen and move to top left */
                     printf("%s%s", clr, topLeft);
-                    printf("\nTCP Pingpong Server ====================================");
+                    printf("\nTCP Pingpong Client ====================================");
                     printf("\nStatistics for port  ------------------------------"
                          "\nRX: %ld"
                          "\nTX: %ld"

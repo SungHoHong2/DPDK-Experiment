@@ -56,6 +56,10 @@ int main(void){
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE; // use my IP
+    int intervals;
+
+    intervals = tx_throughput = rx_throughput = 0;
+
 
     if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
@@ -123,18 +127,23 @@ int main(void){
         //printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
         tx_throughput+=strlen(buf);
+
+        if(++intervals==2000){
+            /* Clear screen and move to top left */
+            printf("%s%s", clr, topLeft);
+            printf("\nTCP Pingpong Client ====================================");
+            printf("\nStatistics for port  ------------------------------"
+                 "\nRX: %ld"
+                 "\nTX: %ld"
+                 "\nLatency: %f"
+                 ,rx_throughput
+                 ,tx_throughput
+                 ,latency);
+            printf("\n====================================================\n");
+            intervals = 0;
+        }
     }
     close(new_fd);  // parent doesn't need this
-
-    /* Clear screen and move to top left */
-    printf("%s%s", clr, topLeft);
-    printf("\nTCP Pingpong Server ====================================");
-    printf("\nStatistics for port  ------------------------------"
-         "\nRX: %ld"
-         "\nTX: %ld"
-         ,rx_throughput
-         ,tx_throughput);
-    printf("\n====================================================\n");
 
     return 0;
 }
