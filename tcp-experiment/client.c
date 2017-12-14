@@ -78,13 +78,7 @@ int main(int argc, char *argv[])
     freeaddrinfo(servinfo); // all done with this structure
 
     // CHARA begin
-    if (!fork()) { // this is the child process
-        close(sockfd); // child doesn't need the listener
-        if (send(new_fd, "Hello, world! from client", 200, 0) == -1)
-            perror("send");
-        close(new_fd);
-        exit(0);
-    }
+    send(sockfd, "Hello, world! from client", 200, 0);
 
     // CHARA end
 
