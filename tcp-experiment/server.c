@@ -115,16 +115,14 @@ int main(void){
 
 
     while(1) {  // main accept() loop
-
         if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1) {
             perror("recv");
             exit(1);
         }
         printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
-
-        close(new_fd);  // parent doesn't need this
     }
 
+    close(new_fd);  // parent doesn't need this
     return 0;
 }
