@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
               	/* Clear screen and move to top left */
               	printf("%s%s", clr, topLeft);
                 printf("\nTCP Pingpong Client ====================================");
-                buf[numbytes] = '\0';
+                buf[numbytes] = '*';
 
                 printf("\nStatistics for port  ------------------------------"
                      "\nPackets send: %ld"
