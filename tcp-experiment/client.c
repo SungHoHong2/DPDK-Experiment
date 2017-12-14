@@ -77,14 +77,12 @@ int main(int argc, char *argv[])
     // CHARA begin
 
 
-    for(int i=0; i<10; i++){
+    for(int i=0; i<100; i++){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
                 memset( data, '*', MAXDATASIZE * sizeof(char) );
 
                 send(sockfd, data, MAXDATASIZE, 0);
-                // CHARA end
-
                 if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
                     perror("recv");
                     exit(1);
@@ -99,7 +97,6 @@ int main(int argc, char *argv[])
                      ,strlen(data)
             			   ,strlen(buf));
                 printf("\n====================================================\n");
-
     }
 
     close(sockfd);
