@@ -129,7 +129,7 @@ int main(void){
         if(++intervals==2000){
             /* Clear screen and move to top left */
             printf("%s%s", clr, topLeft);
-            printf("\nTCP Pingpong Client ====================================");
+            printf("\nTCP Pingpong Server ====================================");
             printf("\nStatistics for port  ------------------------------"
                  "\nRX: %ld"
                  "\nTX: %ld"
