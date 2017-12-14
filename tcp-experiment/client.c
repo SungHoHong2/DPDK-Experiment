@@ -83,17 +83,17 @@ int main(int argc, char *argv[])
     while(1){
 
                 char data[MAXDATASIZE];
-                memset( data, '*', MAXDATASIZE * sizeof(char) );
+                memset( data, '*', MAXDATASIZE * sizeof(char));
                 send(sockfd, data, MAXDATASIZE, 0);
 
-                tx_throughput+=sizeof(data);
+                tx_throughput+=strlen(data);
 
                 if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
                     perror("recv");
                     exit(1);
                 }
 
-                rx_throughput+=sizeof(buf);
+                rx_throughput+=strlen(buf);
                 latency = difftime( time(0), start);
 
                 if(++intervals==2000){
