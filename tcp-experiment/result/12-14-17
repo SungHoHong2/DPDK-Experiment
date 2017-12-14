@@ -1,0 +1,15 @@
+// considered all of its char as bytes
+// and counted the length of character '*'
+
+TCP Pingpong Client ====================================
+Statistics for port  ------------------------------
+RX: 47153432
+TX: 105408000
+Latency: 10.000000
+====================================================
+
+TCP Pingpong Server ====================================
+Statistics for port  ------------------------------
+RX: 102410000
+TX: 102410000
+====================================================
