@@ -40,11 +40,11 @@ static void print_stats(void){
 		   "\nTotal packets sent: %18"PRIu64
 		   "\nTotal packets received: %14"PRIu64
 		   "\nTotal packets dropped: %15"PRIu64
-       "\nTotal duration: %ld",
+       "\nAggregated time: %s",
 		   total_packets_tx,
 		   total_packets_rx,
 		   total_packets_dropped,
-       curr_time);
+       ctime(&start));
 	printf("\n====================================================\n");
 }
 
@@ -82,6 +82,9 @@ static void l2fwd_main_loop(void){
 		l2fwd_ports_eth_addr[0].addr_bytes[5] = 212;
 
 
+
+		time (&start); //useful call
+
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
         /*
@@ -106,12 +109,7 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						// print_stats();
-									if(!first_start){
-											first_start = 1;
-									} else {
-											force_quit = 1;
-									}
+      						print_stats();
       						/* reset the timer */
 									timer_tsc = 0;
       					}

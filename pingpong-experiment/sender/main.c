@@ -71,8 +71,11 @@ struct rte_mempool *test_pktmbuf_pool = NULL;
 static int mac_updating = 1;
 static uint64_t timer_period = 10; /* default period is 10 seconds */
 
-static volatile bool first_start = 0;
 static volatile bool force_quit;
+
+
+static time_t start, end; //adding timer
+
 
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
