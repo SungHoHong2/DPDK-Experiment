@@ -50,6 +50,7 @@ int main(void)
     int yes=1;
     char s[INET6_ADDRSTRLEN];
     int rv;
+    char buf[MAXDATASIZE];
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -118,6 +119,15 @@ int main(void)
             get_in_addr((struct sockaddr *)&their_addr),
             s, sizeof s);
         printf("server: got connection from %s\n", s);
+
+
+        if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1) {
+            perror("recv");
+            exit(1);
+        }
+        buf[numbytes] = '\0';
+        printf("server: received '%s'\n",buf);
+
 
         if (!fork()) { // this is the child process
             close(sockfd); // child doesn't need the listener
