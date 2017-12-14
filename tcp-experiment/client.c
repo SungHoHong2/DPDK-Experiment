@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
 
 
 
-
-    while(1){
-      send(sockfd, "Hello, world! from client", 100, 0);
-    }
+    //
+    // while(1){
+    //   send(sockfd, "Hello, world! from client", 100, 0);
+    // }
 
 
     // CHARA begin
