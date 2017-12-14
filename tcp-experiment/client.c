@@ -72,11 +72,21 @@ int main(int argc, char *argv[])
         return 2;
     }
 
-    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),
-            s, sizeof s);
+    inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof s);
     printf("client: connecting to %s\n", s);
 
     freeaddrinfo(servinfo); // all done with this structure
+
+    // CHARA begin
+    if (!fork()) { // this is the child process
+        close(sockfd); // child doesn't need the listener
+        if (send(new_fd, "Hello, world! from client", 200, 0) == -1)
+            perror("send");
+        close(new_fd);
+        exit(0);
+    }
+
+    // CHARA end
 
     if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
         perror("recv");
