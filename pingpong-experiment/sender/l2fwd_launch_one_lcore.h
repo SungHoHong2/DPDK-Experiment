@@ -36,15 +36,19 @@ static void print_stats(void){
 		total_packets_tx += port_statistics[portid].tx;
 		total_packets_rx += port_statistics[portid].rx;
 	}
+
+
+	double diff = difftime( time(0), start);
+
 	printf("\nAggregate statistics ==============================="
 		   "\nTotal packets sent: %18"PRIu64
 		   "\nTotal packets received: %14"PRIu64
 		   "\nTotal packets dropped: %15"PRIu64
-       "\nAggregated time: %s",
+       "\nAggregated time (sec): %f",
 		   total_packets_tx,
 		   total_packets_rx,
 		   total_packets_dropped,
-       ctime(&start));
+       diff);
 	printf("\n====================================================\n");
 }
 
