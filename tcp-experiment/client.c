@@ -83,15 +83,14 @@ int main(int argc, char *argv[])
     }
 
 
-
-
-
     while(1){
                 char *data;
                 data = (char *)malloc(MAXDATASIZE * sizeof(char));
                 memset( data, '*', MAXDATASIZE * sizeof(char) );
 
                 send(sockfd, data, MAXDATASIZE, 0);
+
+                
                 if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
                     perror("recv");
                     exit(1);
