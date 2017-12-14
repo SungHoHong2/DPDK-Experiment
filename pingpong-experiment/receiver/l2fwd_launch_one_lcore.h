@@ -63,33 +63,13 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[0] = 160;
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[1] = 54;
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[2] = 159;
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[3] = 131;
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[4] = 171;
-	l2fwd_ports_eth_addr[dest_portid].addr_bytes[5] = 188;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[0] = 160;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[1] = 54;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[2] = 159;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[3] = 131;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[4] = 171;
+	// l2fwd_ports_eth_addr[dest_portid].addr_bytes[5] = 188;
 }
-
-
-static void
-l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
-	unsigned dst_port;
-	int sent;
-	struct rte_eth_dev_tx_buffer *buffer;
-
-	dst_port = l2fwd_dst_ports[portid];
-
-	if (mac_updating)
-		l2fwd_mac_updating(m, dst_port); // this is crucial
-    buffer = tx_buffer[dst_port];
-		sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
-
-		if (sent){
-			port_statistics[dst_port].tx += sent;
-		}
-}
-
 
 
 /* main processing loop */
