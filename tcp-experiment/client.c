@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     while(1){
 
                 char data[MAXDATASIZE];
-                memset( data, '*', MAXDATASIZE * sizeof(char));
+                memset( data, 0xff, MAXDATASIZE * sizeof(char));
                 send(sockfd, data, MAXDATASIZE, 0);
 
                 tx_throughput+=strlen(data);
