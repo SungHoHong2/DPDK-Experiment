@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 
                 printf("\nStatistics for port %u ------------------------------"
             			   "\nPackets sent: %ld"
-            			   sizeof(buf));
+            			   ,sizeof(buf));
                 printf("\n====================================================\n");
 
     }
