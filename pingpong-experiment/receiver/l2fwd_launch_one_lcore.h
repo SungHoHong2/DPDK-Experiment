@@ -49,6 +49,54 @@ static void print_stats(void){
 }
 
 
+
+static void
+l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
+	struct ether_hdr *eth;
+	void *tmp;
+
+
+	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
+
+	/* 02:00:00:00:00:xx */
+	tmp = &eth->d_addr.addr_bytes[0];
+	*((uint64_t *)tmp) = 0x000000000002 + ((uint64_t)dest_portid << 40);
+
+	/* src addr */
+	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
+
+}
+
+
+static void
+l2fwd_simple_forward(struct rte_mbuf *m, unsigned portid){
+	unsigned dst_port;
+	int sent;
+	struct rte_eth_dev_tx_buffer *buffer;
+
+	dst_port = l2fwd_dst_ports[portid];
+
+	if (mac_updating)
+		l2fwd_mac_updating(m, dst_port);
+
+		// all port 0 and 1 both transfer data to themselves
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[0] = 160;
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[1] = 54;
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[2] = 159;
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[3] = 131;
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[4] = 171;
+			l2fwd_ports_eth_addr[dst_port].addr_bytes[5] = 188;
+
+    buffer = tx_buffer[dst_port];
+		sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
+
+		if (sent){
+			port_statistics[dst_port].tx += sent;
+		}
+}
+
+
+
 /* main processing loop */
 static void l2fwd_main_loop(void){
     struct rte_mbuf *pkts_burst[MAX_PKT_BURST];
@@ -124,60 +172,19 @@ static void l2fwd_main_loop(void){
          */
         for (i = 0; i < qconf->n_rx_port; i++) {
           	portid = qconf->rx_port_list[i];
-          	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
-                 		pkts_burst, MAX_PKT_BURST);
+          	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
 
           	port_statistics[portid].rx += nb_rx;
 
+						for (j = 0; j < nb_rx; j++) {
+							m = pkts_burst[j];
 
-						nb_tx = rte_eth_tx_burst(portid, 0, pkts_burst, nb_rx);
+							rte_prefetch0(rte_pktmbuf_mtod(m, void *));
+							l2fwd_simple_forward(m, portid);
 
-						if (nb_tx){
-								port_statistics[portid].tx += nb_tx;
-							}
-
-						if (unlikely(nb_tx < nb_rx)) {
-						  				uint16_t buf;
-						  				for (buf = nb_tx; buf < nb_rx; buf++)
-						  					rte_pktmbuf_free(pkts_burst[buf]);
 						}
 
-
-						// for (j = 0; j < nb_rx; j++) {
-						// // 		// m = pkts_burst[j];
-						//  		sent = rte_eth_tx_burst(portid, 0, pkts_burst, 1);
-            // //
-						// // 		// rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-						// // 		// buffer = tx_buffer[portid];
-						// // 		// sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
-            // //
-						// 	if (sent){
-						// 			port_statistics[portid].tx += sent;
-						// 		}
-            // //
-						// 		rte_pktmbuf_free(pkts_burst[j]);
-						// }
-
-
-
-						// struct rte_mbuf *rm[NB_MBUF];
-						// int sent;
-						// char *data;
-						// rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-						// data = rte_pktmbuf_append(rm[0], 1464);
-						// memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
-						// sent = rte_eth_tx_burst(portid, 0, rm, 1);
-            //
-						// if (sent){
-						// 	port_statistics[portid].tx += sent;
-						// }
-            //
-						// rte_pktmbuf_free(rm[0]);
-
-
         }
-
-
 
       }
 
