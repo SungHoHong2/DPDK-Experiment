@@ -143,27 +143,12 @@ static void l2fwd_main_loop(void){
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
-						// ptr ==> Starting address of memory to be filled
-						// x   ==> Value to be filled
-						// n   ==> Number of bytes to be filled starting
-						//         from ptr to be filled
-						// void *memset(void *ptr, int x, size_t n);
-						/*
-								char str[50] = "GeeksForGeeks is for programming geeks.";
-						    printf("\nBefore memset(): %s\n", str);
-
-						    // Fill 8 characters starting from str[13] with '.'
-						    memset(str + 13, '.', 8*sizeof(char));
-
-						    printf("After memset():  %s", str);
-						*/
-
 						data = rte_pktmbuf_append(rm[0], 1464);
-						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
+						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
-							port_statistics[portid].tx += sent;
+							port_statistics[portid].tx += sizeof(data);
 						}
 
 						rte_pktmbuf_free(rm[0]);
