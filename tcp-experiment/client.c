@@ -94,14 +94,14 @@ int main(int argc, char *argv[])
 
                 send(sockfd, data, MAXDATASIZE, 0);
 
-                tx_throughput+=strlen(buf);
+                tx_throughput+=strlen(data);
 
                 if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
                     perror("recv");
                     exit(1);
                 }
 
-                rx_throughput+=numbytes;
+                rx_throughput+=strlen(buf);
                 latency = difftime( time(0), start);
 
                 if(++intervals==2000){
