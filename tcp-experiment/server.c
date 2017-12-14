@@ -119,11 +119,8 @@ int main(void){
 
     while(1) {  // main accept() loop
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-        if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1) {
-            perror("recv");
-            exit(1);
-        }
-        rx_throughput+=numbytes;
+        recv(new_fd, buf, MAXDATASIZE-1, 0);
+        rx_throughput+=strlen(buf);
         //printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
         tx_throughput+=strlen(buf);
