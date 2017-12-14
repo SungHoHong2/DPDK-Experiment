@@ -49,7 +49,8 @@ int main(void){
     char buf[MAXDATASIZE];
     long int tx_throughput;
     long int rx_throughput;
-
+    const char clr[] = { 27, '[', '2', 'J', '\0' };
+    const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
     tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
