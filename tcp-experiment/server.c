@@ -121,13 +121,7 @@ int main(void){
         buf[numbytes] = '\0';
         printf("server: received '%s'\n",buf);
         send(new_fd, buf, 100, 0);
-        // if (!fork()) { // this is the child process
-        //     close(sockfd); // child doesn't need the listener
-        //     if (send(new_fd, buf, 100, 0) == -1)
-        //         perror("send");
-        //     close(new_fd);
-        //     exit(0);
-        // }
+
         close(new_fd);  // parent doesn't need this
     }
 
