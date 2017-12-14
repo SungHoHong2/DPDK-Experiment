@@ -94,8 +94,10 @@ int main(int argc, char *argv[])
                 printf("\nStatistics for port  ------------------------------"
                      "\nPackets send: %ld"
             			   "\nPackets received: %ld"
+                     "\n %s"
                      ,strlen(data)
-            			   ,strlen(buf));
+                     ,strlen(buf)
+            			   ,buf);
                 printf("\n====================================================\n");
     }
 
