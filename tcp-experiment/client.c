@@ -82,6 +82,9 @@ int main(int argc, char *argv[])
     memset( data, '*', MAXDATASIZE * sizeof(char) );
 
     send(sockfd, data, MAXDATASIZE, 0);
+    send(sockfd, data, MAXDATASIZE, 0);
+    send(sockfd, data, MAXDATASIZE, 0);
+
 
     if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
         perror("recv");
