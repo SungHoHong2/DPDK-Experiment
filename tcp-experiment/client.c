@@ -38,7 +38,11 @@ int main(int argc, char *argv[])
     long int rx_throughput;
     double latency;
     double latency_timelimit = 10.0;
+    static time_t start; //adding timer
+    int intervals;
 
+
+    intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -81,31 +85,43 @@ int main(int argc, char *argv[])
     // }
     // CHARA begin
 
+    time (&start); //useful call
     while(1){
-            char *data;
-            data = (char *)malloc(MAXDATASIZE * sizeof(char));
-            memset( data, '*', MAXDATASIZE * sizeof(char) );
 
-            send(sockfd, data, MAXDATASIZE, 0);
+                char *data;
+                data = (char *)malloc(MAXDATASIZE * sizeof(char));
+                memset( data, '*', MAXDATASIZE * sizeof(char) );
 
-            if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-                perror("recv");
-                exit(1);
+                send(sockfd, data, MAXDATASIZE, 0);
+
+                tx_throughput+=strlen(buf);
+
+                if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
+                    perror("recv");
+                    exit(1);
+                }
+
+                rx_throughput+=numbytes;
+                latency = difftime( time(0), start);
+
+                if(++intervals==10){
+                    /* Clear screen and move to top left */
+                    printf("%s%s", clr, topLeft);
+                    printf("\nTCP Pingpong Server ====================================");
+                    printf("\nStatistics for port  ------------------------------"
+                         "\nRX: %ld"
+                         "\nTX: %ld"
+                         "\nLatency: %f"
+                         ,rx_throughput
+                         ,tx_throughput
+                         ,latency);
+                    printf("\n====================================================\n");
+                    intervals = 0;
+                }
             }
 
-            printf("%ld\n",sizeof(buf));
-          	/* Clear screen and move to top left */
-          	// printf("%s%s", clr, topLeft);
-            // printf("\nTCP Pingpong Client ====================================");
-            // printf("\nStatistics for port  ------------------------------"
-            //      "\nPackets send: %ld"
-        		// 	   "\nPackets received: %ld"
-            //      "\n %s"
-            //      ,strlen(data)
-            //      ,strlen(buf)
-        		// 	   ,buf);
-            // printf("\n====================================================\n");
-            }
+
+
     close(sockfd);
     return 0;
 }
