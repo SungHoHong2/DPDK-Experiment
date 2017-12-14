@@ -98,8 +98,8 @@ int main(int argc, char *argv[])
                 printf("\nStatistics for port  ------------------------------"
                      "\nPackets send: %d"
             			   "\nPackets received: %d"
-                     ,len(data)
-            			   ,len(buf));
+                     ,strlen(data)
+            			   ,strlen(buf));
                 printf("\n====================================================\n");
 
     }
