@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
                     exit(1);
                 }
 
+                printf("%s\n",buf);
               	/* Clear screen and move to top left */
               	// printf("%s%s", clr, topLeft);
                 // printf("\nTCP Pingpong Client ====================================");
