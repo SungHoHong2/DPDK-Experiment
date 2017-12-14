@@ -121,10 +121,10 @@ int main(void){
     while(1) {  // main accept() loop
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         recv(new_fd, buf, MAXDATASIZE-1, 0);
-        rx_throughput+=sizeof(buf);
+        rx_throughput+=strlen(buf);
         //printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
-        tx_throughput+=sizeof(buf);
+        tx_throughput+=strlen(buf);
 
         if(++intervals==2000){
             /* Clear screen and move to top left */
