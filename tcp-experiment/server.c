@@ -107,7 +107,11 @@ int main(void)
 	printf("server: waiting for connections...\n");
 
 	while(1) {  // main accept() loop
+
 		sin_size = sizeof their_addr;
+
+		printf("howdy before");
+
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
 		if (new_fd == -1) {
 			perror("accept");
@@ -115,7 +119,7 @@ int main(void)
 		}
 
 
-		printf("howdy");
+		printf("howdy after");
 
 
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr),s, sizeof s);
