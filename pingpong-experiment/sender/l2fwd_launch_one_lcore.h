@@ -38,7 +38,7 @@ static void print_stats(void){
 	}
 
 
-	diff = difftime( time(0), start);
+	latency_diff = difftime( time(0), start);
 
 	printf("\nAggregate statistics ==============================="
 		   "\nTotal packets sent: %18"PRIu64
@@ -48,7 +48,7 @@ static void print_stats(void){
 		   total_packets_tx,
 		   total_packets_rx,
 		   total_packets_dropped,
-       diff);
+       latency_diff);
 	printf("\n====================================================\n");
 }
 
@@ -115,7 +115,7 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						print_stats();
       						/* reset the timer */
-									if(diff>=time_limit) force_quit=1;
+									if(diff>=latency_timelimit) force_quit=1;
 
 									timer_tsc = 0;
       					}
