@@ -123,19 +123,18 @@ int main(void){
         //printf("server: received '%ld'\n",strlen(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
         tx_throughput+=strlen(buf);
-
-
-        /* Clear screen and move to top left */
-        printf("%s%s", clr, topLeft);
-        printf("\nTCP Pingpong Server ====================================");
-        printf("\nStatistics for port  ------------------------------"
-             "\nRX: %ld"
-        	   "\nTX: %ld"
-             ,rx_throughput
-             ,tx_throughput);
-        printf("\n====================================================\n");
-
     }
     close(new_fd);  // parent doesn't need this
+
+    /* Clear screen and move to top left */
+    printf("%s%s", clr, topLeft);
+    printf("\nTCP Pingpong Server ====================================");
+    printf("\nStatistics for port  ------------------------------"
+         "\nRX: %ld"
+         "\nTX: %ld"
+         ,rx_throughput
+         ,tx_throughput);
+    printf("\n====================================================\n");
+
     return 0;
 }
