@@ -96,9 +96,9 @@ int main(int argc, char *argv[])
                 buf[numbytes] = '\0';
 
                 printf("\nStatistics for port  ------------------------------"
-                     "\nPackets send: %ld"
-            			   "\nPackets received: %ld"
-                     ,sizeof(data)
+                     "\nPackets send: %d"
+            			   "\nPackets received: %d"
+                     ,len(data)
             			   ,len(buf));
                 printf("\n====================================================\n");
 
