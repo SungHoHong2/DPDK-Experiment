@@ -90,11 +90,13 @@ int main(int argc, char *argv[])
 
                 send(sockfd, data, MAXDATASIZE, 0);
 
-                
+
                 if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
                     perror("recv");
                     exit(1);
                 }
+
+                sleep(1);
 
                 printf("%ld\n",sizeof(buf));
               	/* Clear screen and move to top left */
