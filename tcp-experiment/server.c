@@ -119,7 +119,7 @@ int main(void){
             exit(1);
         }
         buf[numbytes] = '\0';
-        printf("server: received '%s'\n",buf);
+        printf("server: received '%d'\n",sizeof(buf));
         send(new_fd, buf, MAXDATASIZE, 0);
 
         close(new_fd);  // parent doesn't need this
