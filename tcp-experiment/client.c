@@ -89,16 +89,16 @@ int main(int argc, char *argv[])
                 }
 
               	/* Clear screen and move to top left */
-              	printf("%s%s", clr, topLeft);
-                printf("\nTCP Pingpong Client ====================================");
-                printf("\nStatistics for port  ------------------------------"
-                     "\nPackets send: %ld"
-            			   "\nPackets received: %ld"
-                     "\n %s"
-                     ,strlen(data)
-                     ,strlen(buf)
-            			   ,buf);
-                printf("\n====================================================\n");
+              	// printf("%s%s", clr, topLeft);
+                // printf("\nTCP Pingpong Client ====================================");
+                // printf("\nStatistics for port  ------------------------------"
+                //      "\nPackets send: %ld"
+            		// 	   "\nPackets received: %ld"
+                //      "\n %s"
+                //      ,strlen(data)
+                //      ,strlen(buf)
+            		// 	   ,buf);
+                // printf("\n====================================================\n");
     }
 
     close(sockfd);
