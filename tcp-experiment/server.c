@@ -108,9 +108,11 @@ int main(void)
 
 	while(1) {  // main accept() loop
 
+		printf("howdy before 1 \n");
+
 		sin_size = sizeof their_addr;
 
-		printf("howdy before");
+		printf("howdy before 2 \n");
 
 		new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
 		if (new_fd == -1) {
@@ -118,8 +120,7 @@ int main(void)
 			continue;
 		}
 
-
-		printf("howdy after");
+		printf("howdy after\n");
 
 
 		inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr),s, sizeof s);
