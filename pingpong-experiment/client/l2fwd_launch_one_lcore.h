@@ -41,7 +41,7 @@ static void print_stats(void){
 
 	latency_diff = difftime( time(0), start);
 
-	printf("\Packets statistics ==============================="
+	printf("\nPackets statistics ==============================="
 		   "\nPackets sent: %18"PRIu64
 		   "\nPackets received: %14"PRIu64
 		   "\nPackets dropped: %15"PRIu64
