@@ -65,7 +65,7 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	tmp = &eth->d_addr.addr_bytes[0];
 
 	// a0:36:9f:83:ab:bc
-	*((uint64_t *)tmp) = 0xbcab839f36a0 + ((uint64_t)dest_portid << 40);
+	*((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
@@ -99,12 +99,12 @@ static void l2fwd_main_loop(void){
   	}
 
 
-		l2fwd_ports_eth_addr[0].addr_bytes[0] = 0;
-		l2fwd_ports_eth_addr[0].addr_bytes[1] = 27;
-		l2fwd_ports_eth_addr[0].addr_bytes[2] = 33;
-		l2fwd_ports_eth_addr[0].addr_bytes[3] = 166;
-		l2fwd_ports_eth_addr[0].addr_bytes[4] = 212;
-		l2fwd_ports_eth_addr[0].addr_bytes[5] = 212;
+		// l2fwd_ports_eth_addr[0].addr_bytes[0] = 0;
+		// l2fwd_ports_eth_addr[0].addr_bytes[1] = 27;
+		// l2fwd_ports_eth_addr[0].addr_bytes[2] = 33;
+		// l2fwd_ports_eth_addr[0].addr_bytes[3] = 166;
+		// l2fwd_ports_eth_addr[0].addr_bytes[4] = 212;
+		// l2fwd_ports_eth_addr[0].addr_bytes[5] = 212;
 
 
 
