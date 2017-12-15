@@ -1,4 +1,5 @@
 #include <time.h>
+// #define PKT_SIZE 1464 // max number of bytes we can get at once
 #define PKT_SIZE 700
 
 
