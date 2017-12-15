@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
 
     inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr), s, sizeof s);
     printf("client: connecting to %s\n", s);
+    int rtn = 0;
 
     freeaddrinfo(servinfo); // all done with this structure
 
@@ -84,8 +85,18 @@ int main(int argc, char *argv[])
 
                 char data[MAXDATASIZE];
                 memset( data, 0xff, MAXDATASIZE * sizeof(char));
-                tx_throughput+=send(sockfd, data, MAXDATASIZE, 0);
-                rx_throughput+=recv(sockfd, buf, MAXDATASIZE-1, 0);
+                rtn=send(sockfd, data, MAXDATASIZE, 0);
+
+                if(send!=-1){
+                  tx_throughput++;
+                }
+
+                rtn=recv(sockfd, buf, MAXDATASIZE-1, 0);
+
+                if(rtn!=-1){
+                  rx_throughput++;
+                }
+
                 latency = difftime( time(0), start);
 
                 if(++intervals==2000){
