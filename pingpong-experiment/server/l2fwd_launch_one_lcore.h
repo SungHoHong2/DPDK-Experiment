@@ -139,7 +139,7 @@ static void l2fwd_main_loop(void){
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
 
 						if(pkts_burst && pkts_burst[0])
-          	port_statistics[portid].rx += nb_rx * rte_pktmbuf_pkt_len(pkts_burst[0]);
+          	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
@@ -150,7 +150,7 @@ static void l2fwd_main_loop(void){
 								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
 
 								if(sent)
-								port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(m);
+								port_statistics[portid].tx += sent;
 						}
         	}
       }
