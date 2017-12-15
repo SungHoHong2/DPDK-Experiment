@@ -112,18 +112,30 @@ int main(int argc, char **argv){
 	if (rte_pktmbuf_data_len(m) != MBUF_TEST_DATA_LEN)
 		GOTO_FAIL("Bad data length");
 
-  memset(data, 0xff, rte_pktmbuf_pkt_len(m));
+  memset(data, "*", rte_pktmbuf_pkt_len(m));
 
-	printf("the length of the packet%d\n", rte_pktmbuf_pkt_len(m));
-
+	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m));
   if (!rte_pktmbuf_is_contiguous(m))
 		GOTO_FAIL("Buffer should be continuous");
+
+
+	// how do  know the offset size??
+
+	char *rtn;
+	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
+
+
+
+
 
   // rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
   rte_pktmbuf_free(m);
 
 
-	printf("Howdy...\n");
+
+
+
+
 
 	fail:
 		if(m) {
