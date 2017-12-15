@@ -1,0 +1,12 @@
+DPDK Pingpong Server ====================================
+Statistics for port 0 ------------------------------
+Packets sent:                  1470832
+Packets received:              1470860
+Packets dropped:                    26
+Aggregate statistics ===============================
+Total Packets sent:            1470832
+Total Packets received:        1470860
+Total packets dropped:              26
+Aggregated time (sec): 10.000000
+====================================================
+Closing port 0... Done                                   
