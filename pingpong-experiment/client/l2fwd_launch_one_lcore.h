@@ -24,7 +24,7 @@ static void print_stats(void){
 		/* skip disabled ports */
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
-		printf("\nStatistics for port %u ------------------------------"
+		printf("\nByte statistics for port %u ------------------------------"
 			   "\nBytes sent: %24"PRIu64
 			   "\nBytes received: %20"PRIu64
 			   "\nBytes dropped: %21"PRIu64,
@@ -41,10 +41,10 @@ static void print_stats(void){
 
 	latency_diff = difftime( time(0), start);
 
-	printf("\nAggregate statistics ==============================="
-		   "\nTotal Bytes sent: %18"PRIu64
-		   "\nTotal Bytes received: %14"PRIu64
-		   "\nTotal Bytes dropped: %15"PRIu64
+	printf("\Packets statistics ==============================="
+		   "\nPackets sent: %18"PRIu64
+		   "\nPackets received: %14"PRIu64
+		   "\nPackets dropped: %15"PRIu64
        "\nAggregated time (sec): %f",
 		   total_packets_tx,
 		   total_packets_rx,
@@ -97,16 +97,6 @@ static void l2fwd_main_loop(void){
   		RTE_LOG(INFO, L2FWD, "lcore %u has nothing to do\n", lcore_id);
   		return;
   	}
-
-
-		// l2fwd_ports_eth_addr[0].addr_bytes[0] = 0;
-		// l2fwd_ports_eth_addr[0].addr_bytes[1] = 27;
-		// l2fwd_ports_eth_addr[0].addr_bytes[2] = 33;
-		// l2fwd_ports_eth_addr[0].addr_bytes[3] = 166;
-		// l2fwd_ports_eth_addr[0].addr_bytes[4] = 212;
-		// l2fwd_ports_eth_addr[0].addr_bytes[5] = 212;
-
-
 
 		time (&start); //useful call
 
@@ -166,57 +156,57 @@ static void l2fwd_main_loop(void){
 		         * Sending packets in bulk
 		         */
 
-						// unsigned i;
-						// struct rte_mbuf *mrm[NB_MBUF];
-						// int ret = 0;
-            //
-						// for (i=0; i<NB_MBUF; i++)
-						// 	mrm[i] = NULL;
-            //
-						// char *data;
-						// /* alloc NB_MBUF mbufs */
-						// for (i=0; i<NB_MBUF; i++) {
-						// 	mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-						// 	data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
-						// 	memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
-            //
-						// 	if (mrm[i] == NULL) {
-						// 		printf("rte_pktmbuf_alloc() failed (%u)\n", i);
-						// 		ret = -1;
-						// 		break;
-						// 	}
-						// }
-            //
-						// sent = rte_eth_tx_burst(portid, 0, mrm, i);
-            //
-						// if (sent){
-						// 	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
-						// }
-            //
-						// for (i=0; i<NB_MBUF; i++)
-						// 		rte_pktmbuf_free(mrm[i]);
+						unsigned i;
+						struct rte_mbuf *mrm[NB_MBUF];
+						int ret = 0;
+
+						for (i=0; i<NB_MBUF; i++)
+							mrm[i] = NULL;
+
+						char *data;
+						/* alloc NB_MBUF mbufs */
+						for (i=0; i<NB_MBUF; i++) {
+							mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
+							data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
+							memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
+
+							if (mrm[i] == NULL) {
+								printf("rte_pktmbuf_alloc() failed (%u)\n", i);
+								ret = -1;
+								break;
+							}
+						}
+
+						sent = rte_eth_tx_burst(portid, 0, mrm, i);
+
+						if (sent){
+							port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
+						}
+
+						for (i=0; i<NB_MBUF; i++)
+								rte_pktmbuf_free(mrm[i]);
 
 
 						/*
 						 * sending the packet individually
 						 */
 
-						int sent;
-						char *data;
-						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-
-						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
-
-						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
-						l2fwd_mac_updating(rm[0], portid);
-
-						sent = rte_eth_tx_burst(portid, 0, rm, 1);
-
-						if (sent){
-							port_statistics[portid].tx += sent;
-						}
-						rte_pktmbuf_free(rm[0]);
+						// int sent;
+						// char *data;
+						// rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
+            //
+						// data = rte_pktmbuf_append(rm[0], PKT_SIZE);
+						// memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
+            //
+						// rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
+						// l2fwd_mac_updating(rm[0], portid);
+            //
+						// sent = rte_eth_tx_burst(portid, 0, rm, 1);
+            //
+						// if (sent){
+						// 	port_statistics[portid].tx += sent;
+						// }
+						// rte_pktmbuf_free(rm[0]);
 
 
         }
