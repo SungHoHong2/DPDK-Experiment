@@ -1,4 +1,6 @@
 #include <time.h>
+#define PKT_SIZE 2048
+
 
 /* Print out statistics on packets dropped */
 static void print_stats(void){
@@ -28,8 +30,8 @@ static void print_stats(void){
 			   "\nBytes received: %20"PRIu64
 			   "\nBytes dropped: %21"PRIu64,
 			   portid,
-			   port_statistics[portid].tx,
-			   port_statistics[portid].rx,
+			   port_statistics[portid].tx * PKT_SIZE,
+			   port_statistics[portid].rx * PKT_SIZE,
 			   port_statistics[portid].dropped);
 
 		total_packets_dropped += port_statistics[portid].dropped;
@@ -45,8 +47,8 @@ static void print_stats(void){
 		   "\nTotal Bytes received: %14"PRIu64
 		   "\nTotal Bytes dropped: %15"PRIu64
        "\nAggregated time (sec): %f",
-		   total_packets_tx,
-		   total_packets_rx,
+		   total_packets_tx * PKT_SIZE,
+		   total_packets_rx * PKT_SIZE,
 		   total_packets_dropped,
        latency_diff);
 	printf("\n====================================================\n");
@@ -132,10 +134,10 @@ static void l2fwd_main_loop(void){
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
                  		pkts_burst, MAX_PKT_BURST);
 
-          	// port_statistics[portid].rx += nb_rx;
+          	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
-							  port_statistics[portid].rx += rte_pktmbuf_pkt_len(pkts_burst[j]);
+							  // port_statistics[portid].rx += rte_pktmbuf_pkt_len(pkts_burst[j]);
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
@@ -144,12 +146,12 @@ static void l2fwd_main_loop(void){
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
-						data = rte_pktmbuf_append(rm[0], 2048);
+						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
-							port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(rm[0]);
+							port_statistics[portid].tx += sent;
 						}
 
 						rte_pktmbuf_free(rm[0]);
