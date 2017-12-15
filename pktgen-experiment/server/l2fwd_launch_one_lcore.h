@@ -60,8 +60,8 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	/* 02:00:00:00:00:xx */
 	tmp = &eth->d_addr.addr_bytes[0];
 
-	// a0:36:9f:83:ab:bc
-	*((uint64_t *)tmp) = 0xbcab839f36a0 + ((uint64_t)dest_portid << 40);
+	// 00:1b:21:a6:d4:d4
+	*((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
