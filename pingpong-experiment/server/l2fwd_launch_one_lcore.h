@@ -142,14 +142,14 @@ static void l2fwd_main_loop(void){
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
-								port_statistics[portid].rx += rte_pktmbuf_pkt_len[m];
+								port_statistics[portid].rx += rte_pktmbuf_pkt_len(m);
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 								l2fwd_mac_updating(m, portid);
 						    buffer = tx_buffer[portid];
 								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
 
 								if(sent)
-								port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len[m];
+								port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(m);
 						}
         	}
       }
