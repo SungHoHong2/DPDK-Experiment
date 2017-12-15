@@ -148,7 +148,7 @@ static void l2fwd_main_loop(void){
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
-							port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(rm[0];
+							port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(rm[0]);
 						}
 
 						rte_pktmbuf_free(rm[0]);
