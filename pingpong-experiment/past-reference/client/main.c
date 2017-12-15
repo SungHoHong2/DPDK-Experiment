@@ -40,10 +40,10 @@
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
-// #define MAX_PKT_BURST 32
+//#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 4086 // RTE_MBUF_DEFAULT_BUF_SIZE
-#define PKT_SIZE 1464 // sending packet size
+#define PKT_SIZE 2048 // sending packet size
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
@@ -56,6 +56,10 @@
  */
 #define RTE_TEST_RX_DESC_DEFAULT 128
 #define RTE_TEST_TX_DESC_DEFAULT 512
+
+
+
+
 static uint16_t nb_rxd = RTE_TEST_RX_DESC_DEFAULT;
 static uint16_t nb_txd = RTE_TEST_TX_DESC_DEFAULT;
 
@@ -75,8 +79,12 @@ struct rte_mempool *test_pktmbuf_pool = NULL;
 static int mac_updating = 1;
 static uint64_t timer_period = 10; /* default period is 10 seconds */
 
-static volatile bool first_start = 0;
 static volatile bool force_quit;
+
+
+static time_t start, end; //adding timer
+static double latency_diff;
+static double latency_timelimit = 10.0;
 
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
@@ -157,6 +165,7 @@ int main(int argc, char **argv){
 		rte_socket_id());
 
   nb_ports = rte_eth_dev_count();
+
 
 	/* create memory pool for send data */
 	if (test_pktmbuf_pool == NULL) {
