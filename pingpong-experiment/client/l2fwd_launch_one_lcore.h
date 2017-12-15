@@ -142,6 +142,39 @@ static void l2fwd_main_loop(void){
 						}
 
 
+
+						unsigned i;
+						struct rte_mbuf *mrm[NB_MBUF];
+						int ret = 0;
+
+						for (i=0; i<NB_MBUF; i++)
+							mrm[i] = NULL;
+
+						char *data;
+						/* alloc NB_MBUF mbufs */
+						for (i=0; i<NB_MBUF; i++) {
+							mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
+							data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
+							memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
+
+							if (mrm[i] == NULL) {
+								printf("rte_pktmbuf_alloc() failed (%u)\n", i);
+								ret = -1;
+								break;
+							}
+						}
+
+						sent = rte_eth_tx_burst(portid, 0, mrm, i);
+
+						if (sent){
+							port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
+						}
+
+						for (i=0; i<NB_MBUF; i++)
+								rte_pktmbuf_free(mrm[i]);
+
+
+						/*
 						int sent;
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
@@ -154,7 +187,7 @@ static void l2fwd_main_loop(void){
 							port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
 						}
 
-						rte_pktmbuf_free(rm[0]);
+						rte_pktmbuf_free(rm[0]); *.
 
 
         }
