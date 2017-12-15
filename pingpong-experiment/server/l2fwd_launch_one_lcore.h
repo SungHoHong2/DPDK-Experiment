@@ -24,7 +24,7 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 		printf("\nStatistics for port %u ------------------------------"
-			   "\Bytes sent: %24"PRIu64
+			   "\nBytes sent: %24"PRIu64
 			   "\nBytes received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64,
 			   portid,
