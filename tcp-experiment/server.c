@@ -122,6 +122,8 @@ int main(void){
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         // recv(new_fd, buf, MAXDATASIZE-1, 0);
         rx_throughput+=recv(new_fd, buf, MAXDATASIZE-1, 0);
+        if(recv)
+
         //printf("server: received '%ld'\n",strlen(buf));
         // send(new_fd, buf, MAXDATASIZE, 0);
         tx_throughput+=send(new_fd, buf, MAXDATASIZE, 0);

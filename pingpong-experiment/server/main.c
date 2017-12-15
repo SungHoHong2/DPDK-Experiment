@@ -154,7 +154,6 @@ int main(int argc, char **argv){
 
   nb_ports = rte_eth_dev_count();
 
-
 	/* create memory pool for send data */
 	if (test_pktmbuf_pool == NULL) {
 		test_pktmbuf_pool = rte_pktmbuf_pool_create("test_pktmbuf_pool",
