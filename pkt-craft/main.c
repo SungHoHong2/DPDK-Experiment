@@ -112,7 +112,7 @@ int main(int argc, char **argv){
 	if (rte_pktmbuf_data_len(m) != MBUF_TEST_DATA_LEN)
 		GOTO_FAIL("Bad data length");
 
-  memset(data, "*", rte_pktmbuf_pkt_len(m));
+  memset(data, '*', rte_pktmbuf_pkt_len(m));
 
 	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m));
   if (!rte_pktmbuf_is_contiguous(m))
