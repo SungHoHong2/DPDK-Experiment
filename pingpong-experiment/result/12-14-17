@@ -1,0 +1,24 @@
+DPDK Pingpong Client ====================================
+Statistics for port 0 ------------------------------
+Bytes sent:                 72973080
+Bytes received:             62360220
+Bytes dropped:                     0
+Aggregate statistics ===============================
+Total Bytes sent:           72973080
+Total Bytes received:       62360220
+Total Bytes dropped:               0
+Aggregated time (sec): 10.000000
+====================================================
+
+
+PDK Pingpong Server ====================================
+Statistics for port 0 ------------------------------
+Packets sent:                    58463
+Packets received:                59228
+Packets dropped:                   765
+Aggregate statistics ===============================
+Total Packets sent:              58463
+Total Packets received:          59228
+Total packets dropped:             765
+Total duration: 0
+====================================================
