@@ -30,8 +30,8 @@ static void print_stats(void){
 			   "\nBytes received: %20"PRIu64
 			   "\nBytes dropped: %21"PRIu64,
 			   portid,
-			   port_statistics[portid].tx * PKT_SIZE,
-			   port_statistics[portid].rx * PKT_SIZE,
+			   port_statistics[portid].tx,
+			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
 
 		total_packets_dropped += port_statistics[portid].dropped;
@@ -47,8 +47,8 @@ static void print_stats(void){
 		   "\nTotal Bytes received: %14"PRIu64
 		   "\nTotal Bytes dropped: %15"PRIu64
        "\nAggregated time (sec): %f",
-		   total_packets_tx * PKT_SIZE,
-		   total_packets_rx * PKT_SIZE,
+		   total_packets_tx,
+		   total_packets_rx,
 		   total_packets_dropped,
        latency_diff);
 	printf("\n====================================================\n");
