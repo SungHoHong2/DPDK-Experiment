@@ -118,7 +118,6 @@ int main(int argc, char **argv){
   if (!rte_pktmbuf_is_contiguous(m))
 		GOTO_FAIL("Buffer should be continuous");
 
-
 	// how do  know the offset size??
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
