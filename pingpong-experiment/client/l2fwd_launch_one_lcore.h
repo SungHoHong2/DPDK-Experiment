@@ -187,7 +187,7 @@ static void l2fwd_main_loop(void){
 							port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
 						}
 
-						rte_pktmbuf_free(rm[0]); *.
+						rte_pktmbuf_free(rm[0]); */
 
 
         }
