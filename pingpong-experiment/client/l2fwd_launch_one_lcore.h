@@ -54,6 +54,26 @@ static void print_stats(void){
 }
 
 
+static void
+l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
+	struct ether_hdr *eth;
+	void *tmp;
+
+	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
+
+	/* 02:00:00:00:00:xx */
+	tmp = &eth->d_addr.addr_bytes[0];
+
+	// a0:36:9f:83:ab:bc
+	*((uint64_t *)tmp) = 0xbcab839f36a0 + ((uint64_t)dest_portid << 40);
+
+	/* src addr */
+	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
+
+}
+
+
+
 /* main processing loop */
 static void l2fwd_main_loop(void){
     struct rte_mbuf *pkts_burst[MAX_PKT_BURST];
@@ -142,6 +162,9 @@ static void l2fwd_main_loop(void){
 						}
 
 
+						/*
+		         * Sending packets in bulk
+		         */
 
 						// unsigned i;
 						// struct rte_mbuf *mrm[NB_MBUF];
@@ -174,19 +197,25 @@ static void l2fwd_main_loop(void){
 						// 		rte_pktmbuf_free(mrm[i]);
 
 
-			
+						/*
+						 * sending the packet individually
+						 */
+
 						int sent;
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
+
+						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
+						l2fwd_mac_updating(rm[0], portid);
+
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
-							port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
+							port_statistics[portid].tx += sent;
 						}
-
 						rte_pktmbuf_free(rm[0]);
 
 
