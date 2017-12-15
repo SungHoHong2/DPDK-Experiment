@@ -1,5 +1,5 @@
 #include <time.h>
-#define PKT_SIZE 1464
+#define PKT_SIZE 700
 
 
 /* Print out statistics on packets dropped */
