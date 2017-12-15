@@ -36,15 +36,18 @@ static void print_stats(void){
 		total_packets_tx += port_statistics[portid].tx;
 		total_packets_rx += port_statistics[portid].rx;
 	}
+
+	latency_diff = difftime( time(0), start);
+
 	printf("\nAggregate statistics ==============================="
 		   "\nTotal Packets sent: %18"PRIu64
 		   "\nTotal Packets received: %14"PRIu64
 		   "\nTotal packets dropped: %15"PRIu64
-       "\nTotal duration: %ld",
+			 "\nAggregated time (sec): %f",
 		   total_packets_tx,
 		   total_packets_rx,
 		   total_packets_dropped,
-       curr_time);
+       latency_diff);
 	printf("\n====================================================\n");
 }
 
@@ -93,6 +96,8 @@ static void l2fwd_main_loop(void){
   	}
 
 
+		time (&start); //useful call
+
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
         /*
@@ -118,11 +123,9 @@ static void l2fwd_main_loop(void){
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
       						print_stats();
-									// if(!first_start){
-									// 		first_start = 1;
-									// } else {
-									// 		force_quit = 1;
-									// }
+
+									if(latency_diff>=latency_timelimit) force_quit=1;
+
       						/* reset the timer */
 									timer_tsc = 0;
       					}
