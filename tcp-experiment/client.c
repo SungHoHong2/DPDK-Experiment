@@ -84,18 +84,8 @@ int main(int argc, char *argv[])
 
                 char data[MAXDATASIZE];
                 memset( data, 0xff, MAXDATASIZE * sizeof(char));
-                // rtn=send(sockfd, data, MAXDATASIZE, 0);
-
-                if(send(sockfd, data, MAXDATASIZE, 0)!=-1){
-                  tx_throughput++;
-                }
-
-                //rtn=recv(sockfd, buf, MAXDATASIZE-1, 0);
-
-                if(recv(sockfd, buf, MAXDATASIZE-1, 0)!=-1){
-                  rx_throughput++;
-                }
-
+                tx_throughput+=send(sockfd, data, MAXDATASIZE, 0);
+                rx_throughput+=recv(sockfd, buf, MAXDATASIZE-1, 0);
                 latency = difftime( time(0), start);
 
                 if(++intervals==2000){

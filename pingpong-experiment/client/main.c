@@ -40,7 +40,11 @@
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
-#define MAX_PKT_BURST 32
+//#define MAX_PKT_BURST 32
+#define MAX_PKT_BURST 2048
+#define RTE_MBUF_SIZE 4086 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define PKT_SIZE 2048 // sending packet size
+
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
 #define MAX_RX_QUEUE_PER_LCORE 16
@@ -52,6 +56,10 @@
  */
 #define RTE_TEST_RX_DESC_DEFAULT 128
 #define RTE_TEST_TX_DESC_DEFAULT 512
+
+
+
+
 static uint16_t nb_rxd = RTE_TEST_RX_DESC_DEFAULT;
 static uint16_t nb_txd = RTE_TEST_TX_DESC_DEFAULT;
 
@@ -153,7 +161,7 @@ int main(int argc, char **argv){
 
   /* create the mbuf pool */
 	l2fwd_pktmbuf_pool = rte_pktmbuf_pool_create("mbuf_pool", NB_MBUF,
-		MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE,
+		MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_SIZE,
 		rte_socket_id());
 
   nb_ports = rte_eth_dev_count();
@@ -162,7 +170,7 @@ int main(int argc, char **argv){
 	/* create memory pool for send data */
 	if (test_pktmbuf_pool == NULL) {
 		test_pktmbuf_pool = rte_pktmbuf_pool_create("test_pktmbuf_pool",
-			NB_MBUF, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, rte_socket_id());
+			NB_MBUF, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_SIZE, rte_socket_id());
 	}
 
 
