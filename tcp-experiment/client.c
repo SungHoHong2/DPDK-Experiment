@@ -12,7 +12,7 @@
 
 #define PORT "3490" // the port client will be connecting to
 // #define MAXDATASIZE 1464 // max number of bytes we can get at once
-#define MAXDATASIZE 100
+#define MAXDATASIZE 1
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
