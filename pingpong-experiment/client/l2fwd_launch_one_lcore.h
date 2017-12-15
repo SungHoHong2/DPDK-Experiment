@@ -24,9 +24,9 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 		printf("\nStatistics for port %u ------------------------------"
-			   "\nPackets sent: %24"PRIu64
-			   "\nPackets received: %20"PRIu64
-			   "\nPackets dropped: %21"PRIu64,
+			   "\Bytes sent: %24"PRIu64
+			   "\Bytes received: %20"PRIu64
+			   "\Bytes dropped: %21"PRIu64,
 			   portid,
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
@@ -41,9 +41,9 @@ static void print_stats(void){
 	latency_diff = difftime( time(0), start);
 
 	printf("\nAggregate statistics ==============================="
-		   "\nTotal packets sent: %18"PRIu64
-		   "\nTotal packets received: %14"PRIu64
-		   "\nTotal packets dropped: %15"PRIu64
+		   "\nTotal Bytes sent: %18"PRIu64
+		   "\nTotal Bytes received: %14"PRIu64
+		   "\nTotal Bytes dropped: %15"PRIu64
        "\nAggregated time (sec): %f",
 		   total_packets_tx,
 		   total_packets_rx,
