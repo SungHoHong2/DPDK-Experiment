@@ -122,19 +122,10 @@ int main(int argc, char **argv){
 	// how do  know the offset size??
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
-
-
-
-
+	printf("Read the packet: %s", rtn);
 
   // rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
   rte_pktmbuf_free(m);
-
-
-
-
-
-
 
 	fail:
 		if(m) {
