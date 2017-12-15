@@ -24,7 +24,7 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 		printf("\nStatistics for port %u ------------------------------"
-			   "\nBytes sent: %24"PRIu64
+			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64,
 			   portid,
@@ -37,7 +37,7 @@ static void print_stats(void){
 		total_packets_rx += port_statistics[portid].rx;
 	}
 	printf("\nAggregate statistics ==============================="
-		   "\nTotal Bytes sent: %18"PRIu64
+		   "\nTotal Packets sent: %18"PRIu64
 		   "\nTotal Packets received: %14"PRIu64
 		   "\nTotal packets dropped: %15"PRIu64
        "\nTotal duration: %ld",
@@ -149,7 +149,7 @@ static void l2fwd_main_loop(void){
 								sent = rte_eth_tx_buffer(portid, 0, buffer, m);
 
 								if(sent)
-								port_statistics[portid].tx += sent * rte_pktmbuf_pkt_len(m);
+								port_statistics[portid].tx += sent;
 						}
         	}
       }
