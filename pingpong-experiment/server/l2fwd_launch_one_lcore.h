@@ -138,7 +138,8 @@ static void l2fwd_main_loop(void){
           	portid = qconf->rx_port_list[i];
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
 
-          	port_statistics[portid].rx += nb_rx;
+						if(pkts_burst && pkts_burst[0])
+          	port_statistics[portid].rx += nb_rx * rte_pktmbuf_pkt_len(pkts_burst[0]);
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
