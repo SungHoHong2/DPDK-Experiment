@@ -1,4 +1,6 @@
 #include <time.h>
+#define PKT_SIZE 1464
+
 
 /* Print out statistics on packets dropped */
 static void print_stats(void){
@@ -28,8 +30,8 @@ static void print_stats(void){
 			   "\nBytes received: %20"PRIu64
 			   "\nBytes dropped: %21"PRIu64,
 			   portid,
-			   port_statistics[portid].tx,
-			   port_statistics[portid].rx,
+			   port_statistics[portid].tx * PKT_SIZE,
+			   port_statistics[portid].rx * PKT_SIZE,
 			   port_statistics[portid].dropped);
 
 		total_packets_dropped += port_statistics[portid].dropped;
@@ -145,7 +147,7 @@ static void l2fwd_main_loop(void){
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
-						data = rte_pktmbuf_append(rm[0], 2048);
+						data = rte_pktmbuf_append(rm[0], 1464);
 						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
