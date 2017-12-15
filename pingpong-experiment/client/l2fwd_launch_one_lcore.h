@@ -146,7 +146,7 @@ static void l2fwd_main_loop(void){
 						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
-						data = rte_pktmbuf_append(rm[0], 1464);
+						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
