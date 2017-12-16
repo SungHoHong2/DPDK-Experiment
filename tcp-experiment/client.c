@@ -80,7 +80,7 @@ int main(){
     time (&start);
     while(1){
 
-                char send_data[PKTSIZE];
+                char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKTSIZE, 0);
 
