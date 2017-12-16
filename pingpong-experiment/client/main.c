@@ -44,8 +44,8 @@
 // TUNABLES BEGIN
 //#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
-#define PKT_SIZE 1500 // sending packet size over 1600 the performance degrades
+#define RTE_MBUF_SIZE 9050 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define PKT_SIZE 9000 // sending packet size over 1600 the performance degrades
 // TUNABLES END
 
 
@@ -108,7 +108,7 @@ static const struct rte_eth_conf port_conf = {
 		.header_split   = 0, /**< Header Split disabled */
 		.hw_ip_checksum = 0, /**< IP checksum offload disabled */
 		.hw_vlan_filter = 0, /**< VLAN filtering disabled */
-		.jumbo_frame    = 0, /**< Jumbo Frame Support disabled */
+		.jumbo_frame    = 1, /**< Jumbo Frame Support disabled */
 		.hw_strip_crc   = 1, /**< CRC stripped by hardware */
 	},
 	.txmode = {
