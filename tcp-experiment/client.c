@@ -107,11 +107,11 @@ int main(){
                            ,tx_throughput
                            ,rx_throughput
                            ,latency);
-                    printf("\n====================================================\n");
+                    printf("\n========================================================\n");
                     intervals = 0;
                     if(latency==10) break;
                 }
-                
+
             }
 
     close(sockfd);

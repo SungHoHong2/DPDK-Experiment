@@ -130,13 +130,13 @@ int main(void){
             /* Clear screen and move to top left */
             printf("%s%s", clr, topLeft);
             printf("\nTCP Pingpong Server ====================================");
-            printf("\nByte Statistics for port  ------------------------------"
+            printf("\nByte Statistics ------------------------------"
                  "\n(Default function) Byte sent: %ld"
                  "\n(Default function) Byte received: %ld"
                  ,tx_throughput
                  ,rx_throughput
                  );
-            printf("\n====================================================\n");
+            printf("\n========================================================\n");
             intervals = 0;
         }
     }
