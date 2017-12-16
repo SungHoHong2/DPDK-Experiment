@@ -139,13 +139,12 @@ int main(void){
             printf("%s%s", clr, topLeft);
             printf("\nTCP Pingpong Server ====================================");
             printf("\nByte Statistics ------------------------------"
-                 "\nPKT-SIZE: %d"
-                 "\nByte sent: %ld"
-                 "\nByte sent: %ld"
-                 "\nByte received: %ld"
-                 ,PKT_SIZE
-                 ,tx_throughput
-                 ,rx_throughput
+                   "\nPKT-SIZE: %d"
+                   "\nByte sent: %ld"
+                   "\nByte received: %ld"
+                   ,PKT_SIZE
+                   ,tx_throughput
+                   ,rx_throughput
                  );
             printf("\n========================================================\n");
             intervals = 0;
