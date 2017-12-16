@@ -82,7 +82,7 @@ int main(){
 
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
-                success=send(sockfd, send_data, PKTSIZE, 0);
+                success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success){
                     tx_throughput += strlen(send_data);
