@@ -37,9 +37,9 @@ static void print_stats(void){
 		total_packets_rx += port_statistics[portid].rx;
 	}
 	printf("\nAggregate statistics ==============================="
-		   "\nTotal Packets sent: %18"PRIu64
-		   "\nTotal Packets received: %14"PRIu64
-		   "\nTotal packets dropped: %15"PRIu64
+		   "\nPackets sent: %18"PRIu64
+		   "\nPackets received: %14"PRIu64
+		   "\npackets dropped: %15"PRIu64
        "\nTotal duration: %ld",
 		   total_packets_tx,
 		   total_packets_rx,

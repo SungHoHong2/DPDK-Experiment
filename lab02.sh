@@ -9,6 +9,10 @@ echo 512 > /proc/sys/vm/nr_hugepages
 sudo mount -t hugetlbfs nodev /mnt/huge
 sudo umount /mnt/huge
 
+ip link show enp4s0f0
+ip link show enp4s0f1
+ip link set enp4s0f0 mtu 9000
+ip link set enp4s0f1 mtu 9000
 
 sudo ifconfig enp4s0f0 down
 sudo ifconfig enp4s0f1 down

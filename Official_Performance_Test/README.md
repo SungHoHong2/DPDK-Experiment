@@ -15,6 +15,19 @@
 
 <br>
 
+### Checking the Maximum Transfer Unit
+
+```
+ip link show enp3s0f2 // you can see the default MTU
+enp3s0f2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN
+ip link set eth0 mtu 9000 // changing the MTU size
+```
+
+
+
+
+<br>
+
 ### L3 original test by INTEL
 
 
