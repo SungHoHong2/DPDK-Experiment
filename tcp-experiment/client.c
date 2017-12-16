@@ -110,8 +110,8 @@ int main(){
                            ,rx_throughput
                            ,latency);
                     printf("\n========================================================\n");
-                    intervals = 0;
                     if(latency==10) break;
+                    intervals = 0;
                 }
 
             }
