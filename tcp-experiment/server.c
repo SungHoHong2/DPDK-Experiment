@@ -47,6 +47,7 @@ int main(void){
     char s[INET6_ADDRSTRLEN];
     int rv;
     char buf[PKT_SIZE];
+    long int success = 0;
     long int tx_throughput;
     long int rx_throughput;
     const char clr[] = { 27, '[', '2', 'J', '\0' };
@@ -122,9 +123,16 @@ int main(void){
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         // recv(new_fd, buf, PKT_SIZE-1, 0);
         rx_throughput+=recv(new_fd, buf, PKT_SIZE-1, 0);
+        if(success){
+            rx_throughput += strlen(recv_data);
+        }
         //printf("server: received '%ld'\n",strlen(buf));
         // send(new_fd, buf, PKT_SIZE, 0);
+
         tx_throughput+=send(new_fd, buf, PKT_SIZE, 0);
+        if(success){
+            tx_throughput += strlen(send_data);
+        }
 
         if(++intervals==2000){
             /* Clear screen and move to top left */
