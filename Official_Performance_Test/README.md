@@ -1,4 +1,4 @@
-### informatoin of the Maximum Transfer Unit
+### Maximum Transfer Unit
 
 - **using test pmd to check the speed of the NIC**
 ```
