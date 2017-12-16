@@ -35,6 +35,18 @@ PMD: eth_igb_interrupt_action():  Port 1: Link Up - speed 100 Mbps - full-duplex
 
 ### L3 original test by INTEL
 
+- **DUT (device under test)**
+    - a single or dual processor and PCH chip
+    - DRAM memory size and frequency
+    - NICs
+    - BIOs settings
+    - DPDK build configuration settings
+
+
+
+
+
+
 
 
 
