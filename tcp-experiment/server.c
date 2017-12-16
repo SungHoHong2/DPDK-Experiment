@@ -139,8 +139,11 @@ int main(void){
             printf("%s%s", clr, topLeft);
             printf("\nTCP Pingpong Server ====================================");
             printf("\nByte Statistics ------------------------------"
-                 "\n(Default function) Byte sent: %ld"
-                 "\n(Default function) Byte received: %ld"
+                 "\nPKT-SIZE: %d"
+                 "\nByte sent: %ld"
+                 "\nByte sent: %ld"
+                 "\nByte received: %ld"
+                 ,PKT_SIZE
                  ,tx_throughput
                  ,rx_throughput
                  );

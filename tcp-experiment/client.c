@@ -101,9 +101,11 @@ int main(){
                     printf("%s%s", clr, topLeft);
                     printf("\nTCP Pingpong Client ====================================");
                     printf("\nByte Statistics ------------------------------"
+                           "\nPKT-SIZE: %d"
                            "\nBytes sent: %ld"
                            "\nBytes received: %ld"
                            "\nLatency: %f"
+                           ,PKT_SIZE
                            ,tx_throughput
                            ,rx_throughput
                            ,latency);
