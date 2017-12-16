@@ -104,8 +104,8 @@ int main(){
                            "\nBytes sent: %ld"
                            "\nBytes received: %ld"
                            "\nLatency: %f"
-                           ,rx_throughput
                            ,tx_throughput
+                           ,rx_throughput
                            ,latency);
                     printf("\n====================================================\n");
                     intervals = 0;

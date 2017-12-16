@@ -17,7 +17,7 @@
 #include <time.h>
 
 #define PORT "3490"  // the port users will be connecting to
-#define MAXDATASIZE 1464 // max number of bytes we can get at once
+#define PKT_SIZE 1464 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
 
 
@@ -46,7 +46,7 @@ int main(void){
     int yes=1;
     char s[INET6_ADDRSTRLEN];
     int rv;
-    char buf[MAXDATASIZE];
+    char buf[PKT_SIZE];
     long int tx_throughput;
     long int rx_throughput;
     const char clr[] = { 27, '[', '2', 'J', '\0' };
@@ -120,23 +120,21 @@ int main(void){
 
     while(1) {  // main accept() loop
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-        // recv(new_fd, buf, MAXDATASIZE-1, 0);
-        rx_throughput+=recv(new_fd, buf, MAXDATASIZE-1, 0);
-        if(recv)
-
+        // recv(new_fd, buf, PKT_SIZE-1, 0);
+        rx_throughput+=recv(new_fd, buf, PKT_SIZE-1, 0);
         //printf("server: received '%ld'\n",strlen(buf));
-        // send(new_fd, buf, MAXDATASIZE, 0);
-        tx_throughput+=send(new_fd, buf, MAXDATASIZE, 0);
+        // send(new_fd, buf, PKT_SIZE, 0);
+        tx_throughput+=send(new_fd, buf, PKT_SIZE, 0);
 
         if(++intervals==2000){
             /* Clear screen and move to top left */
             printf("%s%s", clr, topLeft);
             printf("\nTCP Pingpong Server ====================================");
-            printf("\nStatistics for port  ------------------------------"
-                 "\nRX: %ld"
-                 "\nTX: %ld"
-                 ,rx_throughput
+            printf("\nByte Statistics for port  ------------------------------"
+                 "\nByte sent: %ld"
+                 "\nByte received: %ld"
                  ,tx_throughput
+                 ,rx_throughput
                  );
             printf("\n====================================================\n");
             intervals = 0;
