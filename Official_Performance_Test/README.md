@@ -30,6 +30,8 @@ ip link set eth0 mtu 9000 // changing the MTU size
 - The jumbo frame is considered to be bigger than 1500 packet length and it can increase up to 9000
 - However if the ethernet speed is 100mbps the jumbo frame won't have positive effect even though the ethernet supports it
 - **the reason that why VISA workstation cannot support JUMBO frame**
+    - [reference link about the limitation of jumbo link](https://www.intel.com/content/www/us/en/support/articles/000005593/network-and-i-o/ethernet-products.html)
+
 ```
 Port 0: LSC event                                                               
 PMD: eth_igb_interrupt_action():  Port 1: Link Up - speed 100 Mbps - full-duplex
