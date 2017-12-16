@@ -1,7 +1,5 @@
-CC=clang
+objects = client server
+all: $(objects)
 
-build:
-	$(CC) -Wall -g -o server server.c utils.c
-
-clean:
-	rm -rf *.o
+$(objects): %: %.c
+        $(CC) $(CFLAGS) -o $@ $<
