@@ -28,7 +28,7 @@ void *get_in_addr(struct sockaddr *sa){
 
 int main(){
     int sockfd, numbytes, new_fd;
-    char recv_data[PKTSIZE];
+    char recv_data[PKT_SIZE];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
@@ -81,14 +81,14 @@ int main(){
     while(1){
 
                 char send_data[PKTSIZE];
-                memset( send_data, '*', PKTSIZE * sizeof(char));
+                memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKTSIZE, 0);
 
                 if(success){
                     tx_throughput += strlen(send_data);
                 }
 
-                success=recv(sockfd, recv_data, PKTSIZE-1, 0);
+                success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
                 if(success){
                     rx_throughput += strlen(recv_data);
