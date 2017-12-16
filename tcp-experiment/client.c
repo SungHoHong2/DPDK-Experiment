@@ -109,10 +109,9 @@ int main(){
                            ,latency);
                     printf("\n====================================================\n");
                     intervals = 0;
+                    if(latency==10) break;
                 }
-
-                if(latency==10) break;
-
+                
             }
 
     close(sockfd);
