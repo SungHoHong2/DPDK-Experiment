@@ -21,7 +21,7 @@ static long int tx_throughput;
 static long int rx_throughput;
 static double latency;
 static double latency_timelimit = 10.0;
-char nic_str[100];
+static int packets;
 static int intervals;
 
 
@@ -47,8 +47,8 @@ void print_log(){
          ,rx_throughput
          ,latency);
   printf("\nPacket Statistics ------------------------------"
-         "\nPackets received: %s"
-         ,nic_str);
+         "\nPackets received: %d"
+         ,packets);
   printf("\n========================================================\n");
   intervals = 0;
 }
@@ -63,6 +63,8 @@ int main(){
     long int success = 0;
     static time_t start; //adding timer
     FILE * nic_file;
+    char nic_str[100];
+
 
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
@@ -104,6 +106,7 @@ int main(){
   nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
   if (nic_file) {
       fscanf(nic_file, "%s", nic_str);
+      packets = atoi(nic_str);
       fclose(nic_file);
   }
 
@@ -125,7 +128,7 @@ int main(){
                     rx_throughput += strlen(recv_data);
                 }
 
-                latency = difftime( time(0), start);
+                latency = difftime(time(0), start);
 
                 if(++intervals==2000){
                     print_log();
