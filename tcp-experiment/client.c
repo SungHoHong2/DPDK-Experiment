@@ -117,9 +117,12 @@ int main(){
 
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
+
+                pthread_mutex_lock(&lock);
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success){
+                    pthread_mutex_unlock(&lock);
                     tx_throughput += strlen(send_data);
                 }
 
