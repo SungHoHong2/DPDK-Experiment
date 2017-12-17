@@ -9,7 +9,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <time.h>
-#include<pthread.h>
+#include <sys/fcntl.h>
 
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once

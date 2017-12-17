@@ -15,6 +15,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <time.h>
+#include <sys/fcntl.h>
+
 
 #define PORT "3490"  // the port users will be connecting to
 #define PKT_SIZE 64 // max number of bytes we can get at once
