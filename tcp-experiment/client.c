@@ -22,7 +22,7 @@ static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
 static int intervals;
-static double latency;
+static double latency, prev_latency;
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
@@ -129,6 +129,11 @@ int main(){
 
                 if(success && strlen(recv_data)>0){
                     rx_throughput += strlen(recv_data);
+                }
+
+
+                if((latency-prev_latency)>=1){
+                  print_log();
                 }
 
 
