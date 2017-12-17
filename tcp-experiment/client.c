@@ -134,21 +134,20 @@ int main(){
                     print_log();
                 }
 
-                if(latency==10){
-
-                  nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
-                  if (nic_file) {
-                      fscanf(nic_file, "%s", nic_str);
-                      packets = atoi(nic_str) - packets;
-                      printf("%d\n",packets);
-                      fclose(nic_file);
-                  }
-
+                if(latency>=10){
                   break;
                 }
             }
 
-    // print_log();
+
+    nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
+    if (nic_file) {
+        fscanf(nic_file, "%s", nic_str);
+        packets = atoi(nic_str) - packets;
+        printf("%d\n",packets);
+        fclose(nic_file);
+    }
+    print_log();
     close(sockfd);
     return 0;
 }
