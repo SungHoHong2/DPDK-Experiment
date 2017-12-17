@@ -14,7 +14,7 @@
 
 ### Comparing the throughput with the TCP pingpong
 - only comparing the offset of the data
-- it is proven that 'strlen()' only counts the length of the ASCII char value and not the allocated memory
+- it is proven that `strlen()` only counts the length of the ASCII char `*` and not the allocated memory
 
 ```c
 // example of counting the char length
