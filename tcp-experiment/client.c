@@ -66,7 +66,9 @@ int main(){
     pthread_mutex_t send_lock, recv_lock;
 
 
-    pthread_mutex_init(&lock, NULL);
+    pthread_mutex_init(&send_lock, NULL);
+    pthread_mutex_init(&recv_lock, NULL);
+
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
