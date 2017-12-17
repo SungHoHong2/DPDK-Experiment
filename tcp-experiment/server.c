@@ -58,8 +58,8 @@ int main(void){
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE; // use my IP
     int intervals;
-    static time_t start; //adding timer
-
+    time_t start; //adding timer
+    double latency, prev_latency;
     intervals = tx_throughput = rx_throughput = 0;
 
 
