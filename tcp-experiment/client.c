@@ -135,17 +135,19 @@ int main(){
                 }
 
                 if(latency==10){
+
+                  nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
+                  if (nic_file) {
+                      fscanf(nic_file, "%s", nic_str);
+                      packets = atoi(nic_str) - packets;
+                      fclose(nic_file);
+                  }
+                  
                   break;
                 }
             }
 
-    nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
-    if (nic_file) {
-        fscanf(nic_file, "%s", nic_str);
-        packets = atoi(nic_str) - packets;
-        fclose(nic_file);
-    }
-    close(sockfd);
     print_log();
+    close(sockfd);
     return 0;
 }
