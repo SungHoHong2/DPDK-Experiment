@@ -83,7 +83,7 @@ int main(){
   char nic_str[999];
   nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
   if (nic_file) {
-      fscanf(file, "%s", str);
+      fscanf(nic_file, "%s", nic_str);
       fclose(nic_file);
   }
 
