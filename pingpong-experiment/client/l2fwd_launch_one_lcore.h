@@ -25,8 +25,12 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 
+
+		latency_diff = difftime( time(0), start);
+
+
 		printf("\Byte statistics for port %u ------------------------------"
-			   "\nByte received: %20"
+			   "\nByte received: %20"PRIu64
 			   "\nLatency: %f",
 			   portid,
 			   port_statistics[portid].rx_bytes,
@@ -50,7 +54,6 @@ static void print_stats(void){
 		// total_packets_rx += port_statistics[portid].rx;
 	}
 
-	latency_diff = difftime( time(0), start);
 
 	// printf("\nPackets statistics ==============================="
 	// 	   "\nPackets sent: %18"PRIu64
