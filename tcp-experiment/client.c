@@ -121,7 +121,8 @@ int main(){
                            ,rx_throughput
                            ,latency);
                     printf("\nPacket Statistics ------------------------------"
-                    printf("\nPackets received: %s",nic_str);
+                           "\nPackets received: %s"
+                           ,nic_str);
                     printf("\n========================================================\n");
                     intervals = 0;
                     if(latency==10){
