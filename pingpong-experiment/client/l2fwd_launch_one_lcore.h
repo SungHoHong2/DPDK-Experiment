@@ -24,32 +24,43 @@ static void print_stats(void){
 		/* skip disabled ports */
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
-		printf("\nByte statistics for port %u ------------------------------"
-			   "\nBytes sent: %24"PRIu64
-			   "\nBytes received: %20"PRIu64
-			   "\nBytes dropped: %21"PRIu64,
+
+		printf("\Byte statistics for port %u ------------------------------"
+			   "\nByte received: %20"PRIu64
+			   "\nLatency: %f",
 			   portid,
-			   port_statistics[portid].tx * PKT_SIZE,
-			   port_statistics[portid].rx * PKT_SIZE,
+			   port_statistics[portid].rx_bytes,
+				 latency_diff);
+
+		// total_packets_dropped += port_statistics[portid].dropped;
+		// total_packets_tx += port_statistics[portid].tx;
+		// total_packets_rx += port_statistics[portid].rx;
+
+		printf("\Packet statistics for port %u ------------------------------"
+			   "\nPacket sent: %24"PRIu64
+			   "\nPacket received: %20"PRIu64
+			   "\nPacket dropped: %21"PRIu64,
+			   portid,
+			   port_statistics[portid].tx,
+			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
 
-		total_packets_dropped += port_statistics[portid].dropped;
-		total_packets_tx += port_statistics[portid].tx;
-		total_packets_rx += port_statistics[portid].rx;
+		// total_packets_dropped += port_statistics[portid].dropped;
+		// total_packets_tx += port_statistics[portid].tx;
+		// total_packets_rx += port_statistics[portid].rx;
 	}
-
 
 	latency_diff = difftime( time(0), start);
 
-	printf("\nPackets statistics ==============================="
-		   "\nPackets sent: %18"PRIu64
-		   "\nPackets received: %14"PRIu64
-		   "\nPackets dropped: %15"PRIu64
-       "\nAggregated time (sec): %f",
-		   total_packets_tx,
-		   total_packets_rx,
-		   total_packets_dropped,
-       latency_diff);
+	// printf("\nPackets statistics ==============================="
+	// 	   "\nPackets sent: %18"PRIu64
+	// 	   "\nPackets received: %14"PRIu64
+	// 	   "\nPackets dropped: %15"PRIu64
+  //      "\nAggregated time (sec): %f",
+	// 	   total_packets_tx,
+	// 	   total_packets_rx,
+	// 	   total_packets_dropped,
+  //      latency_diff);
 	printf("\n====================================================\n");
 }
 
@@ -147,6 +158,10 @@ static void l2fwd_main_loop(void){
           	port_statistics[portid].rx += nb_rx; // * rte_pktmbuf_pkt_len(pkts_burst[0]);
 
 						for (j = 0; j < nb_rx; j++) {
+
+								char *rtn;
+								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
+								printf("Read the packet: %s", rtn);
 							  // port_statistics[portid].rx += rte_pktmbuf_pkt_len(pkts_burst[j]);
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
@@ -197,7 +212,7 @@ static void l2fwd_main_loop(void){
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0]));
+						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
 
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);

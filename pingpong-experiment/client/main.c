@@ -125,6 +125,7 @@ struct l2fwd_port_statistics {
 	uint64_t tx;
 	uint64_t rx;
 	uint64_t dropped;
+	uint64_t rx_bytes;
 } __rte_cache_aligned;
 struct l2fwd_port_statistics port_statistics[RTE_MAX_ETHPORTS];
 #include "l2fwd_launch_one_lcore.h"
