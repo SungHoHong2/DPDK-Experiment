@@ -19,7 +19,7 @@ const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
 struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
-static double latency;
+static double latency, prev_latency;
 static double latency_timelimit = 10.0;
 static int packets;
 static int intervals;
@@ -62,8 +62,6 @@ int main(){
     socklen_t sin_size;
     long int success = 0;
     static time_t start; //adding timer
-    static time_t log_start;
-    double log_time_diff;
     FILE * nic_file;
     char nic_str[100];
 
@@ -116,7 +114,7 @@ int main(){
   time (&start);
   while(1){
 
-                time(&log_start);
+                prev_latency = latency;
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -133,7 +131,7 @@ int main(){
 
                 latency = difftime(time(0), start);
 
-                if(difftime(start, log_start)>=1){
+                if(latency-prev_latency)>=1){
                        print_log();
                 }
 
