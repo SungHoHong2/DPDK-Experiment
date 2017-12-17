@@ -73,6 +73,8 @@ int main(){
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
+    fcntl(sockfd, F_SETFL, O_NONBLOCK);
+
 
     // get information of the server
     if ((rv = getaddrinfo("lab01", PORT, &hints, &servinfo)) != 0) {
@@ -120,21 +122,17 @@ int main(){
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
 
-                pthread_mutex_lock(&send_lock);
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success){
-                    pthread_mutex_unlock(&send_lock);
                     tx_throughput += strlen(send_data);
                 }
 
 
-                pthread_mutex_lock(&recv_lock);
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
 
                 if(success){
-                    pthread_mutex_lock(&recv_lock);
                     rx_throughput += strlen(recv_data);
                 }
 

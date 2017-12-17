@@ -111,6 +111,8 @@ int main(void){
         exit(1);
     }
 
+    fcntl(sockfd, F_SETFL, O_NONBLOCK);
+
     printf("server: waiting for connections...\n");
 
     sin_size = sizeof their_addr;
@@ -119,6 +121,7 @@ int main(void){
         perror("accept");
     }
 
+    fcntl(new_fd, F_SETFL, O_NONBLOCK);
 
 
     time (&start);
