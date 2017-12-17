@@ -54,7 +54,7 @@ void print_log(){
 
 int main(){
     int sockfd, numbytes, new_fd;
-    char recv_data[PKT_SIZE];
+    char *recv_data;
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];

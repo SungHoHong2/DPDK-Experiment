@@ -30,3 +30,35 @@ if (sent){
 }
 
 ```
+
+<br>
+
+### Comparing the throughput with the TCP pingpong
+- only comparing the offset of the data
+
+```c
+
+/*
+ *  case of DPDK
+ */
+// creating the packet
+char *data;
+memset(data, '*', rte_pktmbuf_pkt_len(m));
+printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // count the packet length
+
+
+// counting the offset of the packet
+char *rtn;
+rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
+printf("lenght of the offset: %ld\n", strlen(rtn));
+
+
+/*
+ *  case of TCP
+ */
+
+
+
+
+
+```
