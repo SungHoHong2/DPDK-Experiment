@@ -120,6 +120,9 @@ int main(void){
         perror("accept");
     }
 
+
+    fcntl(new_fd, F_SETFL, O_NONBLOCK);
+
     time (&start);
     while(1) {  // main accept() loop
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
