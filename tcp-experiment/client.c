@@ -131,7 +131,7 @@ int main(){
 
                 latency = difftime(time(0), start);
 
-                if(latency-prev_latency)>=1){
+                if((latency-prev_latency)>=1){
                        print_log();
                 }
 
