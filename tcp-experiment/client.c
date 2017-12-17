@@ -140,14 +140,15 @@ int main(){
                   if (nic_file) {
                       fscanf(nic_file, "%s", nic_str);
                       packets = atoi(nic_str) - packets;
+                      printf("%d\n",packets);
                       fclose(nic_file);
                   }
-                  
+
                   break;
                 }
             }
 
-    print_log();
+    // print_log();
     close(sockfd);
     return 0;
 }
