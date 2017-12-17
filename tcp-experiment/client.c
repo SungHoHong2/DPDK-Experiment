@@ -130,11 +130,12 @@ int main(){
 
                 latency = difftime(time(0), start);
 
-                if(++intervals==2000){
+                if(++intervals==3000){
                     print_log();
-                    if(latency==10){
-                      break;
-                    }
+                }
+
+                if(latency==10){
+                  break;
                 }
             }
 
