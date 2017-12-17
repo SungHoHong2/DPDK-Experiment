@@ -32,9 +32,9 @@ static void print_stats(void){
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
 
-		// total_packets_dropped += port_statistics[portid].dropped;
-		// total_packets_tx += port_statistics[portid].tx;
-		// total_packets_rx += port_statistics[portid].rx;
+		total_packets_dropped += port_statistics[portid].dropped;
+		total_packets_tx += port_statistics[portid].tx;
+		total_packets_rx += port_statistics[portid].rx;
 	}
 	// printf("\nAggregate statistics ==============================="
 	// 	   "\nPackets sent: %18"PRIu64
@@ -43,7 +43,7 @@ static void print_stats(void){
 	// 	   total_packets_tx,
 	// 	   total_packets_rx,
 	// 	   total_packets_dropped);
-	// printf("\n====================================================\n");
+	printf("\n====================================================\n");
 }
 
 
