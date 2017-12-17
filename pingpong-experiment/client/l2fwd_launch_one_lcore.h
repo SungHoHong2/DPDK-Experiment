@@ -162,11 +162,14 @@ static void l2fwd_main_loop(void){
           	port_statistics[portid].rx += nb_rx; // * rte_pktmbuf_pkt_len(pkts_burst[0]);
 
 						// 69279171
+						// 50400540
+						// 100339112
+
 						for (j = 0; j < nb_rx; j++) {
 
-								// char *rtn;
-								// rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
-							  port_statistics[portid].rx_bytes += rte_pktmbuf_pkt_len(pkts_burst[j]);
+								char *rtn;
+								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
+							  port_statistics[portid].rx_bytes += strlen(rtn); //rte_pktmbuf_pkt_len(pkts_burst[j]);
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
