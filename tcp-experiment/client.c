@@ -63,7 +63,7 @@ int main(){
     static time_t start; //adding timer
     FILE * nic_file;
     char nic_str[100];
-    pthread_mutex_t lock;
+    pthread_mutex_t send_lock, recv_lock;
 
 
     pthread_mutex_init(&lock, NULL);
@@ -118,19 +118,24 @@ int main(){
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
 
-                pthread_mutex_lock(&lock);
+                pthread_mutex_lock(&send_lock);
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success){
-                    pthread_mutex_unlock(&lock);
+                    pthread_mutex_unlock(&send_lock);
                     tx_throughput += strlen(send_data);
                 }
 
+
+                pthread_mutex_lock(&recv_lock);
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
+
                 if(success){
+                    pthread_mutex_lock(&recv_lock);
                     rx_throughput += strlen(recv_data);
                 }
+
 
                 latency = difftime(time(0), start);
                 if(latency>=10){
