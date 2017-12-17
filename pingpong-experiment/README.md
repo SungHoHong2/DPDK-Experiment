@@ -55,3 +55,30 @@ printf("length of the offset: %ld\n", strlen(rtn));
  // receiving the packet
  success=send(sockfd, send_data, PKT_SIZE, 0);
 ```
+
+
+<br>
+
+
+### Example
+
+```c
+char *data; // packet length 1464
+memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
+printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
+
+char *rtn;
+rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
+printf("lenght of the offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
+
+char send_data[100];
+printf("length of TCP offset %ld\n", strlen(send_data));
+memset( send_data, '*', (50) * sizeof(char)); // decide the offset data
+printf("length of TCP offset %ld\n", strlen(send_data));
+
+// rte_pktmbuf_pkt_len(m): 1464
+// lenght of the offset: 456   
+// length of TCP offset 0      
+// length of TCP offset 50     
+
+```

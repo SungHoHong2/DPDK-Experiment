@@ -113,21 +113,17 @@ int main(int argc, char **argv){
 		GOTO_FAIL("Bad data length");
 
   memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
-	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m));
+	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
   if (!rte_pktmbuf_is_contiguous(m))
 		GOTO_FAIL("Buffer should be continuous");
 
 	// how do  know the offset size??
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
-	printf("lenght of the offset: %ld\n", strlen(rtn));
+	printf("lenght of the offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
 
   // rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
   rte_pktmbuf_free(m);
-
-
-
-
 
 
 	fail:
@@ -135,6 +131,9 @@ int main(int argc, char **argv){
 			rte_pktmbuf_free(m);
 		}
 
+
+
+	// TCP
 
 	char send_data[100];
 	printf("length of TCP offset %ld\n", strlen(send_data));
