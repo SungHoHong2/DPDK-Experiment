@@ -19,8 +19,6 @@ const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
 struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
-static double latency, prev_latency;
-static double latency_timelimit = 10.0;
 static int packets;
 static int intervals;
 
@@ -114,7 +112,6 @@ int main(){
   time (&start);
   while(1){
 
-                prev_latency = latency;
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -130,15 +127,6 @@ int main(){
                 }
 
                 latency = difftime(time(0), start);
-
-                if((latency-prev_latency)>=1){
-                       print_log();
-                }
-
-
-                // if(++intervals==3000){
-                // }
-
                 if(latency>=10){
                   break;
                 }
