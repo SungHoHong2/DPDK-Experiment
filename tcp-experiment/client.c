@@ -21,7 +21,7 @@ static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
 static int intervals;
-
+static double latency;
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
