@@ -113,6 +113,7 @@ static void l2fwd_main_loop(void){
   	}
 
 		time (&start); //useful call
+		char *data;
 
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
@@ -211,7 +212,6 @@ static void l2fwd_main_loop(void){
 						 */
 
 						int sent;
-						char *data;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
