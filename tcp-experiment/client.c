@@ -17,6 +17,12 @@
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
 struct sockaddr_storage their_addr; // connector's address information
+static long int tx_throughput;
+static long int rx_throughput;
+static double latency;
+static double latency_timelimit = 10.0;
+char nic_str[100];
+
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
@@ -54,14 +60,9 @@ int main(){
     char s[INET6_ADDRSTRLEN];
     socklen_t sin_size;
     long int success = 0;
-    long int tx_throughput;
-    long int rx_throughput;
-    double latency;
-    double latency_timelimit = 10.0;
     static time_t start; //adding timer
     int intervals;
     FILE * nic_file;
-
 
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
@@ -100,7 +101,6 @@ int main(){
   freeaddrinfo(servinfo); // all done with this structure
 
 
-  char nic_str[999];
   nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
   if (nic_file) {
       fscanf(nic_file, "%s", nic_str);
