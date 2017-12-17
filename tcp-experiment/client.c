@@ -63,6 +63,8 @@ int main(){
     static time_t start; //adding timer
     FILE * nic_file;
     char nic_str[100];
+    pthread_mutex_t lock;
+
 
     pthread_mutex_init(&lock, NULL);
     intervals = tx_throughput = rx_throughput = 0;
