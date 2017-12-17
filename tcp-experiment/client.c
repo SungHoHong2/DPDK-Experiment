@@ -158,7 +158,9 @@ int main(){
         printf("%d\n",packets);
         fclose(nic_file);
     }
-    pthread_mutex_destroy(&lock);
+    pthread_mutex_destroy(&send_lock);
+    pthread_mutex_destroy(&recv_lock);
+
     print_log();
     close(sockfd);
     return 0;
