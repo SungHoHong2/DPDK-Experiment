@@ -71,13 +71,6 @@ int main(int argc, char **argv){
 	argc -= ret;
 	argv += ret;
 
-  // test_pktmbuf_with_non_ascii_data
-  /*
-  - alloc mbuf with rte_pktmbuf_alloc
-  - fill up L2-4 headers fields (look at rte_pktmbuf_append func for example)
-  - send packet via rte_eth_tx_burst
-  */
-
 	/* create pktmbuf pool if it does not exist */
 	if (pktmbuf_pool == NULL) {
 		pktmbuf_pool = rte_pktmbuf_pool_create("test_pktmbuf_pool",
@@ -89,61 +82,23 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-  // alloc mbuf with rte_pktmbuf_alloc
   struct rte_mbuf *m = NULL;
   char *data;
   m = rte_pktmbuf_alloc(pktmbuf_pool);
-
-  if (m == NULL)
-		GOTO_FAIL("Cannot allocate mbuf");
-	if (rte_pktmbuf_pkt_len(m) != 0)
-		GOTO_FAIL("Bad length");
-
-
-	// fill up L2-4 headers fields (look at rte_pktmbuf_append func for example)
-
-	// MBUF_TEST_DATA_LEN is the size of the packet
-
   data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
-  if (data == NULL)
-		GOTO_FAIL("Cannot append data");
-	if (rte_pktmbuf_pkt_len(m) != MBUF_TEST_DATA_LEN)
-		GOTO_FAIL("Bad pkt length");
-	if (rte_pktmbuf_data_len(m) != MBUF_TEST_DATA_LEN)
-		GOTO_FAIL("Bad data length");
-
   memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
 	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
-  if (!rte_pktmbuf_is_contiguous(m))
-		GOTO_FAIL("Buffer should be continuous");
 
-	// how do  know the offset size??
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
 	printf("lenght of the offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
-
-  // rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
   rte_pktmbuf_free(m);
 
 
-	fail:
-		if(m) {
-			rte_pktmbuf_free(m);
-		}
-
-
-
-	// TCP
-
-	char send_data[100];
-	printf("length of TCP offset %ld\n", strlen(send_data));
-	memset( send_data, '*', (50) * sizeof(char)); // decide the offset data
-	printf("length of TCP offset %ld\n", strlen(send_data));
-
-	success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
-	if(success && strlen(recv_data)>0){
-			rx_throughput += strlen(recv_data); // count the valid length
-	}
-
+	// TCP PACKET EXAMPLE
+	char send_data[MBUF_TEST_DATA_LEN];
+	printf("length of TCP offset: %ld\n", strlen(send_data));
+	memset( send_data, '*', (sizeof(send_data)-1000) * sizeof(char));
+	printf("length of TCP offset: %ld\n", strlen(send_data));
 	return 0;
 }
