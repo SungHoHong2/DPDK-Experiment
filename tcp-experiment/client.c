@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include<pthread.h>
 
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
@@ -63,7 +64,7 @@ int main(){
     FILE * nic_file;
     char nic_str[100];
 
-
+    pthread_mutex_init(&lock, NULL);
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -131,7 +132,6 @@ int main(){
                   break;
                 }
 
-                sleep(1);
                 // printf("%s%s", clr, topLeft);
                 // printf("client running for %f seconds\n",latency);
 
@@ -146,6 +146,7 @@ int main(){
         printf("%d\n",packets);
         fclose(nic_file);
     }
+    pthread_mutex_destroy(&lock);
     print_log();
     close(sockfd);
     return 0;
