@@ -114,7 +114,6 @@ int main(){
   time (&start);
   while(1){
                 prev_latency = latency;
-
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -131,13 +130,11 @@ int main(){
                     rx_throughput += strlen(recv_data);
                 }
 
-
+                latency = difftime(time(0), start);
                 if((latency-prev_latency)>=1){
                   print_log();
                 }
 
-
-                latency = difftime(time(0), start);
                 if(latency>=10){
                   break;
                 }
