@@ -87,17 +87,17 @@ int main(int argc, char **argv){
   m = rte_pktmbuf_alloc(pktmbuf_pool);
   data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
   memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
-	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
+	printf("Length of DPDK packet: %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
 
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
-	printf("lenght of the offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
+	printf("lenght of DPDK offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
   rte_pktmbuf_free(m);
 
 
 	// TCP PACKET EXAMPLE
 	char send_data[MBUF_TEST_DATA_LEN];
-	printf("length of TCP offset: %ld\n", strlen(send_data));
+	printf("length of TCP char_array: %ld\n", strlen(send_data));
 	memset( send_data, '*', (sizeof(send_data)-1000) * sizeof(char));
 	printf("length of TCP offset: %ld\n", strlen(send_data));
 	return 0;
