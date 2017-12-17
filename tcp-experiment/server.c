@@ -132,14 +132,14 @@ int main(void){
         // recv(new_fd, buf, PKT_SIZE-1, 0);
         prev_latency = latency;
         rx_throughput+=recv(new_fd, buf, PKT_SIZE-1, 0);
-        if(success){
+        if(success && strlen(buf)>0){
             rx_throughput += strlen(buf);
         }
         //printf("server: received '%ld'\n",strlen(buf));
         // send(new_fd, buf, PKT_SIZE, 0);
 
         tx_throughput+=send(new_fd, buf, PKT_SIZE, 0);
-        if(success){
+        if(success && strlen(buf)>0){
             tx_throughput += strlen(buf);
         }
 

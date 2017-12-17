@@ -119,7 +119,7 @@ int main(){
 
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
-                if(success){
+                if(success && strlen(send_data)>0){
                     tx_throughput += strlen(send_data);
                 }
 
@@ -127,7 +127,7 @@ int main(){
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
 
-                if(success){
+                if(success && strlen(recv_data)>0){
                     rx_throughput += strlen(recv_data);
                 }
 
