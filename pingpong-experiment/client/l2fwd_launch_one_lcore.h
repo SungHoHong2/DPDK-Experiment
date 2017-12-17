@@ -29,8 +29,8 @@ static void print_stats(void){
 		latency_diff = difftime( time(0), start);
 
 
-		printf("\Byte statistics for port %u ------------------------------"
-			   "\nByte received: %u"
+		printf("\nByte statistics for port %u ------------------------------"
+			   "\nByte received: %24"PRIu64
 			   "\nLatency: %f",
 			   portid,
 			   port_statistics[portid].rx_bytes,
@@ -40,7 +40,7 @@ static void print_stats(void){
 		// total_packets_tx += port_statistics[portid].tx;
 		// total_packets_rx += port_statistics[portid].rx;
 
-		printf("\Packet statistics for port %u ------------------------------"
+		printf("\nPacket statistics for port %u ------------------------------"
 			   "\nPacket sent: %24"PRIu64
 			   "\nPacket received: %20"PRIu64
 			   "\nPacket dropped: %21"PRIu64,
