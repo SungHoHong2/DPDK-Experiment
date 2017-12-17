@@ -145,8 +145,7 @@ int main(){
         packets = atoi(nic_str) - packets;
         fclose(nic_file);
     }
-
-    print_log();
     close(sockfd);
+    print_log();
     return 0;
 }
