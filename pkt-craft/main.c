@@ -44,7 +44,7 @@
 		goto fail;						\
 } while(0)
 
-#define MBUF_TEST_DATA_LEN      1464
+#define MBUF_TEST_DATA_LEN      50 //1464
 #define MBUF_DATA_SIZE          2048
 #define NB_MBUF                 128
 
