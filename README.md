@@ -20,3 +20,12 @@
 - [Implemented pingpong for TCP](tcp-experiment)
 - [Implemented pingpong for PKTGEN](pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
+
+<br>
+
+### Performance Result
+- `blue line` is tcp
+- `red line` is dpdk
+
+![img](img/dpdk-throughput.png)
+![img](img/dpdk-line-rate.png)
