@@ -62,6 +62,8 @@ int main(){
     socklen_t sin_size;
     long int success = 0;
     static time_t start; //adding timer
+    static time_t log_start;
+    double log_time_diff;
     FILE * nic_file;
     char nic_str[100];
 
@@ -114,6 +116,7 @@ int main(){
   time (&start);
   while(1){
 
+                time(&log_start);
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -130,8 +133,12 @@ int main(){
 
                 latency = difftime(time(0), start);
 
+                if(difftime(start, log_start)==1){
+                       print_log();
+                }
+
+
                 // if(++intervals==3000){
-                //     print_log();
                 // }
 
                 if(latency>=10){
