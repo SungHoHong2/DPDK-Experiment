@@ -128,13 +128,11 @@ int main(){
 
                 latency = difftime(time(0), start);
                 if(latency>=10){
-                  printf("howdy latency: %f\n",latency);
                   break;
                 }
 
-
-                printf("howdy chara: %f\n",latency);
-
+                printf("%s%s", clr, topLeft);
+                printf("client running for %f seconds\n",latency);
 
 
             }
