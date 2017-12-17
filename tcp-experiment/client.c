@@ -133,7 +133,7 @@ int main(){
 
                 latency = difftime(time(0), start);
 
-                if(difftime(start, log_start)==1){
+                if(difftime(start, log_start)>=1){
                        print_log();
                 }
 
