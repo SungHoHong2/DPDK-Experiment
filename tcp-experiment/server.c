@@ -138,19 +138,24 @@ int main(void){
             tx_throughput += strlen(buf);
         }
 
+        latency = difftime(time(0), start);
+        if((latency-prev_latency)>=1){
+            /* Clear screen and move to top left */
+            printf("%s%s", clr, topLeft);
+            printf("\nTCP Pingpong Server ====================================");
+            printf("\nByte Statistics ------------------------------"
+                   "\nPKT-SIZE: %d"
+                   "\nByte sent: %ld"
+                   "\nByte received: %ld"
+                   ,PKT_SIZE
+                   ,tx_throughput
+                   ,rx_throughput
+                 );
+            printf("\n========================================================\n");
+            intervals = 0;
+        }
     }
     close(new_fd);  // parent doesn't need this
-    printf("%s%s", clr, topLeft);
-    printf("\nTCP Pingpong Server ====================================");
-    printf("\nByte Statistics ------------------------------"
-           "\nPKT-SIZE: %d"
-           "\nByte sent: %ld"
-           "\nByte received: %ld"
-           ,PKT_SIZE
-           ,tx_throughput
-           ,rx_throughput
-         );
-    printf("\n========================================================\n");
 
     return 0;
 }
