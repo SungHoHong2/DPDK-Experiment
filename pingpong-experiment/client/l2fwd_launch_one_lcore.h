@@ -26,7 +26,7 @@ static void print_stats(void){
 			continue;
 
 		printf("\Byte statistics for port %u ------------------------------"
-			   "\nByte received: %20"PRIu64
+			   "\nByte received: %20"
 			   "\nLatency: %f",
 			   portid,
 			   port_statistics[portid].rx_bytes,
