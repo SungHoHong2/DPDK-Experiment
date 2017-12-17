@@ -23,7 +23,7 @@ static void print_stats(void){
 		/* skip disabled ports */
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
-		printf("\nStatistics for port %u ------------------------------"
+		printf("\nPacket statistics for port %u ------------------------------"
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64,
@@ -32,19 +32,17 @@ static void print_stats(void){
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
 
-		total_packets_dropped += port_statistics[portid].dropped;
-		total_packets_tx += port_statistics[portid].tx;
-		total_packets_rx += port_statistics[portid].rx;
+		// total_packets_dropped += port_statistics[portid].dropped;
+		// total_packets_tx += port_statistics[portid].tx;
+		// total_packets_rx += port_statistics[portid].rx;
 	}
-	printf("\nAggregate statistics ==============================="
-		   "\nTotal Packets sent: %18"PRIu64
-		   "\nTotal Packets received: %14"PRIu64
-		   "\nTotal packets dropped: %15"PRIu64
-       "\nTotal duration: %ld",
-		   total_packets_tx,
-		   total_packets_rx,
-		   total_packets_dropped,
-       curr_time);
+	// printf("\nAggregate statistics ==============================="
+	// 	   "\nPackets sent: %18"PRIu64
+	// 	   "\nPackets received: %14"PRIu64
+	// 	   "\npackets dropped: %15"PRIu64
+	// 	   total_packets_tx,
+	// 	   total_packets_rx,
+	// 	   total_packets_dropped);
 	printf("\n====================================================\n");
 }
 

@@ -40,19 +40,17 @@
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
-
-// TUNABLES BEGIN
 // #define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 2048 			// RTE_MBUF_DEFAULT_BUF_SIZE
-// TUNABLES END
-
+#define RTE_MBUF_SIZE 4086 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define PKT_SIZE 2048 // sending packet size
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
 #define MAX_RX_QUEUE_PER_LCORE 16
 #define MAX_TX_QUEUE_PER_PORT 16
 #define MAX_TIMER_PERIOD 86400 /* 1 day max */
+
 /*
  * Configurable number of RX/TX ring descriptors
  */
@@ -98,7 +96,7 @@ static const struct rte_eth_conf port_conf = {
 		.header_split   = 0, /**< Header Split disabled */
 		.hw_ip_checksum = 0, /**< IP checksum offload disabled */
 		.hw_vlan_filter = 0, /**< VLAN filtering disabled */
-		.jumbo_frame    = 1, /**< Jumbo Frame Support disabled */
+		.jumbo_frame    = 0, /**< Jumbo Frame Support disabled */
 		.hw_strip_crc   = 1, /**< CRC stripped by hardware */
 	},
 	.txmode = {
