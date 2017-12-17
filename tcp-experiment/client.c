@@ -131,6 +131,7 @@ int main(){
                   break;
                 }
 
+                sleep(1);
                 // printf("%s%s", clr, topLeft);
                 // printf("client running for %f seconds\n",latency);
 
