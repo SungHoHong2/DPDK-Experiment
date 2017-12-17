@@ -35,6 +35,8 @@ if (sent){
 
 ### Comparing the throughput with the TCP pingpong
 - only comparing the offset of the data
+- it is proven that 'strlen()' only counts the length of the cha value '*'
+
 ```c
 // example of counting the char length
 char send_data[100];
