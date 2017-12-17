@@ -43,7 +43,7 @@ static void print_stats(void){
 		printf("\Packet statistics for port %u ------------------------------"
 			   "\nPacket sent: %24"PRIu64
 			   "\nPacket received: %20"PRIu64
-			   "\nPacket dropped: %21"PRIu64,
+			   "\nPacket dropped: %21",
 			   portid,
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
