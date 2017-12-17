@@ -110,12 +110,13 @@ int main(){
       fclose(nic_file);
   }
 
-
+// 4946604
+//
   time (&start);
   while(1){
                 prev_latency = latency;
                 char send_data[PKT_SIZE];
-                memset( send_data, '*', (PKT_SIZE-2000) * sizeof(char));
+                memset( send_data, '*', (PKT_SIZE) * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success && strlen(send_data)>0){
