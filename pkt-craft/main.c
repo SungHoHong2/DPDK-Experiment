@@ -137,12 +137,14 @@ int main(int argc, char **argv){
 
 
 	char send_data[100];
-
 	printf("length of TCP offset %ld\n", strlen(send_data));
-	memset( send_data, '*', (50) * sizeof(char));
+	memset( send_data, '*', (50) * sizeof(char)); // decide the offset data
 	printf("length of TCP offset %ld\n", strlen(send_data));
 
-
+	success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
+	if(success && strlen(recv_data)>0){
+			rx_throughput += strlen(recv_data); // count the valid length
+	}
 
 	return 0;
 }

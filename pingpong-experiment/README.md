@@ -12,30 +12,9 @@
 
 <br>
 
-
-### modifying the size of packets
-
-```c
-
-int sent;
-char *data;
-rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-
-data = rte_pktmbuf_append(rm[0], 1464); //append length bytes to an buff
-memset(data, 0xff, rte_pktmbuf_pkt_len(rm[0])); //update the value of data
-sent = rte_eth_tx_burst(portid, 0, rm, 1); // returns the number of sent packets
-
-if (sent){
-  port_statistics[portid].tx += sent; //aggregate the results
-}
-
-```
-
-<br>
-
 ### Comparing the throughput with the TCP pingpong
 - only comparing the offset of the data
-- it is proven that 'strlen()' only counts the length of the cha value '*'
+- it is proven that 'strlen()' only counts the length of the ASCII char value and not the allocated memory
 
 ```c
 // example of counting the char length
@@ -48,27 +27,31 @@ printf("length of TCP offset %ld\n", strlen(send_data));
 
 
 ```c
-
 /*
  *  case of DPDK
  */
+
 // creating the packet
 char *data;
-memset(data, '*', rte_pktmbuf_pkt_len(m));
+memset(data, '*', rte_pktmbuf_pkt_len(m)); // deciding the length of the offset
 printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // count the packet length
 
 
 // counting the offset of the packet
 char *rtn;
 rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
-printf("lenght of the offset: %ld\n", strlen(rtn));
+printf("length of the offset: %ld\n", strlen(rtn));
 
 
 /*
  *  case of TCP
  */
 
+ // sending the packet
+ char send_data[100]; // even though the char array is fixed the strlen will only count the valid values
+ memset( send_data, '*', PKT_SIZE * sizeof(char));
 
 
-
+ // receiving the packet
+ success=send(sockfd, send_data, PKT_SIZE, 0);
 ```
