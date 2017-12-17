@@ -138,13 +138,14 @@ int main(){
                 }
             }
 
+    nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
+    if (nic_file) {
+        fscanf(nic_file, "%s", nic_str);
+        packets = atoi(nic_str) - packets;
+        fclose(nic_file);
+    }
+
     print_log();
-
-            // vi /sys/class/net/eno1/statistics/rx_packets
-            // cat /sys/class/net/eno1/statistics/tx_packets
-            // counting the packets
-
-
     close(sockfd);
     return 0;
 }
