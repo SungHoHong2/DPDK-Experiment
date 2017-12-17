@@ -128,8 +128,13 @@ int main(){
 
                 latency = difftime(time(0), start);
                 if(latency>=10){
+                  printf("howdy latency: %ld\n",latency);
                   break;
                 }
+
+
+
+
             }
 
 
