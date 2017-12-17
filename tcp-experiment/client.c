@@ -63,11 +63,6 @@ int main(){
     static time_t start; //adding timer
     FILE * nic_file;
     char nic_str[100];
-    pthread_mutex_t send_lock, recv_lock;
-
-
-    pthread_mutex_init(&send_lock, NULL);
-    pthread_mutex_init(&recv_lock, NULL);
 
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
@@ -156,8 +151,6 @@ int main(){
         printf("%d\n",packets);
         fclose(nic_file);
     }
-    pthread_mutex_destroy(&send_lock);
-    pthread_mutex_destroy(&recv_lock);
 
     print_log();
     close(sockfd);
