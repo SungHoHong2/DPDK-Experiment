@@ -63,7 +63,8 @@ printf("length of the offset: %ld\n", strlen(rtn));
 ### Example
 
 ```c
-char *data; // packet length 1464
+data = rte_pktmbuf_append(m, 1464);
+char *data;
 memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
 printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
 
@@ -72,9 +73,9 @@ rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
 printf("lenght of the offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
 
 char send_data[100];
-printf("length of TCP offset %ld\n", strlen(send_data));
-memset( send_data, '*', (50) * sizeof(char)); // decide the offset data
-printf("length of TCP offset %ld\n", strlen(send_data));
+printf("length of TCP offset %ld\n", strlen(send_data)); // length of TCP offset 0
+memset( send_data, '*', (50) * sizeof(char));
+printf("length of TCP offset %ld\n", strlen(send_data)); // length of TCP offset 50
 
 // rte_pktmbuf_pkt_len(m): 1464
 // lenght of the offset: 456   
