@@ -87,7 +87,7 @@ int main(int argc, char **argv){
   m = rte_pktmbuf_alloc(pktmbuf_pool);
   data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
   memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
-	printf("Length of DPDK packet: %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
+	printf("length of DPDK packet: %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
 
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));

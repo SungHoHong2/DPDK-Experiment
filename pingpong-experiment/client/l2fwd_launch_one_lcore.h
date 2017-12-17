@@ -113,7 +113,7 @@ static void l2fwd_main_loop(void){
   	}
 
 		time (&start); //useful call
-		char *data;
+		char *data, *rtn;
 
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
@@ -158,16 +158,9 @@ static void l2fwd_main_loop(void){
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
                  		pkts_burst, MAX_PKT_BURST);
 
-						// if(pkts_burst && pkts_burst[0])
-          	port_statistics[portid].rx += nb_rx; // * rte_pktmbuf_pkt_len(pkts_burst[0]);
-
-						// 69279171
-						// 50400540
-						// 100339112
+          	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
-
-								char *rtn;
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
 							  port_statistics[portid].rx_bytes += strlen(rtn); //rte_pktmbuf_pkt_len(pkts_burst[j]);
 								rte_pktmbuf_free(pkts_burst[j]);
@@ -214,7 +207,6 @@ static void l2fwd_main_loop(void){
 						 * sending the packet individually
 						 */
 
-						int sent;
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
