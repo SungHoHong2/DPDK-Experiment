@@ -132,5 +132,15 @@ int main(int argc, char **argv){
 		}
 
 
+	char send_data[100];
+
+	printf("length of TCP offset %ld\n", strlen(send_data));
+
+	memset( send_data, '*', (PKT_SIZE-50) * sizeof(char));
+
+	printf("length of TCP offset %ld\n", strlen(send_data));
+
+
+
 	return 0;
 }
