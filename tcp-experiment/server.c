@@ -54,7 +54,6 @@ int main(void){
     long int rx_throughput;
     const char clr[] = { 27, '[', '2', 'J', '\0' };
     const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
-    tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -131,14 +130,14 @@ int main(void){
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         // recv(new_fd, buf, PKT_SIZE-1, 0);
         prev_latency = latency;
-        rx_throughput+=recv(new_fd, buf, PKT_SIZE-1, 0);
+        success = recv(new_fd, buf, PKT_SIZE-1, 0);
         if(success && strlen(buf)>0){
             rx_throughput += strlen(buf);
         }
         //printf("server: received '%ld'\n",strlen(buf));
         // send(new_fd, buf, PKT_SIZE, 0);
 
-        tx_throughput+=send(new_fd, buf, PKT_SIZE, 0);
+        success = send(new_fd, buf, PKT_SIZE, 0);
         if(success && strlen(buf)>0){
             tx_throughput += strlen(buf);
         }
