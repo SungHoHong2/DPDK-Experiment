@@ -54,7 +54,7 @@ void print_log(){
 
 int main(){
     int sockfd, numbytes, new_fd;
-    char *recv_data;
+    char recv_data[PKT_SIZE];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
@@ -141,7 +141,7 @@ int main(){
 
                 // printf("%s%s", clr, topLeft);
                 // printf("client running for %f seconds\n",latency);
-
+                break;
 
             }
 
