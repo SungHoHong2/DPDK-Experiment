@@ -30,9 +30,11 @@ static void print_stats(void){
 
 
 		printf("\nByte statistics for port %u ------------------------------"
+				 "\nPKT-SIZE: %d"
 			   "\nByte received: %24"PRIu64
 			   "\nLatency: %f",
 			   portid,
+				 PKT_SIZE, 
 			   port_statistics[portid].rx_bytes,
 				 latency_diff);
 

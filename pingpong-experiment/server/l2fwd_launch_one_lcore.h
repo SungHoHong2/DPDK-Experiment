@@ -24,10 +24,12 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 		printf("\nPacket statistics for port %u ------------------------------"
+				 "\nPKT-SIZE: %d"
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64,
 			   portid,
+				 PKT_SIZE, 
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
