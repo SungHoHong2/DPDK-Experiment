@@ -22,6 +22,7 @@ static long int rx_throughput;
 static double latency;
 static double latency_timelimit = 10.0;
 char nic_str[100];
+static int intervals;
 
 
 // get sockaddr, IPv4 or IPv6:
@@ -61,7 +62,6 @@ int main(){
     socklen_t sin_size;
     long int success = 0;
     static time_t start; //adding timer
-    int intervals;
     FILE * nic_file;
 
     intervals = tx_throughput = rx_throughput = 0;
