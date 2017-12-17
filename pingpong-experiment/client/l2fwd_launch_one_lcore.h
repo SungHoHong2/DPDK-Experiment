@@ -165,8 +165,7 @@ static void l2fwd_main_loop(void){
 
 								char *rtn;
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
-								printf("Read the packet: %s", rtn);
-							  // port_statistics[portid].rx += rte_pktmbuf_pkt_len(pkts_burst[j]);
+							  port_statistics[portid].rx += strlen(rtn);
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
