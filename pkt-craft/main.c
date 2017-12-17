@@ -44,7 +44,7 @@
 		goto fail;						\
 } while(0)
 
-#define MBUF_TEST_DATA_LEN      50 //1464
+#define MBUF_TEST_DATA_LEN      1464
 #define MBUF_DATA_SIZE          2048
 #define NB_MBUF                 128
 
@@ -112,8 +112,7 @@ int main(int argc, char **argv){
 	if (rte_pktmbuf_data_len(m) != MBUF_TEST_DATA_LEN)
 		GOTO_FAIL("Bad data length");
 
-  memset(data, '*', rte_pktmbuf_pkt_len(m));
-
+  memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
 	printf("rte_pktmbuf_pkt_len(m): %d\n", rte_pktmbuf_pkt_len(m));
   if (!rte_pktmbuf_is_contiguous(m))
 		GOTO_FAIL("Buffer should be continuous");
@@ -126,6 +125,11 @@ int main(int argc, char **argv){
   // rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
   rte_pktmbuf_free(m);
 
+
+
+
+
+
 	fail:
 		if(m) {
 			rte_pktmbuf_free(m);
@@ -135,9 +139,7 @@ int main(int argc, char **argv){
 	char send_data[100];
 
 	printf("length of TCP offset %ld\n", strlen(send_data));
-
 	memset( send_data, '*', (50) * sizeof(char));
-
 	printf("length of TCP offset %ld\n", strlen(send_data));
 
 

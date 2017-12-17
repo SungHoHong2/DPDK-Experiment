@@ -35,6 +35,15 @@ if (sent){
 
 ### Comparing the throughput with the TCP pingpong
 - only comparing the offset of the data
+```c
+// example of counting the char length
+char send_data[100];
+printf("length of TCP offset %ld\n", strlen(send_data));
+memset( send_data, '*', (50) * sizeof(char));
+printf("length of TCP offset %ld\n", strlen(send_data));
+
+```
+
 
 ```c
 
@@ -56,7 +65,6 @@ printf("lenght of the offset: %ld\n", strlen(rtn));
 /*
  *  case of TCP
  */
-
 
 
 
