@@ -40,6 +40,8 @@ int main(){
     double latency_timelimit = 10.0;
     static time_t start; //adding timer
     int intervals;
+    FILE * nic_file;
+
 
     intervals = tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
@@ -77,8 +79,17 @@ int main(){
   printf("client: connecting to %s\n", s);
   freeaddrinfo(servinfo); // all done with this structure
 
-    time (&start);
-    while(1){
+
+  char nic_str[999];
+  nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
+  if (nic_file) {
+      fscanf(file, "%s", str);
+      fclose(nic_file);
+  }
+
+
+  time (&start);
+  while(1){
 
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
@@ -109,12 +120,28 @@ int main(){
                            ,tx_throughput
                            ,rx_throughput
                            ,latency);
+                    printf("\nPacket Statistics ------------------------------"
+                    printf("\nPackets received: %s",nic_str);
                     printf("\n========================================================\n");
-                    if(latency==10) break;
                     intervals = 0;
+                    if(latency==10){
+
+
+
+                      break;
+                    }
                 }
 
             }
+
+
+
+
+
+            // vi /sys/class/net/eno1/statistics/rx_packets
+            // cat /sys/class/net/eno1/statistics/tx_packets
+            // counting the packets
+
 
     close(sockfd);
     return 0;
