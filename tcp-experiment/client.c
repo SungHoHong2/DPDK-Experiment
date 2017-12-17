@@ -26,6 +26,26 @@ void *get_in_addr(struct sockaddr *sa){
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+void print_log(){
+  /* Clear screen and move to top left */
+  printf("%s%s", clr, topLeft);
+  printf("\nTCP Pingpong Client ====================================");
+  printf("\nByte Statistics ------------------------------"
+         "\nPKT-SIZE: %d"
+         "\nBytes sent: %ld"
+         "\nBytes received: %ld"
+         "\nLatency: %f"
+         ,PKT_SIZE
+         ,tx_throughput
+         ,rx_throughput
+         ,latency);
+  printf("\nPacket Statistics ------------------------------"
+         "\nPackets received: %s"
+         ,nic_str);
+  printf("\n========================================================\n");
+  intervals = 0;
+}
+
 int main(){
     int sockfd, numbytes, new_fd;
     char recv_data[PKT_SIZE];
@@ -108,36 +128,14 @@ int main(){
                 latency = difftime( time(0), start);
 
                 if(++intervals==2000){
-                    /* Clear screen and move to top left */
-                    printf("%s%s", clr, topLeft);
-                    printf("\nTCP Pingpong Client ====================================");
-                    printf("\nByte Statistics ------------------------------"
-                           "\nPKT-SIZE: %d"
-                           "\nBytes sent: %ld"
-                           "\nBytes received: %ld"
-                           "\nLatency: %f"
-                           ,PKT_SIZE
-                           ,tx_throughput
-                           ,rx_throughput
-                           ,latency);
-                    printf("\nPacket Statistics ------------------------------"
-                           "\nPackets received: %s"
-                           ,nic_str);
-                    printf("\n========================================================\n");
-                    intervals = 0;
+                    print_log();
                     if(latency==10){
-
-
-
                       break;
                     }
                 }
-
             }
 
-
-
-
+    print_log();
 
             // vi /sys/class/net/eno1/statistics/rx_packets
             // cat /sys/class/net/eno1/statistics/tx_packets
