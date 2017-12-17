@@ -133,6 +133,8 @@ int main(){
                 }
 
 
+                printf("howdy chara: %f\n",latency);
+
 
 
             }
