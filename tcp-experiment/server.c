@@ -58,6 +58,7 @@ int main(void){
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE; // use my IP
     int intervals;
+    static time_t start; //adding timer
 
     intervals = tx_throughput = rx_throughput = 0;
 
@@ -120,10 +121,11 @@ int main(void){
 
 
 
-
+    time (&start);
     while(1) {  // main accept() loop
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         // recv(new_fd, buf, PKT_SIZE-1, 0);
+        prev_latency = latency;
         rx_throughput+=recv(new_fd, buf, PKT_SIZE-1, 0);
         if(success){
             rx_throughput += strlen(buf);
@@ -136,7 +138,8 @@ int main(void){
             tx_throughput += strlen(buf);
         }
 
-        if(++intervals==2000){
+        latency = difftime(time(0), start);
+        if((latency-prev_latency)>=1){
             /* Clear screen and move to top left */
             printf("%s%s", clr, topLeft);
             printf("\nTCP Pingpong Server ====================================");
