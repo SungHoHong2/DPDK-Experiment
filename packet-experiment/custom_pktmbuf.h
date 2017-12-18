@@ -91,7 +91,7 @@ for(int i =0; i<10; i++){
 }
 
 
-for(int i =0; i<100; i++){
+for(int i =0; i<20; i++){
   // increase packet size to 2010
   if(!rte_pktmbuf_prepend(m, 1)){
       printf("prepend failed\n");
