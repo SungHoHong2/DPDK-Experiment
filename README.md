@@ -8,11 +8,11 @@
 <br>
 
 ### Common Features
-- [helloworld - allocating the pthreads for each logical cores](helloworld)
-- [skeleton - basic concpet of tranferring packets](skeleton)
-- [l2fwd - basic concpet of l2 packet forwarding](l2fwd)
-- [crafting Packets - experiment on packet components](pkt-craft)
-- [experiment of `dpdk packets`](pkt-craft)
+- [`helloworld` - allocating the pthreads for each logical cores](helloworld)
+- [`skeleton` - basic concpet of tranferring packets](skeleton)
+- [`l2fwd` - basic concpet of l2 packet forwarding](l2fwd)
+- [`crafting Packets` - experiment on creating packets](pkt-craft)
+- [`dpdk packets` - experiment on packet components ](packet-experiment)
 
 
 <br>
