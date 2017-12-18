@@ -149,7 +149,7 @@ static int checking_head_room_size(){
     if(!rte_pktmbuf_prepend(m, 10)){
         break;
     }else{
-        printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 
@@ -157,7 +157,31 @@ static int checking_head_room_size(){
     if(!rte_pktmbuf_prepend(m, 1)){
         break;
     }else{
-        printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+    }
+  }
+
+  return rte_pktmbuf_pkt_len(m);
+}
+
+
+static int filling_rest(int length){
+  struct rte_mbuf *m = NULL;
+  m = rte_pktmbuf_alloc(pktmbuf_pool);
+
+  while(1){
+    if(!rte_pktmbuf_prepend(m, 10)){
+        break;
+    }else{
+        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+    }
+  }
+
+  while(1){
+    if(!rte_pktmbuf_prepend(m, 1)){
+        break;
+    }else{
+        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 

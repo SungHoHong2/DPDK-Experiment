@@ -44,9 +44,13 @@
 } while(0)
 
 
+
 #define MBUF_DATA_SIZE          2048
 #define NB_MBUF                 128
 #define MBUF_TEST_DATA_LEN      1464
+
+
+
 #define MBUF_TEST_DATA_LEN2     50
 #define MBUF_TEST_HDR1_LEN      20
 #define MBUF_TEST_HDR2_LEN      30
@@ -77,39 +81,6 @@ static unsigned refcnt_lcore[RTE_MAX_LCORE];
 
 #include "test_pktmbuf.h"
 #include "custom_pktmbuf.h"
-
-
-/*
-# allocate mbuf pool
-	the pool contains NB_MBUF elements, where each mbuf is MBUF_SIZE byes long
-
-# test multiple allocations of mbufs for this pool
-	alocate NB_MBUF and store pointers in the table
-	if an allocation ails return an error
-	free all these mbufs
-	Repeat the same test to check that mbufs are freed correctly
-
-
-# data manipulation
- 	alloc mbuf
-	append data
-	test error if length is too large
-	trim data
-	prepend header
-	test for error if prepend is too large
-	remove beginning of mbuf using adjacent
-	test for error when adjacent length is too large
-	check appended data is not corrupt
-
-
-# packet cloning
-		clone mbuf and verify the data
-		clone the cloned data and verify the data
-		attach mbuf to another that does not have the private size
-*/
-
-
-
 
 int main(int argc, char **argv){
 
@@ -153,7 +124,15 @@ int main(int argc, char **argv){
 	// custom_pktmbuf();
 	// one_packet();
 
-	checking_head_room_size();
+	int header_length;
+	int rest;
+	header_length = checking_head_room_size();
+	rest = MBUF_DATA_SIZE - header_length;
+
+
+
+
+
 
 
 
