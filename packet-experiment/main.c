@@ -44,9 +44,40 @@
 		goto fail;						\
 } while(0)
 
-#define MBUF_TEST_DATA_LEN      1464
+
 #define MBUF_DATA_SIZE          2048
 #define NB_MBUF                 128
+#define MBUF_TEST_DATA_LEN      1464
+#define MBUF_TEST_DATA_LEN2     50
+#define MBUF_TEST_HDR1_LEN      20
+#define MBUF_TEST_HDR2_LEN      30
+#define MBUF_TEST_ALL_HDRS_LEN  (MBUF_TEST_HDR1_LEN+MBUF_TEST_HDR2_LEN)
+
+
+
+/* size of private data for mbuf in pktmbuf_pool2 */
+#define MBUF2_PRIV_SIZE         128
+
+#define REFCNT_MAX_ITER         64
+#define REFCNT_MAX_TIMEOUT      10
+#define REFCNT_MAX_REF          (RTE_MAX_LCORE)
+#define REFCNT_MBUF_NUM         64
+#define REFCNT_RING_SIZE        (REFCNT_MBUF_NUM * REFCNT_MAX_REF)
+
+#define MAGIC_DATA              0x42424242
+
+#define MAKE_STRING(x)          # x
+
+
+
+
+static struct rte_mempool *pktmbuf_pool = NULL;
+static struct rte_mempool *pktmbuf_pool2 = NULL;
+static struct rte_mempool *refcnt_pool = NULL;
+static struct rte_ring *refcnt_mbuf_ring = NULL;
+static volatile uint32_t refcnt_stop_slaves;
+static unsigned refcnt_lcore[RTE_MAX_LCORE];
+
 
 
 static struct rte_mempool *pktmbuf_pool = NULL;
