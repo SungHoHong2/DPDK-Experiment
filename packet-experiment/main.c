@@ -145,6 +145,8 @@ int main(int argc, char **argv){
 	test_pktmbuf_with_non_ascii_data();
 
 
+	// manipulating packet
+	test_one_pktmbuf();
 
 
 
