@@ -142,6 +142,9 @@ static int one_packet(){
 
 static int checking_head_room_size(){
 
+  struct rte_mbuf *m = NULL;
+  m = rte_pktmbuf_alloc(pktmbuf_pool);
+
   for(int i =0; i<20; i++){
     if(!rte_pktmbuf_prepend(m, 10)){
         printf("prepend failed\n");
@@ -150,5 +153,5 @@ static int checking_head_room_size(){
     }
   }
 
-
+  return 0;
 }
