@@ -109,7 +109,7 @@ static int one_packet(){
   struct rte_mbuf *m = NULL;
   m = rte_pktmbuf_alloc(pktmbuf_pool);
 
-  if(!rte_pktmbuf_prepend(m, 1500)){
+  if(!rte_pktmbuf_prepend(m, 1464)){
       printf("prepend failed\n");
   }else{
       printf("length: %d\n", rte_pktmbuf_pkt_len(m));
