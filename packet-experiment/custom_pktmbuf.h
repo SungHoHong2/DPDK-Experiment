@@ -38,6 +38,17 @@ static int custom_pktmbuf(void){
       printf("length: %d\n", rte_pktmbuf_pkt_len(m));
   }
 
+  // increase packet size to 500
+  if(!rte_pktmbuf_append(m, 350)){
+      printf("prepend failed\n");
+  }else{
+      printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+  }
+
+
+
+
+
   return 0;
 
 }
