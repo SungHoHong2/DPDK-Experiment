@@ -11,7 +11,7 @@ static int custom_pktmbuf(void){
 
 
   // increase packet size to 100
-  data = rte_pktmbuf_prepend(m, 50);
+  rte_pktmbuf_prepend(m, 50);
   printf("length: %d\n", rte_pktmbuf_pkt_len(m));
 
 
