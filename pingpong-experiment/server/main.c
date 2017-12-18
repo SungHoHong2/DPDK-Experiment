@@ -42,11 +42,11 @@
 #define NB_MBUF   8192
 // #define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 192 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define RTE_MBUF_SIZE 256 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 64 // sending packet size
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
-#define MEMPOOL_CACHE_SIZE 0
+#define MEMPOOL_CACHE_SIZE 256
 #define MAX_RX_QUEUE_PER_LCORE 16
 #define MAX_TX_QUEUE_PER_PORT 16
 #define MAX_TIMER_PERIOD 86400 /* 1 day max */
