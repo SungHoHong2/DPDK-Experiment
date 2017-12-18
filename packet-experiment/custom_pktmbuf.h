@@ -10,12 +10,7 @@ static int custom_pktmbuf(void){
   printf("length: %d\n", rte_pktmbuf_pkt_len(m));
 
 
-  // increase packet size to 100
-  rte_pktmbuf_prepend(m, 100);
-  printf("length: %d\n", rte_pktmbuf_pkt_len(m));
-
-
-	// increase packet size to 300
+  // increase packet size to 300
   rte_pktmbuf_prepend(m, 200);
   printf("length: %d\n", rte_pktmbuf_pkt_len(m));
 
