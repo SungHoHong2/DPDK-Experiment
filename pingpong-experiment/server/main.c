@@ -42,8 +42,8 @@
 #define NB_MBUF   8192
 // #define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 4086 // RTE_MBUF_DEFAULT_BUF_SIZE
-#define PKT_SIZE 1518 // sending packet size
+#define RTE_MBUF_SIZE 192 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define PKT_SIZE 64 // sending packet size
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
 #define MEMPOOL_CACHE_SIZE 256
