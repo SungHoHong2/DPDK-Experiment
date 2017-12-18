@@ -44,7 +44,7 @@
 // TUNABLES BEGIN
 //#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 192 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define RTE_MBUF_SIZE 384 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 64 // sending packet size over 1600 the performance degrades
 // TUNABLES END
 
