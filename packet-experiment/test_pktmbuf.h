@@ -49,17 +49,10 @@ static int test_one_pktmbuf(void){
   printf("append MBUF_TEST_DATA_LEN2: %ld\n", strlen(data2));
   // append MBUF_TEST_DATA_LEN2: 50
 
-
-  rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
-
-
   // trim the end file
   rte_pktmbuf_trim(m, MBUF_TEST_DATA_LEN2);
   printf("trim the end file: %ld\n", strlen(data2));
   // trim the end file: 50
-
-
-  rte_pktmbuf_dump(stdout, m, MBUF_TEST_DATA_LEN);
 
 
   if (rte_pktmbuf_trim(m, (uint16_t)(rte_pktmbuf_data_len(m) + 1)) == 0)
@@ -86,7 +79,6 @@ static int test_one_pktmbuf(void){
 
   rte_pktmbuf_adj(m, MBUF_TEST_ALL_HDRS_LEN);
   printf("rte_pktmbuf_adj header: %ld\n", strlen(hdr));
-
 
 
   rte_pktmbuf_free(m);

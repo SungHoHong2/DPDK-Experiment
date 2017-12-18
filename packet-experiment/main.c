@@ -142,11 +142,19 @@ int main(int argc, char **argv){
 
 
 	// test data manipulation with no ascii data
-	test_pktmbuf_with_non_ascii_data();
+	// test_pktmbuf_with_non_ascii_data();
 
 
 	// manipulating packet
-	test_one_pktmbuf();
+	// test_one_pktmbuf();
+
+	// customized action
+
+	// create packet with size 50
+	// increase packet size to 100
+	// increase packet size to 300
+  // decrease packet size to 250
+  // increase packet size to 300
 
 
 
