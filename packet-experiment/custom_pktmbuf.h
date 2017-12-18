@@ -7,7 +7,9 @@ static int custom_pktmbuf(void){
 
   // create packet with size 50
   data = rte_pktmbuf_append(m, 50);
-  printf("length: %ld\n", strlen(data));
+  // memset(data, '*', rte_pktmbuf_pkt_len(m));
+
+  printf("length: %ld\n", rte_pktmbuf_pkt_len(m));
 
 
   // increase packet size to 100
