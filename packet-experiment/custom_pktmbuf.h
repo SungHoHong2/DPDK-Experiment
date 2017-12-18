@@ -71,28 +71,16 @@ static int custom_pktmbuf(void){
   }
 
 
-  // increase packet size to 2500
-  if(!rte_pktmbuf_append(m, 500)){
+for(int i =0; i<10; i++){
+  // increase packet size to 2010
+  if(!rte_pktmbuf_append(m, 10)){
       printf("append failed\n");
   }else{
       printf("length: %d\n", rte_pktmbuf_pkt_len(m));
   }
+}
 
 
-  // increase packet size to 2048
-  if(!rte_pktmbuf_append(m, 48)){
-      printf("append failed\n");
-  }else{
-      printf("length: %d\n", rte_pktmbuf_pkt_len(m));
-  }
-
-
-  // increase packet size to 2049
-  if(!rte_pktmbuf_append(m, 1)){
-      printf("append failed\n");
-  }else{
-      printf("length: %d\n", rte_pktmbuf_pkt_len(m));
-  }
 
 
 
