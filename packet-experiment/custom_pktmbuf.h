@@ -128,6 +128,14 @@ static int one_packet(){
       printf("length: %d\n", rte_pktmbuf_pkt_len(m));
   }
 
+  for(int i =0; i<10; i++){
+    if(!rte_pktmbuf_append(m, 100)){
+        printf("append failed\n");
+    }else{
+        printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+    }
+
+  }
 
 
 
