@@ -145,21 +145,21 @@ static int checking_head_room_size(){
   struct rte_mbuf *m = NULL;
   m = rte_pktmbuf_alloc(pktmbuf_pool);
 
-  for(int i =0; i<20; i++){
+  while(1){
     if(!rte_pktmbuf_prepend(m, 10)){
-        printf("prepend failed\n");
+        break;
     }else{
         printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 
-  for(int i =0; i<10; i++){
+  while(1){
     if(!rte_pktmbuf_prepend(m, 1)){
-        printf("prepend failed\n");
+        break;
     }else{
         printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 
-  return 0;
+  return rte_pktmbuf_pkt_len(m);
 }
