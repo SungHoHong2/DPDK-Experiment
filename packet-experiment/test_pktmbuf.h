@@ -72,7 +72,7 @@ static int test_one_pktmbuf(void){
   printf("trying to prepend data length %d\n", (uint16_t)(rte_pktmbuf_headroom(m) + 1));
 
   if (hdr != NULL)
-		printf("prepend should not succeed\n");
+		printf("prepend should not succeed %ld \n", strlen(hdr));
 
   rte_pktmbuf_adj(m, MBUF_TEST_ALL_HDRS_LEN);
   printf("rte_pktmbuf_adj header: %ld\n", strlen(hdr));
