@@ -1,20 +1,5 @@
-### Packet Components
-- uses two cache lines
-- header structure is kept as small as possible
-- rte-mbuf can be extended to other types
+### running experiment
 
-### Design of Packets
-
-- embed metadata within a single memory buffer with fixed size area for the packet
-    - only need one operation to allocate and free memory
-    - meta data contains message type length offset
-
-- use separate memory buffer for metadata and for packet
-    -
-
-
-
-| component | detail |
-| -- |  -- |  
-| RTE_PKTMBUF_HEADROOM | beginning of the buffer |
-| | | 
+```
+./build/pktcraft -l 0-1 -n 1 -d librte_pmd_e1000.so -d librte_mempool_ring.so -- -q 8 -p 0x1
+```

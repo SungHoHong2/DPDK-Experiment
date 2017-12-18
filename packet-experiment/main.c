@@ -36,7 +36,7 @@
 #include <rte_ethdev.h>
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
-
+#include "test_pktmbuf.h"
 
 #define GOTO_FAIL(str, ...) do {					\
 		printf("mbuf test FAILED (l.%d): <" str ">\n",		\
@@ -68,15 +68,42 @@
 
 #define MAKE_STRING(x)          # x
 
-
-
-
 static struct rte_mempool *pktmbuf_pool = NULL;
 static struct rte_mempool *pktmbuf_pool2 = NULL;
 static struct rte_mempool *refcnt_pool = NULL;
 static struct rte_ring *refcnt_mbuf_ring = NULL;
 static volatile uint32_t refcnt_stop_slaves;
 static unsigned refcnt_lcore[RTE_MAX_LCORE];
+
+
+/*
+# allocate mbuf pool
+	the pool contains NB_MBUF elements, where each mbuf is MBUF_SIZE byes long
+
+# test multiple allocations of mbufs for this pool
+	alocate NB_MBUF and store pointers in the table
+	if an allocation ails return an error
+	free all these mbufs
+	Repeat the same test to check that mbufs are freed correctly
+
+
+# data manipulation
+ 	alloc mbuf
+	append data
+	test error if length is too large
+	trim data
+	prepend header
+	test for error if prepend is too large
+	remove beginning of mbuf using adjacent
+	test for error when adjacent length is too large
+	check appended data is not corrupt
+
+
+# packet cloning
+		clone mbuf and verify the data
+		clone the cloned data and verify the data
+		attach mbuf to another that does not have the private size
+*/
 
 
 
@@ -110,6 +137,11 @@ int main(int argc, char **argv){
 		printf("cannot allocate mbuf pool\n");
 		return -1;
 	}
+
+
+	// test data manipulation with no ascii data
+
+
 
 
 
