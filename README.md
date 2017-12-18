@@ -11,7 +11,9 @@
 - [helloworld - allocating the pthreads for each logical cores](helloworld)
 - [skeleton - basic concpet of tranferring packets](skeleton)
 - [l2fwd - basic concpet of l2 packet forwarding](l2fwd)
-- [Crafting Packets - experiment on packet components](pkt-craft)
+- [crafting Packets - experiment on packet components](pkt-craft)
+- [experiment of `dpdk packets`](pkt-craft)
+
 
 <br>
 
