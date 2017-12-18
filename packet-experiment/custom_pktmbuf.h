@@ -11,7 +11,11 @@ static int custom_pktmbuf(void){
 
 
   // increase packet size to 300
-  rte_pktmbuf_prepend(m, 200);
+  if(!rte_pktmbuf_prepend(m, 200)){
+    printf("prepend failed\n");
+  }
+
+
   printf("length: %d\n", rte_pktmbuf_pkt_len(m));
 
 
