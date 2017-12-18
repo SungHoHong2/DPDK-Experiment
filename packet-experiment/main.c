@@ -80,8 +80,6 @@ static unsigned refcnt_lcore[RTE_MAX_LCORE];
 
 
 
-static struct rte_mempool *pktmbuf_pool = NULL;
-
 
 int main(int argc, char **argv){
 
