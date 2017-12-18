@@ -56,6 +56,11 @@ static int test_one_pktmbuf(void){
   // trim the end file: 50
 
 
+
+  if (rte_pktmbuf_trim(m, (uint16_t)(rte_pktmbuf_data_len(m) + 1)) == 0)
+		GOTO_FAIL("trim: %d should not succeed\n", (uint16_t)(rte_pktmbuf_data_len(m) + 1));
+
+
   // add header
   hdr = rte_pktmbuf_prepend(m, MBUF_TEST_HDR1_LEN);
   memset(hdr, '*', MBUF_TEST_HDR1_LEN);
