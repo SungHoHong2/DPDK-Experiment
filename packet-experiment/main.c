@@ -76,6 +76,7 @@ static unsigned refcnt_lcore[RTE_MAX_LCORE];
 
 
 #include "test_pktmbuf.h"
+#include "custom_pktmbuf.h"
 
 
 /*
