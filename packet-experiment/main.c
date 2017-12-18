@@ -45,7 +45,7 @@
 
 
 
-#define MBUF_DATA_SIZE          2048
+#define MBUF_DATA_SIZE          1500
 #define NB_MBUF                 128
 #define MBUF_TEST_DATA_LEN      1464
 
