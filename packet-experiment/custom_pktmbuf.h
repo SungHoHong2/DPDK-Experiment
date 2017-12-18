@@ -122,5 +122,14 @@ static int one_packet(){
   }
 
 
+  if(!rte_pktmbuf_append(m, 1500)){
+      printf("append failed\n");
+  }else{
+      printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+  }
+
+
+
+
   return 0;
 }
