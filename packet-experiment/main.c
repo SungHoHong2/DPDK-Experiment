@@ -130,7 +130,7 @@ int main(int argc, char **argv){
 	printf("header length: %d\n", header_length);
 
 	rest = MBUF_DATA_SIZE - header_length;
-	printf("rest length: %d\n", rest);
+	printf("tail length: %d\n", rest);
 
 
 
