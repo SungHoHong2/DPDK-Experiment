@@ -108,7 +108,9 @@ for(int i =0; i<29; i++){
 static int one_packet(){
   struct rte_mbuf *m = NULL;
   m = rte_pktmbuf_alloc(pktmbuf_pool);
-  data = rte_pktmbuf_append(m, 2048);
-  printf("length: %d\n", rte_pktmbuf_pkt_len(m));  
+   rte_pktmbuf_append(m, 2048);
+  printf("length: %d\n", rte_pktmbuf_pkt_len(m));
 
+
+  return 0;
 }
