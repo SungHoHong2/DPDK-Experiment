@@ -69,15 +69,15 @@ static int test_one_pktmbuf(void){
   // prepend header: 1564
 
 
-  printf("trying to prepend data length %ld\n", (uint16_t)(rte_pktmbuf_headroom(m) + 1);
+  printf("trying to prepend data length %ld\n", (uint16_t)(rte_pktmbuf_headroom(m) + 1));
+
   if (hdr != NULL)
 		GOTO_FAIL("prepend should not succeed");
-
 
   rte_pktmbuf_adj(m, MBUF_TEST_ALL_HDRS_LEN);
   printf("rte_pktmbuf_adj header: %ld\n", strlen(hdr));
 
-  
+
 
   rte_pktmbuf_free(m);
   return 0;
