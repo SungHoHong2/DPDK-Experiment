@@ -153,5 +153,13 @@ static int checking_head_room_size(){
     }
   }
 
+  for(int i =0; i<10; i++){
+    if(!rte_pktmbuf_prepend(m, 1)){
+        printf("prepend failed\n");
+    }else{
+        printf("length: %d\n", rte_pktmbuf_pkt_len(m));
+    }
+  }
+
   return 0;
 }
