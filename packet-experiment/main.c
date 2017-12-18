@@ -36,7 +36,6 @@
 #include <rte_ethdev.h>
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
-#include "test_pktmbuf.h"
 
 #define GOTO_FAIL(str, ...) do {					\
 		printf("mbuf test FAILED (l.%d): <" str ">\n",		\
@@ -74,6 +73,9 @@ static struct rte_mempool *refcnt_pool = NULL;
 static struct rte_ring *refcnt_mbuf_ring = NULL;
 static volatile uint32_t refcnt_stop_slaves;
 static unsigned refcnt_lcore[RTE_MAX_LCORE];
+
+
+#include "test_pktmbuf.h"
 
 
 /*
