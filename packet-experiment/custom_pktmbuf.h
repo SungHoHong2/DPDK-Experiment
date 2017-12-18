@@ -170,18 +170,14 @@ static int filling_rest(int length){
   m = rte_pktmbuf_alloc(pktmbuf_pool);
 
   while(1){
-    if(!rte_pktmbuf_prepend(m, 10)){
+    if(!rte_pktmbuf_append(m, 10)){
         break;
-    }else{
-        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 
   while(1){
-    if(!rte_pktmbuf_prepend(m, 1)){
+    if(!rte_pktmbuf_append(m, 1)){
         break;
-    }else{
-        // printf("length: %d\n", rte_pktmbuf_pkt_len(m));
     }
   }
 
