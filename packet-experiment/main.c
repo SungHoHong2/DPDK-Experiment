@@ -150,12 +150,8 @@ int main(int argc, char **argv){
 	// test_one_pktmbuf();
 
 	// customized action
+	custom_pktmbuf();
 
-	// create packet with size 50
-	// increase packet size to 100
-	// increase packet size to 300
-  // decrease packet size to 250
-  // increase packet size to 300
 
 
 
