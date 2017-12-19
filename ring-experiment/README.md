@@ -13,10 +13,14 @@
 - **the files related ring**
 
 ```c
+#define APP_DEFAULT_NIC_RX_RING_SIZE 1024
+#define APP_DEFAULT_NIC_TX_RING_SIZE 1024
 
 
+struct rte_ring *rings[APP_MAX_NIC_PORTS][APP_MAX_WORKER_LCORES];
 
-
+struct rte_ring *rings_in[APP_MAX_IO_LCORES];
+struct rte_ring *rings_out[APP_MAX_NIC_PORTS];
 
 
 
