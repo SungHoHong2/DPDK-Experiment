@@ -20,9 +20,12 @@ int vd_init_parsed(uint8_t port_id, char *name)
     vd_gconf.args_count = 0; // counting the # of arguments
     vd_gconf.vd_eal_args[vd_gconf.args_count++] = "ceph"; // first arguments of vd_eal_args is ceph
 ```
+
 > [`vd_gconf` - struct file for saving the arguments for dpdk ](vd_gconf.md)
 
 ```c
+
+    // assign values to the variables of the struct file
     vd_arg_set(&cfg, "core_mask", "-c", vd_gconf.core_mask);
     vd_arg_set(&cfg, "mem_channel", "-n", vd_gconf.mem_channel);
     vd_arg_set(&cfg, "socket_mem", "--socket-mem", vd_gconf.socket_mem);
@@ -36,3 +39,6 @@ int vd_init_parsed(uint8_t port_id, char *name)
     return 1;
 }
 ```
+
+> ['vd_arg_set' - how to set the string value to the struct elements](vd_arg_set.md) <br>
+> ['vd_show_config' - print out the values from struct file](vd_show_config.md)
