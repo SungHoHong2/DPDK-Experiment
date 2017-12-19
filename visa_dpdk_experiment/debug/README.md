@@ -9,7 +9,7 @@ int main()
 
 ```
 
-> [vd_dpdk_init](vd_dpdk_init.md)
+> [`vd_dpdk_init` - initialize the variables from config file](vd_dpdk_init.md)
 
 ```c
     if (ret < 0) {
