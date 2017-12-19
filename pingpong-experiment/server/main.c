@@ -39,10 +39,10 @@
 #include <rte_mbuf.h>
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
-#define NB_MBUF   87381
+#define NB_MBUF   8192
 // #define MAX_PKT_BURST 32
-#define MAX_PKT_BURST 170
-#define RTE_MBUF_SIZE 384 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define MAX_PKT_BURST 32
+#define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 64 // sending packet size
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
