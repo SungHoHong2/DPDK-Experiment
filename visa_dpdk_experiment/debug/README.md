@@ -25,11 +25,11 @@ int vd_dpdk_init(uint8_t portid, char *name)
     ret = vd_init_parsed(0, name);
     printf("Try to init eal!\n");
 
-```c
+```
 
 > [vd_init_parsed](vd_init_parsed.md)
 
-```
+```c
     ret = rte_eal_init(vd_gconf.args_count, vd_gconf.vd_eal_args);
     if (ret < 0)
         printf("Cannot initial eal!\n");
