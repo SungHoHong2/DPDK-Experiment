@@ -1,7 +1,5 @@
 ### vd_init_parsed
 
-> it reads the value from the visa-dpdk.cfg file
-
 ```c
 int vd_init_parsed(uint8_t port_id, char *name)
 {
@@ -19,11 +17,12 @@ int vd_init_parsed(uint8_t port_id, char *name)
         return -1;
     }
 
+    vd_gconf.args_count = 0; // counting the # of arguments
+    vd_gconf.vd_eal_args[vd_gconf.args_count++] = "ceph"; // first arguments of vd_eal_args is ceph
+```
+> [`vd_gconf` - struct file for saving the arguments for dpdk ](vd_gconf.md)
 
-    vd_gconf.args_count = 0;
-
-    vd_gconf.vd_eal_args[vd_gconf.args_count++] = "ceph";
-
+```c
     vd_arg_set(&cfg, "core_mask", "-c", vd_gconf.core_mask);
     vd_arg_set(&cfg, "mem_channel", "-n", vd_gconf.mem_channel);
     vd_arg_set(&cfg, "socket_mem", "--socket-mem", vd_gconf.socket_mem);

@@ -9,7 +9,7 @@ int vd_dpdk_init(uint8_t portid, char *name)
 
 ```
 
-> [`vd_init_parsed` - initializing the values from config file](vd_init_parsed.md)
+> [`vd_init_parsed` - parse the files from the config file](vd_init_parsed.md)
 
 ```c
     ret = rte_eal_init(vd_gconf.args_count, vd_gconf.vd_eal_args);
