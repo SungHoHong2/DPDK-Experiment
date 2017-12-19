@@ -23,3 +23,5 @@ RTE_LCORE_FOREACH_SLAVE(lcore) {
 }
 
 ```
+
+> [app_lcore_main_loop](app_lcore_main_loop.md)

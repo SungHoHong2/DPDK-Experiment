@@ -31,6 +31,8 @@ export RTE_SDK=/home/sungho/ceph-12.2.0/src/dpdk-17
 export DESTDIR=/usr/local
 export RTE_TARGET=x86_64-native-linuxapp-gcc
 
+export CMAKE_SOURCE_DIR=home/sungho/visa-dpdk
+
 # stable version
 export RTE_SDK=/home/sungho/dpdk-stable-17.05.2
 export DESTDIR=/usr/local
