@@ -115,12 +115,46 @@ static void app_init_nics(void) {
 
   // Init NIC ports and queues, then start the ports
   for (port = 0; port < APP_MAX_NIC_PORTS; port ++) {
+      struct rte_mempool * pool;
+      n_rx_queues = app_get_nic_rx_queues_per_port(port);
+      n_tx_queues = app.nic_tx_port_mask[port];
 
+      if ((n_rx_queues == 0) && (n_tx_queues == 0)) {
+          continue;
+      }
 
-  }
+      ret = rte_eth_dev_configure(
+              port,
+              (uint8_t) n_rx_queues,
+              (uint8_t) n_tx_queues,
+              &port_conf);
 
+              for (queue = 0; queue < APP_MAX_RX_QUEUES_PER_NIC_PORT; queue ++) {
+                    app_get_lcore_for_nic_rx(port, queue, &lcore);
+                    socket = rte_lcore_to_socket_id(lcore);
+                    pool = app.lcore_params[lcore].pool
+                    ret = rte_eth_rx_queue_setup(
+                             port,
+                             queue,
+                             (uint16_t) app.nic_rx_ring_size,
+                             socket,
+                             NULL,
+                             pool);
+              }  
 
+              // Init TX queues
+              if (app.nic_tx_port_mask[port] == 1) {
+                  app_get_lcore_for_nic_tx(port, &lcore);
+                  socket = rte_lcore_to_socket_id(lcore);
+                  ret = rte_eth_tx_queue_setup(
+                              port,
+                              0,
+                              (uint16_t) app.nic_tx_ring_size,
+                              socket,
+                              NULL);
 
+              ret = rte_eth_dev_start(port);
+    }
 }
 
 ```
