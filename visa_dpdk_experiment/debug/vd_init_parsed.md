@@ -20,7 +20,6 @@ int vd_init_parsed(uint8_t port_id, char *name)
     }
 
 
-
     vd_gconf.args_count = 0;
 
     vd_gconf.vd_eal_args[vd_gconf.args_count++] = "ceph";
