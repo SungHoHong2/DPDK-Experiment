@@ -40,5 +40,5 @@ int vd_init_parsed(uint8_t port_id, char *name)
 }
 ```
 
-> ['vd_arg_set' - how to set the string value to the struct elements](vd_arg_set.md) <br>
-> ['vd_show_config' - print out the values from struct file](vd_show_config.md)
+> [`vd_arg_set` - how to set the string value to the struct elements](vd_arg_set.md) <br>
+> [`vd_show_config` - print out the values from struct file](vd_show_config.md)
