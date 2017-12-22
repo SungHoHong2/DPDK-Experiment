@@ -72,7 +72,7 @@ int main(){
 
 
     // get information of the server
-    if ((rv = getaddrinfo("lab01", PORT, &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo("172.24.30.31", PORT, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
     }
