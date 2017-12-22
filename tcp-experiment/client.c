@@ -13,7 +13,7 @@
 
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
-#define PKT_SIZE 5000
+#define PKT_SIZE 10000
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
