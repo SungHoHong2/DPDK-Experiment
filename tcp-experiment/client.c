@@ -146,7 +146,7 @@ int main(){
             }
 
 
-    nic_file = fopen("/sys/class/net/eno1/statistics/rx_packets" , "r");
+    nic_file = fopen("/sys/class/net/ib0/statistics/rx_packets" , "r");
     if (nic_file) {
         fscanf(nic_file, "%s", nic_str);
         packets = atoi(nic_str) - packets;
