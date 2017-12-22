@@ -19,7 +19,7 @@
 
 
 #define PORT "3490"  // the port users will be connecting to
-#define PKT_SIZE 500000 // max number of bytes we can get at once
+#define PKT_SIZE 1000000 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
 
 
