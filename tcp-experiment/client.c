@@ -21,8 +21,8 @@ struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
-static int intervals;
-static double latency, prev_latency, testing_float;
+static int intervals, testing_float;
+static double latency, prev_latency;
 ;
 
 
@@ -42,7 +42,7 @@ void print_log(){
          "\nPKT-SIZE: %d"
          "\nBytes sent: %ld"
          "\nBytes received: %ld"
-         "\nDuration: %f"
+         "\nDuration: %d"
          ,PKT_SIZE
          ,tx_throughput
          ,rx_throughput
@@ -65,6 +65,7 @@ int main(){
     socklen_t sin_size;
     long int success = 0;
     static time_t start; //adding timer
+    struct timespec tps, tpe;
     FILE * nic_file;
     char nic_str[100];
 
@@ -115,8 +116,12 @@ int main(){
   }
 
 
+
+
   time (&start);
   while(1){
+
+                clock_gettime(CLOCK_REALTIME, &tps);
                 prev_latency = latency;
                 char send_data[PKT_SIZE];
                 memset( send_data, '0', PKT_SIZE * sizeof(char));
@@ -129,7 +134,7 @@ int main(){
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
                 if(success && strlen(recv_data)>0){
-                    testing_float = atof(recv_data);
+                    // testing_float = atof(recv_data);
                     rx_throughput += strlen(recv_data);
                 }
 
@@ -141,6 +146,10 @@ int main(){
                 if(latency>=10){
                   break;
                 }
+
+
+                clock_gettime(CLOCK_REALTIME, &tpe);
+                testing_float = tpe.tv_nsec - tps.tv_nsec
 
                 // printf("%s%s", clr, topLeft);
                 // printf("client running for %f seconds\n",latency);
