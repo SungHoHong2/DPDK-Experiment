@@ -13,7 +13,7 @@
 
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
-#define PKT_SIZE 1000000
+#define PKT_SIZE 64
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
@@ -22,7 +22,9 @@ static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
 static int intervals;
-static double latency, prev_latency;
+static double latency, prev_latency, testing_float;
+;
+
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
@@ -40,14 +42,16 @@ void print_log(){
          "\nPKT-SIZE: %d"
          "\nBytes sent: %ld"
          "\nBytes received: %ld"
-         "\nLatency: %f"
+         "\nDuration: %f"
          ,PKT_SIZE
          ,tx_throughput
          ,rx_throughput
          ,latency);
   printf("\nPacket Statistics ------------------------------"
          "\nPackets received: %d"
-         ,packets);
+         "\nTesting Float: %f"
+         ,packets
+         ,testing_float);
   printf("\n========================================================\n");
   intervals = 0;
 }
@@ -115,18 +119,17 @@ int main(){
   while(1){
                 prev_latency = latency;
                 char send_data[PKT_SIZE];
-                memset( send_data, '*', PKT_SIZE * sizeof(char));
+                memset( send_data, '0', PKT_SIZE * sizeof(char));
                 success=send(sockfd, send_data, PKT_SIZE, 0);
 
                 if(success && strlen(send_data)>0){
                     tx_throughput += strlen(send_data);
                 }
 
-
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
 
-
                 if(success && strlen(recv_data)>0){
+                    testing_float = atof(recv_data);
                     rx_throughput += strlen(recv_data);
                 }
 
