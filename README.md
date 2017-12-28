@@ -23,9 +23,10 @@
 - [Implemented pingpong for PKTGEN](pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
 
+<br>
 
-### Implementation
-- [`DPDK-VISA` - experimental interface for using dpdk](visa_dpdk_experiment)
+### Device Reading
+- [`device configuration` - getting device configuration data from ceph](device)
 
 
 <br>
