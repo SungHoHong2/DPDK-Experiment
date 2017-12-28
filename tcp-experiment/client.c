@@ -49,7 +49,7 @@ void print_log(){
          ,latency);
   printf("\nPacket Statistics ------------------------------"
          "\nPackets received: %d"
-         "\nTesting Float: %f"
+         "\nTesting Float: %d"
          ,packets
          ,testing_float);
   printf("\n========================================================\n");
@@ -149,7 +149,7 @@ int main(){
 
 
                 clock_gettime(CLOCK_REALTIME, &tpe);
-                testing_float = tpe.tv_nsec - tps.tv_nsec
+                testing_float = tpe.tv_nsec - tps.tv_nsec;
 
                 // printf("%s%s", clr, topLeft);
                 // printf("client running for %f seconds\n",latency);
