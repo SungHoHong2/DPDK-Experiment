@@ -21,8 +21,8 @@ struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
-static int intervals, testing_float;
-static double latency, prev_latency;
+static int intervals;
+static double latency, prev_latency, testing_float;
 ;
 
 
@@ -49,7 +49,7 @@ void print_log(){
          ,latency);
   printf("\nPacket Statistics ------------------------------"
          "\nPackets received: %d"
-         "\nTesting Float: %d"
+         "\nTesting Float: %f"
          ,packets
          ,testing_float);
   printf("\n========================================================\n");
