@@ -55,7 +55,6 @@ int main(int argc , char *argv[])
     puts("Connection accepted");
 
 
-    memset( send_data, '*', PKT_SIZE * sizeof(char));
     //Receive a message from client
     while(1){
         //Send the message back to client

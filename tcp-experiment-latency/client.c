@@ -23,7 +23,6 @@ int main(int argc , char *argv[])
     }
     puts("Socket created");
 
-    memset( send_data, '*', PKT_SIZE * sizeof(char));
 
     server.sin_addr.s_addr = inet_addr("172.24.30.31");
     server.sin_family = AF_INET;
@@ -39,6 +38,9 @@ int main(int argc , char *argv[])
     puts("Connected\n");
 
     //keep communicating with server
+
+    // memset( message, '*', PKT_SIZE * sizeof(char));
+
     while(1)
     {
         printf("Enter message : ");
