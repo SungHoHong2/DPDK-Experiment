@@ -14,6 +14,7 @@
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
 #define PKT_SIZE 64
+#define NUM_ROUNDS 10000
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
@@ -21,8 +22,9 @@ struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
-static int intervals;
-static double latency, prev_latency;
+static double latency, prev_latency, real_latency;
+;
+
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa){
@@ -40,16 +42,17 @@ void print_log(){
          "\nPKT-SIZE: %d"
          "\nBytes sent: %ld"
          "\nBytes received: %ld"
-         "\nLatency: %f"
+         "\nDuration: %f"
          ,PKT_SIZE
          ,tx_throughput
          ,rx_throughput
          ,latency);
   printf("\nPacket Statistics ------------------------------"
          "\nPackets received: %d"
-         ,packets);
+         "\nLatency: %f"
+         ,packets
+         ,real_latency);
   printf("\n========================================================\n");
-  intervals = 0;
 }
 
 int main(){
@@ -61,10 +64,11 @@ int main(){
     socklen_t sin_size;
     long int success = 0;
     static time_t start; //adding timer
+    struct timespec tps, tpe;
     FILE * nic_file;
     char nic_str[100];
 
-    intervals = tx_throughput = rx_throughput = 0;
+    tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -112,7 +116,9 @@ int main(){
 
 
   time (&start);
-  while(1){
+  clock_gettime(CLOCK_REALTIME, &tps);
+  for(int i=0; i<NUM_ROUNDS; i++){
+
                 prev_latency = latency;
                 char send_data[PKT_SIZE];
                 memset( send_data, '*', PKT_SIZE * sizeof(char));
@@ -122,9 +128,7 @@ int main(){
                     tx_throughput += strlen(send_data);
                 }
 
-
                 success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
-
 
                 if(success && strlen(recv_data)>0){
                     rx_throughput += strlen(recv_data);
@@ -134,16 +138,10 @@ int main(){
                 if((latency-prev_latency)>=1){
                   print_log();
                 }
-
-                if(latency>=10){
-                  break;
-                }
-
-                // printf("%s%s", clr, topLeft);
-                // printf("client running for %f seconds\n",latency);
-
-
             }
+
+    clock_gettime(CLOCK_REALTIME, &tpe);
+    real_latency = tpe.tv_nsec - tps.tv_nsec;
 
 
     nic_file = fopen("/sys/class/net/ib0/statistics/rx_packets" , "r");

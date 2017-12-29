@@ -1,4 +1,4 @@
-objects = client server
+objects = client server client_latency
 all: $(objects)
 
 $(objects): %: %.c
