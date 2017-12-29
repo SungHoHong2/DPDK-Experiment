@@ -53,7 +53,7 @@ int main(int argc , char *argv[])
             puts("Send failed");
             return 1;
         }
-        // memset( message, '\0', PKT_SIZE * sizeof(char));
+        memset( message, '\0', PKT_SIZE * sizeof(char));
 
         //Receive a reply from the server
         if( recv(sock , server_reply , 2000 , 0) < 0)
@@ -64,7 +64,7 @@ int main(int argc , char *argv[])
 
         puts("Server reply :");
         puts(server_reply);
-        // memset( server_reply, '\0', PKT_SIZE * sizeof(char));
+        memset( server_reply, '\0', PKT_SIZE * sizeof(char));
     }
 
     close(sock);
