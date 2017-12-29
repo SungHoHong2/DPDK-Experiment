@@ -40,12 +40,14 @@ int main(int argc , char *argv[])
 
     // memset( message, '*', PKT_SIZE * sizeof(char));
 
-    while(1)
+    for(int i=0; i<10; i++)
     {
         char message[PKT_SIZE] , server_reply[PKT_SIZE];
 
-        printf("Enter message : ");
-        scanf("%s" , message);
+        // printf("Enter message : ");
+        // scanf("%s" , message);
+
+        memset( message, '*', PKT_SIZE * sizeof(char));
 
         //Send some data
         if( send(sock , message , strlen(message) , 0) < 0)
