@@ -152,7 +152,7 @@ int main(){
   //  }
 
 
-   while(1){
+    for(int i=0; i<10; i++){
      prev_latency = latency;
 
      char send_data[PKT_SIZE];
