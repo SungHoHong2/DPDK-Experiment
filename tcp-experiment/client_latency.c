@@ -139,7 +139,6 @@ int main(){
                           tx_throughput += strlen(send_data);
                       }
                 } else {
-                      pthread_mutex_unlock(&lock);
                       success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
                       if(success && strlen(recv_data)>0){
                           rx_throughput += strlen(recv_data);
@@ -152,6 +151,21 @@ int main(){
                 }
    }
 
+   while(1){
+     success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
+     if(success && strlen(recv_data)>0){
+         rx_throughput += strlen(recv_data);
+     }
+
+     latency = difftime(time(0), start);
+     if((latency-prev_latency)>=1){
+       print_log();
+     }
+
+     if(latency>=10){
+       break;
+     }
+   }
 
     clock_gettime(CLOCK_REALTIME, &tpe);
     real_latency = tpe.tv_nsec - tps.tv_nsec;
