@@ -121,7 +121,7 @@ int main(){
 
 
 
-  for(int rounds=0; i<NUM_ROUNDS*2; i++){
+  for(int rounds=0; rounds<NUM_ROUNDS*2; rounds++){
 
                 prev_latency = latency;
 
