@@ -60,7 +60,7 @@ int main(int argc , char *argv[])
         //Send the message back to client
         if(read_size = recv(client_sock , client_message , 2000 , 0)){
               write(client_sock , client_message , strlen(client_message));
-              memset( message, '\0', PKT_SIZE * sizeof(char));
+              memset( client_message, '\0', PKT_SIZE * sizeof(char));
         }
     }
 
