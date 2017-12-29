@@ -154,8 +154,8 @@ int main(){
     }
 
     print_log();
-    printf("\n tpe: %d", tpe.tv_nsec);
-    printf("\n tps: %d", tps.tv_nsec);
+    printf("\n tpe: %ld", tpe.tv_nsec);
+    printf("\n tps: %ld", tps.tv_nsec);
 
     close(sockfd);
     return 0;
