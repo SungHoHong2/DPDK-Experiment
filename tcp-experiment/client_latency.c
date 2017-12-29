@@ -14,7 +14,7 @@
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
 #define PKT_SIZE 64
-#define NUM_ROUNDS 100000
+#define NUM_ROUNDS 10000
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
@@ -118,32 +118,37 @@ int main(){
 
   time (&start);
   clock_gettime(CLOCK_REALTIME, &tps);
-  for(int i=0; i<NUM_ROUNDS; i++){
+
+
+
+  for(int rounds=0; i<NUM_ROUNDS*2; i++){
 
                 prev_latency = latency;
-                char send_data[PKT_SIZE];
-                memset( send_data, '*', PKT_SIZE * sizeof(char));
-                success=send(sockfd, send_data, PKT_SIZE, 0);
 
-                if(success && strlen(send_data)>0){
-                    tx_throughput += strlen(send_data);
-                }
+                if (round % 2 == 0) {
+                      char send_data[PKT_SIZE];
+                      memset( send_data, '*', PKT_SIZE * sizeof(char));
+                      success=send(sockfd, send_data, PKT_SIZE, 0);
 
-                success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
-
-                if(success && strlen(recv_data)>0){
-                    rx_throughput += strlen(recv_data);
+                      if(success && strlen(send_data)>0){
+                          tx_throughput += strlen(send_data);
+                      }
+                } else {
+                      success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
+                      if(success && strlen(recv_data)>0){
+                          rx_throughput += strlen(recv_data);
+                      }
                 }
 
                 latency = difftime(time(0), start);
                 if((latency-prev_latency)>=1){
                   print_log();
                 }
-            }
+   }
+
 
     clock_gettime(CLOCK_REALTIME, &tpe);
     real_latency = tpe.tv_nsec - tps.tv_nsec;
-
 
     nic_file = fopen("/sys/class/net/ib0/statistics/rx_packets" , "r");
     if (nic_file) {
@@ -154,8 +159,15 @@ int main(){
     }
 
     print_log();
-    printf("\n tpe: %ld", tpe.tv_nsec);
-    printf("\n tps: %ld", tps.tv_nsec);
+    printf("\n tpe end time: %ld", tpe.tv_nsec);
+    printf("\n tps start time: %ld", tps.tv_nsec);
+
+    long int received_packets = rx_throughput/PKT_SIZE;
+    printf("\n received packets: %ld", received_packets);
+
+    long int mean_latency = real_latency/received_packets
+    printf("\n mean latency: %ld", mean_latency);
+    printf("\n");
 
     close(sockfd);
     return 0;
