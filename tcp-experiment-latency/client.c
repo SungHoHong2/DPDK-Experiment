@@ -64,8 +64,7 @@ int main(int argc , char *argv[])
             break;
         }
 
-        puts("Server reply :");
-        printf("%ld",strlen(server_reply));
+        printf("Server reply - strlen(server_reply):  %ld",strlen(server_reply));
         // puts(server_reply);
         memset( server_reply, '\0', PKT_SIZE * sizeof(char));
     }
