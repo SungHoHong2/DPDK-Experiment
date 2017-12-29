@@ -46,25 +46,21 @@ int main(int argc , char *argv[])
 
         // printf("Enter message : ");
         // scanf("%s" , message);
-
         memset( message, '*', PKT_SIZE * sizeof(char));
-
         //Send some data
-        if( send(sock , message , strlen(message) , 0) < 0)
-        {
+        if( send(sock , message , strlen(message) , 0) < 0){
             puts("Send failed");
             return 1;
         }
         memset( message, '\0', PKT_SIZE * sizeof(char));
 
         //Receive a reply from the server
-        if( recv(sock , server_reply , 2000 , 0) < 0)
-        {
+        if( recv(sock , server_reply , 2000 , 0) < 0){
             puts("recv failed");
             break;
         }
 
-        printf("Server reply - strlen(server_reply):  %ld",strlen(server_reply));
+        printf("Server reply - strlen(server_reply):  %ld\n",strlen(server_reply));
         // puts(server_reply);
         memset( server_reply, '\0', PKT_SIZE * sizeof(char));
     }
