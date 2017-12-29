@@ -10,6 +10,8 @@
 #include <arpa/inet.h>
 #include <time.h>
 #include <sys/fcntl.h>
+#include <pthread.h>
+
 
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
@@ -68,13 +70,15 @@ int main(){
     struct timespec tps, tpe;
     FILE * nic_file;
     char nic_str[100];
+    pthread_mutex_t lock;
+
 
     tx_throughput = rx_throughput = 0;
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     fcntl(sockfd, F_SETFL, O_NONBLOCK);
-
+    pthread_mutex_init(&lock, NULL);
 
     // get information of the server
     if ((rv = getaddrinfo("172.24.30.31", PORT, &hints, &servinfo)) != 0) {
@@ -126,6 +130,7 @@ int main(){
                 prev_latency = latency;
 
                 if (rounds % 2 == 0) {
+                      pthread_mutex_lock(&lock);
                       char send_data[PKT_SIZE];
                       memset( send_data, '*', PKT_SIZE * sizeof(char));
                       success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -134,6 +139,7 @@ int main(){
                           tx_throughput += strlen(send_data);
                       }
                 } else {
+                      pthread_mutex_unlock(&lock);
                       success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
                       if(success && strlen(recv_data)>0){
                           rx_throughput += strlen(recv_data);
@@ -169,6 +175,7 @@ int main(){
     // printf("\n mean latency: %ld", mean_latency);
     printf("\n");
 
+    pthread_mutex_destroy(&lock);
     close(sockfd);
     return 0;
 }
