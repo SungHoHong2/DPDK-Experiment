@@ -13,7 +13,6 @@ int main(int argc , char *argv[])
 {
     int sock;
     struct sockaddr_in server;
-    char message[PKT_SIZE] , server_reply[PKT_SIZE];
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -43,6 +42,8 @@ int main(int argc , char *argv[])
 
     while(1)
     {
+        char message[PKT_SIZE] , server_reply[PKT_SIZE];
+
         printf("Enter message : ");
         scanf("%s" , message);
 
@@ -52,6 +53,7 @@ int main(int argc , char *argv[])
             puts("Send failed");
             return 1;
         }
+        // memset( message, '\0', PKT_SIZE * sizeof(char));
 
         //Receive a reply from the server
         if( recv(sock , server_reply , 2000 , 0) < 0)
@@ -62,6 +64,7 @@ int main(int argc , char *argv[])
 
         puts("Server reply :");
         puts(server_reply);
+        // memset( server_reply, '\0', PKT_SIZE * sizeof(char));
     }
 
     close(sock);
