@@ -155,12 +155,14 @@ int main(){
      prev_latency = latency;
      success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
      if(success && strlen(recv_data)>0){
+
          rx_throughput += strlen(recv_data);
      }
 
      latency = difftime(time(0), start);
      if((latency-prev_latency)>=1){
-       print_log();
+       recv_data("chara: s\n",recv_data);
+       // print_log();
      }
 
      if(latency>=10){
