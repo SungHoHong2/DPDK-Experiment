@@ -191,9 +191,9 @@ int main(){
         fclose(nic_file);
     }
 
-    print_log();
-    printf("\n tpe end time: %ld", tpe.tv_nsec);
-    printf("\n tps start time: %ld", tps.tv_nsec);
+    // print_log();
+    // printf("\n tpe end time: %ld", tpe.tv_nsec);
+    // printf("\n tps start time: %ld", tps.tv_nsec);
 
     // long int received_packets = rx_throughput/PKT_SIZE;
     // printf("\n received packets: %ld", received_packets);
