@@ -42,7 +42,7 @@ void print_log(){
          "\nPKT-SIZE: %d"
          "\nBytes sent: %ld"
          "\nBytes received: %ld"
-         "\nDuration: %d"
+         "\nDuration: %f"
          ,PKT_SIZE
          ,tx_throughput
          ,rx_throughput
