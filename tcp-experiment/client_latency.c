@@ -161,8 +161,8 @@ int main(){
 
      latency = difftime(time(0), start);
      if((latency-prev_latency)>=1){
-       recv_data("chara: s\n",recv_data);
        // print_log();
+       recv_data("chara: %s\n",recv_data);
      }
 
      if(latency>=10){
