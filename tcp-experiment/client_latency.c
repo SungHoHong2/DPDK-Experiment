@@ -162,7 +162,7 @@ int main(){
      latency = difftime(time(0), start);
      if((latency-prev_latency)>=1){
        // print_log();
-       printf("chara: %s\n",recv_data);
+       printf("chara: %s - %ld \n",recv_data, strlen(recv_data));
      }
 
      if(latency>=10){
