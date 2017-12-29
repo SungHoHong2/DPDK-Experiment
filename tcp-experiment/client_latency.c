@@ -125,31 +125,31 @@ int main(){
 
 
 
-  for(int rounds=0; rounds<NUM_ROUNDS*2; rounds++){
-
-                prev_latency = latency;
-
-                if (rounds % 2 == 0) {
-                      pthread_mutex_lock(&lock);
-                      char send_data[PKT_SIZE];
-                      memset( send_data, '*', PKT_SIZE * sizeof(char));
-                      success=send(sockfd, send_data, PKT_SIZE, 0);
-
-                      if(success && strlen(send_data)>0){
-                          tx_throughput += strlen(send_data);
-                      }
-                } else {
-                      success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
-                      if(success && strlen(recv_data)>0){
-                          rx_throughput += strlen(recv_data);
-                      }
-                }
-
-                latency = difftime(time(0), start);
-                if((latency-prev_latency)>=1){
-                  print_log();
-                }
-   }
+  // for(int rounds=0; rounds<NUM_ROUNDS*2; rounds++){
+  //
+  //               prev_latency = latency;
+  //
+  //               if (rounds % 2 == 0) {
+  //                     pthread_mutex_lock(&lock);
+  //                     char send_data[PKT_SIZE];
+  //                     memset( send_data, '*', PKT_SIZE * sizeof(char));
+  //                     success=send(sockfd, send_data, PKT_SIZE, 0);
+  //
+  //                     if(success && strlen(send_data)>0){
+  //                         tx_throughput += strlen(send_data);
+  //                     }
+  //               } else {
+  //                     success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
+  //                     if(success && strlen(recv_data)>0){
+  //                         rx_throughput += strlen(recv_data);
+  //                     }
+  //               }
+  //
+  //               latency = difftime(time(0), start);
+  //               if((latency-prev_latency)>=1){
+  //                 print_log();
+  //               }
+  //  }
 
    while(1){
      prev_latency = latency;
