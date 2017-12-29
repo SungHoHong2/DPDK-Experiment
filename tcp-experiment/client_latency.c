@@ -14,7 +14,7 @@
 #define PORT "3490" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
 #define PKT_SIZE 64
-#define NUM_ROUNDS 10000
+#define NUM_ROUNDS 100000
 
 const char clr[] = { 27, '[', '2', 'J', '\0' };
 const char topLeft[] = { 27, '[', '1', ';', '1', 'H','\0' };
@@ -22,7 +22,8 @@ struct sockaddr_storage their_addr; // connector's address information
 static long int tx_throughput;
 static long int rx_throughput;
 static int packets;
-static double latency, prev_latency, real_latency;
+static double latency, prev_latency;
+static long int real_latency;
 ;
 
 
@@ -49,7 +50,7 @@ void print_log(){
          ,latency);
   printf("\nPacket Statistics ------------------------------"
          "\nPackets received: %d"
-         "\nLatency: %f"
+         "\nLatency: %ld"
          ,packets
          ,real_latency);
   printf("\n========================================================\n");
@@ -153,6 +154,8 @@ int main(){
     }
 
     print_log();
+
+
     close(sockfd);
     return 0;
 }
