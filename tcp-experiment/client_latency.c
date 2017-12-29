@@ -151,20 +151,18 @@ int main(){
   //               }
   //  }
 
-  int send_num = 0;
+  char send_data[PKT_SIZE];
+  memset( send_data, '*', PKT_SIZE * sizeof(char));
+  success=send(sockfd, send_data, PKT_SIZE, 0);
+
+  if(success && strlen(send_data)>0){
+      send_num++;
+      tx_throughput += strlen(send_data);
+  }
+
    while(1){
      prev_latency = latency;
      success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
-
-
-     char send_data[PKT_SIZE];
-     memset( send_data, '*', PKT_SIZE * sizeof(char));
-     success=send(sockfd, send_data, PKT_SIZE, 0);
-
-     if((success && strlen(send_data)>0) && send_num>2){
-         send_num++;
-         tx_throughput += strlen(send_data);
-     }
 
      if(success && strlen(recv_data)>0){
          rx_throughput += strlen(recv_data);
