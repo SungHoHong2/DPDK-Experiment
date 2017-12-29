@@ -138,6 +138,7 @@ int main(void){
         success = send(new_fd, buf, PKT_SIZE, 0);
         if(success && strlen(buf)>0){
             tx_throughput += strlen(buf);
+            memset( buf, '\0', PKT_SIZE * sizeof(char));
         }
 
         latency = difftime(time(0), start);
