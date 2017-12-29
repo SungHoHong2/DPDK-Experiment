@@ -77,7 +77,7 @@ int main(){
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
-    fcntl(sockfd, F_SETFL, O_NONBLOCK);
+    // fcntl(sockfd, F_SETFL, O_NONBLOCK);
     pthread_mutex_init(&lock, NULL);
 
     // get information of the server
