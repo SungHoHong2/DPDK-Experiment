@@ -152,6 +152,7 @@ int main(){
    }
 
    while(1){
+     prev_latency = latency;
      success=recv(sockfd, recv_data, PKT_SIZE-1, 0);
      if(success && strlen(recv_data)>0){
          rx_throughput += strlen(recv_data);
