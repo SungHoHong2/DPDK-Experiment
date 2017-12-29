@@ -156,7 +156,6 @@ int main(){
   success=send(sockfd, send_data, PKT_SIZE, 0);
 
   if(success && strlen(send_data)>0){
-      send_num++;
       tx_throughput += strlen(send_data);
   }
 
