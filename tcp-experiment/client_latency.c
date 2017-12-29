@@ -125,7 +125,7 @@ int main(){
 
                 prev_latency = latency;
 
-                if (round % 2 == 0) {
+                if (rounds % 2 == 0) {
                       char send_data[PKT_SIZE];
                       memset( send_data, '*', PKT_SIZE * sizeof(char));
                       success=send(sockfd, send_data, PKT_SIZE, 0);
@@ -162,11 +162,11 @@ int main(){
     printf("\n tpe end time: %ld", tpe.tv_nsec);
     printf("\n tps start time: %ld", tps.tv_nsec);
 
-    long int received_packets = rx_throughput/PKT_SIZE;
-    printf("\n received packets: %ld", received_packets);
-
-    long int mean_latency = real_latency/received_packets
-    printf("\n mean latency: %ld", mean_latency);
+    // long int received_packets = rx_throughput/PKT_SIZE;
+    // printf("\n received packets: %ld", received_packets);
+    //
+    // long int mean_latency = real_latency/received_packets;
+    // printf("\n mean latency: %ld", mean_latency);
     printf("\n");
 
     close(sockfd);
