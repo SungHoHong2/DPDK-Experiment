@@ -16,7 +16,7 @@ LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 
 TARGET="server"
 all:
-	cc -O -gdwarf-2  -I../lib -o ${TARGET} server.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET} server.c ${LIBS}
 
 .PHONY: clean
 clean:
