@@ -38,8 +38,8 @@ int loop(void *arg)
             /* Simply close socket */
             ff_close(clientfd);
 
-        //  } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
-        } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
+          } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
+        // } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
             int available = (int)event.data;
             do {
                 int nclientfd = ff_accept(sockfd, NULL, NULL);
