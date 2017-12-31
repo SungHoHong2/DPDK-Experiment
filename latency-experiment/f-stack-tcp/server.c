@@ -37,7 +37,7 @@ int loop(void *arg)
         if (event.flags & EV_EOF) {
             /* Simply close socket */
             ff_close(clientfd);
-        } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
+        } else if (clientfd != sockfd) { // I think this is the reason why it is only available to connect with your own
             int available = (int)event.data;
             do {
                 int nclientfd = ff_accept(sockfd, NULL, NULL);
@@ -62,10 +62,8 @@ int loop(void *arg)
         } else if (event.filter == EVFILT_READ) {
             char buf[256];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
-            ff_write(clientfd, "howdyhowdy", sizeof(char)*100);
+            ff_write(clientfd, "howdy howdy", sizeof(char)*100);
             printf("connection accepted howdy\n");
-
-
         } else {
             printf("unknown event: %8.8X\n", event.flags);
         }

@@ -15,7 +15,7 @@ export FF_DPDK=/data/f-stack/dpdk/x86_64-native-linuxapp-gcc
 
 
 # the ip address needs to be within the broadcast []
-wget -qO- http://10.218.111.253 | sed -e 's/<[^>]*>//g'
+wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
 ```
 
 <br>
