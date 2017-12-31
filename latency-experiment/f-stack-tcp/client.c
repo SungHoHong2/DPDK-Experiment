@@ -29,7 +29,7 @@ int main(int argc , char *argv[])
 
   // int sock;
   // struct sockaddr_in server;
-  // char message[1000] , server_reply[2000];
+  char message[1000] , server_reply[2000];
 
 
   // //Create socket
@@ -55,7 +55,7 @@ int main(int argc , char *argv[])
     // server.sin_addr.s_addr = inet_addr("127.0.0.1");
     // server.sin_family = AF_INET;
     // server.sin_port = htons( 8888 );
-    my_addr.sin_addr.s_addr = inet_addr("10.218.111.253");
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons( 80 );
 
@@ -69,6 +69,28 @@ int main(int argc , char *argv[])
     int ret = ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
     puts("Connected\n");
 
+    while(1){
+
+        printf("Enter message : ");
+        scanf("%s" , message);
+
+        //Send some data
+        if( ff_send(sockfd , message , strlen(message) , 0) < 0)
+        {
+            puts("Send failed");
+            return 1;
+        }
+
+        //Receive a reply from the server
+        if( ff_recv(sockfd , server_reply , 2000 , 0) < 0)
+        {
+            puts("recv failed");
+            break;
+        }
+
+        puts("Server reply :");
+        puts(server_reply);
+    }
 
     return 0;
 
