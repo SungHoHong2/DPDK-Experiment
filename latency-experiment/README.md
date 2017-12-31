@@ -23,6 +23,5 @@ wget -qO- http://10.218.111.253 | sed -e 's/<[^>]*>//g'
 - [implementing f-stack-tcp](f-stack-tcp)
 ```
 cd f-stack-tcp
-./start.sh -b server -c config.ini
 ./server --conf config.ini --proc-type=primary --proc-id=0
 ```

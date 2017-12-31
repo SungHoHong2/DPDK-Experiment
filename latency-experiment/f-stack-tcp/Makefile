@@ -15,9 +15,12 @@ LIBS+= -lrte_ring -lrte_cmdline -lrte_cfgfile -lrte_kni -lrte_timer -Wl,-lrte_pm
 LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 
 TARGET="server"
+TARGET_2="client"
 all:
 	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET} server.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_2} client.c ${LIBS}
+
 
 .PHONY: clean
 clean:
-	rm -f *.o ${TARGET}
+	rm -f *.o ${TARGET} ${TARGET_2}
