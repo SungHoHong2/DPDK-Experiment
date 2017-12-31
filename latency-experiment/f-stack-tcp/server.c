@@ -65,7 +65,7 @@ int loop(void *arg)
         } else if (event.filter == EVFILT_READ) { // this will work
             char buf[256];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
-            ff_write(clientfd, "howdy howdy", sizeof(char)*100);
+            ff_write(clientfd, buf, sizeof(buf));
         } else {  // or this one will work
             printf("unknown event: %8.8X\n", event.flags);
         }
