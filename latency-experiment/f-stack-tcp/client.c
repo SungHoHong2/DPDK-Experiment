@@ -57,7 +57,7 @@ int main(int argc , char *argv[])
     // server.sin_port = htons( 8888 );
     my_addr.sin_addr.s_addr = inet_addr("10.218.111.253");
     my_addr.sin_family = AF_INET;
-    server.sin_port = htons( 80 );
+    my_addr.sin_port = htons( 80 );
 
     // //Connect to remote server
     // // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);
