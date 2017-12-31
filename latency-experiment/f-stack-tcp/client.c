@@ -66,21 +66,8 @@ int main(int argc , char *argv[])
     //     perror("connect failed. Error");
     //     return 1;
     // }
-    int ret = ff_connect(sockfd, struct sockaddr *)&my_addr, sizeof(my_addr));
+    int ret = ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
     puts("Connected\n");
-
-
-    int ret = ff_bind(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
-    if (ret < 0) {
-        printf("ff_bind failed\n");
-        exit(1);
-    }
-
-    ret = ff_listen(sockfd, MAX_EVENTS);
-    if (ret < 0) {
-        printf("ff_listen failed\n");
-        exit(1);
-    }
 
 
     return 0;

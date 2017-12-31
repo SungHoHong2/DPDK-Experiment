@@ -29,6 +29,8 @@ int loop(void *arg)
     unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
     unsigned i;
 
+    printf("ff_kevent accepted howdy\n");
+
     for (i = 0; i < nevents; ++i) {
         struct kevent event = events[i];
         int clientfd = (int)event.ident;
@@ -37,7 +39,7 @@ int loop(void *arg)
         if (event.flags & EV_EOF) {
             /* Simply close socket */
             ff_close(clientfd);
-        } else if (clientfd == sockfd) {
+        } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
             int available = (int)event.data;
             do {
                 int nclientfd = ff_accept(sockfd, NULL, NULL);
@@ -49,6 +51,7 @@ int loop(void *arg)
 
                 /* Add to event list */
                 EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL);
+                printf("EV_SET howdy\n");
 
                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
                     printf("ff_kevent error:%d, %s\n", errno,
@@ -62,7 +65,7 @@ int loop(void *arg)
             char buf[256];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
             ff_write(clientfd, "howdyhowdy", sizeof(char)*100);
-
+            printf("connection accepted howdy\n");
 
 
         } else {
