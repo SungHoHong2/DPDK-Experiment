@@ -14,21 +14,17 @@
 - [`crafting Packets` - experiment on creating packets](pkt-craft)
 - [`dpdk packets` - experiment on packet components ](packet-experiment)
 - [`ring` - experiment on ring ](ring-experiment)
+- [`device reading` - getting device configuration data from ceph](device)
+
 
 <br>
 
-### Performance Check
+### Performance Test
 - [Implemented pingpong for DPDK](pingpong-experiment)
 - [Implemented pingpong for TCP](tcp-experiment)
 - [Implemented pingpong for PKTGEN](pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
 - [`Latency Performance Test` by using f-stack & IMB-benchmark](latency-experiment)
-
-
-<br>
-
-### Device Reading
-- [`device configuration` - getting device configuration data from ceph](device)
 
 
 <br>
