@@ -7,14 +7,12 @@
 #include<sys/socket.h>
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h>    //write
-#define PKT_SIZE 64
-
 
 int main(int argc , char *argv[])
 {
     int socket_desc , client_sock , c , read_size;
     struct sockaddr_in server , client;
-    char client_message[PKT_SIZE];
+    char client_message[2000];
 
     //Create socket
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -54,14 +52,11 @@ int main(int argc , char *argv[])
     }
     puts("Connection accepted");
 
-
     //Receive a message from client
-    while(1){
+    while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
+    {
         //Send the message back to client
-        if(read_size = recv(client_sock , client_message , 2000 , 0)){
-              write(client_sock , client_message , strlen(client_message));
-              memset( client_message, '\0', PKT_SIZE * sizeof(char));
-        }
+        write(client_sock , client_message , strlen(client_message));
     }
 
     if(read_size == 0)

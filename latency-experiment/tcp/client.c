@@ -5,14 +5,12 @@
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
-#define PKT_SIZE 64
-
-
 
 int main(int argc , char *argv[])
 {
     int sock;
     struct sockaddr_in server;
+    char message[1000] , server_reply[2000];
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -22,12 +20,12 @@ int main(int argc , char *argv[])
     }
     puts("Socket created");
 
-
-    server.sin_addr.s_addr = inet_addr("172.24.30.31");
+    server.sin_addr.s_addr = inet_addr("127.0.0.1");
     server.sin_family = AF_INET;
     server.sin_port = htons( 8888 );
 
     //Connect to remote server
+    // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);
     if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
     {
         perror("connect failed. Error");
@@ -37,32 +35,27 @@ int main(int argc , char *argv[])
     puts("Connected\n");
 
     //keep communicating with server
-
-    // memset( message, '*', PKT_SIZE * sizeof(char));
-
-    for(int i=0; i<10; i++)
+    while(1)
     {
-        char message[PKT_SIZE] , server_reply[PKT_SIZE];
+        printf("Enter message : ");
+        scanf("%s" , message);
 
-        // printf("Enter message : ");
-        // scanf("%s" , message);
-        memset( message, '*', PKT_SIZE * sizeof(char));
         //Send some data
-        if( send(sock , message , strlen(message) , 0) < 0){
+        if( send(sock , message , strlen(message) , 0) < 0)
+        {
             puts("Send failed");
             return 1;
         }
-        memset( message, '\0', PKT_SIZE * sizeof(char));
 
         //Receive a reply from the server
-        if( recv(sock , server_reply , 2000 , 0) < 0){
+        if( recv(sock , server_reply , 2000 , 0) < 0)
+        {
             puts("recv failed");
             break;
         }
 
-        printf("Server reply - strlen(server_reply):  %ld\n",strlen(server_reply));
-        // puts(server_reply);
-        memset( server_reply, '\0', PKT_SIZE * sizeof(char));
+        puts("Server reply :");
+        puts(server_reply);
     }
 
     close(sock);
