@@ -20,9 +20,9 @@ int main(int argc , char *argv[])
     }
     puts("Socket created");
 
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server.sin_addr.s_addr = inet_addr("10.218.111.254");
     server.sin_family = AF_INET;
-    server.sin_port = htons( 8888 );
+    server.sin_port = htons( 80 );
 
     //Connect to remote server
     // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);

@@ -50,7 +50,7 @@ int loop(void *arg)
                 }
 
                 /* Add to event list */
-                EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL);
+                EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
                 printf("EV_SET howdy\n");
 
                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
@@ -62,11 +62,11 @@ int loop(void *arg)
 
                 available--;
             } while (available);
-        } else if (event.filter == EVFILT_READ) {
+        } else if (event.filter == EVFILT_READ) { // this will work
             char buf[256];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
             ff_write(clientfd, "howdy howdy", sizeof(char)*100);
-        } else {
+        } else {  // or this one will work
             printf("unknown event: %8.8X\n", event.flags);
         }
     }

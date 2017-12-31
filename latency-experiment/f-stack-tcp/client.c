@@ -66,7 +66,7 @@ int main(int argc , char *argv[])
     //     perror("connect failed. Error");
     //     return 1;
     // }
-    int ret = ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
+    int ret = ff_connect(1024, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
     puts("Connected\n");
 
     while(1){
