@@ -56,6 +56,7 @@ int loop(void *arg)
                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
                     printf("ff_kevent error:%d, %s\n", errno,
                         strerror(errno));
+                        printf("EV_SET howdy\n");
                     return -1;
                 }
 
