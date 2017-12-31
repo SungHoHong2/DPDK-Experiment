@@ -50,7 +50,8 @@ int main(int argc , char *argv[])
 
     puts("Socket created");
 
-
+    struct sockaddr_in my_addr;
+    bzero(&my_addr, sizeof(my_addr));
     // server.sin_addr.s_addr = inet_addr("127.0.0.1");
     // server.sin_family = AF_INET;
     // server.sin_port = htons( 8888 );
