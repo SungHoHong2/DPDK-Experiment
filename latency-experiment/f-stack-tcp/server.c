@@ -29,8 +29,6 @@ int loop(void *arg)
     unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
     unsigned i;
 
-    printf("ff_kevent accepted howdy\n");
-
     for (i = 0; i < nevents; ++i) {
         struct kevent event = events[i];
         int clientfd = (int)event.ident;
