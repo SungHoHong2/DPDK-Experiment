@@ -1,6 +1,8 @@
 /*
     C ECHO client example using sockets
 */
+
+#include <unistd.h>
 #include<stdio.h> //printf
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
@@ -54,7 +56,6 @@ int main(int argc , char *argv[])
         }
         // memset( message, '\0', sizeof(char));
 
-        usleep(1);
 
         //Receive a reply from the server
         // memset( server_reply, '\0', sizeof(char));
@@ -63,6 +64,8 @@ int main(int argc , char *argv[])
             break;
         }
 
+
+        usleep(1);
         // puts("Server reply :");
         // puts(server_reply);
         total_length += strlen(server_reply);
