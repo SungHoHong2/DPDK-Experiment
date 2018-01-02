@@ -56,17 +56,20 @@ int main(int argc , char *argv[])
                 puts("Send failed");
                 return 1;
             }
-        } else {
 
+            usleep(1);
+
+        } else {
             //Receive a reply from the server
             if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
                 puts("recv failed");
                 break;
             }
             total_length += strlen(server_reply);
+
+            usleep(1);
         }
 
-        usleep(1);
         // puts("Server reply :");
         // puts(server_reply);
     }
