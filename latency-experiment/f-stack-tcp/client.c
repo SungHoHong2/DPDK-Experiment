@@ -13,7 +13,7 @@
 #define PKT_SIZE  128
 
 
-long int diff(timespec start, timespec end)
+long int diff(struct timespec start, struct timespec end)
 {
     timespec temp;
 
