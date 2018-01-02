@@ -10,7 +10,7 @@
 #include <time.h>
 
 
-#define TOTAL_SEND 3
+#define TOTAL_SEND 100
 #define PKT_SIZE  60
 
 int main(int argc , char *argv[])
