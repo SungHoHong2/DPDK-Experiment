@@ -48,7 +48,7 @@ int main(int argc , char *argv[])
         // scanf("%s" , message);
 
 
-        if(i%0==0){
+        if(i%2==0){
             memset( message, '*', sizeof(char)*PKT_SIZE);
 
             //Send some data
