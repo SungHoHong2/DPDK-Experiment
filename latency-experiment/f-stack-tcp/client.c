@@ -65,7 +65,7 @@ int main(int argc , char *argv[])
         }
 
 
-        usleep(1);
+        sleep(1);
         // puts("Server reply :");
         // puts(server_reply);
         total_length += strlen(server_reply);
