@@ -10,8 +10,6 @@
 
 #define TOTAL_SEND 10000
 
-static int pkt_size;
-
 int main(int argc , char *argv[])
 {
     int sock;
@@ -75,16 +73,16 @@ int main(int argc , char *argv[])
     // }
 
 
-
+    int pkt_size;
     while(1)
     {
-        char message[PKT_SIZE] , server_reply[PKT_SIZE];
 
         put("total size of the packet: ");
         scanf("%s", start);
         pkt_size = atoi(start);
+        char message[pkt_size] , server_reply[pkt_size];
 
-            memset( message, '*', sizeof(char)*PKT_SIZE);
+            memset( message, '*', sizeof(char)*pkt_size);
 
             //Send some data
             if( send(sock , message , strlen(message) , 0) < 0){
@@ -93,7 +91,7 @@ int main(int argc , char *argv[])
             }
 
             //Receive a reply from the server
-            if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
+            if( recv(sock , server_reply , pkt_size , 0) < 0){
                 puts("recv failed");
                 break;
             }
