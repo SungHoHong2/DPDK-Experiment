@@ -47,7 +47,7 @@ int main(int argc , char *argv[])
     // server.sin_addr.s_addr = inet_addr("10.218.111.252"); // TCP
     my_addr.sin_addr.s_addr = inet_addr("10.218.111.252"); // DPDK
 
-    my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    // my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     //Connect to remote server
     // if (connect(sockfd , (struct sockaddr *)&server , sizeof(server)) < 0){
