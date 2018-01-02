@@ -66,10 +66,10 @@ int main(int argc , char *argv[])
             usleep(1);
         }
 
-
-        // puts("Server reply :");
         // puts(server_reply);
     }
+
+    printf("total_length: %d\n", total_length);
 
 
     // int pkt_size;
