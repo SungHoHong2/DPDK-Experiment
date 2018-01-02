@@ -12,7 +12,6 @@ int main(int argc , char *argv[])
 {
     int sock;
     struct sockaddr_in server;
-    char message[PKT_SIZE] , server_reply[PKT_SIZE];
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -38,6 +37,7 @@ int main(int argc , char *argv[])
     //keep communicating with server
     while(1)
     {
+        char message[PKT_SIZE] , server_reply[PKT_SIZE];
         printf("Enter message : ");
         scanf("%s" , message);
 
