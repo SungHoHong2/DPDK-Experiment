@@ -22,8 +22,9 @@ int loop(void *arg) {
         printf("ff_connect failed %d: %s\n", errno, strerror(errno));
     } else {
         printf("ff_connect OK\n");
-        return 0;
     }
+    return 0;
+
 }
 
 int main(int argc, char * argv[]) {
