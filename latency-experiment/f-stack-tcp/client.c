@@ -23,7 +23,7 @@
 int main(int argc , char *argv[])
 {
     int sockfd;
-    struct linux_sockaddr server;
+    struct sockaddr_in server;
     int total_length;
     struct timespec tps, tpe;
     long int latency;
