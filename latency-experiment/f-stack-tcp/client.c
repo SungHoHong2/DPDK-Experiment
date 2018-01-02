@@ -88,6 +88,8 @@ int main(int argc , char *argv[])
     latency =  (tpe.tv_sec - tps.tv_sec) * 1000000000;
     latency += (tpe.tv_nsec - tps.tv_nsec);
     // latency =  tpe.tv_nsec - tps.tv_nsec;
+    latency /= TOTAL_SEND;
+
     printf("latency: %ld\n", latency);
 
 
