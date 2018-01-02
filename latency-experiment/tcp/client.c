@@ -31,6 +31,8 @@ int main(int argc , char *argv[])
         printf("ff_bind failed\n");
         exit(1);
     }
+    puts("bind?\n");
+
 
     //Connect to remote server
     // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);
