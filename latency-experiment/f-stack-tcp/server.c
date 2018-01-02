@@ -67,9 +67,9 @@ int loop(void *arg)
             char buf[PKT_SIZE];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
 
-            if(readlen>0){
-              printf("readlen :%ld\n", readlen);
-            }
+            // if(readlen>0){
+            //   printf("readlen :%ld\n", readlen);
+            // }
             // printf("received packet size: %ld", strlen(buf));
             ff_write(clientfd, buf, sizeof(buf));
 
