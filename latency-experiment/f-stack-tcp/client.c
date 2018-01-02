@@ -66,7 +66,7 @@ int main(int argc , char *argv[])
         total_length += strlen(server_reply);
     }
 
-
+    printf("total_length: %d\n", %d);
     close(sock);
     return 0;
 }
