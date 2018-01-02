@@ -9,9 +9,27 @@
 #include <arpa/inet.h> //inet_addr
 #include <time.h>
 
-
 #define TOTAL_SEND 10000
 #define PKT_SIZE  128
+
+
+timespec diff(timespec start, timespec end)
+{
+    timespec temp;
+
+    if ((end.tv_nsec-start.tv_nsec)<0
+    {
+            temp.tv_sec = end.tv_sec-start.tv_sec-1;
+            temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+    }
+    else
+    {
+            temp.tv_sec = end.tv_sec-start.tv_sec;
+            temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+    }
+    return temp;
+}
+
 
 int main(int argc , char *argv[])
 {
@@ -84,9 +102,7 @@ int main(int argc , char *argv[])
       printf("unidentical total_length: %d\n", total_length);
     }
 
-    latency = ( tpe.tv_sec - tps.tv_sec )
-          + ( tpe.tv_nsec - tps.tv_nsec );
-    printf("start time: %ld, end time: %ld\n", tps.tv_nsec, tpe.tv_nsec);
+    latency = diff(tps, tpe);
     // latency =  tpe.tv_nsec - tps.tv_nsec;
     printf("latency: %ld\n", latency);
 
