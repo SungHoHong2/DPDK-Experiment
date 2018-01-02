@@ -77,7 +77,7 @@ int main(int argc , char *argv[])
     while(1)
     {
 
-        put("total size of the packet: ");
+        printf("total size of the packet: ");
         scanf("%s", start);
         pkt_size = atoi(start);
         char message[pkt_size] , server_reply[pkt_size];
