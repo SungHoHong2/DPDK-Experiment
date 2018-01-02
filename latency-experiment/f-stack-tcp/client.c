@@ -44,8 +44,8 @@ int main(int argc , char *argv[])
     bzero(&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons( 80 );
-    server.sin_addr.s_addr = inet_addr("10.218.111.252"); // TCP
-    // server.sin_addr.s_addr = inet_addr("10.218.111.254"); // DPDK
+    // server.sin_addr.s_addr = inet_addr("10.218.111.252"); // TCP
+    server.sin_addr.s_addr = inet_addr("10.218.111.254"); // DPDK
 
 
     //Connect to remote server
