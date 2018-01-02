@@ -46,11 +46,10 @@ int main(int argc , char *argv[])
             puts("Send failed");
             return 1;
         }
-        memset( message, '\0', sizeof(char));
-
+        // memset( message, '\0', sizeof(char));
 
         //Receive a reply from the server
-        memset( server_reply, '\0', sizeof(char));
+        // memset( server_reply, '\0', sizeof(char));
         if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
             puts("recv failed");
             break;
