@@ -9,7 +9,7 @@
 #include<arpa/inet.h> //inet_addr
 
 #define PKT_SIZE 60
-#define TOTAL_SEND 10
+#define TOTAL_SEND 10000
 
 
 int main(int argc , char *argv[])
