@@ -73,38 +73,15 @@ int main(int argc , char *argv[])
         // puts(server_reply);
     }
 
-    printf("total_length: %d\n", total_length);
+    if(total_length == TOTAL_SEND * PKT_SIZE)
+    printf("identical total_length: %d\n", total_length);
 
+    else{
+      printf("expected_length: %d\n", TOTAL_SEND * PKT_SIZE);
+      printf("actual_length: %d\n", total_length);
+      printf("unidentical total_length: %d\n", total_length);
+    }
 
-    // int pkt_size;
-    // int recv_rtn;
-    // while(1)
-    // {
-    //
-    //     printf("total size of the packet: ");
-    //     scanf("%s", start);
-    //     pkt_size = atoi(start);
-    //     char message[pkt_size] , server_reply[pkt_size];
-    //
-    //         memset( message, '*', sizeof(char)*pkt_size);
-    //
-    //         //Send some data
-    //         if( send(sock , message , strlen(message) , 0) < 0){
-    //             puts("Send failed");
-    //             return 1;
-    //         }
-    //
-    //         //Receive a reply from the server
-    //
-    //         int recv_rtn = recv(sock , server_reply , pkt_size , 0);
-    //         if( recv_rtn < 0){
-    //             puts("recv failed");
-    //             break;
-    //         }
-    //         total_length = strlen(server_reply);
-    //         printf("total_length: %d\n", recv_rtn);
-    // }
-    //
 
     close(sock);
     return 0;
