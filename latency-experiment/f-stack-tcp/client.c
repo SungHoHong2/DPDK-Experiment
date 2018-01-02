@@ -10,7 +10,7 @@
 #include <time.h>
 
 #define TOTAL_SEND 10000
-#define PKT_SIZE  256
+#define PKT_SIZE  512
 
 
 
