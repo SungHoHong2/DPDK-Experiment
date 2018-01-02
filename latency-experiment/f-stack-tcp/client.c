@@ -54,6 +54,7 @@ int main(int argc , char *argv[])
     //     return 1;
     // }
 
+    sockfd = restore_fstack_fd(sockfd);
     if(ff_connect(sockfd, (struct linux_sockaddr*)&server, sizeof(server)) < 0 ){
       perror("connect failed. Error");
       return 1;
