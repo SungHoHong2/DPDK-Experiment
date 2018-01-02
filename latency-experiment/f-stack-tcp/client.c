@@ -20,7 +20,7 @@ int main(int argc , char *argv[])
     int total_length;
     char start[64];
     struct timespec tps, tpe;
-
+    long int latency;
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -35,15 +35,16 @@ int main(int argc , char *argv[])
 
     //Connect to remote server
     // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);
-    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
-    {
+    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0){
         perror("connect failed. Error");
         return 1;
     }
 
     puts("Connected\n");
 
-    total_length = 0;
+    total_length = latency = 0;
+    clock_gettime(CLOCK_REALTIME, &tps);
+
     //keep communicating with server
     for(int i =0; i<TOTAL_SEND*2; i++)
     {
@@ -73,14 +74,21 @@ int main(int argc , char *argv[])
         // puts(server_reply);
     }
 
+    clock_gettime(CLOCK_REALTIME, &tpe);
+    real_latency = tpe.tv_nsec - tps.tv_nsec;
+
     if(total_length == TOTAL_SEND * PKT_SIZE)
     printf("identical total_length: %d\n", total_length);
+
 
     else{
       printf("expected_length: %d\n", TOTAL_SEND * PKT_SIZE);
       printf("actual_length: %d\n", total_length);
       printf("unidentical total_length: %d\n", total_length);
     }
+
+    printf("latency: %d\n", latency);
+
 
 
     close(sock);
