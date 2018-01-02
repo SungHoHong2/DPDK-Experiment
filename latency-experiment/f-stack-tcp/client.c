@@ -75,18 +75,16 @@ int main(int argc , char *argv[])
     }
 
     clock_gettime(CLOCK_REALTIME, &tpe);
-    real_latency = tpe.tv_nsec - tps.tv_nsec;
 
     if(total_length == TOTAL_SEND * PKT_SIZE)
-    printf("identical total_length: %d\n", total_length);
-
-
+      printf("identical total_length: %d\n", total_length);
     else{
       printf("expected_length: %d\n", TOTAL_SEND * PKT_SIZE);
       printf("actual_length: %d\n", total_length);
       printf("unidentical total_length: %d\n", total_length);
     }
 
+    real_latency = tpe.tv_nsec - tps.tv_nsec;
     printf("latency: %d\n", latency);
 
 
