@@ -12,6 +12,7 @@ int main(int argc , char *argv[])
 {
     int sock;
     struct sockaddr_in server;
+    int total_length;
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -34,12 +35,15 @@ int main(int argc , char *argv[])
 
     puts("Connected\n");
 
+    total_length = 0;
     //keep communicating with server
     while(1)
     {
         char message[PKT_SIZE] , server_reply[PKT_SIZE];
-        printf("Enter message : ");
-        scanf("%s" , message);
+        // printf("Enter message : ");
+        // scanf("%s" , message);
+
+        memset( message, '*', sizeof(char)*PKT_SIZE);
 
         //Send some data
         if( send(sock , message , strlen(message) , 0) < 0){
@@ -55,9 +59,11 @@ int main(int argc , char *argv[])
             break;
         }
 
-        puts("Server reply :");
+        // puts("Server reply :");
         puts(server_reply);
+        total_length += strlen(server_reply);
     }
+
 
     close(sock);
     return 0;
