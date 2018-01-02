@@ -42,15 +42,15 @@ int main(int argc , char *argv[])
         scanf("%s" , message);
 
         //Send some data
-        memset( message, '\0', sizeof(char));
-        if( send(sock , message , strlen(message) , 0) < 0)
-        {
+        if( send(sock , message , strlen(message) , 0) < 0){
             puts("Send failed");
             return 1;
         }
+        memset( message, '\0', sizeof(char));
+
 
         //Receive a reply from the server
-        // memset( server_reply, '\0', sizeof(char));
+        memset( server_reply, '\0', sizeof(char));
         if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
             puts("recv failed");
             break;
