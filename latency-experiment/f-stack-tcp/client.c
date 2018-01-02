@@ -23,7 +23,6 @@
 int main(int argc , char *argv[])
 {
     int sockfd;
-    struct sockaddr_in server;
     int total_length;
     struct timespec tps, tpe;
     long int latency;
@@ -41,11 +40,12 @@ int main(int argc , char *argv[])
     puts("Socket created");
 
 
-    bzero(&server, sizeof(server));
-    server.sin_family = AF_INET;
-    server.sin_port = htons( 80 );
+    struct sockaddr_in my_addr;
+    bzero(&my_addr, sizeof(my_addr));
+    my_addr.sin_family = AF_INET;
+    my_addr.sin_port = htons( 80 );
     // server.sin_addr.s_addr = inet_addr("10.218.111.252"); // TCP
-    server.sin_addr.s_addr = inet_addr("10.218.111.254"); // DPDK
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254"); // DPDK
 
 
     //Connect to remote server
@@ -55,7 +55,7 @@ int main(int argc , char *argv[])
     // }
 
     // sockfd = restore_fstack_fd(sockfd);
-    if(ff_connect(sockfd, &server.sin_addr, sizeof(server)) < 0 ){
+    if(ff_connect(sockfd, (struct linux_sockaddr*)&my_addr, sizeof(my_addr)) < 0 ){
       perror("connect failed. Error");
       return 1;
     }
