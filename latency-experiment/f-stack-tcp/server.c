@@ -13,6 +13,9 @@
 #include "ff_api.h"
 
 #define MAX_EVENTS 512
+#define PKT_SIZE 60
+
+char buf[PKT_SIZE];
 
 /* kevent set */
 struct kevent kevSet;
@@ -63,7 +66,7 @@ int loop(void *arg)
                 available--;
             } while (available);
         } else if (event.filter == EVFILT_READ) { // this will work
-            char buf[256];
+            memset( buf, '\0', sizeof(char));
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
             ff_write(clientfd, buf, sizeof(buf));
         } else {  // or this one will work
