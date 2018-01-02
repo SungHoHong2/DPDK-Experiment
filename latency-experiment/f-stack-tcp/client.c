@@ -62,7 +62,7 @@ int main(int argc , char *argv[])
 
         } else {
             //Receive a reply from the server
-            if( recv(sock , server_reply , strlen(message), 0) < 0){
+            if( recv(sock , server_reply , PKT_SIZE, 0) < 0){
                 puts("recv failed");
                 break;
             }
