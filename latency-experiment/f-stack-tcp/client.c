@@ -11,7 +11,7 @@
 
 
 #define TOTAL_SEND 10000
-#define PKT_SIZE  60
+#define PKT_SIZE  64
 
 int main(int argc , char *argv[])
 {
