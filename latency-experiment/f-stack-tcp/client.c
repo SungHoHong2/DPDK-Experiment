@@ -39,7 +39,7 @@ int main(int argc , char *argv[])
 
     total_length = 0;
     //keep communicating with server
-    for(int i =0; i<TOTAL_SEND i++)
+    for(int i =0; i<TOTAL_SEND; i++)
     {
         char message[PKT_SIZE] , server_reply[PKT_SIZE];
         // printf("Enter message : ");
