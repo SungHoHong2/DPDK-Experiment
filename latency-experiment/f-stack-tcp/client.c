@@ -93,7 +93,7 @@ int main(int argc , char *argv[])
             //Receive a reply from the server
             if( recv(sock , server_reply , pkt_size , 0) < 0){
                 puts("recv failed");
-                break;
+                // break;
             }
             total_length = strlen(server_reply);
             printf("total_length: %d\n", total_length);
