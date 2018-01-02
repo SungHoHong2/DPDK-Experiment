@@ -7,8 +7,10 @@
 #include <string.h>    //strlen
 #include <sys/socket.h>    //socket
 #include <arpa/inet.h> //inet_addr
+#include <time.h>
 
-#define TOTAL_SEND 10000
+
+#define TOTAL_SEND 1
 #define PKT_SIZE  60
 
 int main(int argc , char *argv[])
@@ -17,6 +19,8 @@ int main(int argc , char *argv[])
     struct sockaddr_in server;
     int total_length;
     char start[64];
+    struct timespec tps, tpe;
+
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -53,7 +57,7 @@ int main(int argc , char *argv[])
                 puts("Send failed");
                 return 1;
             }
-            usleep(1);
+            // usleep(1);
 
         } else {
             //Receive a reply from the server
@@ -63,7 +67,7 @@ int main(int argc , char *argv[])
             }
 
             total_length += strlen(server_reply);
-            usleep(1);
+            // usleep(1);
         }
 
         // puts(server_reply);
