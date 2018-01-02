@@ -30,7 +30,7 @@ int main(int argc , char *argv[])
 
 
     //Create socket
-    // sock = socket(AF_INET , SOCK_STREAM , 0);
+    // sockfd = socket(AF_INET , SOCK_STREAM , 0);
 
     ff_init(argc, argv);
     sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
@@ -55,7 +55,7 @@ int main(int argc , char *argv[])
     // }
 
     // sockfd = restore_fstack_fd(sockfd);
-    if(ff_connect(sockfd, (struct linux_sockaddr*)&server, sizeof(server)) < 0 ){
+    if(ff_connect(sockfd, &server.sin_addr, sizeof(server)) < 0 ){
       perror("connect failed. Error");
       return 1;
     }
