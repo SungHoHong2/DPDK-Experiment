@@ -49,14 +49,6 @@ int main(int argc , char *argv[])
 
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    int ret = ff_bind(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
-    if (ret < 0) {
-        printf("ff_bind failed\n");
-        exit(1);
-    }
-    puts("bind?\n");
-
-
     //Connect to remote server
     // if (connect(sockfd , (struct sockaddr *)&server , sizeof(server)) < 0){
     //     perror("connect failed. Error");
