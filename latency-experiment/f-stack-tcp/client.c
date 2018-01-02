@@ -23,7 +23,7 @@
 int main(int argc , char *argv[])
 {
     int sockfd;
-    struct sockaddr_in server;
+    struct linux_sockaddr server;
     int total_length;
     struct timespec tps, tpe;
     long int latency;
@@ -54,7 +54,7 @@ int main(int argc , char *argv[])
     //     return 1;
     // }
 
-    if(ff_connect(sockfd, (struct sockaddr *)&server, sizeof(server)) < 0 ){
+    if(ff_connect(sockfd, (struct linux_sockaddr*)&server, sizeof(server)) < 0 ){
       perror("connect failed. Error");
       return 1;
     }
