@@ -45,7 +45,7 @@ int main(int argc , char *argv[])
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons( 80 );
     // server.sin_addr.s_addr = inet_addr("10.218.111.252"); // TCP
-    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254"); // DPDK
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.252"); // DPDK
 
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
