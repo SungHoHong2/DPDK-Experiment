@@ -14,7 +14,9 @@ int loop(void *arg) {
     bzero(&my_addr, sizeof(my_addr));
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons(80);
-    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+    // my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
+
 
     int on = 1;
     ff_ioctl(sockfd, FIONBIO, &on);
