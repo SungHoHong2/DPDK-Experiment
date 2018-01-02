@@ -40,7 +40,7 @@ int main(int argc , char *argv[])
         return 1;
     }
 
-    printf("PKT_SIZE: %ld\n", PKT_SIZE);
+    printf("PKT_SIZE: %d\n", PKT_SIZE);
 
     total_length = latency = 0;
     clock_gettime(CLOCK_REALTIME, &tps);

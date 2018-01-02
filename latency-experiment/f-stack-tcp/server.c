@@ -85,7 +85,7 @@ int main(int argc, char * argv[])
 
     sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
     printf("sockfd:%d\n", sockfd);
-    printf("PKT_SIZE: %ld\n", PKT_SIZE);
+    printf("PKT_SIZE: %d\n", PKT_SIZE);
     if (sockfd < 0) {
         printf("ff_socket failed\n");
         exit(1);
