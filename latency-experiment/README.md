@@ -33,7 +33,7 @@ wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
 ```
 cd f-stack-tcp
 ./server --conf config_server.ini --proc-type=primary --proc-id=0
-./client
+./client --conf config_client.ini --proc-type=primary --proc-id=0
 ```
 
 <br>
