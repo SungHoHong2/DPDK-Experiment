@@ -41,34 +41,34 @@ int main(int argc , char *argv[])
 
     total_length = 0;
     //keep communicating with server
-    for(int i =0; i<TOTAL_SEND; i++)
+    for(int i =0; i<TOTAL_SEND*2; i++)
     {
         char message[PKT_SIZE] , server_reply[PKT_SIZE];
         // printf("Enter message : ");
         // scanf("%s" , message);
 
-        memset( message, '*', sizeof(char)*PKT_SIZE);
 
-        //Send some data
-        if( send(sock , message , strlen(message) , 0) < 0){
-            puts("Send failed");
-            return 1;
+        if(i%0==0){
+            memset( message, '*', sizeof(char)*PKT_SIZE);
+
+            //Send some data
+            if( send(sock , message , strlen(message) , 0) < 0){
+                puts("Send failed");
+                return 1;
+            }
+        } else {
+
+            //Receive a reply from the server
+            if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
+                puts("recv failed");
+                break;
+            }
+            total_length += strlen(server_reply);
         }
-        // memset( message, '\0', sizeof(char));
 
-
-        //Receive a reply from the server
-        // memset( server_reply, '\0', sizeof(char));
-        if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
-            puts("recv failed");
-            break;
-        }
-
-
-        sleep(1);
+        uleep(1);
         // puts("Server reply :");
         // puts(server_reply);
-        total_length += strlen(server_reply);
     }
 
     // 59011
