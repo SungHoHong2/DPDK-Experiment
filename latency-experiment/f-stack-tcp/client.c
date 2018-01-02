@@ -84,8 +84,8 @@ int main(int argc , char *argv[])
       printf("unidentical total_length: %d\n", total_length);
     }
 
-    printf("start time: %ld, end time: %ld", tps.tv_nsec, tpe.tv_nsec);
-    latency = tpe.tv_nsec - tps.tv_nsec;
+    printf("start time: %ld, end time: %ld\n", tps.tv_nsec, tpe.tv_nsec);
+    latency = tps.tv_nsec -  tpe.tv_nsec;
     printf("latency: %ld\n", latency);
 
 
