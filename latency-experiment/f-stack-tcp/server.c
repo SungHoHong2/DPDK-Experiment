@@ -66,9 +66,9 @@ int loop(void *arg)
                 available--;
             } while (available);
         } else if (event.filter == EVFILT_READ) { // this will work
-            memset( buf, '\0', sizeof(char));
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
             ff_write(clientfd, buf, sizeof(buf));
+            memset( buf, '\0', sizeof(char));
         } else {  // or this one will work
             printf("unknown event: %8.8X\n", event.flags);
         }
