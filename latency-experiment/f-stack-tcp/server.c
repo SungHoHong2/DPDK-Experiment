@@ -53,7 +53,6 @@ int loop(void *arg)
 
                 /* Add to event list */
                 EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
-                printf("EV_SET howdy\n");
 
                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
                     printf("ff_kevent error:%d, %s\n", errno,
@@ -67,7 +66,9 @@ int loop(void *arg)
         } else if (event.filter == EVFILT_READ) { // this will work
             char buf[PKT_SIZE];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
+            printf("received packet size: %d", buf);
             ff_write(clientfd, buf, sizeof(buf));
+
         } else {  // or this one will work
             printf("unknown event: %8.8X\n", event.flags);
         }
