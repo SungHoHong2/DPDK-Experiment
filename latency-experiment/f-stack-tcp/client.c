@@ -54,6 +54,8 @@ int main(int argc , char *argv[])
         }
         // memset( message, '\0', sizeof(char));
 
+        usleep(1);
+
         //Receive a reply from the server
         // memset( server_reply, '\0', sizeof(char));
         if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
@@ -65,6 +67,9 @@ int main(int argc , char *argv[])
         // puts(server_reply);
         total_length += strlen(server_reply);
     }
+
+    // 59011
+    // 60000
 
     printf("total_length: %d\n", total_length);
     close(sock);
