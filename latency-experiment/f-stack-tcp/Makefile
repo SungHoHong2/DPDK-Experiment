@@ -14,13 +14,13 @@ LIBS+= -Wl,--whole-archive -lrte_hash -lrte_kvargs -Wl,-lrte_mbuf -lethdev -lrte
 LIBS+= -lrte_ring -lrte_cmdline -lrte_cfgfile -lrte_kni -lrte_timer -Wl,-lrte_pmd_virtio
 LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 
-TARGET="fstack-client"
+TARGET="fstack-server"
 TARGET_2="client"
 TARGET_3="tcp-server"
 
 
 all:
-	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET} server.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET} fstack-server.c ${LIBS}
 	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_2} fstack-client.c
 	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_3} tcp-server.c
 
