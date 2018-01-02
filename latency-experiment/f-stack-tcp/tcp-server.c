@@ -56,10 +56,10 @@ int main(int argc , char *argv[])
     puts("Connection accepted");
 
     //Receive a message from client
-    while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
+    while( (read_size = recv(client_sock , client_message , PKT_SIZE , 0)) > 0 )
     {
         //Send the message back to client
-        write(client_sock , client_message , strlen(client_message));
+        write(client_sock , client_message , PKT_SIZE);
     }
 
     if(read_size == 0)
