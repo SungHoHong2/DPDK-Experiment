@@ -15,9 +15,9 @@
 
 long int diff(struct timespec start, struct timespec end)
 {
-    timespec temp;
+    struct timespec temp;
 
-    if ((end.tv_nsec-start.tv_nsec)<0
+    if ((end.tv_nsec-start.tv_nsec)<0)
     {
             temp.tv_sec = end.tv_sec-start.tv_sec-1;
             temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
