@@ -66,7 +66,7 @@ int loop(void *arg)
         } else if (event.filter == EVFILT_READ) { // this will work
             char buf[PKT_SIZE];
             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
-            printf("received packet size: %d", buf);
+            printf("received packet size: %d", strlen(buf));
             ff_write(clientfd, buf, sizeof(buf));
 
         } else {  // or this one will work
