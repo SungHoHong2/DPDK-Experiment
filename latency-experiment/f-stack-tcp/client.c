@@ -8,15 +8,16 @@
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
 
-#define PKT_SIZE 60
 #define TOTAL_SEND 10000
 
+static int pkt_size;
 
 int main(int argc , char *argv[])
 {
     int sock;
     struct sockaddr_in server;
     int total_length;
+    char start[64];
 
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -41,14 +42,48 @@ int main(int argc , char *argv[])
 
     total_length = 0;
     //keep communicating with server
-    for(int i =0; i<TOTAL_SEND*2; i++)
+    // for(int i =0; i<TOTAL_SEND*2; i++)
+    // {
+    //     char message[PKT_SIZE] , server_reply[PKT_SIZE];
+    //
+    //     if(i%2==0){
+    //         memset( message, '*', sizeof(char)*PKT_SIZE);
+    //
+    //         //Send some data
+    //         if( send(sock , message , strlen(message) , 0) < 0){
+    //             puts("Send failed");
+    //             return 1;
+    //         }
+    //         usleep(1);
+    //
+    //     } else {
+    //         //Receive a reply from the server
+    //         if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
+    //             puts("recv failed");
+    //             break;
+    //         }
+    //
+    //         total_length += strlen(server_reply);
+    //         usleep(1);
+    //     }
+    //
+    //
+    //
+    //
+    //     // puts("Server reply :");
+    //     // puts(server_reply);
+    // }
+
+
+
+    while(1)
     {
         char message[PKT_SIZE] , server_reply[PKT_SIZE];
-        // printf("Enter message : ");
-        // scanf("%s" , message);
 
+        put("total size of the packet: ");
+        scanf("%s", start);
+        pkt_size = atoi(start);
 
-        if(i%2==0){
             memset( message, '*', sizeof(char)*PKT_SIZE);
 
             //Send some data
@@ -57,27 +92,16 @@ int main(int argc , char *argv[])
                 return 1;
             }
 
-            usleep(1);
-
-        } else {
             //Receive a reply from the server
             if( recv(sock , server_reply , PKT_SIZE , 0) < 0){
                 puts("recv failed");
                 break;
             }
-            total_length += strlen(server_reply);
-
-            usleep(1);
-        }
-
-        // puts("Server reply :");
-        // puts(server_reply);
+            total_length = strlen(server_reply);
+            printf("total_length: %d\n", total_length);
     }
 
-    // 59011
-    // 60000
 
-    printf("total_length: %d\n", total_length);
     close(sock);
     return 0;
 }
