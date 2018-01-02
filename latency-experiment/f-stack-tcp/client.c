@@ -74,8 +74,8 @@ int main(int argc , char *argv[])
 
 
     int pkt_size;
-    while(1)
-    {
+    // while(1)
+    // {
 
         printf("total size of the packet: ");
         scanf("%s", start);
@@ -97,7 +97,7 @@ int main(int argc , char *argv[])
             }
             total_length = strlen(server_reply);
             printf("total_length: %d\n", total_length);
-    }
+    // }
 
 
     close(sock);
