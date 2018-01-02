@@ -53,7 +53,7 @@ int main(int argc , char *argv[])
         perror("accept failed");
         return 1;
     }
-    puts("Connection accepted");
+    printf("PKT_SIZE: %d\n", PKT_SIZE);
 
     //Receive a message from client
     while( (read_size = recv(client_sock , client_message , PKT_SIZE , 0)) > 0 )
