@@ -74,6 +74,7 @@ int main(int argc , char *argv[])
 
 
     int pkt_size;
+    int recv_rtn;
     while(1)
     {
 
@@ -91,12 +92,14 @@ int main(int argc , char *argv[])
             }
 
             //Receive a reply from the server
-            if( recv(sock , server_reply , pkt_size , 0) < 0){
+
+            int recv_rtn = recv(sock , server_reply , pkt_size , 0);
+            if( recv_rtn < 0){
                 puts("recv failed");
-                // break;
+                break;
             }
             total_length = strlen(server_reply);
-            printf("total_length: %d\n", total_length);
+            printf("total_length: %d\n", recv_rtn);
     }
 
 
