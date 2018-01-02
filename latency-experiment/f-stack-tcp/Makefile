@@ -16,11 +16,15 @@ LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 
 TARGET="server"
 TARGET_2="client"
+TARGET_3="tcp-server"
+
+
 all:
 	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET} server.c ${LIBS}
-	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_2} client.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_2} client.c
+	cc -O -gdwarf-2  -I /data/f-stack/lib -o ${TARGET_3} tcp-server.c
 
 
 .PHONY: clean
 clean:
-	rm -f *.o ${TARGET} ${TARGET_2}
+	rm -f *.o ${TARGET} ${TARGET_2} ${TARGET_3}
