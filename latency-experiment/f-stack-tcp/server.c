@@ -13,7 +13,7 @@
 #include "ff_api.h"
 
 #define MAX_EVENTS 512
-#define PKT_SIZE 64
+#define PKT_SIZE 128
 
 
 /* kevent set */
