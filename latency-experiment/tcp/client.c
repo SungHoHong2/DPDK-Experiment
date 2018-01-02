@@ -26,14 +26,6 @@ int main(int argc , char *argv[])
     server.sin_port = htons( 80 );
 
 
-    int ret = ff_bind(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
-    if (ret < 0) {
-        printf("ff_bind failed\n");
-        exit(1);
-    }
-    puts("bind?\n");
-
-
     //Connect to remote server
     // int ff_connect(int s, const struct linux_sockaddr *name, socklen_t namelen);
     if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
