@@ -84,8 +84,8 @@ int main(int argc , char *argv[])
       printf("unidentical total_length: %d\n", total_length);
     }
 
-    real_latency = tpe.tv_nsec - tps.tv_nsec;
-    printf("latency: %d\n", latency);
+    latency = tpe.tv_nsec - tps.tv_nsec;
+    printf("latency: %ld\n", latency);
 
 
 
