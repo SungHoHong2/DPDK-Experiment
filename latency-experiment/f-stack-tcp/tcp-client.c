@@ -10,14 +10,13 @@
 #include <assert.h>
 #include <sys/ioctl.h>
 #include <sys/epoll.h>
-#include <fcntl.h>
-
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
 
 // sleep function
 #include <unistd.h>
+
 
 
 #define PKT_SIZE 64
@@ -37,6 +36,53 @@ int status = 0;
 int succ = 0;
 
 
+int loop(void *arg) {
+    int nevents = epoll_wait(epfd, events, MAX_EVENTS, 0);
+    struct epoll_event event;
+    for (int i = 0; i < nevents; ++i) {
+        if(events[i].events & EPOLLOUT) {
+            if (status++ == 0)
+                printf("connection establised, fd %d\n", events[i].data.fd);
+            else
+                printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+
+
+            int n = strlen(hello);
+            int nsend = write(events[i].data.fd, hello, PKT_SIZE);
+            if(nsend < 0 && errno != EAGAIN) {
+                perror("send error");
+                close(events[i].data.fd);
+                exit(1);
+            }
+            // printf("message delivered!\n");
+            ev.data.fd = sockfd;
+            ev.events = EPOLLIN;
+            assert(epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev)==0);
+            // printf("events modified!\n");
+        }
+        if(events[i].events & EPOLLIN) {
+            // printf("sockfd: %d\n", sockfd);
+            // printf("receiving data... fd %d\n", events[i].data.fd);
+            // printf("read success %d times\n", succ);
+
+            struct epoll_event ev;
+            ev.data.fd = sockfd;
+            ev.events = EPOLLOUT;
+
+            epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
+
+            int nrecv = recv(events[i].data.fd, buffer, PKT_SIZE, 0) ;
+            if(nrecv == -1 && errno != EAGAIN)
+                perror("read error");
+            if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
+                break;
+            if (nrecv > 0) succ++;
+
+            printf("stringlength: %ld\n", strlen(buffer));
+            exit(1);
+        }
+    }
+}
 
 int main(int argc,char* argv[]){
 
@@ -48,75 +94,31 @@ int main(int argc,char* argv[]){
       exit(1);
   }
 
+  int on = 1;
+  ioctl(sockfd, FIONBIO, &on);
 
   memset( hello, '*', PKT_SIZE * sizeof(char));
   struct sockaddr_in serv_addr;
   bzero(&serv_addr, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(80);
-  serv_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+  serv_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
 
-  assert((epfd = epoll_create(1)) > 0);
+  assert((epfd = epoll_create(0)) > 0);
   ev.data.fd = sockfd;
   ev.events = EPOLLOUT;
   epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
   fprintf(stderr, "epoll fd: %d\n", epfd);
 
   printf("connecting...\n");
-  int ret = connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
+  int ret = connect(sockfd, (struct linux_sockaddr *)&serv_addr, sizeof(serv_addr));
   if (ret < 0) {
       perror("connect");
   }
 
 
-  while(1){
+  run(loop, NULL);
 
-        int nevents = epoll_wait(epfd, events, MAX_EVENTS, 0);
-        struct epoll_event event;
-        for (int i = 0; i < nevents; ++i) {
-            if(events[i].events & EPOLLOUT) {
-                if (status++ == 0)
-                    printf("connection establised, fd %d\n", events[i].data.fd);
-                else
-                    printf("epoll %d times, fd %d\n", status, events[i].data.fd);
-
-
-                int n = strlen(hello);
-                int nsend = write(events[i].data.fd, hello, PKT_SIZE);
-                if(nsend < 0 && errno != EAGAIN) {
-                    perror("send error");
-                    close(events[i].data.fd);
-                    exit(1);
-                }
-                // printf("message delivered!\n");
-                ev.data.fd = sockfd;
-                ev.events = EPOLLIN;
-                assert(epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev)==0);
-                // printf("events modified!\n");
-            }
-            if(events[i].events & EPOLLIN) {
-                // printf("sockfd: %d\n", sockfd);
-                // printf("receiving data... fd %d\n", events[i].data.fd);
-                // printf("read success %d times\n", succ);
-
-                struct epoll_event ev;
-                ev.data.fd = sockfd;
-                ev.events = EPOLLOUT;
-
-                epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
-
-                int nrecv = recv(events[i].data.fd, buffer, PKT_SIZE, 0) ;
-                if(nrecv == -1 && errno != EAGAIN)
-                    perror("read error");
-                if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
-                    break;
-                if (nrecv > 0) succ++;
-
-                printf("stringlength: %ld\n", strlen(buffer));
-                exit(1);
-            }
-        }
-  }
 
 return 0;
 }
