@@ -120,62 +120,48 @@ int main(int argc, char * argv[])
     struct epoll_event *events = calloc(MAX_EVENTS, sizeof(struct epoll_event));
     while(1){
 
-       int n = epoll_wait(epollfd, events, MAX_EVENTS, -1);
-       if(-1 == n)
-       {
-           printf("Failed to wait.%s", strerror(errno));
-           exit(1);
-       }
-
-
+       int nevents = epoll_wait(epollfd, events, MAX_EVENTS, -1);
        int i;
-       for(i = 0; i < n; i++)
-       {
-         if(events[i].data.ptr == &serverfd)
-         {
 
-             if(events[i].events & EPOLLHUP || events[i].events & EPOLLERR)
-             {
-                 /*
-                  * EPOLLHUP and EPOLLERR are always monitored.
-                  */
-                 close(serverfd);
-                 exit(1);
-             }
+       for (i = 0; i < nevents; ++i) {
+           /* Handle new connect */
+           if (events[i].data.fd == sockfd) {
+               while (1) {
+                   int nclientfd = accept(sockfd, NULL, NULL);
+                   if (nclientfd < 0) {
+                       break;
+                   }
 
-               /*
-               * New client connection is available. Call accept.
-               * Make connection socket non blocking.
-               * Add read event for the connection socket.
-               */
-               int connfd = accept(serverfd, (struct sockaddr*)&clientaddr, &clientlen);
-
-               if(-1 == connfd)
-               {
-                   printf("Accept failed.%s", strerror(errno));
-                   exit(1);
+                   /* Add to event list */
+                   ev.data.fd = nclientfd;
+                   ev.events  = EPOLLIN;
+                   if (epoll_ctl(epfd, EPOLL_CTL_ADD, nclientfd, &ev) != 0) {
+                       printf("ff_epoll_ctl failed:%d, %s\n", errno,
+                              strerror(errno));
+                       break;
+                   }
                }
-               else
-               {
-                   // printf("Accepted connection.Sleeping for minute.\n");
-                   //
-                   // makeSocketNonBlocking(connfd);
-                   //
-                   // sleep(60);
-                   //
-                   // printf("Adding a read event\n");
-                   //
-                   // struct EchoEvent* echoEvent = calloc(1, sizeof(struct EchoEvent));
-                   //
-                   // echoEvent->fd = connfd;
-
-                   /*
-                   * Add a read event.
-                   */
-                   // modifyEpollContext(epollfd, EPOLL_CTL_ADD, echoEvent->fd, EPOLLIN, echoEvent);
+           } else {
+               if (events[i].events & EPOLLERR ) {
+                   /* Simply close socket */
+                   epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
+                   close(events[i].data.fd);
+               } else if (events[i].events & EPOLLIN) {
+                   char buf[PKT_SIZE];
+                   size_t readlen = read( events[i].data.fd, buf, sizeof(buf));
+                   if(readlen > 0) {
+                       printf("received length: %ld\n", strlen(buf));
+                       send(events[i].data.fd, buf, sizeof(buf), 0);
+                   } else {
+                       epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
+                       close( events[i].data.fd);
+                   }
+               } else {
+                   printf("unknown event: %8.8X\n", events[i].events);
                }
            }
        }
+
 
 
     }
