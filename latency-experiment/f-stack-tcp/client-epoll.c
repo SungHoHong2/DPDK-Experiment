@@ -20,6 +20,7 @@
 #include "ff_api.h"
 
 #define PKT_SIZE 64
+#define MAX_EVENTS 512
 
 char* getMessage(char* buffer, int len, FILE* fp)
 {
@@ -72,31 +73,31 @@ void process(FILE *fp, int sockfd){
   printf("[CLIENT] exit.\n");
 }
 
+struct kevent events[MAX_EVENTS];
 
 int loop(){
-  int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
-  printf("events number: %d\n", nevents);
+  unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
 
-  for (int i = 0; i < nevents; ++i) {
-    if (status++ == 0)
-        printf("connection establised, fd %d\n", events[i].data.fd);
-    else
-        printf("epoll %d times, fd %d\n", status, events[i].data.fd);
-
-
-    char *hello = "hello";
-    int n = strlen(hello);
-    int nsend = ff_write(events[i].data.fd, hello, n);
-    if(nsend < 0 && errno != EAGAIN) {
-          perror("send error");
-          close(events[i].data.fd);
-          exit(1);
-    }
-
-}
-printf("message delivered!\n");
-
-  }
+//   for (int i = 0; i < nevents; ++i) {
+//     if (status++ == 0)
+//         printf("connection establised, fd %d\n", events[i].data.fd);
+//     else
+//         printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+//
+//
+//     char *hello = "hello";
+//     int n = strlen(hello);
+//     int nsend = ff_write(events[i].data.fd, hello, n);
+//     if(nsend < 0 && errno != EAGAIN) {
+//           perror("send error");
+//           close(events[i].data.fd);
+//           exit(1);
+//     }
+//
+// }
+// printf("message delivered!\n");
+//
+//
 
   return 0;
 }
