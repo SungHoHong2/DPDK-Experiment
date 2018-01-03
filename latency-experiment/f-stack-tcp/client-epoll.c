@@ -9,8 +9,12 @@
 #include <errno.h>
 #include <assert.h>
 
+// struct hostent and gethostbyname()
+#include <netdb.h>
+
 #include "ff_config.h"
 #include "ff_api.h"
+
 
 
 int main(int argc,char* argv[]){
@@ -23,9 +27,10 @@ int main(int argc,char* argv[]){
 
 
   if ((hent = gethostbyname(host)) == NULL)
-    errexit("gethostbyname failed.\n");
+    printf("gethostbyname failed.\n");
   if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-    errexit("create socket failed: %s\n", strerror(errno));
+    printf("create socket failed: %s\n", strerror(errno));
+
 
 
 
