@@ -15,7 +15,7 @@ LIBS+= -lrte_ring -lrte_cmdline -lrte_cfgfile -lrte_kni -lrte_timer -Wl,-lrte_pm
 LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 
 TARGET="fstack-server"
-TARGET_2="client"
+TARGET_2="tcp-client"
 TARGET_3="tcp-server"
 TARGET_4="fstack-client"
 
