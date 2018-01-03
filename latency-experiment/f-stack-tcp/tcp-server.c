@@ -1,199 +1,120 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+#include <strings.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <string.h>
+#include <arpa/inet.h>
 #include <errno.h>
-#include <netinet/in.h>
-#include <stdlib.h>
-#include <sys/epoll.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include <assert.h>
 
-#define SERVERPORT 80
-#define MAXCONN 200
-#define MAXEVENTS 100
-#define MAXLEN 255
+#include "ff_config.h"
+#include "ff_api.h"
 
-struct EchoEvent
+#define MAX_EVENTS 512
+#define PKT_SIZE 64
+
+
+/* kevent set */
+struct kevent kevSet;
+/* events */
+struct kevent events[MAX_EVENTS];
+/* kq */
+int kq;
+int sockfd;
+
+
+int loop(void *arg)
 {
-    int fd;
-    uint32_t event;
-    char data[MAXLEN];
-    int length;
-    int offset;
+    /* Wait for events to happen */
+    unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
+    unsigned i;
 
-};
+    for (i = 0; i < nevents; ++i) {
+        struct kevent event = events[i];
+        int clientfd = (int)event.ident;
 
+        /* Handle disconnect */
+        if (event.flags & EV_EOF) {
+            /* Simply close socket */
+            ff_close(clientfd);
 
-int epollfd;
-
-
-int main(int argc, char** argv)
-{
-    int serverfd;
-    struct sockaddr_in server_addr;
-    struct sockaddr_in clientaddr;
-    socklen_t clientlen = sizeof(clientaddr);
-
-   /*
-    * Create server socket. Specify the nonblocking socket option.
-    */
-    serverfd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-    if(-1 == serverfd)
-    {
-        printf("Failed to create socket.%s", strerror(errno));
-        exit(1);
-    }
-
-    bzero(&server_addr, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(SERVERPORT);
-    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-
-   /*
-    * Bind the server socket to the required ip-address and port.
-    */
-    if(-1 == bind(serverfd, (struct sockaddr*)&server_addr, sizeof(server_addr)))
-    {
-        printf("Failed to bind.%s", strerror(errno));
-        exit(1);
-    }
-
-   /*
-    * Mark the server socket has a socket that will be used to .
-    * accept incoming connections.
-    */
-    if(-1 == listen(serverfd, MAXCONN))
-    {
-        printf("Failed to listen.%s", strerror(errno));
-        exit(1);
-    }
-
-   /*
-    * Create epoll context.
-    */
-    epollfd = epoll_create(MAXCONN);
-
-    if(-1 == epollfd)
-    {
-        printf("Failed to create epoll context.%s", strerror(errno));
-        exit(1);
-    }
-
-   /*
-    * Create read event for server socket.
-    */
-    modifyEpollContext(epollfd, EPOLL_CTL_ADD, serverfd, EPOLLIN, &serverfd);
-
-   /*
-    * Main loop that listens for event.
-    */
-
-    struct epoll_event *events = calloc(MAXEVENTS, sizeof(struct epoll_event));
-    while(1)
-    {
-        int n = epoll_wait(epollfd, events, MAXEVENTS, -1);
-
-        if(-1 == n)
-        {
-            printf("Failed to wait.%s", strerror(errno));
-            exit(1);
-        }
-
-        int i;
-        for(i = 0; i < n; i++)
-        {
-            if(events[i].data.ptr == &serverfd)
-            {
-                if(events[i].events & EPOLLHUP || events[i].events & EPOLLERR)
-                {
-                  /*
-                   * EPOLLHUP and EPOLLERR are always monitored.
-                   */
-                    close(serverfd);
-                    exit(1);
+          } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
+        // } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
+            int available = (int)event.data;
+            do {
+                int nclientfd = ff_accept(sockfd, NULL, NULL);
+                if (nclientfd < 0) {
+                    printf("ff_accept failed:%d, %s\n", errno,
+                        strerror(errno));
+                    break;
                 }
 
-               /*
-               * New client connection is available. Call accept.
-               * Make connection socket non blocking.
-               * Add read event for the connection socket.
-               */
-                int connfd = accept(serverfd, (struct sockaddr*)&clientaddr, &clientlen);
+                /* Add to event list */
+                EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
 
-                if(-1 == connfd)
-                {
-                    printf("Accept failed.%s", strerror(errno));
-                    exit(1);
+                if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
+                    printf("ff_kevent error:%d, %s\n", errno, strerror(errno));
+                    return -1;
                 }
-                else
-                {
-                    printf("Accepted connection.Sleeping for minute.\n");
 
-                    makeSocketNonBlocking(connfd);
+                available--;
+            } while (available);
+        } else if (event.filter == EVFILT_READ) { // this will work
+            char buf[PKT_SIZE];
+            size_t readlen = ff_read(clientfd, buf, sizeof(buf));
 
-                    sleep(60);
+            // if(readlen>0){
+            //   printf("readlen :%ld\n", readlen);
+            // }
+            printf("received length: %ld\n", strlen(buf));
+            ff_send(clientfd, buf, sizeof(buf), 0);
 
-                    printf("Adding a read event\n");
-
-                    struct EchoEvent* echoEvent = calloc(1, sizeof(struct EchoEvent));
-
-                    echoEvent->fd = connfd;
-
-                  /*
-                  * Add a read event.
-                  */
-                    modifyEpollContext(epollfd, EPOLL_CTL_ADD, echoEvent->fd, EPOLLIN, echoEvent);
-                }
-            }
-            else
-            {
-                /*
-                 *A event has happend for one of the connection sockets.
-                 *Remove the connection socket from the epoll context.
-                 * When the event is handled by handle() function ,
-                 *it will add the required event to listen for this
-                 *connection socket again to epoll
-                 *context
-                 */
-
-                if(events[i].events & EPOLLHUP || events[i].events & EPOLLERR)
-                {
-                    struct EchoEvent* echoEvent = (struct EchoEvent*) events[i].data.ptr;
-                    printf("\nClosing connection socket\n");
-                    close(echoEvent->fd);
-                    free(echoEvent);
-                }
-                else if(EPOLLIN == events[i].events)
-                {
-                    struct EchoEvent* echoEvent = (struct EchoEvent*) events[i].data.ptr;
-
-                    echoEvent->event = EPOLLIN;
-                  /*
-                 * Delete the read event.
-                 */
-                    modifyEpollContext(epollfd, EPOLL_CTL_DEL, echoEvent->fd, 0, 0);
-
-                    handle(echoEvent);
-                }
-                else if(EPOLLOUT == events[i].events)
-                {
-                    struct EchoEvent* echoEvent = (struct EchoEvent*) events[i].data.ptr;
-
-                    echoEvent->event = EPOLLOUT;
-
-                    /*
-                   * Delete the write event.
-                   */
-                    modifyEpollContext(epollfd, EPOLL_CTL_DEL, echoEvent->fd, 0, 0);
-
-                    handle(echoEvent);
-                }
-            }
-
+        } else {  // or this one will work
+            printf("unknown event: %8.8X\n", event.flags);
         }
     }
+}
 
-    free(events);
-    exit(0);
+int main(int argc, char * argv[])
+{
+
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    printf("sockfd:%d\n", sockfd);
+    printf("PKT_SIZE: %d\n", PKT_SIZE);
+    if (sockfd < 0) {
+        printf("ff_socket failed\n");
+        exit(1);
+    }
+
+    struct sockaddr_in my_addr;
+    bzero(&my_addr, sizeof(my_addr));
+    my_addr.sin_family = AF_INET;
+    my_addr.sin_port = htons(80);
+    my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+    int ret = bind(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
+    if (ret < 0) {
+        printf("ff_bind failed\n");
+        exit(1);
+    }
+
+    ret = listen(sockfd, MAX_EVENTS);
+    if (ret < 0) {
+        printf("ff_listen failed\n");
+        exit(1);
+    }
+
+    // EV_SET(&kevSet, sockfd, EVFILT_READ, EV_ADD, 0, MAX_EVENTS, NULL);
+    //
+    // assert((kq = ff_kqueue()) > 0);
+    //
+    // /* Update kqueue */
+    // ff_kevent(kq, &kevSet, 1, NULL, 0, NULL);
+    //
+    // ff_run(loop, NULL);
+    return 0;
+
+
 }
