@@ -16,7 +16,7 @@
 #include <errno.h>
 extern int errno;
 #define BUFFSIZE 128
-#define PORT 10012
+#define PORT 80
 
 // Print error information
 int errexit(const char* format, ...);
@@ -78,22 +78,9 @@ int main(int argc,char* argv[])
     int sock;
     struct hostent *hent;
     struct sockaddr_in server;
-    char *host = "127.0.0.1";
+    char *host = "10.218.111.252";
     unsigned short port = PORT;
-    switch (argc)
-    {
-        case 1:
-            break;
-        case 2:
-            host = argv[1];
-            break;
-        case 3:
-            host = argv[1];
-            port = atoi(argv[2]);
-            break;
-        default:
-            errexit("usage: %s [host [port]]\n", argv[0]);
-    }
+
     // convert decimal IP to binary IP
     if ((hent = gethostbyname(host)) == NULL)
         errexit("gethostbyname failed.\n");
