@@ -23,15 +23,36 @@ char* getMessage(char* buffer, int len, FILE* fp)
 }
 
 
+int recvFromServer(int sockfd, char* buf, int buf_size)
+{
+    int n, offset = 0;
+    errno = 0;
+    while (buf_size - offset > 0 &&
+            (n = recv(sockfd, buf + offset, buf_size - offset, MSG_DONTWAIT)) > 0)
+    {
+        offset += n;
+    }
+    if (offset == 0 && errno == EAGAIN)
+    {
+        printf("[CLIENT] no message received.\n");
+        return -1;
+    }
+    else
+    {
+        return offset;
+    }
+}
+
+
 void process(FILE *fp, int sockfd){
   char sendline[PKT_SIZE], recvline[PKT_SIZE];
   int numbytes;
 
-  while (getMessage(sendline, BUFFSIZE, fp) != NULL)
+  while (getMessage(sendline, PKT_SIZE, fp) != NULL)
   {
       send(sockfd, sendline, strlen(sendline), 0);
       sleep(1);
-      if ((numbytes = recvFromServer(sockfd, recvline, BUFFSIZE)) == 0){
+      if ((numbytes = recvFromServer(sockfd, recvline, PKT_SIZE)) == 0){
           printf("[CLIENT] server terminated.\n");
           return;
       }
