@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <assert.h>
 #include <sys/ioctl.h>
+#include <sys/epoll.h>
+#include <fcntl.h>
 
 
 // struct hostent and gethostbyname()
