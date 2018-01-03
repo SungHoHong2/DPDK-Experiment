@@ -15,9 +15,10 @@ int loop(void *arg) {
     struct sockaddr_in my_addr;
     bzero(&my_addr, sizeof(my_addr));
     my_addr.sin_family = AF_INET;
-    my_addr.sin_port = htons(22);
-    // my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
-    my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
+    my_addr.sin_port = htons(80);
+    // my_addr.sin_port = htons(22);
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+    // my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
 
 
     int on = 1;
@@ -28,6 +29,9 @@ int loop(void *arg) {
         printf("ff_connect OK\n");
         check_connection = 1;
     }
+
+
+
 
 }
 
