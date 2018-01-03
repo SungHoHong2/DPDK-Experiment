@@ -63,7 +63,7 @@ int main(int argc,char* argv[]){
   fprintf(stderr, "epoll fd: %d\n", epfd);
 
   printf("connecting...\n");
-  int ret = connect(sockfd, (struct linux_sockaddr *)&serv_addr, sizeof(serv_addr));
+  int ret = connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
   if (ret < 0) {
       perror("connect");
   }
