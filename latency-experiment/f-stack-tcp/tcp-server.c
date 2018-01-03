@@ -97,6 +97,24 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
+    /*
+      * Create epoll context.
+      */
+    epollfd = epoll_create(MAX_EVENTS);
+    if(-1 == epollfd)
+    {
+        printf("Failed to create epoll context.%s", strerror(errno));
+        exit(1);
+    }
+
+
+    struct epoll_event *events = calloc(MAX_EVENTS, sizeof(struct epoll_event));
+
+
+
+
+
+
     // EV_SET(&kevSet, sockfd, EVFILT_READ, EV_ADD, 0, MAX_EVENTS, NULL);
     //
     // assert((kq = ff_kqueue()) > 0);
