@@ -20,7 +20,6 @@ int loop(void *arg) {
     my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
     // my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
 
-
     int on = 1;
     ff_ioctl(sockfd, FIONBIO, &on);
     if (ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr)) == -1) {
@@ -29,8 +28,6 @@ int loop(void *arg) {
         printf("ff_connect OK\n");
         while(1){}
     }
-
-
 
 }
 
