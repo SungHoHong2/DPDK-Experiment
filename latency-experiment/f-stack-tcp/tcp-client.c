@@ -56,7 +56,7 @@ int main(int argc,char* argv[]){
   serv_addr.sin_port = htons(80);
   serv_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
 
-  assert((epfd = epoll_create(0)) > 0);
+  assert((epfd = epoll_create(1)) > 0);
   ev.data.fd = sockfd;
   ev.events = EPOLLOUT;
   epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
