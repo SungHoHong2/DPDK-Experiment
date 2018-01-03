@@ -119,7 +119,7 @@ int main(int argc,char* argv[]){
   }
 
 
-  run(loop, NULL);
+  run();
 
 
 return 0;
