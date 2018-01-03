@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <sys/ioctl.h>
-#include "ff_api.h"
 
 int sockfd = -1;
 int check_connection = 0;
