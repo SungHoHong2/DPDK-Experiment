@@ -48,8 +48,8 @@ int loop(void *arg) {
         if(events[i].events & EPOLLOUT) {
             if (status++ == 0)
                 printf("connection establised, fd %d\n", events[i].data.fd);
-            else
-                printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+            // else
+            //     printf("epoll %d times, fd %d\n", status, events[i].data.fd);
 
             int n = strlen(hello);
             int nsend = ff_write(events[i].data.fd, hello, PKT_SIZE);
