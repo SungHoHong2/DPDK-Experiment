@@ -59,7 +59,10 @@ int main(int argc , char *argv[])
     while( (read_size = recv(client_sock , client_message , PKT_SIZE , 0)) > 0 )
     {
         //Send the message back to client
-        write(client_sock , client_message , PKT_SIZE);
+        int rtn = write(client_sock , client_message , PKT_SIZE);
+        if(!rtn){
+          break;
+        }
     }
 
     if(read_size == 0)
