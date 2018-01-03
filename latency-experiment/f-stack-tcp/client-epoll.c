@@ -32,9 +32,18 @@ int main(int argc,char* argv[]){
     printf("create socket failed: %s\n", strerror(errno));
 
 
+  bzero(&server, sizeof(server));
+  server.sin_family = AF_INET;
+  server.sin_port = htons(port);
+  server.sin_addr = *((struct in_addr*)hent->h_addr);
+  printf("[CLIENT] server addr: %s, port: %u\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
 
 
 
+  if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0)
+      printf("connect to server failed: %s\n", strerror(errno));
+
+  printf("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
 
 
 
