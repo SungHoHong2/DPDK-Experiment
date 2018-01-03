@@ -22,6 +22,13 @@ int main(int argc,char* argv[]){
   unsigned short port = 80;
 
 
+  if ((hent = gethostbyname(host)) == NULL)
+    errexit("gethostbyname failed.\n");
+  if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+    errexit("create socket failed: %s\n", strerror(errno));
+
+
+
 
 
 

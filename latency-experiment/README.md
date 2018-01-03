@@ -34,6 +34,10 @@ wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
 cd f-stack-tcp
 ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
 ./client --conf config_client.ini --proc-type=primary --proc-id=0
+
+
+./client-epoll --conf config_client.ini --proc-type=primary --proc-id=0
+
 ```
 
 <br>
