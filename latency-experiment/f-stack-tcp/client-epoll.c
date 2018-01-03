@@ -127,7 +127,8 @@ int main(int argc,char* argv[]){
   printf("[CLIENT] server addr: %s, port: %u\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
 
 
-
+  int on = 1;
+  ff_ioctl(sockfd, FIONBIO, &on);
   if (ff_connect(sock, (struct linux_sockaddr *)&server, sizeof(server)) < 0){
       printf("connect to server failed: %s\n", strerror(errno));
       return -1;
