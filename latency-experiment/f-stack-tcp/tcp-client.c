@@ -36,7 +36,8 @@ int status = 0;
 int succ = 0;
 
 
-int loop(void *arg) {
+int run(void *arg) {
+  while(1){
     int nevents = epoll_wait(epfd, events, MAX_EVENTS, 0);
     struct epoll_event event;
     for (int i = 0; i < nevents; ++i) {
@@ -81,7 +82,8 @@ int loop(void *arg) {
             printf("stringlength: %ld\n", strlen(buffer));
             exit(1);
         }
-    }
+     }
+  }
 }
 
 int main(int argc,char* argv[]){
