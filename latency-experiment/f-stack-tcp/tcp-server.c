@@ -111,7 +111,67 @@ int main(int argc, char * argv[])
 
 
     struct epoll_event *events = calloc(MAX_EVENTS, sizeof(struct epoll_event));
+    while(1){
 
+       int n = epoll_wait(epollfd, events, MAX_EVENTS, -1);
+       if(-1 == n)
+       {
+           printf("Failed to wait.%s", strerror(errno));
+           exit(1);
+       }
+
+
+       int i;
+       for(i = 0; i < n; i++)
+       {
+         if(events[i].data.ptr == &serverfd)
+         {
+
+             if(events[i].events & EPOLLHUP || events[i].events & EPOLLERR)
+             {
+                 /*
+                  * EPOLLHUP and EPOLLERR are always monitored.
+                  */
+                 close(serverfd);
+                 exit(1);
+             }
+
+               /*
+               * New client connection is available. Call accept.
+               * Make connection socket non blocking.
+               * Add read event for the connection socket.
+               */
+               int connfd = accept(serverfd, (struct sockaddr*)&clientaddr, &clientlen);
+
+               if(-1 == connfd)
+               {
+                   printf("Accept failed.%s", strerror(errno));
+                   exit(1);
+               }
+               else
+               {
+                   // printf("Accepted connection.Sleeping for minute.\n");
+                   //
+                   // makeSocketNonBlocking(connfd);
+                   //
+                   // sleep(60);
+                   //
+                   // printf("Adding a read event\n");
+                   //
+                   // struct EchoEvent* echoEvent = calloc(1, sizeof(struct EchoEvent));
+                   //
+                   // echoEvent->fd = connfd;
+
+                   /*
+                   * Add a read event.
+                   */
+                   // modifyEpollContext(epollfd, EPOLL_CTL_ADD, echoEvent->fd, EPOLLIN, echoEvent);
+               }
+           }
+       }
+
+
+    }
 
 
 
