@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
-    assert((epfd = epoll_create(0)) > 0);
+    epfd = epoll_create(1);
     ev.data.fd = sockfd;
     ev.events = EPOLLIN;
     epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
