@@ -18,6 +18,13 @@
 #define PKT_SIZE 64
 
 
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
+
+int epfd;
+int sockfd;
+
+
 int loop(void *arg)
 {
     /* Wait for events to happen */
