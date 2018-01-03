@@ -17,7 +17,7 @@ LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 TARGET="fstack-server"
 TARGET_2="client"
 TARGET_3="tcp-server"
-TARGET_3="client-epoll"
+TARGET_4="client-epoll"
 
 
 all:
@@ -29,4 +29,4 @@ all:
 
 .PHONY: clean
 clean:
-	rm -f *.o ${TARGET} ${TARGET_2} ${TARGET_3}
+	rm -f *.o ${TARGET} ${TARGET_2} ${TARGET_3} ${TARGET_4}
