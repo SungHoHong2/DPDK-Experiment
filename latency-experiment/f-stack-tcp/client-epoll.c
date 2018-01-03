@@ -73,6 +73,16 @@ void process(FILE *fp, int sockfd){
 }
 
 
+int loop(){
+  char sendline[PKT_SIZE], recvline[PKT_SIZE];
+  int numbytes;
+
+  while (getMessage(sendline, PKT_SIZE, fp) != NULL){
+    printf("howdy\n");
+  }
+
+  return 0;
+}
 
 
 
@@ -106,7 +116,9 @@ int main(int argc,char* argv[]){
 
   printf("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
 
-  process(stdin, sock);
+  // process(stdin, sock);
+  ff_run(loop, NULL);
+
   close(sock);
 
 return 0;
