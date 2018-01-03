@@ -70,7 +70,7 @@ int loop(void *arg)
             // if(readlen>0){
             //   printf("readlen :%ld\n", readlen);
             // }
-            // printf("received packet size: %ld", strlen(buf));
+            printf("received packet size: %ld", strlen(buf));
             ff_write(clientfd, buf, sizeof(buf));
 
         } else {  // or this one will work
