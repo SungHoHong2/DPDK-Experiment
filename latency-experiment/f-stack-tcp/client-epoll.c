@@ -74,11 +74,28 @@ void process(FILE *fp, int sockfd){
 
 
 int loop(){
-  char sendline[PKT_SIZE], recvline[PKT_SIZE];
-  int numbytes;
+  int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
+  printf("events number: %d\n", nevents);
 
-  while (getMessage(sendline, PKT_SIZE, fp) != NULL){
-    printf("howdy\n");
+  for (int i = 0; i < nevents; ++i) {
+    if (status++ == 0)
+        printf("connection establised, fd %d\n", events[i].data.fd);
+    else
+        printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+
+
+    char *hello = "hello";
+    int n = strlen(hello);
+    int nsend = ff_write(events[i].data.fd, hello, n);
+    if(nsend < 0 && errno != EAGAIN) {
+          perror("send error");
+          close(events[i].data.fd);
+          exit(1);
+    }
+
+}
+printf("message delivered!\n");
+
   }
 
   return 0;
