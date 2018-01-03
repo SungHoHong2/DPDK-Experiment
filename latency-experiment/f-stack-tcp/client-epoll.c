@@ -33,8 +33,8 @@ struct epoll_event events[MAX_EVENTS];
 
 int epfd;
 int sockfd;
-const char* hello = "hello";
-char buffer[10];
+char* hello = "******";
+char buffer[PKT_SIZE];
 int status = 0;
 int succ = 0;
 
@@ -48,24 +48,25 @@ int loop(void *arg) {
                 printf("connection establised, fd %d\n", events[i].data.fd);
             else
                 printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+
+
             int n = strlen(hello);
-            int nsend = ff_write(events[i].data.fd, hello, n);
+            int nsend = ff_write(events[i].data.fd, hello, PKT_SIZE);
             if(nsend < 0 && errno != EAGAIN) {
                 perror("send error");
                 close(events[i].data.fd);
                 exit(1);
             }
-            printf("message delivered!\n");
+            // printf("message delivered!\n");
             ev.data.fd = sockfd;
             ev.events = EPOLLIN;
             assert(ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev)==0);
-            printf("events modified!\n");
+            // printf("events modified!\n");
         }
         if(events[i].events & EPOLLIN) {
-            printf("sockfd: %d\n", sockfd);
-            printf("receiving data... fd %d\n", events[i].data.fd);
-            printf("read success %d times\n", succ);
-
+            // printf("sockfd: %d\n", sockfd);
+            // printf("receiving data... fd %d\n", events[i].data.fd);
+            // printf("read success %d times\n", succ);
 
             struct epoll_event ev;
             ev.data.fd = sockfd;
@@ -73,14 +74,15 @@ int loop(void *arg) {
 
             ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
 
-            memset(buffer, 0, BUFSIZE);
-            int nrecv = ff_read(events[i].data.fd, buffer, BUFSIZE - 1) ;
+            memset(buffer, 0, PKT_SIZE);
+            int nrecv = ff_read(events[i].data.fd, buffer, PKT_SIZE - 1) ;
             if(nrecv == -1 && errno != EAGAIN)
                 perror("read error");
             if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
                 break;
             if (nrecv > 0) succ++;
-            printf("%s\n", buffer);
+
+            printf("stringlength: %ld\n", strlen(buffer));
         }
     }
 }

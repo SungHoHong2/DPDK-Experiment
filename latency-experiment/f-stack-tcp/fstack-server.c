@@ -68,7 +68,7 @@ int loop(void *arg)
             // if(readlen>0){
             //   printf("readlen :%ld\n", readlen);
             // }
-            printf("%s: %ld\n", buf, strlen(buf));
+            printf("received length: %ld\n", strlen(buf));
             ff_write(clientfd, buf, sizeof(buf));
 
         } else {  // or this one will work
