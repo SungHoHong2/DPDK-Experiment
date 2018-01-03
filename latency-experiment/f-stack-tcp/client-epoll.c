@@ -99,7 +99,7 @@ int main(int argc,char* argv[]){
 
 
 
-  if (ff_connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0){
+  if (ff_connect(sock, (struct linux_sockaddr *)&server, sizeof(server)) < 0){
       printf("connect to server failed: %s\n", strerror(errno));
       return -1;
   }
