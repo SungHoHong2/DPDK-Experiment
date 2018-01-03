@@ -41,9 +41,7 @@ int succ = 0;
 
 int loop(void *arg) {
     int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
-    printf("events number: %d\n", nevents);
     struct epoll_event event;
-    printf("events value: %d\n", events[0].events);
     for (int i = 0; i < nevents; ++i) {
         if(events[i].events & EPOLLOUT) {
             if (status++ == 0)
@@ -68,6 +66,7 @@ int loop(void *arg) {
             printf("receiving data... fd %d\n", events[i].data.fd);
             printf("read success %d times\n", succ);
 
+
             struct epoll_event ev;
             ev.data.fd = sockfd;
             ev.events = EPOLLOUT;
@@ -75,7 +74,7 @@ int loop(void *arg) {
             ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
 
             memset(buffer, 0, BUFSIZE);
-            int nrecv = read(events[i].data.fd, buffer, BUFSIZE - 1) ;
+            int nrecv = ff_read(events[i].data.fd, buffer, BUFSIZE - 1) ;
             if(nrecv == -1 && errno != EAGAIN)
                 perror("read error");
             if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
