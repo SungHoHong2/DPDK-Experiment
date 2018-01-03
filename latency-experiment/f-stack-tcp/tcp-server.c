@@ -9,6 +9,8 @@
 #include <errno.h>
 #include <assert.h>
 #include <sys/epoll.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 
 #define MAX_EVENTS 512
