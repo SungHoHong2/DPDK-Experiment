@@ -17,7 +17,7 @@ int loop(void *arg) {
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons(80);
     // my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
-    my_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
 
     if(check_connection){
 
