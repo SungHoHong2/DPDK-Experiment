@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <assert.h>
+#include <sys/epoll.h>
 
 
 #define MAX_EVENTS 512
@@ -100,6 +101,7 @@ int main(int argc, char * argv[])
     /*
       * Create epoll context.
       */
+    int epollfd;
     epollfd = epoll_create(MAX_EVENTS);
     if(-1 == epollfd)
     {

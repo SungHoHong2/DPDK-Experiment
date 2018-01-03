@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <sys/ioctl.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -11,68 +12,62 @@
 
 #include "ff_config.h"
 #include "ff_api.h"
+#include "ff_epoll.h"
 
 #define MAX_EVENTS 512
 #define PKT_SIZE 64
 
 
-/* kevent set */
-struct kevent kevSet;
-/* events */
-struct kevent events[MAX_EVENTS];
-/* kq */
-int kq;
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
+
+int epfd;
 int sockfd;
 
 
 int loop(void *arg)
 {
     /* Wait for events to happen */
-    unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
-    unsigned i;
+
+    int nevents = ff_epoll_wait(epfd,  events, MAX_EVENTS, 0);
+    int i;
 
     for (i = 0; i < nevents; ++i) {
-        struct kevent event = events[i];
-        int clientfd = (int)event.ident;
-
-        /* Handle disconnect */
-        if (event.flags & EV_EOF) {
-            /* Simply close socket */
-            ff_close(clientfd);
-
-          } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
-        // } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
-            int available = (int)event.data;
-            do {
+        /* Handle new connect */
+        if (events[i].data.fd == sockfd) {
+            while (1) {
                 int nclientfd = ff_accept(sockfd, NULL, NULL);
                 if (nclientfd < 0) {
-                    printf("ff_accept failed:%d, %s\n", errno,
-                        strerror(errno));
                     break;
                 }
 
                 /* Add to event list */
-                EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
-
-                if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
-                    printf("ff_kevent error:%d, %s\n", errno, strerror(errno));
-                    return -1;
+                ev.data.fd = nclientfd;
+                ev.events  = EPOLLIN;
+                if (ff_epoll_ctl(epfd, EPOLL_CTL_ADD, nclientfd, &ev) != 0) {
+                    printf("ff_epoll_ctl failed:%d, %s\n", errno,
+                        strerror(errno));
+                    break;
                 }
-
-                available--;
-            } while (available);
-        } else if (event.filter == EVFILT_READ) { // this will work
-            char buf[PKT_SIZE];
-            size_t readlen = ff_read(clientfd, buf, sizeof(buf));
-
-            // if(readlen>0){
-            //   printf("readlen :%ld\n", readlen);
-            // }
-            printf("received length: %ld\n", strlen(buf));
-            ff_send(clientfd, buf, sizeof(buf), 0);
-
-        } else {  // or this one will work
-            printf("unknown event: %8.8X\n", event.flags);
+            }
+        } else {
+            if (events[i].events & EPOLLERR ) {
+                /* Simply close socket */
+                ff_epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
+                ff_close(events[i].data.fd);
+            } else if (events[i].events & EPOLLIN) {
+                char buf[PKT_SIZE];
+                size_t readlen = ff_read( events[i].data.fd, buf, sizeof(buf));
+                if(readlen > 0) {
+                    printf("received length: %ld\n", strlen(buf));
+                    ff_send(clientfd, buf, sizeof(buf), 0);
+                } else {
+                    ff_epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
+                    ff_close( events[i].data.fd);
+                }
+            } else {
+                printf("unknown event: %8.8X\n", events[i].events);
+            }
         }
     }
 }
@@ -83,11 +78,13 @@ int main(int argc, char * argv[])
 
     sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
     printf("sockfd:%d\n", sockfd);
-    printf("PKT_SIZE: %d\n", PKT_SIZE);
     if (sockfd < 0) {
         printf("ff_socket failed\n");
         exit(1);
     }
+
+    int on = 1;
+    ff_ioctl(sockfd, FIONBIO, &on);
 
     struct sockaddr_in my_addr;
     bzero(&my_addr, sizeof(my_addr));
@@ -107,15 +104,10 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
-    EV_SET(&kevSet, sockfd, EVFILT_READ, EV_ADD, 0, MAX_EVENTS, NULL);
-
-    assert((kq = ff_kqueue()) > 0);
-
-    /* Update kqueue */
-    ff_kevent(kq, &kevSet, 1, NULL, 0, NULL);
-
+    assert((epfd = ff_epoll_create(0)) > 0);
+    ev.data.fd = sockfd;
+    ev.events = EPOLLIN;
+    ff_epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
     ff_run(loop, NULL);
     return 0;
-
-
 }
