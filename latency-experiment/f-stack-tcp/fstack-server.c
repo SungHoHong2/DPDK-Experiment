@@ -55,9 +55,7 @@ int loop(void *arg)
                 EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
 
                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
-                    printf("ff_kevent error:%d, %s\n", errno,
-                        strerror(errno));
-                        printf("EV_SET howdy\n");
+                    printf("ff_kevent error:%d, %s\n", errno, strerror(errno));
                     return -1;
                 }
 
@@ -70,7 +68,7 @@ int loop(void *arg)
             // if(readlen>0){
             //   printf("readlen :%ld\n", readlen);
             // }
-            printf("received packet size: %ld", strlen(buf));
+            printf("%s: %ld\n", buf, strlen(buf));
             ff_write(clientfd, buf, sizeof(buf));
 
         } else {  // or this one will work
