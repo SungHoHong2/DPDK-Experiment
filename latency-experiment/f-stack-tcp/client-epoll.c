@@ -8,6 +8,8 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <assert.h>
+#include <sys/ioctl.h>
+
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
@@ -128,7 +130,7 @@ int main(int argc,char* argv[]){
 
 
   int on = 1;
-  ff_ioctl(sockfd, FIONBIO, &on);
+  ff_ioctl(sock, FIONBIO, &on);
   if (ff_connect(sock, (struct linux_sockaddr *)&server, sizeof(server)) < 0){
       printf("connect to server failed: %s\n", strerror(errno));
       return -1;
