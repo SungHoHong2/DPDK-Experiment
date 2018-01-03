@@ -73,6 +73,7 @@ void process(FILE *fp, int sockfd){
   printf("[CLIENT] exit.\n");
 }
 
+int kq;
 struct kevent events[MAX_EVENTS];
 
 int loop(){
