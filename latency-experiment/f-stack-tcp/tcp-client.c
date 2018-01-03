@@ -90,8 +90,10 @@ int main(int argc,char* argv[])
     server.sin_addr = *((struct in_addr*)hent->h_addr);
     printf("[CLIENT] server addr: %s, port: %u\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
 
-    if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0)
+    if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0){
         printf("connect to server failed: %s\n", strerror(errno));
+        return 0;
+      }
 
     printf("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
     // Send request to server
