@@ -17,61 +17,60 @@
 int sockfd;
 
 
-int loop(void *arg)
-{
-    /* Wait for events to happen */
-    unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
-    unsigned i;
-
-    for (i = 0; i < nevents; ++i) {
-        struct kevent event = events[i];
-        int clientfd = (int)event.ident;
-
-        /* Handle disconnect */
-        if (event.flags & EV_EOF) {
-            /* Simply close socket */
-            ff_close(clientfd);
-
-          } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
-        // } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
-            int available = (int)event.data;
-            do {
-                int nclientfd = ff_accept(sockfd, NULL, NULL);
-                if (nclientfd < 0) {
-                    printf("ff_accept failed:%d, %s\n", errno,
-                        strerror(errno));
-                    break;
-                }
-
-                /* Add to event list */
-                EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
-
-                if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
-                    printf("ff_kevent error:%d, %s\n", errno, strerror(errno));
-                    return -1;
-                }
-
-                available--;
-            } while (available);
-        } else if (event.filter == EVFILT_READ) { // this will work
-            char buf[PKT_SIZE];
-            size_t readlen = ff_read(clientfd, buf, sizeof(buf));
-
-            // if(readlen>0){
-            //   printf("readlen :%ld\n", readlen);
-            // }
-            printf("received length: %ld\n", strlen(buf));
-            ff_send(clientfd, buf, sizeof(buf), 0);
-
-        } else {  // or this one will work
-            printf("unknown event: %8.8X\n", event.flags);
-        }
-    }
-}
+// int loop(void *arg)
+// {
+//     /* Wait for events to happen */
+//     unsigned nevents = ff_kevent(kq, NULL, 0, events, MAX_EVENTS, NULL);
+//     unsigned i;
+//
+//     for (i = 0; i < nevents; ++i) {
+//         struct kevent event = events[i];
+//         int clientfd = (int)event.ident;
+//
+//         /* Handle disconnect */
+//         if (event.flags & EV_EOF) {
+//             /* Simply close socket */
+//             ff_close(clientfd);
+//
+//           } else if (clientfd == sockfd) { // I think this is the reason why it is only available to connect with your own
+//         // } else if (clientfd != sockfd) { // this allows outside servers to communicate with the hosts
+//             int available = (int)event.data;
+//             do {
+//                 int nclientfd = ff_accept(sockfd, NULL, NULL);
+//                 if (nclientfd < 0) {
+//                     printf("ff_accept failed:%d, %s\n", errno,
+//                         strerror(errno));
+//                     break;
+//                 }
+//
+//                 /* Add to event list */
+//                 EV_SET(&kevSet, nclientfd, EVFILT_READ, EV_ADD, 0, 0, NULL); // if this pass then
+//
+//                 if(ff_kevent(kq, &kevSet, 1, NULL, 0, NULL) < 0) {
+//                     printf("ff_kevent error:%d, %s\n", errno, strerror(errno));
+//                     return -1;
+//                 }
+//
+//                 available--;
+//             } while (available);
+//         } else if (event.filter == EVFILT_READ) { // this will work
+//             char buf[PKT_SIZE];
+//             size_t readlen = ff_read(clientfd, buf, sizeof(buf));
+//
+//             // if(readlen>0){
+//             //   printf("readlen :%ld\n", readlen);
+//             // }
+//             printf("received length: %ld\n", strlen(buf));
+//             ff_send(clientfd, buf, sizeof(buf), 0);
+//
+//         } else {  // or this one will work
+//             printf("unknown event: %8.8X\n", event.flags);
+//         }
+//     }
+// }
 
 int main(int argc, char * argv[])
 {
-
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     printf("sockfd:%d\n", sockfd);
     printf("PKT_SIZE: %d\n", PKT_SIZE);
