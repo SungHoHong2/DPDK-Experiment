@@ -17,14 +17,14 @@ LIBS+= -Wl,--no-whole-archive -lrt -lm -ldl -lcrypto -pthread
 TARGET="fstack-server"
 TARGET_2="client"
 TARGET_3="tcp-server"
-TARGET_4="client-epoll"
+TARGET_4="fstack-client"
 
 
 all:
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET} fstack-server.c ${LIBS}
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_2} client.c ${LIBS}
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_3} tcp-server.c
-	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_4} client-epoll.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_4} fstack-client.c ${LIBS}
 
 
 .PHONY: clean
