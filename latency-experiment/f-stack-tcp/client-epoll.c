@@ -11,9 +11,42 @@
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
-
 #include "ff_config.h"
 #include "ff_api.h"
+
+#define PKT_SIZE 64
+
+char* getMessage(char* buffer, int len, FILE* fp)
+{
+    printf(">> Input message: ");
+    return fgets(buffer, len, fp);
+}
+
+
+void process(FILE *fp, int sockfd){
+  char sendline[PKT_SIZE], recvline[PKT_SIZE];
+  int numbytes;
+
+  while (getMessage(sendline, BUFFSIZE, fp) != NULL)
+  {
+      send(sockfd, sendline, strlen(sendline), 0);
+      sleep(1);
+      if ((numbytes = recvFromServer(sockfd, recvline, BUFFSIZE)) == 0){
+          printf("[CLIENT] server terminated.\n");
+          return;
+      }
+
+      else if (numbytes > 0)
+      {
+          recvline[numbytes] = '\0';
+          printf("Received: %s\n", recvline);
+      }
+  }
+
+  printf("[CLIENT] exit.\n");
+}
+
+
 
 
 
@@ -40,13 +73,15 @@ int main(int argc,char* argv[]){
 
 
 
-  if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0)
+  if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0){
       printf("connect to server failed: %s\n", strerror(errno));
+      return -1;
+  }
 
   printf("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
 
-
-
+  process(stdin, sock);
+  close(sock);
 
 return 0;
 }
