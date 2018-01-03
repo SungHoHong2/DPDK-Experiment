@@ -85,7 +85,7 @@ int main(int argc, char * argv[])
     my_addr.sin_port = htons(80);
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    int ret = bind(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr));
+    int ret = bind(sockfd, (struct sockaddr *)&my_addr, sizeof(my_addr));
     if (ret < 0) {
         printf("ff_bind failed\n");
         exit(1);
