@@ -24,6 +24,18 @@
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
 
+#define MAX_EVENTS 512
+#define BUFSIZE 10
+
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
+
+int epfd;
+int sockfd;
+const char* hello = "hello";
+char buffer[10];
+int status = 0;
+int succ = 0;
 
 
 int main(int argc,char* argv[]){
