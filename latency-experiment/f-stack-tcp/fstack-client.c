@@ -33,7 +33,7 @@ struct epoll_event events[MAX_EVENTS];
 
 int epfd;
 int sockfd;
-char* hello = "******";
+char hello[PKT_SIZE];
 char buffer[PKT_SIZE];
 int status = 0;
 int succ = 0;
