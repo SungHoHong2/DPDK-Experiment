@@ -33,7 +33,7 @@ int recvFromServer(int sockfd, char* buf, int buf_size)
     int n, offset = 0;
     errno = 0;
     while (buf_size - offset > 0 &&
-            (n = recv(sockfd, buf + offset, buf_size - offset, MSG_DONTWAIT)) > 0)
+            (n = ff_recv(sockfd, buf + offset, buf_size - offset, MSG_DONTWAIT)) > 0)
     {
         offset += n;
     }
@@ -55,7 +55,7 @@ void process(FILE *fp, int sockfd){
 
   while (getMessage(sendline, PKT_SIZE, fp) != NULL)
   {
-      send(sockfd, sendline, strlen(sendline), 0);
+      ff_send(sockfd, sendline, strlen(sendline), 0);
       sleep(1);
       if ((numbytes = recvFromServer(sockfd, recvline, PKT_SIZE)) == 0){
           printf("[CLIENT] server terminated.\n");
@@ -84,10 +84,10 @@ int main(int argc,char* argv[]){
   char *host = "10.218.111.254";
   unsigned short port = 80;
 
-
+  ff_init(argc, argv);
   if ((hent = gethostbyname(host)) == NULL)
     printf("gethostbyname failed.\n");
-  if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+  if ((sock = ff_socket(PF_INET, SOCK_STREAM, 0)) < 0)
     printf("create socket failed: %s\n", strerror(errno));
 
 
@@ -99,7 +99,7 @@ int main(int argc,char* argv[]){
 
 
 
-  if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0){
+  if (ff_connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0){
       printf("connect to server failed: %s\n", strerror(errno));
       return -1;
   }
