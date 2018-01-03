@@ -36,7 +36,7 @@ int status = 0;
 int succ = 0;
 
 
-int run(void *arg) {
+int run() {
   while(1){
     int nevents = epoll_wait(epfd, events, MAX_EVENTS, 0);
     struct epoll_event event;
