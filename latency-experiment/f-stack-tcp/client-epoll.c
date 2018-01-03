@@ -57,8 +57,8 @@ int main(int argc,char* argv[]){
   struct sockaddr_in serv_addr;
   bzero(&serv_addr, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(2099);
-  serv_addr.sin_addr.s_addr = inet_addr("192.168.32.1");
+  serv_addr.sin_port = htons(80);
+  serv_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
 
   assert((epfd = ff_epoll_create(0)) > 0);
   ev.data.fd = sockfd;
@@ -71,6 +71,8 @@ int main(int argc,char* argv[]){
   if (ret < 0) {
       perror("ff_connect");
   }
+
+
 
 
 return 0;
