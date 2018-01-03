@@ -116,8 +116,8 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
-
-    struct epoll_event *events = calloc(MAX_EVENTS, sizeof(struct epoll_event));
+    struct epoll_event ev;
+    struct epoll_event events[MAX_EVENTS];
     while(1){
 
        int nevents = epoll_wait(epollfd, events, MAX_EVENTS, -1);
