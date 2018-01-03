@@ -82,8 +82,7 @@ int loop(void *arg) {
             if (nrecv > 0) succ++;
 
             printf("stringlength: %ld\n", strlen(buffer));
-            break;
-
+            exit(1);
         }
     }
 }
