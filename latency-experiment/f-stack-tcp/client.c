@@ -16,22 +16,17 @@ int loop(void *arg) {
     bzero(&my_addr, sizeof(my_addr));
     my_addr.sin_family = AF_INET;
     my_addr.sin_port = htons(80);
-    my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
-    // my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
+    // my_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+    my_addr.sin_addr.s_addr = inet_addr("10.218.111.252");
 
-    if(check_connection){
 
-      printf("gogogo\n");
-
-    }{
-            int on = 1;
-            ff_ioctl(sockfd, FIONBIO, &on);
-            if (ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr)) == -1) {
-                printf("ff_connect failed %d: %s\n", errno, strerror(errno));
-            } else {
-                printf("ff_connect OK\n");
-                check_connection = 1;
-            }
+    int on = 1;
+    ff_ioctl(sockfd, FIONBIO, &on);
+    if (ff_connect(sockfd, (struct linux_sockaddr *)&my_addr, sizeof(my_addr)) == -1) {
+        printf("ff_connect failed %d: %s\n", errno, strerror(errno));
+    } else {
+        printf("ff_connect OK\n");
+        check_connection = 1;
     }
 
 }
