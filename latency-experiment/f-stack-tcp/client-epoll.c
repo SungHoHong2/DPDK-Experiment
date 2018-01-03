@@ -75,7 +75,7 @@ int loop(void *arg) {
             ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
 
             memset(buffer, 0, PKT_SIZE);
-            int nrecv = ff_recv(events[i].data.fd, buffer, PKT_SIZE - 1) ;
+            int nrecv = ff_recv(events[i].data.fd, buffer, PKT_SIZE, 0) ;
             if(nrecv == -1 && errno != EAGAIN)
                 perror("read error");
             if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
