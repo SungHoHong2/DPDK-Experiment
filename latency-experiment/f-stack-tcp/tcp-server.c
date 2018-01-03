@@ -72,6 +72,11 @@ int sockfd;
 
 int main(int argc, char * argv[])
 {
+    int serverfd;
+    struct sockaddr_in server_addr;
+    struct sockaddr_in clientaddr;
+    socklen_t clientlen = sizeof(clientaddr);
+
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     printf("sockfd:%d\n", sockfd);
     printf("PKT_SIZE: %d\n", PKT_SIZE);
