@@ -39,6 +39,53 @@ int status = 0;
 int succ = 0;
 
 
+int loop(void *arg) {
+    int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
+    printf("events number: %d\n", nevents);
+    struct epoll_event event;
+    printf("events value: %d\n", events[0].events);
+    for (int i = 0; i < nevents; ++i) {
+        if(events[i].events & EPOLLOUT) {
+            if (status++ == 0)
+                printf("connection establised, fd %d\n", events[i].data.fd);
+            else
+                printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+            int n = strlen(hello);
+            int nsend = ff_write(events[i].data.fd, hello, n);
+            if(nsend < 0 && errno != EAGAIN) {
+                perror("send error");
+                close(events[i].data.fd);
+                exit(1);
+            }
+            printf("message delivered!\n");
+            ev.data.fd = sockfd;
+            ev.events = EPOLLIN;
+            assert(ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev)==0);
+            printf("events modified!\n");
+        }
+        if(events[i].events & EPOLLIN) {
+            printf("sockfd: %d\n", sockfd);
+            printf("receiving data... fd %d\n", events[i].data.fd);
+            printf("read success %d times\n", succ);
+
+            struct epoll_event ev;
+            ev.data.fd = sockfd;
+            ev.events = EPOLLOUT;
+
+            ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
+
+            memset(buffer, 0, BUFSIZE);
+            int nrecv = read(events[i].data.fd, buffer, BUFSIZE - 1) ;
+            if(nrecv == -1 && errno != EAGAIN)
+                perror("read error");
+            if((nrecv == -1 && errno == EAGAIN) || nrecv == 0)
+                break;
+            if (nrecv > 0) succ++;
+            printf("%s\n", buffer);
+        }
+    }
+}
+
 int main(int argc,char* argv[]){
 
   ff_init(argc, argv);
@@ -73,6 +120,7 @@ int main(int argc,char* argv[]){
   }
 
 
+  ff_run(loop, NULL);
 
 
 return 0;
