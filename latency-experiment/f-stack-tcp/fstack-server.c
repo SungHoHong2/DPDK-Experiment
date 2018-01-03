@@ -69,7 +69,7 @@ int loop(void *arg)
             //   printf("readlen :%ld\n", readlen);
             // }
             printf("received length: %ld\n", strlen(buf));
-            ff_write(clientfd, buf, sizeof(buf));
+            ff_send(clientfd, buf, sizeof(buf));
 
         } else {  // or this one will work
             printf("unknown event: %8.8X\n", event.flags);
