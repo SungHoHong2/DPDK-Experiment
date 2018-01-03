@@ -22,7 +22,7 @@ int main(int argc,char* argv[]){
   int sock;
   struct hostent *hent;
   struct sockaddr_in server;
-  char *host = "127.0.0.1";
+  char *host = "10.218.111.254";
   unsigned short port = 80;
 
 
