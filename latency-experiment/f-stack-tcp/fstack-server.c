@@ -60,7 +60,7 @@ int loop(void *arg)
                 size_t readlen = ff_read( events[i].data.fd, buf, sizeof(buf));
                 if(readlen > 0) {
                     printf("received length: %ld\n", strlen(buf));
-                    ff_send(nclientfd, buf, sizeof(buf), 0);
+                    ff_send(events[i].data.fd, buf, sizeof(buf), 0);
                 } else {
                     ff_epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
                     ff_close( events[i].data.fd);
