@@ -74,7 +74,6 @@ int loop(void *arg) {
 
             ff_epoll_ctl(epfd, EPOLL_CTL_MOD, sockfd, &ev);
 
-            memset(buffer, 0, PKT_SIZE);
             int nrecv = ff_recv(events[i].data.fd, buffer, PKT_SIZE, 0) ;
             if(nrecv == -1 && errno != EAGAIN)
                 perror("read error");
@@ -101,7 +100,7 @@ int main(int argc,char* argv[]){
   int on = 1;
   ff_ioctl(sockfd, FIONBIO, &on);
 
-
+  memset( hello, '*', PKT_SIZE * sizeof(char));
   struct sockaddr_in serv_addr;
   bzero(&serv_addr, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET;

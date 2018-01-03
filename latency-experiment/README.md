@@ -36,7 +36,7 @@ cd f-stack-tcp
 ./client --conf config_client.ini --proc-type=primary --proc-id=0
 
 
-./client-epoll --conf config_client.ini --proc-type=primary --proc-id=0
+./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
 
 ```
 
