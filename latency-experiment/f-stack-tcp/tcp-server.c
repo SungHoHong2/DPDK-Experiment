@@ -9,19 +9,11 @@
 #include <errno.h>
 #include <assert.h>
 
-#include "ff_config.h"
-#include "ff_api.h"
 
 #define MAX_EVENTS 512
 #define PKT_SIZE 64
 
 
-/* kevent set */
-struct kevent kevSet;
-/* events */
-struct kevent events[MAX_EVENTS];
-/* kq */
-int kq;
 int sockfd;
 
 
