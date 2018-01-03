@@ -1,4 +1,4 @@
-### F-SHARK
+### F-STACK
 
 - **installing F-SHARK**
 ```
@@ -16,12 +16,9 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 # install gwak
 sudo apt-get install gawk
 
-/freebsd/netinet/libalias/alias_sctp.c:2130:32:
-
 # Running the F-Stack
 ./start.sh -b example/helloworld -c config.ini
 ./start.sh -b example/helloworld_epoll -c config.ini
-
 
 # the ip address needs to be within the broadcast []
 wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
@@ -33,17 +30,7 @@ wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
 ```
 cd f-stack-tcp
 ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
-./client --conf config_client.ini --proc-type=primary --proc-id=0
-
-
 ./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
-
-```
-
-<br>
-
-- **testing with IMB-benchmark**
-    - [test results](results/traditional_test.md)
-```
-mpirun -np 2 --hostfile hosts_example ./IMB-MPI1 pingpong
+./tcp-server
+./tcp-client
 ```

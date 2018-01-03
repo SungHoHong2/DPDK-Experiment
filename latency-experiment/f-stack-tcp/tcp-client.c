@@ -118,9 +118,6 @@ int main(int argc,char* argv[]){
       perror("connect");
   }
 
-
   run();
-
-
 return 0;
 }
