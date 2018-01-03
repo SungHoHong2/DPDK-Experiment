@@ -18,14 +18,11 @@ extern int errno;
 #define BUFFSIZE 128
 #define PORT 80
 
-// Print error information
-int errexit(const char* format, ...);
-// Print work information
-int echo(const char* format, ...);
+
 
 char* getMessage(char* buffer, int len, FILE* fp)
 {
-    echo(">> Input message: ");
+    printf(">> Input message: ");
     return fgets(buffer, len, fp);
 }
 
@@ -40,7 +37,7 @@ int recvFromServer(int sockfd, char* buf, int buf_size)
     }
     if (offset == 0 && errno == EAGAIN)
     {
-        echo("[CLIENT] no message received.\n");
+        printf("[CLIENT] no message received.\n");
         return -1;
     }
     else
@@ -60,16 +57,16 @@ void process(FILE *fp, int sockfd)
         sleep(1);
         if ((numbytes = recvFromServer(sockfd, recvline, BUFFSIZE)) == 0)
         {
-            echo("[CLIENT] server terminated.\n");
+            printf("[CLIENT] server terminated.\n");
             return;
         }
         else if (numbytes > 0)
         {
             recvline[numbytes] = '\0';
-            echo("Received: %s\n", recvline);
+            printf("Received: %s\n", recvline);
         }
     }
-    echo("[CLIENT] exit.\n");
+    printf("[CLIENT] exit.\n");
 }
 
 // Main function
@@ -83,20 +80,20 @@ int main(int argc,char* argv[])
 
     // convert decimal IP to binary IP
     if ((hent = gethostbyname(host)) == NULL)
-        errexit("gethostbyname failed.\n");
+        printf("gethostbyname failed.\n");
     if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
-        errexit("create socket failed: %s\n", strerror(errno));
+        printf("create socket failed: %s\n", strerror(errno));
 
     bzero(&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons(port);
     server.sin_addr = *((struct in_addr*)hent->h_addr);
-    echo("[CLIENT] server addr: %s, port: %u\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
+    printf("[CLIENT] server addr: %s, port: %u\n", inet_ntoa(server.sin_addr), ntohs(server.sin_port));
 
     if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0)
-        errexit("connect to server failed: %s\n", strerror(errno));
+        printf("connect to server failed: %s\n", strerror(errno));
 
-    echo("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
+    printf("[CLIENT] connected to server %s\n", inet_ntoa(server.sin_addr));
     // Send request to server
     process(stdin, sock);
     close(sock);
