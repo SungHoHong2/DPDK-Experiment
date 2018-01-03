@@ -11,6 +11,11 @@
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
+
+// sleep function
+#include <unistd.h>
+
+
 #include "ff_config.h"
 #include "ff_api.h"
 
