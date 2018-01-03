@@ -25,8 +25,10 @@
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
 
-#define MAX_EVENTS 512
-#define BUFSIZE 10
+#define MAXIMUM_RUN 100000
+static long int limit_bytes = PKT_SIZE * MAXIMUM_RUN;
+static long int curr_bytes;
+static double latency;
 
 struct epoll_event ev;
 struct epoll_event events[MAX_EVENTS];
@@ -48,7 +50,6 @@ int loop(void *arg) {
                 printf("connection establised, fd %d\n", events[i].data.fd);
             else
                 printf("epoll %d times, fd %d\n", status, events[i].data.fd);
-
 
             int n = strlen(hello);
             int nsend = ff_write(events[i].data.fd, hello, PKT_SIZE);
@@ -81,8 +82,14 @@ int loop(void *arg) {
                 break;
             if (nrecv > 0) succ++;
 
-            printf("stringlength: %ld\n", strlen(buffer));
-            exit(1);
+            curr_bytes+=strlen(buffer);
+            // printf("stringlength: %ld\n", strlen(buffer));
+
+            if(curr_bytes>=limit_bytes){
+              printf("curr_bytes: %ld\n", curr_bytes);
+              printf("limit_bytes: %ld\n", limit_bytes);
+              exit(1);
+            }
         }
     }
 }

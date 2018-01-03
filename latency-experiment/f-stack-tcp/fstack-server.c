@@ -18,17 +18,9 @@
 #define PKT_SIZE 64
 
 
-struct epoll_event ev;
-struct epoll_event events[MAX_EVENTS];
-
-int epfd;
-int sockfd;
-
-
 int loop(void *arg)
 {
     /* Wait for events to happen */
-
     int nevents = ff_epoll_wait(epfd,  events, MAX_EVENTS, 0);
     int i;
 
@@ -59,7 +51,7 @@ int loop(void *arg)
                 char buf[PKT_SIZE];
                 size_t readlen = ff_read( events[i].data.fd, buf, sizeof(buf));
                 if(readlen > 0) {
-                    printf("received length: %ld\n", strlen(buf));
+                    // printf("received length: %ld\n", strlen(buf));
                     ff_send(events[i].data.fd, buf, sizeof(buf), 0);
                 } else {
                     ff_epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
@@ -104,6 +96,7 @@ int main(int argc, char * argv[])
         exit(1);
     }
 
+    printf("server is running...\n");
     assert((epfd = ff_epoll_create(0)) > 0);
     ev.data.fd = sockfd;
     ev.events = EPOLLIN;
