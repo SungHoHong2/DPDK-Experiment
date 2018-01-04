@@ -22,7 +22,7 @@
 
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
-bool TEST_TOGGLE 0   // 0: latency, 1: throughput
+#define TEST_TOGGLE 0   // 0: latency, 1: throughput
 
 #define MAXIMUM_RUN 10000
 #define TIME_LIMIT 10000000
@@ -43,7 +43,7 @@ int status = 0;
 int succ = 0;
 
 void print(){
-  if(TEST_TOGGLE && (curr_bytes>=limit_bytes)){ // latency
+  if(!TEST_TOGGLE && (curr_bytes>=limit_bytes)){ // latency
           printf("latency results\n");
           gettimeofday(&t2, NULL);
           printf("curr_bytes: %ld\n", curr_bytes);
