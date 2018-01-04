@@ -1,9 +1,21 @@
 ### DPDK latency run
 ```
+// 64
+312.653800
+316.828700
+308.972800
 
-latency: 312.653800 us
-latency: 558.786100 us
+// 128
+
+
+// 256
+// 512
+// 1024
+// 1518
+// 2048
+// 3000
+
 ```
 
 
-### DPDK throughput run 
+### DPDK throughput run
