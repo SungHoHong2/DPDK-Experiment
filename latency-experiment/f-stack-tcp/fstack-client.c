@@ -16,7 +16,7 @@
 
 // sleep function
 #include <unistd.h>
-
+#include <pthread.h>
 
 #include "ff_config.h"
 #include "ff_api.h"
@@ -87,12 +87,16 @@ int loop(void *arg) {
 
             if(curr_bytes>=limit_bytes){
                 printf("please break\n");
-
-                return 0;
-                break;
+                exit(1);
             }
         }
     }
+}
+
+
+void* thread_loop(void *arg)
+{
+  ff_run(loop, NULL);
 }
 
 int main(int argc,char* argv[]){
@@ -129,9 +133,16 @@ int main(int argc,char* argv[]){
       perror("ff_connect");
   }
 
+  pthread_t tid;
+  int *ptr;
+
+  pthread_create(&tid, NULL, &thread_loop, NULL);
+
+
 
   gettimeofday(&t1, NULL);
-  ff_run(loop, NULL);
+  // ff_run(loop, NULL);
+  pthread_join(tid, (void**)&(ptr));
   gettimeofday(&t2, NULL);
 
   printf("curr_bytes: %ld\n", curr_bytes);
