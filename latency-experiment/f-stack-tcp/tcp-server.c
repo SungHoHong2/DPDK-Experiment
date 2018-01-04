@@ -15,7 +15,7 @@
 
 
 #define MAX_EVENTS 512
-#define PKT_SIZE 64
+#define PKT_SIZE 128
 
 
 struct epoll_event ev;
@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     printf("server pktsize: %d\n",PKT_SIZE);
-    
+
     if (sockfd < 0) {
         printf("ff_socket failed\n");
         exit(1);
