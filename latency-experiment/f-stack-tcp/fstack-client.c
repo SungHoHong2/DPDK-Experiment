@@ -24,8 +24,11 @@
 
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
+#define TEST_TOGGLE 0   // 0: latency, 1: throughput
 
 #define MAXIMUM_RUN 10000
+#define TIME_LIMIT 10000000
+
 static long int limit_bytes = PKT_SIZE * MAXIMUM_RUN;
 static long int curr_bytes;
 static double latency;
@@ -42,18 +45,29 @@ int status = 0;
 int succ = 0;
 
 void print(){
-  printf("results: \n");
-  gettimeofday(&t2, NULL);
-  printf("curr_bytes: %ld\n", curr_bytes);
-  printf("limit_bytes: %ld\n", limit_bytes);
+  if(!TEST_TOGGLE && (curr_bytes>=limit_bytes)){ // latency
+                printf("latency results\n");
+                gettimeofday(&t2, NULL);
+                printf("curr_bytes: %ld\n", curr_bytes);
+                printf("limit_bytes: %ld\n", limit_bytes);
 
-  // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-  // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-  latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
-  latency += (t2.tv_usec - t1.tv_usec);   // us
+                // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+                // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+                latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
+                latency += (t2.tv_usec - t1.tv_usec);   // us
 
-  latency/=MAXIMUM_RUN;
-  printf("latency: %f us\n", latency);
+                latency/=MAXIMUM_RUN;
+                printf("latency: %f us\n", latency);
+                exit(1);
+  } else { // throughput
+                gettimeofday(&t2, NULL);
+                latency = (t2.tv_sec - t1.tv_sec);
+                if(latency>10){
+                      printf("throughput results\n");
+                      printf("curr_bytes: %ld\n", curr_bytes);
+                      exit(1);
+                }
+         }
 }
 
 int loop(void *arg) {
@@ -99,11 +113,8 @@ int loop(void *arg) {
 
             curr_bytes+=strlen(buffer);
             // printf("stringlength: %ld\n", strlen(buffer));
+            print();
 
-            if(curr_bytes>=limit_bytes){
-                print();
-                exit(1);
-            }
         }
     }
 }
