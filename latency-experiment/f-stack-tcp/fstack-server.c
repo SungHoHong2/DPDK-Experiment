@@ -15,7 +15,7 @@
 #include "ff_epoll.h"
 
 #define MAX_EVENTS 512
-#define PKT_SIZE 512
+#define PKT_SIZE 1024
 
 
 struct epoll_event ev;
