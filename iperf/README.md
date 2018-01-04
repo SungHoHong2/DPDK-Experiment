@@ -1,4 +1,4 @@
-### IPerf
+### IPerf Experiments
 
 - **install**
 
@@ -15,12 +15,13 @@ make install
 - **running**
 
 ```
-# server
-iperf -s / iperf3 -s
+// server 10.218.111.252
+cd src
+./iperf3 -s
 
-# client
+// client
+cd src
 iperf/iperf3 -c remotehost -i 1 -t 30	 // Run a 30 second tests, giving results every 1 second
 ```
-
 
 <br>
