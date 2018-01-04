@@ -22,8 +22,11 @@
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
 
-#define MAX_EVENTS 512
-#define BUFSIZE 10
+#define MAXIMUM_RUN 10000
+static long int limit_bytes = PKT_SIZE * MAXIMUM_RUN;
+static long int curr_bytes;
+static double latency;
+struct timeval t1, t2;
 
 struct epoll_event ev;
 struct epoll_event events[MAX_EVENTS];
@@ -34,6 +37,22 @@ char hello[PKT_SIZE];
 char buffer[PKT_SIZE];
 int status = 0;
 int succ = 0;
+
+
+void print(){
+  printf("results: \n");
+  gettimeofday(&t2, NULL);
+  printf("curr_bytes: %ld\n", curr_bytes);
+  printf("limit_bytes: %ld\n", limit_bytes);
+
+  // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+  // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+  latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
+  latency += (t2.tv_usec - t1.tv_usec);   // us
+
+  latency/=MAXIMUM_RUN;
+  printf("latency: %f us\n", latency);
+}
 
 
 int run() {
@@ -79,8 +98,11 @@ int run() {
                 break;
             if (nrecv > 0) succ++;
 
-            printf("stringlength: %ld\n", strlen(buffer));
-            exit(1);
+            curr_bytes+=strlen(buffer);
+            if(curr_bytes>=limit_bytes){
+                print();
+                exit(1);
+            }
         }
      }
   }
