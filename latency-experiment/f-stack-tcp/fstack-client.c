@@ -29,6 +29,7 @@
 static long int limit_bytes = PKT_SIZE * MAXIMUM_RUN;
 static long int curr_bytes;
 static double latency;
+struct timeval t1, t2;
 
 struct epoll_event ev;
 struct epoll_event events[MAX_EVENTS];
@@ -40,6 +41,20 @@ char buffer[PKT_SIZE];
 int status = 0;
 int succ = 0;
 
+void print(){
+  printf("results: \n");
+  gettimeofday(&t2, NULL);
+  printf("curr_bytes: %ld\n", curr_bytes);
+  printf("limit_bytes: %ld\n", limit_bytes);
+
+  // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+  // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+  latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
+  latency += (t2.tv_usec - t1.tv_usec);   // us
+
+  latency/=MAXIMUM_RUN;
+  printf("latency: %f us\n", latency);
+}
 
 int loop(void *arg) {
     int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
@@ -86,7 +101,7 @@ int loop(void *arg) {
             // printf("stringlength: %ld\n", strlen(buffer));
 
             if(curr_bytes>=limit_bytes){
-                printf("please break\n");
+                print();
                 exit(1);
             }
         }
@@ -94,14 +109,10 @@ int loop(void *arg) {
 }
 
 
-void* thread_loop(void *arg)
-{
-  printf("howdy\n");
-}
+
 
 int main(int argc,char* argv[]){
 
-  struct timeval t1, t2;
   ff_init(argc, argv);
   sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
   printf("sockfd: %d\n", sockfd);
@@ -133,29 +144,9 @@ int main(int argc,char* argv[]){
       perror("ff_connect");
   }
 
-  pthread_t tid;
-  int *ptr;
-
-  pthread_create(&tid, NULL, &thread_loop, NULL);
-
-
 
   gettimeofday(&t1, NULL);
   ff_run(loop, NULL);
-  pthread_join(tid, (void**)&(ptr));
-  gettimeofday(&t2, NULL);
-
-  printf("curr_bytes: %ld\n", curr_bytes);
-  printf("limit_bytes: %ld\n", limit_bytes);
-
-  // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
-  // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
-
-  latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
-  latency += (t2.tv_usec - t1.tv_usec);   // us
-
-  latency/=MAXIMUM_RUN;
-  printf("latency: %f us\n", latency);
 
 return 0;
 }
