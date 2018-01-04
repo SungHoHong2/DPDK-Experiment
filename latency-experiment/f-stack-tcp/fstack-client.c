@@ -96,7 +96,7 @@ int loop(void *arg) {
 
 void* thread_loop(void *arg)
 {
-  ff_run(loop, NULL);
+  printf("howdy\n");
 }
 
 int main(int argc,char* argv[]){
@@ -141,7 +141,7 @@ int main(int argc,char* argv[]){
 
 
   gettimeofday(&t1, NULL);
-  // ff_run(loop, NULL);
+  ff_run(loop, NULL);
   pthread_join(tid, (void**)&(ptr));
   gettimeofday(&t2, NULL);
 
