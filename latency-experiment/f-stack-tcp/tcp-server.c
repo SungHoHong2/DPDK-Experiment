@@ -95,7 +95,7 @@ int main(int argc, char * argv[])
                   char buf[PKT_SIZE];
                   size_t readlen = read( events[i].data.fd, buf, sizeof(buf));
                   if(readlen > 0) {
-                      printf("received length: %ld\n", strlen(buf));
+                      // printf("received length: %ld\n", strlen(buf));
                       send(events[i].data.fd, buf, sizeof(buf), 0);
                   } else {
                       epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);

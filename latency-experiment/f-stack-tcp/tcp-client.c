@@ -64,8 +64,8 @@ int run() {
         if(events[i].events & EPOLLOUT) {
             if (status++ == 0)
                 printf("connection establised, fd %d\n", events[i].data.fd);
-            else
-                printf("epoll %d times, fd %d\n", status, events[i].data.fd);
+            // else
+                // printf("epoll %d times, fd %d\n", status, events[i].data.fd);
 
 
             int n = strlen(hello);
