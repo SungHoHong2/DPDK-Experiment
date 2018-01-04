@@ -43,7 +43,8 @@ int status = 0;
 int succ = 0;
 
 void print(){
-  if(!TEST_TOGGLE && (curr_bytes>=limit_bytes)){ // latency
+  if(!TEST_TOGGLE){ // latency
+    if(curr_bytes>=limit_bytes){
               printf("latency results\n");
               gettimeofday(&t2, NULL);
               printf("curr_bytes: %ld\n", curr_bytes);
@@ -57,6 +58,7 @@ void print(){
               latency/=MAXIMUM_RUN;
               printf("latency: %f us\n", latency);
               exit(1);
+    }
   } else { // throughput
             gettimeofday(&t2, NULL);
             latency = (t2.tv_sec - t1.tv_sec);
