@@ -20,7 +20,7 @@
 
 
 
-#define PKT_SIZE 256
+#define PKT_SIZE 512
 #define MAX_EVENTS 512
 #define TEST_TOGGLE 0   // 0: latency, 1: throughput
 
