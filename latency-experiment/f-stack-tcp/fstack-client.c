@@ -87,6 +87,8 @@ int loop(void *arg) {
 
             if(curr_bytes>=limit_bytes){
                 printf("please break\n");
+
+                return 0;
                 break;
             }
         }
