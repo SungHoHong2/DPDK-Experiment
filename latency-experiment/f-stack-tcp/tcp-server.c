@@ -31,7 +31,8 @@ int main(int argc, char * argv[])
     // ff_init(argc, argv);
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    printf("sockfd:%d\n", sockfd);
+    printf("server pktsize: %d\n",PKT_SIZE);
+    
     if (sockfd < 0) {
         printf("ff_socket failed\n");
         exit(1);

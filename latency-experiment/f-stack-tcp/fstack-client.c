@@ -115,7 +115,7 @@ int main(int argc,char* argv[]){
 
   ff_init(argc, argv);
   sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
-  printf("sockfd: %d\n", sockfd);
+  printf("client pktsize: %d\n",PKT_SIZE);
 
   if (sockfd < 0) {
       printf("ff_socket failed\n");
