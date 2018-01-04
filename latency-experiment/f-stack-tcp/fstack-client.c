@@ -147,6 +147,5 @@ int main(int argc,char* argv[]){
 
   gettimeofday(&t1, NULL);
   ff_run(loop, NULL);
-
-return 0;
+  return 0;
 }

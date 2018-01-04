@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <sys/ioctl.h>
 #include <sys/epoll.h>
+#include <sys/time.h>
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
@@ -140,6 +141,7 @@ int main(int argc,char* argv[]){
       perror("connect");
   }
 
+  gettimeofday(&t1, NULL);
   run();
-return 0;
+  return 0;
 }
