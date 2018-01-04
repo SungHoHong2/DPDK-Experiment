@@ -22,7 +22,7 @@
 
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
-#define TEST_TOGGLE 0   // 0: latency, 1: throughput
+static int TEST_TOGGLE 0   // 0: latency, 1: throughput
 
 #define MAXIMUM_RUN 10000
 #define TIME_LIMIT 10000000
