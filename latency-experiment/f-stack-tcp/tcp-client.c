@@ -62,6 +62,7 @@ void print(){
             latency = (t2.tv_sec - t1.tv_sec);
             if(latency>10){
                 printf("throughput results\n");
+                printf("curr_bytes: %ld\n", curr_bytes);
                 exit(1);
             }
          }
