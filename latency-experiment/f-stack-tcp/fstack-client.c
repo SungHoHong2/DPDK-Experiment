@@ -25,7 +25,7 @@
 #define PKT_SIZE 64
 #define MAX_EVENTS 512
 
-#define MAXIMUM_RUN 100000
+#define MAXIMUM_RUN 10000
 static long int limit_bytes = PKT_SIZE * MAXIMUM_RUN;
 static long int curr_bytes;
 static double latency;
