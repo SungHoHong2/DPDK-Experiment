@@ -9,7 +9,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <sys/ioctl.h>
-
+#include <sys/time.h>
 
 // struct hostent and gethostbyname()
 #include <netdb.h>
@@ -86,8 +86,6 @@ int loop(void *arg) {
             // printf("stringlength: %ld\n", strlen(buffer));
 
             if(curr_bytes>=limit_bytes){
-              printf("curr_bytes: %ld\n", curr_bytes);
-              printf("limit_bytes: %ld\n", limit_bytes);
               exit(1);
             }
         }
@@ -96,6 +94,7 @@ int loop(void *arg) {
 
 int main(int argc,char* argv[]){
 
+  struct timeval t1, t2;
   ff_init(argc, argv);
   sockfd = ff_socket(AF_INET, SOCK_STREAM, 0);
   printf("sockfd: %d\n", sockfd);
@@ -128,8 +127,21 @@ int main(int argc,char* argv[]){
   }
 
 
+  gettimeofday(&t1, NULL);
   ff_run(loop, NULL);
+  gettimeofday(&t2, NULL);
 
+  printf("curr_bytes: %ld\n", curr_bytes);
+  printf("limit_bytes: %ld\n", limit_bytes);
+
+  // elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
+  // elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
+
+  latency = (t2.tv_sec - t1.tv_sec) * 1000000.0;      // sec to us
+  latency += (t2.tv_usec - t1.tv_usec);   // us
+
+  latency/=MAXIMUM_RUN;
+  printf("latency: %f us\n", latency);
 
 return 0;
 }
