@@ -15,7 +15,7 @@
 
 
 #define MAX_EVENTS 512
-#define PKT_SIZE 1024
+#define PKT_SIZE 1518
 
 
 struct epoll_event ev;
