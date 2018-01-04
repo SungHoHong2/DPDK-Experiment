@@ -22,7 +22,7 @@
 #include "ff_api.h"
 #include "ff_epoll.h"
 
-#define PKT_SIZE 2048
+#define PKT_SIZE 3000
 #define MAX_EVENTS 512
 #define TEST_TOGGLE 1   // 0: latency, 1: throughput
 
