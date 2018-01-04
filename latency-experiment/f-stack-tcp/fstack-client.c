@@ -86,7 +86,8 @@ int loop(void *arg) {
             // printf("stringlength: %ld\n", strlen(buffer));
 
             if(curr_bytes>=limit_bytes){
-              perror("raise() failed");
+                printf("please break\n");
+                break;
             }
         }
     }
