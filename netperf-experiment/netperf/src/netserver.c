@@ -280,77 +280,6 @@ create_listens(char hostname[], char port[], int af) {
   }
 }
 
-void
-setup_listens(char name[], char port[], int af) {
-
-  int do_inet;
-  int no_name = 0;
-#ifdef AF_INET6
-  int do_inet6;
-#endif
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
-
-  if (strcmp(name,"") == 0) {
-    no_name = 1;
-    switch (af) {
-    case AF_UNSPEC:
-      do_inet = 1;
-#ifdef AF_INET6
-      do_inet6 = 1;
-#endif
-      break;
-    case AF_INET:
-      do_inet = 1;
-#ifdef AF_INET6
-      do_inet6 = 0;
-#endif
-      break;
-#ifdef AF_INET6
-    case AF_INET6:
-      do_inet = 0;
-      do_inet6 = 1;
-      break;
-#endif
-    default:
-      do_inet = 1;
-    }
-    /* if we have IPv6, try that one first because it may be a superset */
-#ifdef AF_INET6
-    if (do_inet6)
-      create_listens("::0",port,AF_INET6);
-#endif
-    if (do_inet)
-      create_listens("0.0.0.0",port,AF_INET);
-  }
-  else {
-    create_listens(name,port,af);
-  }
-
-  if (listen_list) {
-    fprintf(stdout,
-	    "Starting netserver with host '%s' port '%s' and family %s\n",
-	    (no_name) ? "IN(6)ADDR_ANY" : name,
-	    port,
-	    inet_ftos(af));
-    fflush(stdout);
-  }
-  else {
-    fprintf(stderr,
-	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
-	    (no_name) ? "IN(6)ADDR_ANY" : name,
-	    port,
-	    inet_ftos(af));
-    fflush(stderr);
-    exit(1);
-  }
-}
 
 SOCKET
 set_fdset(struct listen_elt *list, fd_set *fdset) {
@@ -947,15 +876,11 @@ accept_connections() {
     FD_ZERO(&except_fds);
     high_fd = set_fdset(listen_list,&read_fds);
 
-#if !defined(WIN32)
-    num_ready = select(high_fd + 1,
-#else
     num_ready = select(1,
-#endif
-		       &read_fds,
-		       &write_fds,
-		       &except_fds,
-		       NULL);
+		            &read_fds,
+		            &write_fds,
+		            &except_fds,
+		            NULL);
 
     if (num_ready < 0) {
       fprintf(where,
@@ -971,22 +896,19 @@ accept_connections() {
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
       if (FD_ISSET(candidate,&read_fds)) {
-	accept_connection(candidate);
-	FD_CLR(candidate,&read_fds);
-	num_ready--;
+	        accept_connection(candidate);
+	        FD_CLR(candidate,&read_fds);
+	        num_ready--;
       }
       else {
-	candidate++;
+	        candidate++;
       }
     }
   }
 }
 
-#ifndef WIN32
-#define SERVER_ARGS "DdfhL:n:Np:v:VZ:46"
-#else
 #define SERVER_ARGS "DdfhL:n:Np:v:VZ:46I:i:"
-#endif
+
 void
 scan_netserver_args(int argc, char *argv[]) {
 
