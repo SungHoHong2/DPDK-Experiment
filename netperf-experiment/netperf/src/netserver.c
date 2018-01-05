@@ -875,17 +875,17 @@ accept_connections() {
 		            NULL);
 
     /* try to keep things simple */
-    // candidate = 0;
-    // while ((num_ready) && (candidate <= high_fd)) {
-    //     if (FD_ISSET(candidate,&read_fds)) {
-	  //         accept_connection(candidate);
-	  //          FD_CLR(candidate,&read_fds);
-	  //           num_ready--;
-    //   }
-    //   else {
-	  //           candidate++;
-    //   }
-    // }
+    candidate = 0;
+    while ((num_ready) && (candidate <= high_fd)) {
+        if (FD_ISSET(candidate,&read_fds)) {
+	          accept_connection(candidate);
+	           FD_CLR(candidate,&read_fds);
+	            num_ready--;
+      }
+      else {
+	            candidate++;
+      }
+    }
   }
 }
 
