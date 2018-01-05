@@ -273,7 +273,7 @@ if (want_daemonize) {
   fflush(stdout); // active
   fflush(stderr); // active
 
-  exit();
+  exit(1);
 
 }
 
