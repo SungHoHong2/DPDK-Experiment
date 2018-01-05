@@ -151,7 +151,6 @@ int      netperf_daemon;
 int      daemon_parent = 0;
 int      not_inetd;
 int      want_daemonize;
-int      spawn_on_accept;
 int      suppress_debug = 0;
 
 extern	char	*optarg;
@@ -823,14 +822,9 @@ accept_connection(SOCKET listen_fd) {
   setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
 #endif
 
-  if (spawn_on_accept) {
-    spawn_child();
-    /* spawn_child() only returns when we are the parent */
-    close(server_sock);
-  }
-  else {
-    process_requests();
-  }
+  spawn_child();
+  /* spawn_child() only returns when we are the parent */
+  close(server_sock);
 }
 
 void
@@ -960,7 +954,6 @@ main(int argc, char *argv[]) {
   strcpy(program, argv[0]);
 
   // init_netserver_globals();
-  spawn_on_accept = 1;  // active
   want_daemonize = 1;  // active
   child = 0; // active
   not_inetd = 0; // active
