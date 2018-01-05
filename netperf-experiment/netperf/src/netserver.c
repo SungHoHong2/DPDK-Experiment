@@ -315,6 +315,270 @@ create_listens(char hostname[], char port[], int af) {
 
 
 void
+process_requests()
+{
+
+  float	temp_rate;
+
+  if (debug) {
+    fprintf(where,
+	    "%s: enter\n",
+	    __FUNCTION__);
+    fflush(where);
+  }
+
+  /* if the netserver was started with a passphrase, look for it in
+     the first request to arrive.  if there is no passphrase in the
+     first request we will end-up dumping the control connection. raj
+     2012-01-23 */
+
+  if ((passphrase != NULL)  && (recv_passphrase()))
+      return;
+
+  while (1) {
+
+    if (recv_request() <= 0) {
+      close(server_sock);
+      return;
+    }
+
+    switch (netperf_request.content.request_type) {
+
+    case DEBUG_ON:
+      netperf_response.content.response_type = DEBUG_OK;
+      if (!suppress_debug) {
+	debug++;
+
+	if (debug == 1) {
+	  /* we just flipped-on debugging, dump the request because
+	     recv_request/recv_request_n will not have dumped it as its
+	     dump_request() call is conditional on debug being set. raj
+	     2011-07-08 */
+	  dump_request();
+	}
+      }
+
+      send_response();
+      break;
+
+    case DEBUG_OFF:
+      if (debug)
+	debug--;
+      netperf_response.content.response_type = DEBUG_OK;
+      send_response();
+      /* we used to take the trouble to close the debug file, but SAF
+	 asked a good question when he asked "Why?" and since I cannot
+	 think of a good reason, I have removed the code. raj
+	 2011-07-08 */
+      break;
+
+    case DO_SYSINFO:
+      {
+	netperf_response.content.response_type = SYSINFO_RESPONSE;
+
+	snprintf((char *)netperf_response.content.test_specific_data,
+		 sizeof(netperf_response.content.test_specific_data),
+		 "%c%s%c%s%c%s%c%s",
+		 ',',
+		 "Deprecated",
+		 ','
+,		 "Deprecated",
+		 ',',
+		 "Deprecated",
+		 ',',
+		 "Deprecated");
+
+	send_response_n(0);
+	break;
+      }
+
+    case CPU_CALIBRATE:
+      netperf_response.content.response_type = CPU_CALIBRATE;
+      temp_rate = calibrate_local_cpu(0.0);
+      bcopy((char *)&temp_rate,
+	    (char *)netperf_response.content.test_specific_data,
+	    sizeof(temp_rate));
+      bcopy((char *)&lib_num_loc_cpus,
+	    (char *)netperf_response.content.test_specific_data +
+	            sizeof(temp_rate),
+	    sizeof(lib_num_loc_cpus));
+      if (debug) {
+	fprintf(where,
+		"netserver: sending CPU information: rate is %g num cpu %d\n",
+		temp_rate,
+		lib_num_loc_cpus);
+	fflush(where);
+      }
+
+      /* we need the cpu_start, cpu_stop in the looper case to kill
+         the child proceses raj 7/95 */
+
+#ifdef USE_LOOPER
+      cpu_start(1);
+      cpu_stop(1,&temp_rate);
+#endif /* USE_LOOPER */
+
+      send_response();
+      break;
+
+    case DO_TCP_STREAM:
+      recv_tcp_stream();
+      break;
+
+    case DO_TCP_MAERTS:
+      recv_tcp_maerts();
+      break;
+
+    case DO_TCP_RR:
+      recv_tcp_rr();
+      break;
+
+    case DO_TCP_CRR:
+      recv_tcp_conn_rr();
+      break;
+
+    case DO_TCP_CC:
+      recv_tcp_cc();
+      break;
+
+#ifdef DO_1644
+    case DO_TCP_TRR:
+      recv_tcp_tran_rr();
+      break;
+#endif /* DO_1644 */
+
+#ifdef DO_NBRR
+    case DO_TCP_NBRR:
+      recv_tcp_nbrr();
+      break;
+#endif /* DO_NBRR */
+
+    case DO_UDP_STREAM:
+      recv_udp_stream();
+      break;
+
+    case DO_UDP_RR:
+      recv_udp_rr();
+      break;
+
+#ifdef WANT_DLPI
+
+    case DO_DLPI_CO_RR:
+      recv_dlpi_co_rr();
+      break;
+
+    case DO_DLPI_CL_RR:
+      recv_dlpi_cl_rr();
+      break;
+
+    case DO_DLPI_CO_STREAM:
+      recv_dlpi_co_stream();
+      break;
+
+    case DO_DLPI_CL_STREAM:
+      recv_dlpi_cl_stream();
+      break;
+
+#endif /* WANT_DLPI */
+
+#ifdef WANT_UNIX
+
+    case DO_STREAM_STREAM:
+      recv_stream_stream();
+      break;
+
+    case DO_STREAM_RR:
+      recv_stream_rr();
+      break;
+
+    case DO_DG_STREAM:
+      recv_dg_stream();
+      break;
+
+    case DO_DG_RR:
+      recv_dg_rr();
+      break;
+
+#endif /* WANT_UNIX */
+
+#ifdef WANT_XTI
+    case DO_XTI_TCP_STREAM:
+      recv_xti_tcp_stream();
+      break;
+
+    case DO_XTI_TCP_RR:
+      recv_xti_tcp_rr();
+      break;
+
+    case DO_XTI_UDP_STREAM:
+      recv_xti_udp_stream();
+      break;
+
+    case DO_XTI_UDP_RR:
+      recv_xti_udp_rr();
+      break;
+
+#endif /* WANT_XTI */
+
+#ifdef WANT_SCTP
+    case DO_SCTP_STREAM:
+      recv_sctp_stream();
+      break;
+
+    case DO_SCTP_STREAM_MANY:
+      recv_sctp_stream_1toMany();
+      break;
+
+    case DO_SCTP_RR:
+      recv_sctp_rr();
+      break;
+
+    case DO_SCTP_RR_MANY:
+      recv_sctp_rr_1toMany();
+      break;
+#endif
+
+#ifdef WANT_SDP
+    case DO_SDP_STREAM:
+      recv_sdp_stream();
+      break;
+
+    case DO_SDP_MAERTS:
+      recv_sdp_maerts();
+      break;
+
+    case DO_SDP_RR:
+      recv_sdp_rr();
+      break;
+#endif
+
+#ifdef WANT_OMNI
+    case DO_OMNI:
+      recv_omni();
+      break;
+#endif
+
+    case PASSPHRASE:
+      if (debug) {
+	fprintf(where,"Ignoring an unexpected passphrase control message\n");
+	fflush(where);
+      }
+      break;
+
+    default:
+      fprintf(where,"unknown test number %d\n",
+	      netperf_request.content.request_type);
+      fflush(where);
+      netperf_response.content.serv_errno=998;
+      send_response();
+      break;
+
+    }
+  }
+}
+
+
+void
 accept_connection(SOCKET listen_fd) {
 
   struct sockaddr_storage peeraddr;
@@ -361,7 +625,7 @@ accept_connection(SOCKET listen_fd) {
 #endif
 
   if (spawn_on_accept) {
-    spawn_child();
+    // spawn_child();
     /* spawn_child() only returns when we are the parent */
     close(server_sock);
   }
