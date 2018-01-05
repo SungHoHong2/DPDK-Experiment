@@ -1381,7 +1381,7 @@ daemonize() {
 
   default:
     /* we are the parent, nothing to do but exit? */
-    exit(0);
+    // exit(0);
   }
 
 #else
