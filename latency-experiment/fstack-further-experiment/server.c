@@ -17,8 +17,11 @@ int main(int argc , char *argv[])
     struct sockaddr_in server , client;
     char client_message[2000];
 
+
+    ff_init(argc, argv);
+
     //Create socket
-    socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+    socket_desc = ff_socket(AF_INET , SOCK_STREAM , 0);
     if (socket_desc == -1)
     {
         printf("Could not create socket");
@@ -31,7 +34,7 @@ int main(int argc , char *argv[])
     server.sin_port = htons( 8888 );
 
     //Bind
-    if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
+    if( ff_bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
     {
         //print the error message
         perror("bind failed. Error");
@@ -40,7 +43,7 @@ int main(int argc , char *argv[])
     puts("bind done");
 
     //Listen
-    listen(socket_desc , 3);
+    ff_listen(socket_desc , 3);
 
     //Accept and incoming connection
     puts("Waiting for incoming connections...");
