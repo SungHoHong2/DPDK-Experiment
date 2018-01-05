@@ -3,14 +3,33 @@
 char	netserver_id[]="\
 @(#)netserver.c (c) Copyright 1993-2012 Hewlett-Packard Co. Version 2.6.0";
 #include "config.h"
-#include <memory.h>
-#include <string.h>
-#include <strings.h>
-#include <limits.h>
-#include <sys/ipc.h>
-#include <sys/ioctl.h>
-#include <sys/socket.h>
 
+#if HAVE_STRING_H
+# if !STDC_HEADERS && HAVE_MEMORY_H
+#  include <memory.h>
+# endif
+# include <string.h>
+#endif
+
+#if HAVE_STRINGS_H
+# include <strings.h>
+#endif
+
+#if HAVE_LIMITS_H
+# include <limits.h>
+#endif
+
+#if HAVE_SYS_IPC_H
+#include <sys/ipc.h>
+#endif
+
+#if HAVE_SYS_IOCTL_H
+#include <sys/ioctl.h>
+#endif
+
+#if HAVE_SYS_SOCKET_H
+#include <sys/socket.h>
+#endif
 
 #if HAVE_SYS_STAT_H
 #include <sys/stat.h>
@@ -90,26 +109,8 @@ char	netserver_id[]="\
 #ifdef WANT_SCTP
 #include "nettest_sctp.h"
 #endif
-
 #include "netsh.h"
 
-#ifndef DEBUG_LOG_FILE_DIR
-#if defined(WIN32)
-#define DEBUG_LOG_FILE_DIR ""
-#elif defined(ANDROID)
-#define DEBUG_LOG_FILE_DIR "/data/local/tmp/"
-#else
-#define DEBUG_LOG_FILE_DIR "/tmp/"
-#endif
-#endif /* DEBUG_LOG_FILE_DIR */
-
-#ifndef DEBUG_LOG_FILE
-#define DEBUG_LOG_FILE DEBUG_LOG_FILE_DIR"netserver.debug"
-#endif
-
-#if !defined(PATH_MAX)
-#define PATH_MAX MAX_PATH
-#endif
 char     FileName[PATH_MAX];
 
 char     listen_port[10];
