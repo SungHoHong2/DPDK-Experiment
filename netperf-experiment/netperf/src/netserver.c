@@ -1317,21 +1317,40 @@ main(int argc, char *argv[]) {
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
   // scan_netserver_args(argc, argv);
-
   // check_if_inetd();
   struct sockaddr_storage name;
   netperf_socklen_t namelen;
 
   namelen = sizeof(name);
-  if (getsockname(0,
-      (struct sockaddr *)&name,
-      &namelen) == SOCKET_ERROR) {
+  if (getsockname(0,(struct sockaddr *)&name, &namelen) == SOCKET_ERROR) {
       not_inetd = 1;
   }
 
     /* we are the top netserver process, so we have to create the
        listen endpoint(s) and decide if we want to daemonize */
-    setup_listens(local_host_name,listen_port,local_address_family);
+    // setup_listens(local_host_name,listen_port,local_address_family);
+    int no_name = 1;  //active
+    create_listens("::0",port,AF_INET6);  // active
+    create_listens("0.0.0.0",port,AF_INET);  // active
+
+    if (listen_list) {
+      fprintf(stdout,
+  	    "Starting netserver with host '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : name,
+  	    port,
+  	    inet_ftos(af));
+      fflush(stdout);
+    }
+    else {
+      fprintf(stderr,
+  	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : name,
+  	    port,
+  	    inet_ftos(af));
+      fflush(stderr);
+      exit(1);
+    }
+
     if (want_daemonize) {
       daemonize();
     }
