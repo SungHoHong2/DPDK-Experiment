@@ -863,47 +863,29 @@ accept_connections() {
   SOCKET high_fd, candidate;
   int num_ready;
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
   while (1) {
-
     FD_ZERO(&write_fds);
     FD_ZERO(&except_fds);
     high_fd = set_fdset(listen_list,&read_fds);
 
     num_ready = select(high_fd + 1,
-		       &read_fds,
-		       &write_fds,
-		       &except_fds,
-		       NULL);
-
-    if (num_ready < 0) {
-      fprintf(where,
-	      "%s: select failure: %s (errno %d)\n",
-	      __FUNCTION__,
-	      strerror(errno),
-	      errno);
-      fflush(where);
-      exit(1);
-    }
+		            &read_fds,
+		            &write_fds,
+		            &except_fds,
+		            NULL);
 
     /* try to keep things simple */
-    candidate = 0;
-    while ((num_ready) && (candidate <= high_fd)) {
-      if (FD_ISSET(candidate,&read_fds)) {
-	accept_connection(candidate);
-	FD_CLR(candidate,&read_fds);
-	num_ready--;
-      }
-      else {
-	candidate++;
-      }
-    }
+    // candidate = 0;
+    // while ((num_ready) && (candidate <= high_fd)) {
+    //     if (FD_ISSET(candidate,&read_fds)) {
+	  //         accept_connection(candidate);
+	  //          FD_CLR(candidate,&read_fds);
+	  //           num_ready--;
+    //   }
+    //   else {
+	  //           candidate++;
+    //   }
+    // }
   }
 }
 
