@@ -327,13 +327,6 @@ process_requests()
     fflush(where);
   }
 
-  /* if the netserver was started with a passphrase, look for it in
-     the first request to arrive.  if there is no passphrase in the
-     first request we will end-up dumping the control connection. raj
-     2012-01-23 */
-
-  if ((passphrase != NULL)  && (recv_passphrase()))
-      return;
 
   while (1) {
 
@@ -575,6 +568,47 @@ process_requests()
 
     }
   }
+}
+
+
+
+SOCKET
+set_fdset(struct listen_elt *list, fd_set *fdset) {
+
+  struct listen_elt *temp;
+  SOCKET max = INVALID_SOCKET;
+
+  FD_ZERO(fdset);
+
+  temp = list;
+
+  if (debug) {
+    fprintf(where,
+	    "%s: enter list %p fd_set %p\n",
+	    __FUNCTION__,
+	    list,
+	    fdset);
+    fflush(where);
+  }
+
+  while (temp) {
+    if (temp->fd > max)
+      max = temp->fd;
+
+    if (debug) {
+      fprintf(where,
+	      "setting %d in fdset\n",
+	      temp->fd);
+      fflush(where);
+    }
+
+    FD_SET(temp->fd,fdset);
+
+    temp = temp->next;
+  }
+
+  return max;
+
 }
 
 
