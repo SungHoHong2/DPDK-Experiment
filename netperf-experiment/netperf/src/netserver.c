@@ -809,12 +809,6 @@ accept_connection(SOCKET listen_fd) {
   int on = 1;
 #endif
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
 
   peeraddrlen = sizeof(peeraddr);
 
@@ -878,7 +872,7 @@ accept_connections() {
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
         if (FD_ISSET(candidate,&read_fds)) {
-	          accept_connection(candidate);
+	           accept_connection(candidate);
 	           FD_CLR(candidate,&read_fds);
 	            num_ready--;
       }
@@ -889,11 +883,9 @@ accept_connections() {
   }
 }
 
-#ifndef WIN32
-#define SERVER_ARGS "DdfhL:n:Np:v:VZ:46"
-#else
+
 #define SERVER_ARGS "DdfhL:n:Np:v:VZ:46I:i:"
-#endif
+
 void
 scan_netserver_args(int argc, char *argv[]) {
 
