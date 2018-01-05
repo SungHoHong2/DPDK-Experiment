@@ -315,6 +315,63 @@ create_listens(char hostname[], char port[], int af) {
 
 
 void
+accept_connection(SOCKET listen_fd) {
+
+  struct sockaddr_storage peeraddr;
+  netperf_socklen_t peeraddrlen;
+#if defined(SO_KEEPALIVE)
+  int on = 1;
+#endif
+
+  if (debug) {
+    fprintf(where,
+	    "%s: enter\n",
+	    __FUNCTION__);
+    fflush(where);
+  }
+
+  peeraddrlen = sizeof(peeraddr);
+
+  /* while server_control is only used by the WIN32 path, but why
+     bother ifdef'ing it?  and besides, do we *really* need knowledge
+     of server_control in the WIN32 case? do we have to tell the
+     child about *all* the listen endpoints? raj 2011-07-08 */
+  server_control = listen_fd;
+
+  if ((server_sock = accept(listen_fd,
+			   (struct sockaddr *)&peeraddr,
+			    &peeraddrlen)) == INVALID_SOCKET) {
+    fprintf(where,
+	    "%s: accept failure: %s (errno %d)\n",
+	    __FUNCTION__,
+	    strerror(errno),
+	    errno);
+    fflush(where);
+    exit(1);
+  }
+
+#if defined(SO_KEEPALIVE)
+  /* we are not terribly concerned if this does not work, it is merely
+     duct tape added to belts and suspenders. raj 2011-07-08 */
+  setsockopt(server_sock,
+	     SOL_SOCKET,
+	     SO_KEEPALIVE,
+	     (const char *)&on,
+	     sizeof(on));
+#endif
+
+  if (spawn_on_accept) {
+    spawn_child();
+    /* spawn_child() only returns when we are the parent */
+    close(server_sock);
+  }
+  else {
+    process_requests();
+  }
+}
+
+
+void
 accept_connections() {
 
   fd_set read_fds, write_fds, except_fds;
