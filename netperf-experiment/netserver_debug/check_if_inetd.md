@@ -1,6 +1,6 @@
 ```c
 static void
-check_if_inetd() {
+check_if_inetd() { 
 
   if (debug) {
     fprintf(where,
