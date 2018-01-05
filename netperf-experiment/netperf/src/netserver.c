@@ -1380,6 +1380,7 @@ daemonize() {
       accept_connections();
 
   default:
+    printf("running\n");
     /* we are the parent, nothing to do but exit? */
     // exit(0);
   }
