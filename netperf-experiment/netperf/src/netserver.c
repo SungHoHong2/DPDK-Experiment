@@ -890,13 +890,6 @@ void
 daemonize() {
 #if defined(HAVE_FORK)
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
   /* flush the usual suspects */
   fflush(stdin);
   fflush(stdout);
@@ -1076,9 +1069,6 @@ main(int argc, char *argv[]) {
     if (want_daemonize) {
       daemonize();
     }
-
-    accept_connections();
-
   return 0;
 
 }
