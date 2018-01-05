@@ -230,13 +230,7 @@ create_listens(char hostname[], char port[], int af) {
                         &local_res);
     count += 1;
     if (error == EAI_AGAIN) {
-      if (debug) {
-        fprintf(stderr,
-		"%s: Sleeping on getaddrinfo EAI_AGAIN\n",
-		__FUNCTION__);
-        fflush(stderr);
-      }
-      sleep(1);
+            sleep(1);
     }
   } while ((error == EAI_AGAIN) && (count <= 5));
 
