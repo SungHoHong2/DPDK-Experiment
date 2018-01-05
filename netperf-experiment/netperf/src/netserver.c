@@ -138,6 +138,35 @@ int      suppress_debug = 0;
 extern	char	*optarg;
 extern	int	optind, opterr;
 
+void
+netlib_init_cpu_map__ex() {
+
+  int i;
+#ifdef HAVE_MPCTL
+  int num;
+  i = 0;
+  /* I go back and forth on whether this should be the system-wide set
+     of calls, or if the processor set versions (sans the _SYS) should
+     be used.  at the moment I believe that the system-wide version
+     should be used. raj 2006-04-03 */
+  num = mpctl(MPC_GETNUMSPUS_SYS,0,0);
+  lib_cpu_map[i] = mpctl(MPC_GETFIRSTSPU_SYS,0,0);
+  for (i = 1;((i < num) && (i < MAXCPUS)); i++) {
+    lib_cpu_map[i] = mpctl(MPC_GETNEXTSPU_SYS,lib_cpu_map[i-1],0);
+  }
+  /* from here, we set them all to -1 because if we launch more
+     loopers than actual CPUs, well, I'm not sure why :) */
+  for (; i < MAXCPUS; i++) {
+    lib_cpu_map[i] = -1;
+  }
+
+#else
+  /* we assume that there is indeed a contiguous mapping */
+  for (i = 0; i < MAXCPUS; i++) {
+    lib_cpu_map[i] = i;
+  }
+#endif
+}
 
 
 void
@@ -323,7 +352,7 @@ lib_remote_cpu_stats.peak_cpu_util = -1.0;
 
 netperf_version = strdup(NETPERF_VERSION);
 
-netlib_init_cpu_map(); // active
+netlib_init_cpu_map__ex(); // active
 srand(getpid()); // active
 
 strncpy(local_host_name,"",sizeof(local_host_name));
