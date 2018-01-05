@@ -397,7 +397,7 @@ create_listens("0.0.0.0",listen_port,AF_INET);  // active
 if (listen_list) {  // active
   fprintf(stdout,
     "Starting netserver with host '%s' port '%s' and family %s\n",
-    (no_name) ? "IN(6)ADDR_ANY" : name,
+    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
     listen_port,
     inet_ftos(af));  // active
   fflush(stdout);  // active
@@ -405,7 +405,7 @@ if (listen_list) {  // active
 else {
   fprintf(stderr,
     "Unable to start netserver with  '%s' port '%s' and family %s\n",
-    (no_name) ? "IN(6)ADDR_ANY" : name,
+    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
     listen_port,
     inet_ftos(af));
   fflush(stderr);
