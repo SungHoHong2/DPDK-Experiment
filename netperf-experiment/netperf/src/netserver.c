@@ -1382,7 +1382,7 @@ daemonize() {
   default:
     printf("running\n");
     /* we are the parent, nothing to do but exit? */
-    // exit(0);
+    exit(0);
   }
 
 #else
@@ -1462,16 +1462,6 @@ check_if_inetd() {
 int _cdecl
 main(int argc, char *argv[]) {
 
-#ifdef WIN32
-  WSADATA	wsa_data ;
-
-  /* Initialize the winsock lib do we still want version 2.2? */
-  if ( WSAStartup(MAKEWORD(2,2), &wsa_data) == SOCKET_ERROR ){
-    printf("WSAStartup() failed : %lu\n", GetLastError()) ;
-    return -1 ;
-  }
-#endif /* WIN32 */
-
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
   if (program == NULL) {
@@ -1488,27 +1478,19 @@ main(int argc, char *argv[]) {
   local_address_family = AF_UNSPEC;
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
-  scan_netserver_args(argc, argv);
+  // scan_netserver_args(argc, argv);
 
-  check_if_inetd();
+  // check_if_inetd();
+  struct sockaddr_storage name;
+  netperf_socklen_t namelen;
 
-  if (child) {
-    /* we are the child of either an inetd or parent netserver via
-       spawning (Windows) rather than fork()ing. if we were fork()ed
-       we would not be coming through this way. set_server_sock() must
-       be called before open_debug_file() or there is a chance that
-       we'll toast the descriptor when we do not wish it. */
-    set_server_sock();
-    open_debug_file();
-    process_requests();
+  namelen = sizeof(name);
+  if (getsockname(0,
+      (struct sockaddr *)&name,
+      &namelen) == SOCKET_ERROR) {
+      not_inetd = 1;
   }
-  else if (daemon_parent) {
-    /* we are the parent daemonized netserver
-       process. accept_connections() will decide if we want to spawn a
-       child process */
-    accept_connections();
-  }
-  else {
+
     /* we are the top netserver process, so we have to create the
        listen endpoint(s) and decide if we want to daemonize */
     setup_listens(local_host_name,listen_port,local_address_family);
@@ -1516,13 +1498,10 @@ main(int argc, char *argv[]) {
       daemonize();
     }
     accept_connections();
-  }
 
   unlink_empty_debug_file();
 
-#ifdef WIN32
-  WSACleanup();
-#endif
+
 
   return 0;
 
