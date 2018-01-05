@@ -815,7 +815,7 @@ spawn_child() {
        worry about the standard file descriptors. raj 2011-07-11 */
 
     close_listens(listen_list);
-    open_debug_file();
+    // open_debug_file();
 
     child = 1;
     netperf_daemon = 0;
