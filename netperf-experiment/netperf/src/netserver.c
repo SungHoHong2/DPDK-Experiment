@@ -876,11 +876,15 @@ accept_connections() {
     FD_ZERO(&except_fds);
     high_fd = set_fdset(listen_list,&read_fds);
 
+#if !defined(WIN32)
+    num_ready = select(high_fd + 1,
+#else
     num_ready = select(1,
-		            &read_fds,
-		            &write_fds,
-		            &except_fds,
-		            NULL);
+#endif
+		       &read_fds,
+		       &write_fds,
+		       &except_fds,
+		       NULL);
 
     if (num_ready < 0) {
       fprintf(where,
@@ -896,19 +900,22 @@ accept_connections() {
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
       if (FD_ISSET(candidate,&read_fds)) {
-	        accept_connection(candidate);
-	        FD_CLR(candidate,&read_fds);
-	        num_ready--;
+	accept_connection(candidate);
+	FD_CLR(candidate,&read_fds);
+	num_ready--;
       }
       else {
-	        candidate++;
+	candidate++;
       }
     }
   }
 }
 
+#ifndef WIN32
+#define SERVER_ARGS "DdfhL:n:Np:v:VZ:46"
+#else
 #define SERVER_ARGS "DdfhL:n:Np:v:VZ:46I:i:"
-
+#endif
 void
 scan_netserver_args(int argc, char *argv[]) {
 
