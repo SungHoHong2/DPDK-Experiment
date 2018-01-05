@@ -216,17 +216,7 @@ create_listens(char hostname[], char port[], int af) {
   SOCKET temp_socket;
   struct listen_elt *temp_elt;
 
-  if (debug) {
-    fprintf(stderr,
-	    "%s: called with host '%s' port '%s' family %s(%d)\n",
-	    __FUNCTION__,
-            hostname,
-	    port,
-	    inet_ftos(af),
-            af);
-    fflush(stderr);
-  }
- memset(&hints,0,sizeof(hints));
+  memset(&hints,0,sizeof(hints));
   hints.ai_family = af;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_protocol = IPPROTO_TCP;
@@ -251,32 +241,12 @@ create_listens(char hostname[], char port[], int af) {
   } while ((error == EAI_AGAIN) && (count <= 5));
 
   if (error) {
-    if (debug) {
-
-      fprintf(stderr,
-	      "%s: could not resolve remote '%s' port '%s' af %d\n"
-	      "\tgetaddrinfo returned %s (%d)\n",
-	      __FUNCTION__,
-	      hostname,
-	      port,
-	      af,
-	      gai_strerror(error),
-	      error);
-
-    }
     return;
   }
 
-  if (debug) {
-    dump_addrinfo(stderr, local_res, hostname, port, af);
-  }
-
   local_res_temp = local_res;
-
   while (local_res_temp != NULL) {
-
     temp_socket = socket(local_res_temp->ai_family,SOCK_STREAM,0);
-
     if (temp_socket == INVALID_SOCKET) {
       if (debug) {
 	fprintf(stderr,
@@ -331,19 +301,6 @@ create_listens(char hostname[], char port[], int af) {
 	fflush(stderr);
 	exit(1);
       }
-    }
-    else {
-      /* we consider a bind() or listen() failure a transient and try
-	 the next address */
-      if (debug) {
-	fprintf(stderr,
-		"%s: warning: bind or listen call failure: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-      close(temp_socket);
     }
     local_res_temp = local_res_temp->ai_next;
   }
