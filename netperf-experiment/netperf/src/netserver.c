@@ -167,12 +167,7 @@ extern	int	optind, opterr;
 void
 set_server_sock() {
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
+
 
 #ifdef WIN32
   server_sock = (SOCKET)GetStdHandle(STD_INPUT_HANDLE);
