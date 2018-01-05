@@ -159,173 +159,6 @@ extern	int	optind, opterr;
 
 /* char  *passphrase = NULL; */
 
-static void
-init_netserver_globals() {
-
-#if defined(__VMS) || defined(VMWARE_UW)
-  spawn_on_accept = 0;
-  want_daemonize = 0;
-#else
-  spawn_on_accept = 1;
-#if defined(WIN32)
-  /* we only know how to spawn in WIN32, not daemonize */
-  want_daemonize = 0;
-#else
-  want_daemonize = 1;
-#endif /* WIN32 */
-#endif /* __VMS || VMWARE_UW */
-
-  child = 0;
-  not_inetd = 0;
-  netperf_daemon = 0;
-}
-
-void
-unlink_empty_debug_file() {
-
-#if !defined(WIN32)
-  struct stat buf;
-
-  if (stat(FileName,&buf)== 0) {
-
-    if (buf.st_size == 0)
-      unlink(FileName);
-  }
-#endif
-}
-
-/* it is important that set_server_sock() be called before this
-   routine as we depend on the control socket being dup()ed out of the
-   way when we go messing about with the streams. */
-void
-open_debug_file()
-{
-#if !defined WIN32
-#define NETPERF_NULL "/dev/null"
-#else
-#define NETPERF_NULL "nul"
-#endif
-
-  FILE *rd_null_fp;
-
-  if (where != NULL) fflush(where);
-
-  snprintf(FileName,
-	   sizeof(FileName),
-#if defined(WIN32)
-	   "%s\\%s_%d",
-	   getenv("TEMP"),
-#else
-	   "%s_%d",
-#endif
-	   DEBUG_LOG_FILE,
-	   getpid());
-  if ((where = fopen((suppress_debug) ? NETPERF_NULL : FileName,
-		     "w")) == NULL) {
-    perror("netserver: debug file");
-    exit(1);
-  }
-
-#if !defined(WIN32)
-
-  chmod(FileName,0644);
-
-  /* redirect stdin to "/dev/null" */
-  rd_null_fp = fopen(NETPERF_NULL,"r");
-  if (NULL == rd_null_fp) {
-    fprintf(where,
-	    "%s: opening of %s failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    NETPERF_NULL,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (close(STDIN_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDIN_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(rd_null_fp)) == -1) {
-    fprintf(where,
-	    "%s: dup of rd_null_fp to stdin failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  /* redirect stdout to "where" */
-  if (close(STDOUT_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDOUT_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(where)) == -1) {
-    fprintf(where,
-	    "%s: dup of where to stdout failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  /* redirect stderr to "where" */
-  if (close(STDERR_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDERR_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(where)) == -1) {
-    fprintf(where,
-	    "%s: dup of where to stderr failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-#else
-
-  /* Hopefully, by closing stdout & stderr, the subsequent fopen calls
-     will get mapped to the correct std handles. */
-  fclose(stdout);
-
-  if ((where = fopen(FileName, "w")) == NULL) {
-    perror("netserver: fopen of debug file as new stdout failed!");
-    exit(1);
-  }
-
-  fclose(stderr);
-
-  if ((where = fopen(FileName, "w")) == NULL) {
-    fprintf(stdout, "fopen of debug file as new stderr failed!\n");
-    exit(1);
-  }
-
-#endif
-
-}
 
 /* so, either we are a child of inetd in which case server_sock should
    be stdin, or we are a child of a netserver parent.  there will be
@@ -1470,7 +1303,12 @@ main(int argc, char *argv[]) {
   }
   strcpy(program, argv[0]);
 
-  init_netserver_globals();
+  // init_netserver_globals();
+  spawn_on_accept = 1;  // active
+  want_daemonize = 1;  // active
+  child = 0; // active
+  not_inetd = 0; // active
+  netperf_daemon = 0; // active
 
   netlib_init();
 
@@ -1497,11 +1335,8 @@ main(int argc, char *argv[]) {
     if (want_daemonize) {
       daemonize();
     }
+
     accept_connections();
-
-  unlink_empty_debug_file();
-
-
 
   return 0;
 
