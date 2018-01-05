@@ -36,6 +36,11 @@ cd src
 | -l | elapsed time |
 | -o | used for creating latency features [optional]|
 
+
+<br>
+
+
+- **building netserver**
 ```
 ./netperf -H 10.218.111.252 -l 5 -- -m 2048 -o P99_LATENCY
 ```

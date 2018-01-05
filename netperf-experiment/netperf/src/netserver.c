@@ -1346,7 +1346,7 @@ scan_netserver_args(int argc, char *argv[]) {
 	 checking malloc(). we will though make certain we only
 	 allocated it once in the event that someone puts -Z on the
 	 command line more than once */
-      if (passphrase == NULL) 
+      if (passphrase == NULL)
 	passphrase = malloc(sizeof(netperf_request.content.test_specific_data));
       strncpy(passphrase,
 	      optarg,
