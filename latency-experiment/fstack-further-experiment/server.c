@@ -8,6 +8,9 @@
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h>    //write
 
+#include "ff_config.h"
+#include "ff_api.h"
+
 int main(int argc , char *argv[])
 {
     int socket_desc , client_sock , c , read_size;
@@ -52,22 +55,22 @@ int main(int argc , char *argv[])
     }
     puts("Connection accepted");
 
-    //Receive a message from client
-    while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
-    {
-        //Send the message back to client
-        write(client_sock , client_message , strlen(client_message));
-    }
-
-    if(read_size == 0)
-    {
-        puts("Client disconnected");
-        fflush(stdout);
-    }
-    else if(read_size == -1)
-    {
-        perror("recv failed");
-    }
+    // //Receive a message from client
+    // while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
+    // {
+    //     //Send the message back to client
+    //     write(client_sock , client_message , strlen(client_message));
+    // }
+    //
+    // if(read_size == 0)
+    // {
+    //     puts("Client disconnected");
+    //     fflush(stdout);
+    // }
+    // else if(read_size == -1)
+    // {
+    //     perror("recv failed");
+    // }
 
     return 0;
 }
