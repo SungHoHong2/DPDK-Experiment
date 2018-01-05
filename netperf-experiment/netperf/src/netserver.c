@@ -112,7 +112,6 @@ char	netserver_id[]="\
 #include "netsh.h"
 
 char     FileName[PATH_MAX];
-
 char     listen_port[10];
 
 struct listen_elt {
@@ -121,11 +120,9 @@ struct listen_elt {
 };
 
 struct listen_elt *listen_list = NULL;
-
 SOCKET   server_control;
 
-int      child;   /* are we the child of inetd or a parent netserver?
-		     */
+int      child;
 int      netperf_daemon;
 int      daemon_parent = 0;
 int      not_inetd;
@@ -136,64 +133,113 @@ int      suppress_debug = 0;
 extern	char	*optarg;
 extern	int	optind, opterr;
 
-
-
-
 int _cdecl
 main(int argc, char *argv[]) {
 
-// #ifdef WIN32
-//   WSADATA	wsa_data ;
-//
-//   /* Initialize the winsock lib do we still want version 2.2? */
-//   if ( WSAStartup(MAKEWORD(2,2), &wsa_data) == SOCKET_ERROR ){
-//     printf("WSAStartup() failed : %lu\n", GetLastError()) ;
-//     return -1 ;
-//   }
-// #endif /* WIN32 */
-//
-//   /* Save away the program name */
-//   program = (char *)malloc(strlen(argv[0]) + 1);
-//   if (program == NULL) {
-//     printf("malloc for program name failed!\n");
-//     return -1 ;
-//   }
-//   strcpy(program, argv[0]);
-//
+/* Save away the program name */
+program = (char *)malloc(strlen(argv[0]) + 1);
+  if (program == NULL) {
+    printf("malloc for program name failed!\n");
+    return -1 ;
+  }
+
+  strcpy(program, argv[0]);
+
 //   init_netserver_globals();
-//
+spawn_on_accept = 1;
+want_daemonize = 1;
+
+child = 0;
+not_inetd = 0;
+netperf_daemon = 0;
+
 //   netlib_init();
-//
-//   strncpy(local_host_name,"",sizeof(local_host_name));
-//   local_address_family = AF_UNSPEC;
-//   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
-//
+where = stdout;
+request_array = (int *)(&netperf_request);
+response_array = (int *)(&netperf_response);
+
+for (i = 0; i < MAXCPUS; i++) {
+  lib_local_per_cpu_util[i] = -1.0;
+}
+
+lib_local_cpu_stats.peak_cpu_id = -1;
+lib_local_cpu_stats.peak_cpu_util = -1.0;
+lib_remote_cpu_stats.peak_cpu_id = -1;
+lib_remote_cpu_stats.peak_cpu_util = -1.0;
+
+netperf_version = strdup(NETPERF_VERSION);
+
+netlib_init_cpu_map(); // active
+srand(getpid()); // active
+
+strncpy(local_host_name,"",sizeof(local_host_name));
+local_address_family = AF_UNSPEC;
+strncpy(listen_port,TEST_PORT,sizeof(listen_port));
+
 //   scan_netserver_args(argc, argv);
-//
+
 //   check_if_inetd();
-//
-//   if (child) {
-//     /* we are the child of either an inetd or parent netserver via
-//        spawning (Windows) rather than fork()ing. if we were fork()ed
-//        we would not be coming through this way. set_server_sock() must
-//        be called before open_debug_file() or there is a chance that
-//        we'll toast the descriptor when we do not wish it. */
-//     set_server_sock();
-//     open_debug_file();
-//     process_requests();
-//   }
-//   else if (daemon_parent) {
-//     /* we are the parent daemonized netserver
-//        process. accept_connections() will decide if we want to spawn a
-//        child process */
-//     accept_connections();
-//   }
-//   else {
-//     /* we are the top netserver process, so we have to create the
-//        listen endpoint(s) and decide if we want to daemonize */
-//     setup_listens(local_host_name,listen_port,local_address_family);
-//     if (want_daemonize) {
+struct sockaddr_storage name;
+netperf_socklen_t namelen;
+
+namelen = sizeof(name);
+if (getsockname(0,
+    (struct sockaddr *)&name,
+    &namelen) == SOCKET_ERROR) {
+  not_inetd = 1;
+
+
+
+    /* we are the top netserver process, so we have to create the
+       listen endpoint(s) and decide if we want to daemonize */
+//    setup_listens(local_host_name,listen_port,local_address_family);
+
+int do_inet; // active
+int no_name = 0;  //active
+
+if (strcmp(name,"") == 0) { //active
+
+  no_name = 1; // active
+  do_inet = 1;  // active
+  do_inet6 = 1;  // active
+}
+
+if (do_inet6)  // active
+create_listens("::0",port,AF_INET6);  // active
+
+if (do_inet)  // active
+create_listens("0.0.0.0",port,AF_INET);  // active
+
+if (listen_list) {  // active
+  fprintf(stdout,
+    "Starting netserver with host '%s' port '%s' and family %s\n",
+    (no_name) ? "IN(6)ADDR_ANY" : name,
+    port,
+    inet_ftos(af));  // active
+  fflush(stdout);  // active
+}
+else {
+  fprintf(stderr,
+    "Unable to start netserver with  '%s' port '%s' and family %s\n",
+    (no_name) ? "IN(6)ADDR_ANY" : name,
+    port,
+    inet_ftos(af));
+  fflush(stderr);
+  exit(1);
+}
+
+if (want_daemonize) {
 //       daemonize();
+/* flush the usual suspects */
+
+  fflush(stdin); // active
+  fflush(stdout); // active
+  fflush(stderr); // active
+
+  exit();
+
+}
+
 //     }
 //     accept_connections();
 //   }
