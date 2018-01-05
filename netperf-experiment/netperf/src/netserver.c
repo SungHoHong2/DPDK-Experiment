@@ -368,7 +368,7 @@ netperf_socklen_t namelen;
 namelen = sizeof(name);
 if (getsockname(0,
     (struct sockaddr *)&name,
-    &namelen) == SOCKET_ERROR) {
+    &namelen) == SOCKET_ERROR)
   not_inetd = 1;
 
 
