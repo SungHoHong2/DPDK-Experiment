@@ -242,16 +242,8 @@ create_listens(char hostname[], char port[], int af) {
   while (local_res_temp != NULL) {
     temp_socket = socket(local_res_temp->ai_family,SOCK_STREAM,0);
     if (temp_socket == INVALID_SOCKET) {
-      if (debug) {
-	fprintf(stderr,
-		"%s could not allocate a socket: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-      local_res_temp = local_res_temp->ai_next;
-      continue;
+        local_res_temp = local_res_temp->ai_next;
+        continue;
     }
 
     /* happiness and joy, keep going */
@@ -259,46 +251,33 @@ create_listens(char hostname[], char port[], int af) {
 		   SOL_SOCKET,
 		   SO_REUSEADDR,
 		   (char *)&on ,
-		   sizeof(on)) == SOCKET_ERROR) {
-      if (debug) {
-	fprintf(stderr,
-		"%s: warning: could not set SO_REUSEADDR: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-    }
-    /* still happy and joyful */
+		   sizeof(on)) == SOCKET_ERROR) { }
 
+    /* still happy and joyful */
     if ((bind(temp_socket,
 	      local_res_temp->ai_addr,
 	      local_res_temp->ai_addrlen) != SOCKET_ERROR) &&
-	(listen(temp_socket,1024) != SOCKET_ERROR))  {
+	      (listen(temp_socket,1024) != SOCKET_ERROR))  {
 
-      /* OK, now add to the list */
-      temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
-      if (temp_elt) {
-	temp_elt->fd = temp_socket;
-	if (listen_list) {
-	  temp_elt->next = listen_list;
-	}
-	else {
-	  temp_elt->next = NULL;
-	}
-	listen_list = temp_elt;
-      }
-      else {
-	fprintf(stderr,
-		"%s: could not malloc a listen_elt\n",
-		__FUNCTION__);
-	fflush(stderr);
-	exit(1);
-      }
+        /* OK, now add to the list */
+        temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
+        if (temp_elt) {
+  	           temp_elt->fd = temp_socket;
+  	           if (listen_list) {
+  	                 temp_elt->next = listen_list;
+  	           }
+  	           else {
+  	                 temp_elt->next = NULL;
+  	           }
+  	           listen_list = temp_elt;
+        } else {
+        	     fprintf(stderr, "%s: could not malloc a listen_elt\n",__FUNCTION__);
+        	     fflush(stderr);
+        	     exit(1);
+        }
     }
     local_res_temp = local_res_temp->ai_next;
   }
-
 }
 
 void
