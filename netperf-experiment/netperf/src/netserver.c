@@ -1330,8 +1330,8 @@ main(int argc, char *argv[]) {
        listen endpoint(s) and decide if we want to daemonize */
     // setup_listens(local_host_name,listen_port,local_address_family);
     int no_name = 1;  //active
-    create_listens("::0",port,AF_INET6);  // active
-    create_listens("0.0.0.0",port,AF_INET);  // active
+    create_listens("::0",listen_port,AF_INET6);  // active
+    create_listens("0.0.0.0",listen_port,AF_INET);  // active
 
     if (listen_list) {
       fprintf(stdout,
