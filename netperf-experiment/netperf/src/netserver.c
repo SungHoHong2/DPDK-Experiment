@@ -888,7 +888,6 @@ accept_connections() {
 
 void
 daemonize() {
-#if defined(HAVE_FORK)
 
   /* flush the usual suspects */
   fflush(stdin);
@@ -914,8 +913,6 @@ daemonize() {
     /* we are the child. we should get a new "where" to match our new
        pid */
 
-    // open_debug_file();
-
 #ifdef HAVE_SETSID
       setsid();
 #else
@@ -933,13 +930,6 @@ daemonize() {
     exit(0);
   }
 
-#else
-  fprintf(where,
-	  "%s called on platform which cannot daemonize\n",
-	  __FUNCTION__);
-  fflush(where);
-  exit(1);
-#endif /* HAVE_FORK */
 }
 
 static void
@@ -973,38 +963,6 @@ check_if_inetd() {
 #endif
   }
 }
-
-/* OK, so how does all this work you ask?  Well, we are in a maze of
-   twisty options, all different.  Netserver can be invoked as a child
-   of inetd or the VMS auxiliary server process, or a parent netserver
-   process. In those cases, we could/should follow the "child"
-   path. However, there are really two "child" paths through the
-   netserver code.
-
-   When this netserver is a child of a parent netserver in the
-   case of *nix, the child process will be created by a
-   spawn_child_process() in accept_connections() and will not hit the
-   "child" path here in main().
-
-   When this netserver is a child of a parent netserver in the case of
-   windows, the child process will have been spawned via a
-   Create_Process() call in spawn_child_process() in
-   accept_connections, but will flow through here again. We rely on
-   the scan_netserver_args() call to have noticed the magic option
-   that tells us we are a child process.
-
-   When this netserver is launched from the command line we will first
-   set-up the listen endpoint(s) for the controll connection.  At that
-   point we decide if we want to and can become our own daemon, or
-   stay attached to the "terminal."  When this happens under *nix, we
-   will again take a fork() path via daemonize() and will not come
-   back through main().  If we ever learn how to become our own daemon
-   under Windows, we will undoubtedly take a Create_Process() path
-   again and will come through main() once again - that is what the
-   "daemon" case here is all about.
-
-   It is hoped that this is all much clearer than the old spaghetti
-   code that netserver had become.  raj 2011-07-11 */
 
 
 int _cdecl
