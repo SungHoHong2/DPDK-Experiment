@@ -416,6 +416,10 @@ if (want_daemonize) {
 //       daemonize();
 /* flush the usual suspects */
 
+
+/* ok, we can start accepting control connections now */
+  accept_connections();
+
   fflush(stdin); // active
   fflush(stdout); // active
   fflush(stderr); // active
