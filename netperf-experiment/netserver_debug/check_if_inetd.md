@@ -17,11 +17,11 @@ check_if_inetd() {
     struct sockaddr_storage name;
     netperf_socklen_t namelen;
 
-    namelen = sizeof(name);
-    if (getsockname(0,
-		    (struct sockaddr *)&name,
-		    &namelen) == SOCKET_ERROR) {
-      not_inetd = 1;
+    namelen = sizeof(name); // active
+    if (getsockname(0, // active
+		    (struct sockaddr *)&name, // active
+		    &namelen) == SOCKET_ERROR) { // active
+      not_inetd = 1; // active
     }
     else {
       not_inetd = 0;

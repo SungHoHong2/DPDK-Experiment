@@ -10,10 +10,10 @@ daemonize() {
     fflush(where);
   }
 
-  /* flush the usual suspects */
-  fflush(stdin);
-  fflush(stdout);
-  fflush(stderr);
+  /* flush the usual suspects * /
+  fflush(stdin); // active
+  fflush(stdout); // active
+  fflush(stderr); // active
 
   switch (fork()) {
   case -1:
@@ -32,7 +32,7 @@ daemonize() {
     chdir(DEBUG_LOG_FILE_DIR);
 
     /* we are the child. we should get a new "where" to match our new
-       pid */
+       pid * /
 
     open_debug_file();
 
@@ -40,15 +40,15 @@ daemonize() {
       setsid();
 #else
       setpgrp();
-#endif /* HAVE_SETSID */
+#endif /* HAVE_SETSID * /
 
       signal(SIGCLD, SIG_IGN);
 
-      /* ok, we can start accepting control connections now */
+      /* ok, we can start accepting control connections now * /
       accept_connections();
 
-  default:
-    /* we are the parent, nothing to do but exit? */
+  default: // active
+    /* we are the parent, nothing to do but exit? * /
     exit(0);
   }
 

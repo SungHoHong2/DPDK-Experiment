@@ -4,21 +4,21 @@ netlib_init()
 {
   int i;
 
-  where = stdout;
+  where = stdout;  // active
 
-  request_array = (int *)(&netperf_request);
-  response_array = (int *)(&netperf_response);
+  request_array = (int *)(&netperf_request); // active
+  response_array = (int *)(&netperf_response); // active
 
-  for (i = 0; i < MAXCPUS; i++) {
-    lib_local_per_cpu_util[i] = -1.0;
-  }
+  for (i = 0; i < MAXCPUS; i++) {  // active
+    lib_local_per_cpu_util[i] = -1.0;  // active
+  } // active
 
-  lib_local_cpu_stats.peak_cpu_id = -1;
-  lib_local_cpu_stats.peak_cpu_util = -1.0;
-  lib_remote_cpu_stats.peak_cpu_id = -1;
-  lib_remote_cpu_stats.peak_cpu_util = -1.0;
+  lib_local_cpu_stats.peak_cpu_id = -1; // active
+  lib_local_cpu_stats.peak_cpu_util = -1.0; // active
+  lib_remote_cpu_stats.peak_cpu_id = -1; // active
+  lib_remote_cpu_stats.peak_cpu_util = -1.0; // active
 
-  netperf_version = strdup(NETPERF_VERSION);
+  netperf_version = strdup(NETPERF_VERSION); // active
 
   /* on those systems where we know that CPU numbers may not start at
      zero and be contiguous, we provide a way to map from a
@@ -28,7 +28,7 @@ netlib_init()
      netperf commandline will provide a "proper" CPU identifier. raj
      2006-04-03 */
 
-  netlib_init_cpu_map();
+  netlib_init_cpu_map(); // active
 
   if (debug) {
     fprintf(where,
@@ -41,7 +41,7 @@ netlib_init()
 
   /* some functionality might want to use random numbers, so we should
      initialize the random number generator */
-  srand(getpid());
+  srand(getpid()); // active
 
 }
 ```
