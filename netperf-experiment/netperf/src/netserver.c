@@ -234,12 +234,12 @@ if (getsockname(0,
 int do_inet; // active
 int no_name = 0;  //active
 
-if (strcmp(name,"") == 0) { //active
+// if (strcmp(name,"") == 0) { //active
 
   no_name = 1; // active
   do_inet = 1;  // active
   do_inet6 = 1;  // active
-}
+// }
 
 if (do_inet6)  // active
 create_listens("::0",port,AF_INET6);  // active
