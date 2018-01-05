@@ -1336,16 +1336,16 @@ main(int argc, char *argv[]) {
     if (listen_list) {
       fprintf(stdout,
   	    "Starting netserver with host '%s' port '%s' and family %s\n",
-  	    (no_name) ? "IN(6)ADDR_ANY" : name,
-  	    port,
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
   	    inet_ftos(af));
       fflush(stdout);
     }
     else {
       fprintf(stderr,
   	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
-  	    (no_name) ? "IN(6)ADDR_ANY" : name,
-  	    port,
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
   	    inet_ftos(af));
       fflush(stderr);
       exit(1);
