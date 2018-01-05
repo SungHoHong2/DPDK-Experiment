@@ -232,6 +232,7 @@ if (getsockname(0,
 //    setup_listens(local_host_name,listen_port,local_address_family);
 
 int do_inet; // active
+int do_inet6;
 int no_name = 0;  //active
 
 // if (strcmp(name,"") == 0) { //active
