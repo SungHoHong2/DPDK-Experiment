@@ -1199,7 +1199,7 @@ daemonize() {
     /* we are the child. we should get a new "where" to match our new
        pid */
 
-    open_debug_file();
+    // open_debug_file();
 
 #ifdef HAVE_SETSID
       setsid();
