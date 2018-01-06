@@ -115,9 +115,9 @@ char	netserver_id[]="\
 
 #include "netsh.h"
 
-// #include "ff_config.h"
-// #include "ff_api.h"
-// #include "ff_epoll.h"
+#include "ff_config.h"
+#include "ff_api.h"
+#include "ff_epoll.h"
 
 #define MAX_EVENTS 512
 #define PKT_SIZE 3000
@@ -945,7 +945,7 @@ int _cdecl
 main(int argc, char *argv[]) {
 
 
-  // ff_init(argc, argv);
+  ff_init(argc, argv);
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
   if (program == NULL) {
