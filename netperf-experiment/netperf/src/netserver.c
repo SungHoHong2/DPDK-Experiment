@@ -155,41 +155,16 @@ int      suppress_debug = 0;
 extern	char	*optarg;
 extern	int	optind, opterr;
 
-
 #include "netserver_h.h"
 
-void
-set_server_sock() {
+void set_server_sock() {
 
-
-
-// #ifdef WIN32
-//   server_sock = (SOCKET)GetStdHandle(STD_INPUT_HANDLE);
-// #elif !defined(__VMS)
   if (server_sock != INVALID_SOCKET) {
     fprintf(where,"Yo, Iz ain't invalid!\n");
     fflush(where);
     exit(1);
   }
-
-  /* we dup this to up the reference count so when we do redirection
-     of the io streams we don't accidentally toast the control
-     connection in the case of our being a child of inetd. */
   server_sock = dup(0);
-
-// #else
-//   if ((server_sock =
-//        socket(TCPIP$C_AUXS, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-//     fprintf(stderr,
-// 	    "%s: failed to grab aux server socket: %s (errno %s)\n",
-// 	    __FUNCTION__,
-// 	    strerror(errno),
-// 	    errno);
-//     fflush(stderr);
-//     exit(1);
-//   }
-// #endif
-
 }
 
 
@@ -362,8 +337,7 @@ spawn_child() {
 }
 
 
-void
-accept_connections() {
+void accept_connections() {
 
   fd_set read_fds, write_fds, except_fds;
   SOCKET high_fd, candidate;
@@ -438,38 +412,6 @@ void daemonize() {
 
 }
 
-static void
-check_if_inetd() {
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
-  if (not_inetd) {
-    return;
-  }
-  else {
-#if !defined(WIN32) && !defined(__VMS)
-    struct sockaddr_storage name;
-    netperf_socklen_t namelen;
-
-    namelen = sizeof(name);
-    if (getsockname(0,
-		    (struct sockaddr *)&name,
-		    &namelen) == SOCKET_ERROR) {
-      not_inetd = 1;
-    }
-    else {
-      not_inetd = 0;
-      child = 1;
-    }
-#endif
-  }
-}
-
 
 int _cdecl main(int argc, char *argv[]) {
 
@@ -477,7 +419,6 @@ int _cdecl main(int argc, char *argv[]) {
   program = (char *)malloc(strlen(argv[0]) + 1);
   strcpy(program, argv[0]);
 
-  // init_netserver_globals();
   child = 0; // active
   not_inetd = 0; // active
   netperf_daemon = 0; // active
@@ -488,8 +429,6 @@ int _cdecl main(int argc, char *argv[]) {
   local_address_family = AF_UNSPEC;
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
-  // scan_netserver_args(argc, argv);
-  // check_if_inetd();
   struct sockaddr_storage name;
   netperf_socklen_t namelen;
 
