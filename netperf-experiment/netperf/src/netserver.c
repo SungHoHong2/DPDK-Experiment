@@ -269,56 +269,26 @@ create_listens(char hostname[], char port[], int af) {
 }
 
 
-SOCKET
-set_fdset(struct listen_elt *list, fd_set *fdset) {
+SOCKET set_fdset(struct listen_elt *list, fd_set *fdset) {
 
   struct listen_elt *temp;
   SOCKET max = INVALID_SOCKET;
-
   FD_ZERO(fdset);
-
   temp = list;
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter list %p fd_set %p\n",
-	    __FUNCTION__,
-	    list,
-	    fdset);
-    fflush(where);
-  }
 
   while (temp) {
     if (temp->fd > max)
       max = temp->fd;
 
-    if (debug) {
-      fprintf(where,
-	      "setting %d in fdset\n",
-	      temp->fd);
-      fflush(where);
-    }
-
     FD_SET(temp->fd,fdset);
-
     temp = temp->next;
   }
-
   return max;
-
 }
 
-void
-close_listens(struct listen_elt *list) {
+
+void close_listens(struct listen_elt *list) {
   struct listen_elt *temp;
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
   temp = list;
 
   while (temp) {
@@ -327,8 +297,8 @@ close_listens(struct listen_elt *list) {
   }
 }
 
-static int
-recv_passphrase() {
+
+static int recv_passphrase() {
 
   /* may need to revisit the timeout. we only respond if there is an
      error with receiving the passphrase */
@@ -366,13 +336,6 @@ process_requests()
 
   printf("%s\n",__FUNCTION__);
 
-  float	temp_rate;
-  /* if the netserver was started with a passphrase, look for it in
-     the first request to arrive.  if there is no passphrase in the
-     first request we will end-up dumping the control connection. raj
-     2012-01-23 */
-  if ((passphrase != NULL)  && (recv_passphrase()))
-      return;
 
   while (1) {
 
@@ -421,7 +384,6 @@ spawn_child() {
     exit(0);
     break;
   }
-
 
 #endif /* HAVE_FORK */
 }
