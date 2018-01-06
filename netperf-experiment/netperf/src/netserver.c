@@ -802,6 +802,7 @@ spawn_child() {
 }
 
 
+SOCKET epfd;
 
 
 void
@@ -814,7 +815,7 @@ accept_connection(SOCKET listen_fd) {
 #endif
 
   printf("server is running...\n");
-  assert((epfd = ff_epoll_create(0)) > 0);
+  assert((epfd = ff_epoll_create(1)) > 0);
   ev.data.fd = temp_socket;
   ev.events = EPOLLIN;
   ff_epoll_ctl(epfd, EPOLL_CTL_ADD, temp_socket, &ev);
