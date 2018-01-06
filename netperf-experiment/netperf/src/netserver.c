@@ -380,6 +380,7 @@ process_requests()
   while (1) {
 
     if (recv_request() <= 0) {
+      printf("recv_request\n");
       close(server_sock);
       return;
     }
@@ -387,6 +388,7 @@ process_requests()
     switch (netperf_request.content.request_type) {
 
     case DEBUG_ON:
+      printf("DEBUG_ON\n");
       netperf_response.content.response_type = DEBUG_OK;
       if (!suppress_debug) {
 	debug++;
@@ -408,6 +410,7 @@ process_requests()
       if (debug)
 	debug--;
       netperf_response.content.response_type = DEBUG_OK;
+      printf("DEBUG_OFF\n");
       send_response();
       /* we used to take the trouble to close the debug file, but SAF
 	 asked a good question when he asked "Why?" and since I cannot
@@ -416,6 +419,8 @@ process_requests()
       break;
 
     case DO_SYSINFO:
+    printf("DO_SYSINFO\n");
+
       {
 	netperf_response.content.response_type = SYSINFO_RESPONSE;
 
@@ -436,6 +441,8 @@ process_requests()
       }
 
     case CPU_CALIBRATE:
+
+      printf("CPU_CALIBRATE\n");
       netperf_response.content.response_type = CPU_CALIBRATE;
       temp_rate = calibrate_local_cpu(0.0);
       bcopy((char *)&temp_rate,
@@ -455,6 +462,8 @@ process_requests()
 
       /* we need the cpu_start, cpu_stop in the looper case to kill
          the child proceses raj 7/95 */
+
+printf("USE_LOOPER\n");
 
 #ifdef USE_LOOPER
       cpu_start(1);
