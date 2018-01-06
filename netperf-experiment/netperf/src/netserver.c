@@ -160,16 +160,36 @@ extern	int	optind, opterr;
 
 void
 set_server_sock() {
-  if ((server_sock =
-       socket(TCPIP$C_AUXS, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-    fprintf(stderr,
-	    "%s: failed to grab aux server socket: %s (errno %s)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(stderr);
+
+
+
+// #ifdef WIN32
+//   server_sock = (SOCKET)GetStdHandle(STD_INPUT_HANDLE);
+// #elif !defined(__VMS)
+  if (server_sock != INVALID_SOCKET) {
+    fprintf(where,"Yo, Iz ain't invalid!\n");
+    fflush(where);
     exit(1);
   }
+
+  /* we dup this to up the reference count so when we do redirection
+     of the io streams we don't accidentally toast the control
+     connection in the case of our being a child of inetd. */
+  server_sock = dup(0);
+
+// #else
+//   if ((server_sock =
+//        socket(TCPIP$C_AUXS, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+//     fprintf(stderr,
+// 	    "%s: failed to grab aux server socket: %s (errno %s)\n",
+// 	    __FUNCTION__,
+// 	    strerror(errno),
+// 	    errno);
+//     fflush(stderr);
+//     exit(1);
+//   }
+// #endif
+
 }
 
 
