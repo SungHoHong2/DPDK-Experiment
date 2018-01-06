@@ -150,7 +150,6 @@ int      child;   /* are we the child of inetd or a parent netserver?
 int      netperf_daemon;
 int      daemon_parent = 0;
 int      not_inetd;
-int      want_daemonize;
 int      suppress_debug = 0;
 
 extern	char	*optarg;
@@ -364,6 +363,8 @@ recv_passphrase() {
 void
 process_requests()
 {
+
+  printf("%s\n",__FUNCTION__);
 
   float	temp_rate;
 
@@ -625,14 +626,6 @@ spawn_child() {
 
 #if defined(HAVE_FORK)
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
-
   /* flush the usual suspects */
   fflush(stdin);
   fflush(stdout);
@@ -642,15 +635,6 @@ spawn_child() {
   signal(SIGCLD,SIG_IGN);
 
   switch (fork()) {
-  case -1:
-    fprintf(where,
-	    "%s: fork() error %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-
   case 0:
     /* we are the child, but not of inetd.  we don't know if we are
        the child of a daemonized parent or not, so we still need to
@@ -671,11 +655,6 @@ spawn_child() {
 #if !defined(HAVE_SETSID)
     /* Only call "waitpid()" if "setsid()" is not used. */
     while(waitpid(-1, NULL, WNOHANG) > 0) {
-      if (debug) {
-	fprintf(where,
-		"%s: reaped a child process\n",
-		__FUNCTION__);
-      }
     }
 #endif
     break;
@@ -835,10 +814,8 @@ accept_connections() {
 }
 
 
-#define SERVER_ARGS "DdfhL:n:Np:v:VZ:46I:i:"
 
-void
-daemonize() {
+void daemonize() {
 
   /* flush the usual suspects */
   fflush(stdin);
@@ -895,15 +872,13 @@ check_if_inetd() {
 }
 
 
-int _cdecl
-main(int argc, char *argv[]) {
+int _cdecl main(int argc, char *argv[]) {
 
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
   strcpy(program, argv[0]);
 
   // init_netserver_globals();
-  want_daemonize = 1;  // active
   child = 0; // active
   not_inetd = 0; // active
   netperf_daemon = 0; // active
@@ -949,9 +924,7 @@ main(int argc, char *argv[]) {
       exit(1);
     }
 
-    if (want_daemonize) {
-      daemonize();
-    }
+    daemonize();
   return 0;
 
 }
