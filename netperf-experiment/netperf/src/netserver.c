@@ -558,7 +558,13 @@ process_requests()
       break;
 #endif
 
-
+    default:
+      fprintf(where,"unknown test number %d\n",
+	      netperf_request.content.request_type);
+      fflush(where);
+      netperf_response.content.serv_errno=998;
+      send_response();
+      break;
 
     }
   }
