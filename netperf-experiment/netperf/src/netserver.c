@@ -981,23 +981,23 @@ main(int argc, char *argv[]) {
     create_listens("::0",listen_port,AF_INET6);  // active
     create_listens("0.0.0.0",listen_port,AF_INET);  // active
 
-    // if (listen_list) {
-    //   fprintf(stdout,
-  	//     "Starting netserver with host '%s' port '%s' and family %s\n",
-  	//     (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
-  	//     listen_port,
-  	//     inet_ftos(af));
-    //   fflush(stdout);
-    // }
-    // else {
-    //   fprintf(stderr,
-  	//     "Unable to start netserver with  '%s' port '%s' and family %s\n",
-  	//     (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
-  	//     listen_port,
-  	//     inet_ftos(af));
-    //   fflush(stderr);
-    //   exit(1);
-    // }
+    if (listen_list) {
+      fprintf(stdout,
+  	    "Starting netserver with host '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
+  	    inet_ftos(af));
+      fflush(stdout);
+    }
+    else {
+      fprintf(stderr,
+  	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
+  	    inet_ftos(af));
+      fflush(stderr);
+      exit(1);
+    }
     //
     // if (want_daemonize) {
     //   daemonize();
