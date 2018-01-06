@@ -57,4 +57,6 @@ sudo ./helloworld --conf ../config.ini --proc-type=primary --proc-id=0
 - **testing f-stack with wrk benchmark**
 ```
 ./wrk -t12 -c400 -d30s http://10.218.111.252
+./wrk -t12 -c400 -d1s http://10.218.111.252
+
 ```
