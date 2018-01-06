@@ -39,7 +39,6 @@ process_requests()
 
   printf("%s\n",__FUNCTION__);
 
-
   while (1) {
 
     if (recv_request() <= 0) {  //finsihing receive
