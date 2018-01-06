@@ -130,11 +130,9 @@ int main(int argc, char * argv[])
                   if(readlen > 0) {
 
                       // for pingpong purposes
-                      if(!TYPE_SERVER){
-                          send(events[i].data.fd, buf, sizeof(buf), 0);
-                      } else {
-                      // for wrk purpose
-                          int nsend = write(events[i].data.fd, html, PKT_SIZE);
+                      // send(events[i].data.fd, buf, sizeof(buf), 0);
+                      write( events[i].data.fd, html, sizeof(html));
+
                       }
                   } else {
                       epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
