@@ -1,5 +1,3 @@
-
-
 #include "netserver_h.h"
 #include "create_listens.h"
 #include "daemonize.h"
@@ -48,7 +46,7 @@ process_requests()
 
   while (1) {
 
-    if (recv_request() <= 0) {
+    if (recv_request() <= 0) {  //finsihing receive
       printf("chara: recv_request\n");
       close(server_sock);
       return;
@@ -63,13 +61,12 @@ process_requests()
   }
 }
 
-/* the routine we call when we are going to spawn/fork/whatnot a child
-   process from the parent netserver daemon. raj 2011-07-08 */
+
+
 void
 spawn_child() {
 
 #if defined(HAVE_FORK)
-
   /* flush the usual suspects */
   fflush(stdin);
   fflush(stdout);
