@@ -791,6 +791,7 @@ spawn_child() {
 void
 accept_connection(SOCKET listen_fd) {
 
+  printf("running %s\n", __FUNCTION__);
   struct sockaddr_storage peeraddr;
   netperf_socklen_t peeraddrlen;
 #if defined(SO_KEEPALIVE)
@@ -838,6 +839,7 @@ accept_connections() {
 
     /* try to keep things simple */
     candidate = 0;
+    // this place runs when it recevied the data.
     while ((num_ready) && (candidate <= high_fd)) {
       printf("number of candidates %d....\n", candidate);
 
