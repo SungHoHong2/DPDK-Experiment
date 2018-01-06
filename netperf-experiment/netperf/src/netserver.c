@@ -666,7 +666,7 @@ spawn_child() {
 
     child = 1;
     netperf_daemon = 0;
-    process_requests();
+    // process_requests();
     exit(0);
     break;
 
