@@ -372,12 +372,6 @@ process_requests()
 
   float	temp_rate;
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
 
   /* if the netserver was started with a passphrase, look for it in
      the first request to arrive.  if there is no passphrase in the
@@ -406,7 +400,7 @@ process_requests()
 	     recv_request/recv_request_n will not have dumped it as its
 	     dump_request() call is conditional on debug being set. raj
 	     2011-07-08 */
-	  dump_request();
+	     dump_request();
 	}
       }
 
