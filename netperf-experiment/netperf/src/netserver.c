@@ -160,24 +160,6 @@ extern	int	optind, opterr;
 
 void
 set_server_sock() {
-
-
-
-#ifdef WIN32
-  server_sock = (SOCKET)GetStdHandle(STD_INPUT_HANDLE);
-#elif !defined(__VMS)
-  if (server_sock != INVALID_SOCKET) {
-    fprintf(where,"Yo, Iz ain't invalid!\n");
-    fflush(where);
-    exit(1);
-  }
-
-  /* we dup this to up the reference count so when we do redirection
-     of the io streams we don't accidentally toast the control
-     connection in the case of our being a child of inetd. */
-  server_sock = dup(0);
-
-#else
   if ((server_sock =
        socket(TCPIP$C_AUXS, SOCK_STREAM, 0)) == INVALID_SOCKET) {
     fprintf(stderr,
@@ -188,8 +170,6 @@ set_server_sock() {
     fflush(stderr);
     exit(1);
   }
-#endif
-
 }
 
 
@@ -297,33 +277,6 @@ void close_listens(struct listen_elt *list) {
   }
 }
 
-
-static int recv_passphrase() {
-
-  /* may need to revisit the timeout. we only respond if there is an
-     error with receiving the passphrase */
-  if ((recv_request_timed_n(0,20) > 0) &&
-      (netperf_request.content.request_type == PASSPHRASE) &&
-      (!strcmp(passphrase,
-	       (char *)netperf_request.content.test_specific_data))) {
-    /* it was okey dokey */
-    return 0;
-  }
-#if defined(SEND_PASSPHRASE_RESPONSE)
-  netperf_response.content.response_type = PASSPHRASE;
-  netperf_response.content.serv_errno = 403;
-    snprintf((char *)netperf_response.content.test_specific_data,
-	     sizeof(netperf_response.content.test_specific_data),
-	     "Sorry, unable to match with required passphrase\n");
-  send_response_n(0);
-#endif
-  fprintf(where,
-	  "Unable to match required passphrase.  Closing control connection\n");
-  fflush(where);
-
-  close(server_sock);
-  return -1;
-}
 
 /* This routine implements the "main event loop" of the netperf server
    code. Code above it will have set-up the control connection so it
