@@ -245,7 +245,6 @@ create_listens(char hostname[], char port[], int af) {
 
   local_res_temp = local_res; // addrinfo
 
-  ff_init(argc, argv);
   while (local_res_temp != NULL) {
     temp_socket = ff_socket(local_res_temp->ai_family, SOCK_STREAM,0);
 
