@@ -367,13 +367,10 @@ process_requests()
   printf("%s\n",__FUNCTION__);
 
   float	temp_rate;
-
-
   /* if the netserver was started with a passphrase, look for it in
      the first request to arrive.  if there is no passphrase in the
      first request we will end-up dumping the control connection. raj
      2012-01-23 */
-
   if ((passphrase != NULL)  && (recv_passphrase()))
       return;
 
@@ -386,7 +383,6 @@ process_requests()
     }
 
     switch (netperf_request.content.request_type) {
-
 
     case DO_TCP_STREAM:
       printf("DO_TCP_STREAM\n");
@@ -432,29 +428,39 @@ process_requests()
 #endif /* DO_NBRR */
 
     case DO_UDP_STREAM:
+    printf("DO_UDP_STREAM\n");
 
       recv_udp_stream();
       break;
 
     case DO_UDP_RR:
+    printf("DO_UDP_RR\n");
       recv_udp_rr();
       break;
 
 #ifdef WANT_DLPI
 
     case DO_DLPI_CO_RR:
+    printf("DO_DLPI_CO_RR\n");
+
       recv_dlpi_co_rr();
       break;
 
     case DO_DLPI_CL_RR:
+    printf("DO_DLPI_CL_RR\n");
+
       recv_dlpi_cl_rr();
       break;
 
     case DO_DLPI_CO_STREAM:
+    printf("DO_DLPI_CO_STREAM\n");
+
       recv_dlpi_co_stream();
       break;
 
     case DO_DLPI_CL_STREAM:
+    printf("DO_DLPI_CL_STREAM\n");
+
       recv_dlpi_cl_stream();
       break;
 
@@ -463,18 +469,25 @@ process_requests()
 #ifdef WANT_UNIX
 
     case DO_STREAM_STREAM:
+    printf("DO_STREAM_STREAM\n");
+
       recv_stream_stream();
       break;
 
     case DO_STREAM_RR:
+    printf("DO_STREAM_RR\n");
+
       recv_stream_rr();
       break;
 
     case DO_DG_STREAM:
+    printf("DO_DG_STREAM\n");
+
       recv_dg_stream();
       break;
 
     case DO_DG_RR:
+    printf("DO_DG_RR\n");
       recv_dg_rr();
       break;
 
@@ -482,68 +495,30 @@ process_requests()
 
 #ifdef WANT_XTI
     case DO_XTI_TCP_STREAM:
+    printf("DO_XTI_TCP_STREAM\n");
+
       recv_xti_tcp_stream();
       break;
 
     case DO_XTI_TCP_RR:
+    printf("DO_XTI_TCP_RR\n");
+
       recv_xti_tcp_rr();
       break;
 
     case DO_XTI_UDP_STREAM:
+    printf("DO_XTI_UDP_STREAM\n");
+
       recv_xti_udp_stream();
       break;
 
     case DO_XTI_UDP_RR:
+    printf("DO_XTI_UDP_RR\n");
+
       recv_xti_udp_rr();
       break;
 
 #endif /* WANT_XTI */
-
-#ifdef WANT_SCTP
-    case DO_SCTP_STREAM:
-      recv_sctp_stream();
-      break;
-
-    case DO_SCTP_STREAM_MANY:
-      recv_sctp_stream_1toMany();
-      break;
-
-    case DO_SCTP_RR:
-      recv_sctp_rr();
-      break;
-
-    case DO_SCTP_RR_MANY:
-      recv_sctp_rr_1toMany();
-      break;
-#endif
-
-#ifdef WANT_SDP
-    case DO_SDP_STREAM:
-      recv_sdp_stream();
-      break;
-
-    case DO_SDP_MAERTS:
-      recv_sdp_maerts();
-      break;
-
-    case DO_SDP_RR:
-      recv_sdp_rr();
-      break;
-#endif
-
-#ifdef WANT_OMNI
-    case DO_OMNI:
-      recv_omni();
-      break;
-#endif
-
-    default:
-      fprintf(where,"unknown test number %d\n",
-	      netperf_request.content.request_type);
-      fflush(where);
-      netperf_response.content.serv_errno=998;
-      send_response();
-      break;
 
     }
   }
