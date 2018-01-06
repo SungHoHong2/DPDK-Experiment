@@ -803,7 +803,8 @@ spawn_child() {
 
 
 SOCKET epfd;
-
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
 
 void
 accept_connection(SOCKET listen_fd) {
@@ -815,7 +816,7 @@ accept_connection(SOCKET listen_fd) {
 #endif
 
   printf("server is running...\n");
-  assert((epfd = ff_epoll_create(1)) > 0);
+  epfd = ff_epoll_create(0);
   ev.data.fd = temp_socket;
   ev.events = EPOLLIN;
   ff_epoll_ctl(epfd, EPOLL_CTL_ADD, temp_socket, &ev);
