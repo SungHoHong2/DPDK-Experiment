@@ -156,13 +156,8 @@ int      suppress_debug = 0;
 extern	char	*optarg;
 extern	int	optind, opterr;
 
-/* char  *passphrase = NULL; */
 
-
-/* so, either we are a child of inetd in which case server_sock should
-   be stdin, or we are a child of a netserver parent.  there will be
-   logic here for all of it, including Windows. it is important that
-   this be called before open_debug_file() */
+#include "netserver_h.h"
 
 void
 set_server_sock() {
@@ -788,35 +783,6 @@ spawn_child() {
 #endif /* HAVE_FORK */
 }
 
-void
-accept_connection(SOCKET listen_fd) {
-
-  printf("running %s\n", __FUNCTION__);
-  struct sockaddr_storage peeraddr;
-  netperf_socklen_t peeraddrlen;
-#if defined(SO_KEEPALIVE)
-  int on = 1;
-#endif
-
-  peeraddrlen = sizeof(peeraddr);
-  /* while server_control is only used by the WIN32 path, but why
-     bother ifdef'ing it?  and besides, do we *really* need knowledge
-     of server_control in the WIN32 case? do we have to tell the
-     child about *all* the listen endpoints? raj 2011-07-08 */
-  server_control = listen_fd;
-  server_sock = accept(listen_fd,(struct sockaddr *)&peeraddr,&peeraddrlen);
-
-
-#if defined(SO_KEEPALIVE)
-  /* we are not terribly concerned if this does not work, it is merely
-     duct tape added to belts and suspenders. raj 2011-07-08 */
-  setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
-#endif
-
-  spawn_child();
-  /* spawn_child() only returns when we are the parent */
-  close(server_sock);
-}
 
 void
 accept_connections() {
@@ -849,29 +815,14 @@ accept_connections() {
 
              struct sockaddr_storage peeraddr;
              netperf_socklen_t peeraddrlen;
-             // #if defined(SO_KEEPALIVE)
-             //   int on = 1;
-             // #endif
-
              peeraddrlen = sizeof(peeraddr);
-             /* while server_control is only used by the WIN32 path, but why
-                bother ifdef'ing it?  and besides, do we *really* need knowledge
-                of server_control in the WIN32 case? do we have to tell the
-                child about *all* the listen endpoints? raj 2011-07-08 */
+
              server_control = candidate;
              server_sock = accept(candidate,(struct sockaddr *)&peeraddr,&peeraddrlen);
-
-
-             // #if defined(SO_KEEPALIVE)
-             // /* we are not terribly concerned if this does not work, it is merely
-             //    duct tape added to belts and suspenders. raj 2011-07-08 */
-             // setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
-             // #endif
 
              spawn_child();
              /* spawn_child() only returns when we are the parent */
              close(server_sock);
-
 
              FD_CLR(candidate,&read_fds);
 	            num_ready--;
