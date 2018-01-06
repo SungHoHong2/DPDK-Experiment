@@ -839,6 +839,8 @@ accept_connections() {
     /* try to keep things simple */
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
+      printf("number of candidates %d....\n", candidate);
+
         if (FD_ISSET(candidate,&read_fds)) {
 	           accept_connection(candidate);
 	           FD_CLR(candidate,&read_fds);
