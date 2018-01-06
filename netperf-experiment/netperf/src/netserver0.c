@@ -151,7 +151,6 @@ int      netperf_daemon;
 int      daemon_parent = 0;
 int      not_inetd;
 int      want_daemonize;
-int      spawn_on_accept;
 int      suppress_debug = 0;
 
 extern	char	*optarg;
@@ -159,173 +158,6 @@ extern	int	optind, opterr;
 
 /* char  *passphrase = NULL; */
 
-static void
-init_netserver_globals() {
-
-#if defined(__VMS) || defined(VMWARE_UW)
-  spawn_on_accept = 0;
-  want_daemonize = 0;
-#else
-  spawn_on_accept = 1;
-#if defined(WIN32)
-  /* we only know how to spawn in WIN32, not daemonize */
-  want_daemonize = 0;
-#else
-  want_daemonize = 1;
-#endif /* WIN32 */
-#endif /* __VMS || VMWARE_UW */
-
-  child = 0;
-  not_inetd = 0;
-  netperf_daemon = 0;
-}
-
-void
-unlink_empty_debug_file() {
-
-#if !defined(WIN32)
-  struct stat buf;
-
-  if (stat(FileName,&buf)== 0) {
-
-    if (buf.st_size == 0)
-      unlink(FileName);
-  }
-#endif
-}
-
-/* it is important that set_server_sock() be called before this
-   routine as we depend on the control socket being dup()ed out of the
-   way when we go messing about with the streams. */
-void
-open_debug_file()
-{
-#if !defined WIN32
-#define NETPERF_NULL "/dev/null"
-#else
-#define NETPERF_NULL "nul"
-#endif
-
-  FILE *rd_null_fp;
-
-  if (where != NULL) fflush(where);
-
-  snprintf(FileName,
-	   sizeof(FileName),
-#if defined(WIN32)
-	   "%s\\%s_%d",
-	   getenv("TEMP"),
-#else
-	   "%s_%d",
-#endif
-	   DEBUG_LOG_FILE,
-	   getpid());
-  if ((where = fopen((suppress_debug) ? NETPERF_NULL : FileName,
-		     "w")) == NULL) {
-    perror("netserver: debug file");
-    exit(1);
-  }
-
-#if !defined(WIN32)
-
-  chmod(FileName,0644);
-
-  /* redirect stdin to "/dev/null" */
-  rd_null_fp = fopen(NETPERF_NULL,"r");
-  if (NULL == rd_null_fp) {
-    fprintf(where,
-	    "%s: opening of %s failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    NETPERF_NULL,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (close(STDIN_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDIN_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(rd_null_fp)) == -1) {
-    fprintf(where,
-	    "%s: dup of rd_null_fp to stdin failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  /* redirect stdout to "where" */
-  if (close(STDOUT_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDOUT_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(where)) == -1) {
-    fprintf(where,
-	    "%s: dup of where to stdout failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  /* redirect stderr to "where" */
-  if (close(STDERR_FILENO) == -1) {
-    fprintf(where,
-	    "%s: close of STDERR_FILENO failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-  if (dup(fileno(where)) == -1) {
-    fprintf(where,
-	    "%s: dup of where to stderr failed: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
-
-#else
-
-  /* Hopefully, by closing stdout & stderr, the subsequent fopen calls
-     will get mapped to the correct std handles. */
-  fclose(stdout);
-
-  if ((where = fopen(FileName, "w")) == NULL) {
-    perror("netserver: fopen of debug file as new stdout failed!");
-    exit(1);
-  }
-
-  fclose(stderr);
-
-  if ((where = fopen(FileName, "w")) == NULL) {
-    fprintf(stdout, "fopen of debug file as new stderr failed!\n");
-    exit(1);
-  }
-
-#endif
-
-}
 
 /* so, either we are a child of inetd in which case server_sock should
    be stdin, or we are a child of a netserver parent.  there will be
@@ -335,12 +167,7 @@ open_debug_file()
 void
 set_server_sock() {
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
+
 
 #ifdef WIN32
   server_sock = (SOCKET)GetStdHandle(STD_INPUT_HANDLE);
@@ -383,17 +210,7 @@ create_listens(char hostname[], char port[], int af) {
   SOCKET temp_socket;
   struct listen_elt *temp_elt;
 
-  if (debug) {
-    fprintf(stderr,
-	    "%s: called with host '%s' port '%s' family %s(%d)\n",
-	    __FUNCTION__,
-            hostname,
-	    port,
-	    inet_ftos(af),
-            af);
-    fflush(stderr);
-  }
- memset(&hints,0,sizeof(hints));
+  memset(&hints,0,sizeof(hints));
   hints.ai_family = af;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_protocol = IPPROTO_TCP;
@@ -407,54 +224,20 @@ create_listens(char hostname[], char port[], int af) {
                         &local_res);
     count += 1;
     if (error == EAI_AGAIN) {
-      if (debug) {
-        fprintf(stderr,
-		"%s: Sleeping on getaddrinfo EAI_AGAIN\n",
-		__FUNCTION__);
-        fflush(stderr);
-      }
-      sleep(1);
+            sleep(1);
     }
   } while ((error == EAI_AGAIN) && (count <= 5));
 
   if (error) {
-    if (debug) {
-
-      fprintf(stderr,
-	      "%s: could not resolve remote '%s' port '%s' af %d\n"
-	      "\tgetaddrinfo returned %s (%d)\n",
-	      __FUNCTION__,
-	      hostname,
-	      port,
-	      af,
-	      gai_strerror(error),
-	      error);
-
-    }
     return;
   }
 
-  if (debug) {
-    dump_addrinfo(stderr, local_res, hostname, port, af);
-  }
-
   local_res_temp = local_res;
-
   while (local_res_temp != NULL) {
-
     temp_socket = socket(local_res_temp->ai_family,SOCK_STREAM,0);
-
     if (temp_socket == INVALID_SOCKET) {
-      if (debug) {
-	fprintf(stderr,
-		"%s could not allocate a socket: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-      local_res_temp = local_res_temp->ai_next;
-      continue;
+        local_res_temp = local_res_temp->ai_next;
+        continue;
     }
 
     /* happiness and joy, keep going */
@@ -462,132 +245,35 @@ create_listens(char hostname[], char port[], int af) {
 		   SOL_SOCKET,
 		   SO_REUSEADDR,
 		   (char *)&on ,
-		   sizeof(on)) == SOCKET_ERROR) {
-      if (debug) {
-	fprintf(stderr,
-		"%s: warning: could not set SO_REUSEADDR: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-    }
-    /* still happy and joyful */
+		   sizeof(on)) == SOCKET_ERROR) { }
 
+    /* still happy and joyful */
     if ((bind(temp_socket,
 	      local_res_temp->ai_addr,
 	      local_res_temp->ai_addrlen) != SOCKET_ERROR) &&
-	(listen(temp_socket,1024) != SOCKET_ERROR))  {
+	      (listen(temp_socket,1024) != SOCKET_ERROR))  {
 
-      /* OK, now add to the list */
-      temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
-      if (temp_elt) {
-	temp_elt->fd = temp_socket;
-	if (listen_list) {
-	  temp_elt->next = listen_list;
-	}
-	else {
-	  temp_elt->next = NULL;
-	}
-	listen_list = temp_elt;
-      }
-      else {
-	fprintf(stderr,
-		"%s: could not malloc a listen_elt\n",
-		__FUNCTION__);
-	fflush(stderr);
-	exit(1);
-      }
-    }
-    else {
-      /* we consider a bind() or listen() failure a transient and try
-	 the next address */
-      if (debug) {
-	fprintf(stderr,
-		"%s: warning: bind or listen call failure: %s (errno %d)\n",
-		__FUNCTION__,
-		strerror(errno),
-		errno);
-	fflush(stderr);
-      }
-      close(temp_socket);
+        /* OK, now add to the list */
+        temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
+        if (temp_elt) {
+  	           temp_elt->fd = temp_socket;
+  	           if (listen_list) {
+  	                 temp_elt->next = listen_list;
+  	           }
+  	           else {
+  	                 temp_elt->next = NULL;
+  	           }
+  	           listen_list = temp_elt;
+        } else {
+        	     fprintf(stderr, "%s: could not malloc a listen_elt\n",__FUNCTION__);
+        	     fflush(stderr);
+        	     exit(1);
+        }
     }
     local_res_temp = local_res_temp->ai_next;
   }
-
 }
 
-void
-setup_listens(char name[], char port[], int af) {
-
-  int do_inet;
-  int no_name = 0;
-#ifdef AF_INET6
-  int do_inet6;
-#endif
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
-
-  if (strcmp(name,"") == 0) {
-    no_name = 1;
-    switch (af) {
-    case AF_UNSPEC:
-      do_inet = 1;
-#ifdef AF_INET6
-      do_inet6 = 1;
-#endif
-      break;
-    case AF_INET:
-      do_inet = 1;
-#ifdef AF_INET6
-      do_inet6 = 0;
-#endif
-      break;
-#ifdef AF_INET6
-    case AF_INET6:
-      do_inet = 0;
-      do_inet6 = 1;
-      break;
-#endif
-    default:
-      do_inet = 1;
-    }
-    /* if we have IPv6, try that one first because it may be a superset */
-#ifdef AF_INET6
-    if (do_inet6)
-      create_listens("::0",port,AF_INET6);
-#endif
-    if (do_inet)
-      create_listens("0.0.0.0",port,AF_INET);
-  }
-  else {
-    create_listens(name,port,af);
-  }
-
-  if (listen_list) {
-    fprintf(stdout,
-	    "Starting netserver with host '%s' port '%s' and family %s\n",
-	    (no_name) ? "IN(6)ADDR_ANY" : name,
-	    port,
-	    inet_ftos(af));
-    fflush(stdout);
-  }
-  else {
-    fprintf(stderr,
-	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
-	    (no_name) ? "IN(6)ADDR_ANY" : name,
-	    port,
-	    inet_ftos(af));
-    fflush(stderr);
-    exit(1);
-  }
-}
 
 SOCKET
 set_fdset(struct listen_elt *list, fd_set *fdset) {
@@ -686,12 +372,6 @@ process_requests()
 
   float	temp_rate;
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
 
   /* if the netserver was started with a passphrase, look for it in
      the first request to arrive.  if there is no passphrase in the
@@ -720,7 +400,7 @@ process_requests()
 	     recv_request/recv_request_n will not have dumped it as its
 	     dump_request() call is conditional on debug being set. raj
 	     2011-07-08 */
-	  dump_request();
+	     dump_request();
 	}
       }
 
@@ -982,7 +662,7 @@ spawn_child() {
        worry about the standard file descriptors. raj 2011-07-11 */
 
     close_listens(listen_list);
-    open_debug_file();
+    // open_debug_file();
 
     child = 1;
     netperf_daemon = 0;
@@ -1117,51 +797,23 @@ accept_connection(SOCKET listen_fd) {
   int on = 1;
 #endif
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
   peeraddrlen = sizeof(peeraddr);
-
   /* while server_control is only used by the WIN32 path, but why
      bother ifdef'ing it?  and besides, do we *really* need knowledge
      of server_control in the WIN32 case? do we have to tell the
      child about *all* the listen endpoints? raj 2011-07-08 */
   server_control = listen_fd;
-
-  if ((server_sock = accept(listen_fd,
-			   (struct sockaddr *)&peeraddr,
-			    &peeraddrlen)) == INVALID_SOCKET) {
-    fprintf(where,
-	    "%s: accept failure: %s (errno %d)\n",
-	    __FUNCTION__,
-	    strerror(errno),
-	    errno);
-    fflush(where);
-    exit(1);
-  }
+  server_sock = accept(listen_fd,(struct sockaddr *)&peeraddr,&peeraddrlen);
 
 #if defined(SO_KEEPALIVE)
   /* we are not terribly concerned if this does not work, it is merely
      duct tape added to belts and suspenders. raj 2011-07-08 */
-  setsockopt(server_sock,
-	     SOL_SOCKET,
-	     SO_KEEPALIVE,
-	     (const char *)&on,
-	     sizeof(on));
+  setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
 #endif
 
-  if (spawn_on_accept) {
-    spawn_child();
-    /* spawn_child() only returns when we are the parent */
-    close(server_sock);
-  }
-  else {
-    process_requests();
-  }
+  spawn_child();
+  /* spawn_child() only returns when we are the parent */
+  close(server_sock);
 }
 
 void
@@ -1171,176 +823,37 @@ accept_connections() {
   SOCKET high_fd, candidate;
   int num_ready;
 
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
   while (1) {
-
     FD_ZERO(&write_fds);
     FD_ZERO(&except_fds);
     high_fd = set_fdset(listen_list,&read_fds);
 
-#if !defined(WIN32)
     num_ready = select(high_fd + 1,
-#else
-    num_ready = select(1,
-#endif
-		       &read_fds,
-		       &write_fds,
-		       &except_fds,
-		       NULL);
-
-    if (num_ready < 0) {
-      fprintf(where,
-	      "%s: select failure: %s (errno %d)\n",
-	      __FUNCTION__,
-	      strerror(errno),
-	      errno);
-      fflush(where);
-      exit(1);
-    }
+		            &read_fds,
+		            &write_fds,
+		            &except_fds,
+		            NULL);
 
     /* try to keep things simple */
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
-      if (FD_ISSET(candidate,&read_fds)) {
-	accept_connection(candidate);
-	FD_CLR(candidate,&read_fds);
-	num_ready--;
+        if (FD_ISSET(candidate,&read_fds)) {
+	           accept_connection(candidate);
+	           FD_CLR(candidate,&read_fds);
+	            num_ready--;
       }
       else {
-	candidate++;
+	            candidate++;
       }
     }
   }
 }
 
-#ifndef WIN32
-#define SERVER_ARGS "DdfhL:n:Np:v:VZ:46"
-#else
+
 #define SERVER_ARGS "DdfhL:n:Np:v:VZ:46I:i:"
-#endif
-void
-scan_netserver_args(int argc, char *argv[]) {
-
-  int c;
-  char arg1[BUFSIZ], arg2[BUFSIZ];
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
-
-  while ((c = getopt(argc, argv, SERVER_ARGS)) != EOF){
-    switch (c) {
-    case '?':
-    case 'h':
-      print_netserver_usage();
-      exit(1);
-    case 'd':
-      debug++;
-      suppress_debug = 0;
-      break;
-    case 'D':
-      /* perhaps one of these days we'll take an argument */
-      want_daemonize = 0;
-      not_inetd = 1;
-      break;
-    case 'f':
-      spawn_on_accept = 0;
-      not_inetd = 1;
-      break;
-#ifdef WIN32
-    case 'I':
-      child = TRUE;
-      break;
-    case 'i':
-      break;
-#endif
-    case 'L':
-      not_inetd = 1;
-      break_args_explicit(optarg,arg1,arg2);
-      if (arg1[0]) {
-	strncpy(local_host_name,arg1,sizeof(local_host_name));
-      }
-      if (arg2[0]) {
-	local_address_family = parse_address_family(arg2);
-      }
-      break;
-    case 'n':
-      shell_num_cpus = atoi(optarg);
-      if (shell_num_cpus > MAXCPUS) {
-	fprintf(stderr,
-		"netserver: This version can only support %d CPUs. Please"
-		"increase MAXCPUS in netlib.h and recompile.\n",
-		MAXCPUS);
-	fflush(stderr);
-	exit(1);
-      }
-      break;
-    case 'N':
-      suppress_debug = 1;
-      debug = 0;
-      break;
-    case 'p':
-      /* we want to open a listen socket at a specified port number */
-      strncpy(listen_port,optarg,sizeof(listen_port));
-      not_inetd = 1;
-      break;
-    case 'Z':
-      /* only copy as much of the passphrase as could fit in the
-	 test-specific portion of a control message. Windows does not
-	 seem to have a strndup() so just malloc and strncpy it.  we
-	 weren't checking the strndup() return so won't bother with
-	 checking malloc(). we will though make certain we only
-	 allocated it once in the event that someone puts -Z on the
-	 command line more than once */
-      if (passphrase == NULL)
-	passphrase = malloc(sizeof(netperf_request.content.test_specific_data));
-      strncpy(passphrase,
-	      optarg,
-	      sizeof(netperf_request.content.test_specific_data));
-      passphrase[sizeof(netperf_request.content.test_specific_data) - 1] = '\0';
-      break;
-    case '4':
-      local_address_family = AF_INET;
-      break;
-    case '6':
-#if defined(AF_INET6)
-      local_address_family = AF_INET6;
-#else
-      local_address_family = AF_UNSPEC;
-#endif
-      break;
-    case 'v':
-      /* say how much to say */
-      verbosity = atoi(optarg);
-      break;
-    case 'V':
-      printf("Netperf version %s\n",NETPERF_VERSION);
-      exit(0);
-      break;
-
-    }
-  }
-}
 
 void
 daemonize() {
-#if defined(HAVE_FORK)
-
-  if (debug) {
-    fprintf(where,
-	    "%s: enter\n",
-	    __FUNCTION__);
-    fflush(where);
-  }
 
   /* flush the usual suspects */
   fflush(stdin);
@@ -1366,8 +879,6 @@ daemonize() {
     /* we are the child. we should get a new "where" to match our new
        pid */
 
-    open_debug_file();
-
 #ifdef HAVE_SETSID
       setsid();
 #else
@@ -1380,17 +891,11 @@ daemonize() {
       accept_connections();
 
   default:
+    printf("running\n");
     /* we are the parent, nothing to do but exit? */
     exit(0);
   }
 
-#else
-  fprintf(where,
-	  "%s called on platform which cannot daemonize\n",
-	  __FUNCTION__);
-  fflush(where);
-  exit(1);
-#endif /* HAVE_FORK */
 }
 
 static void
@@ -1425,51 +930,9 @@ check_if_inetd() {
   }
 }
 
-/* OK, so how does all this work you ask?  Well, we are in a maze of
-   twisty options, all different.  Netserver can be invoked as a child
-   of inetd or the VMS auxiliary server process, or a parent netserver
-   process. In those cases, we could/should follow the "child"
-   path. However, there are really two "child" paths through the
-   netserver code.
-
-   When this netserver is a child of a parent netserver in the
-   case of *nix, the child process will be created by a
-   spawn_child_process() in accept_connections() and will not hit the
-   "child" path here in main().
-
-   When this netserver is a child of a parent netserver in the case of
-   windows, the child process will have been spawned via a
-   Create_Process() call in spawn_child_process() in
-   accept_connections, but will flow through here again. We rely on
-   the scan_netserver_args() call to have noticed the magic option
-   that tells us we are a child process.
-
-   When this netserver is launched from the command line we will first
-   set-up the listen endpoint(s) for the controll connection.  At that
-   point we decide if we want to and can become our own daemon, or
-   stay attached to the "terminal."  When this happens under *nix, we
-   will again take a fork() path via daemonize() and will not come
-   back through main().  If we ever learn how to become our own daemon
-   under Windows, we will undoubtedly take a Create_Process() path
-   again and will come through main() once again - that is what the
-   "daemon" case here is all about.
-
-   It is hoped that this is all much clearer than the old spaghetti
-   code that netserver had become.  raj 2011-07-11 */
-
 
 int _cdecl
 main(int argc, char *argv[]) {
-
-#ifdef WIN32
-  WSADATA	wsa_data ;
-
-  /* Initialize the winsock lib do we still want version 2.2? */
-  if ( WSAStartup(MAKEWORD(2,2), &wsa_data) == SOCKET_ERROR ){
-    printf("WSAStartup() failed : %lu\n", GetLastError()) ;
-    return -1 ;
-  }
-#endif /* WIN32 */
 
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
@@ -1479,7 +942,11 @@ main(int argc, char *argv[]) {
   }
   strcpy(program, argv[0]);
 
-  init_netserver_globals();
+  // init_netserver_globals();
+  want_daemonize = 1;  // active
+  child = 0; // active
+  not_inetd = 0; // active
+  netperf_daemon = 0; // active
 
   netlib_init();
 
@@ -1487,42 +954,44 @@ main(int argc, char *argv[]) {
   local_address_family = AF_UNSPEC;
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
-  scan_netserver_args(argc, argv);
+  // scan_netserver_args(argc, argv);
+  // check_if_inetd();
+  struct sockaddr_storage name;
+  netperf_socklen_t namelen;
 
-  check_if_inetd();
+  namelen = sizeof(name);
+  if (getsockname(0,(struct sockaddr *)&name, &namelen) == SOCKET_ERROR) {
+      not_inetd = 1;
+  }
 
-  if (child) {
-    /* we are the child of either an inetd or parent netserver via
-       spawning (Windows) rather than fork()ing. if we were fork()ed
-       we would not be coming through this way. set_server_sock() must
-       be called before open_debug_file() or there is a chance that
-       we'll toast the descriptor when we do not wish it. */
-    set_server_sock();
-    open_debug_file();
-    process_requests();
-  }
-  else if (daemon_parent) {
-    /* we are the parent daemonized netserver
-       process. accept_connections() will decide if we want to spawn a
-       child process */
-    accept_connections();
-  }
-  else {
     /* we are the top netserver process, so we have to create the
        listen endpoint(s) and decide if we want to daemonize */
-    setup_listens(local_host_name,listen_port,local_address_family);
+    // setup_listens(local_host_name,listen_port,local_address_family);
+    int no_name = 1;  //active
+    create_listens("::0",listen_port,AF_INET6);  // active
+    create_listens("0.0.0.0",listen_port,AF_INET);  // active
+
+    if (listen_list) {
+      fprintf(stdout,
+  	    "Starting netserver with host '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
+  	    inet_ftos(af));
+      fflush(stdout);
+    }
+    else {
+      fprintf(stderr,
+  	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
+  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	    listen_port,
+  	    inet_ftos(af));
+      fflush(stderr);
+      exit(1);
+    }
+
     if (want_daemonize) {
       daemonize();
     }
-    accept_connections();
-  }
-
-  unlink_empty_debug_file();
-
-#ifdef WIN32
-  WSACleanup();
-#endif
-
   return 0;
 
 }

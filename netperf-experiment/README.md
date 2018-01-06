@@ -43,4 +43,6 @@ cd src
 - **building netserver**
 ```
 ./netperf -H 10.218.111.252 -l 5 -- -m 2048 -o P99_LATENCY
+
+./netserver --conf config_server.ini --proc-type=primary --proc-id=0
 ```

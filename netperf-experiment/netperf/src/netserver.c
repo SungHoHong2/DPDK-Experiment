@@ -115,6 +115,13 @@ char	netserver_id[]="\
 
 #include "netsh.h"
 
+#include "ff_config.h"
+#include "ff_api.h"
+#include "ff_epoll.h"
+
+#define MAX_EVENTS 512
+#define PKT_SIZE 3000
+
 #ifndef DEBUG_LOG_FILE_DIR
 #if defined(WIN32)
 #define DEBUG_LOG_FILE_DIR ""
@@ -155,6 +162,9 @@ int      suppress_debug = 0;
 
 extern	char	*optarg;
 extern	int	optind, opterr;
+
+
+
 
 /* char  *passphrase = NULL; */
 
@@ -234,7 +244,7 @@ create_listens(char hostname[], char port[], int af) {
 
   local_res_temp = local_res;
   while (local_res_temp != NULL) {
-    temp_socket = socket(local_res_temp->ai_family,SOCK_STREAM,0);
+    temp_socket = ff_socket(local_res_temp->ai_family,SOCK_STREAM,0);
     if (temp_socket == INVALID_SOCKET) {
         local_res_temp = local_res_temp->ai_next;
         continue;
@@ -248,10 +258,10 @@ create_listens(char hostname[], char port[], int af) {
 		   sizeof(on)) == SOCKET_ERROR) { }
 
     /* still happy and joyful */
-    if ((bind(temp_socket,
+    if ((ff_bind(temp_socket,
 	      local_res_temp->ai_addr,
 	      local_res_temp->ai_addrlen) != SOCKET_ERROR) &&
-	      (listen(temp_socket,1024) != SOCKET_ERROR))  {
+	      (ff_listen(temp_socket,1024) != SOCKET_ERROR))  {
 
         /* OK, now add to the list */
         temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
@@ -934,6 +944,8 @@ check_if_inetd() {
 int _cdecl
 main(int argc, char *argv[]) {
 
+
+  ff_init(argc, argv);
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
   if (program == NULL) {
@@ -954,8 +966,6 @@ main(int argc, char *argv[]) {
   local_address_family = AF_UNSPEC;
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
-  // scan_netserver_args(argc, argv);
-  // check_if_inetd();
   struct sockaddr_storage name;
   netperf_socklen_t namelen;
 
@@ -964,34 +974,31 @@ main(int argc, char *argv[]) {
       not_inetd = 1;
   }
 
-    /* we are the top netserver process, so we have to create the
-       listen endpoint(s) and decide if we want to daemonize */
-    // setup_listens(local_host_name,listen_port,local_address_family);
     int no_name = 1;  //active
     create_listens("::0",listen_port,AF_INET6);  // active
     create_listens("0.0.0.0",listen_port,AF_INET);  // active
 
-    if (listen_list) {
-      fprintf(stdout,
-  	    "Starting netserver with host '%s' port '%s' and family %s\n",
-  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
-  	    listen_port,
-  	    inet_ftos(af));
-      fflush(stdout);
-    }
-    else {
-      fprintf(stderr,
-  	    "Unable to start netserver with  '%s' port '%s' and family %s\n",
-  	    (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
-  	    listen_port,
-  	    inet_ftos(af));
-      fflush(stderr);
-      exit(1);
-    }
-
-    if (want_daemonize) {
-      daemonize();
-    }
+    // if (listen_list) {
+    //   fprintf(stdout,
+  	//     "Starting netserver with host '%s' port '%s' and family %s\n",
+  	//     (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	//     listen_port,
+  	//     inet_ftos(af));
+    //   fflush(stdout);
+    // }
+    // else {
+    //   fprintf(stderr,
+  	//     "Unable to start netserver with  '%s' port '%s' and family %s\n",
+  	//     (no_name) ? "IN(6)ADDR_ANY" : local_host_name,
+  	//     listen_port,
+  	//     inet_ftos(af));
+    //   fflush(stderr);
+    //   exit(1);
+    // }
+    //
+    // if (want_daemonize) {
+    //   daemonize();
+    // }
   return 0;
 
 }
