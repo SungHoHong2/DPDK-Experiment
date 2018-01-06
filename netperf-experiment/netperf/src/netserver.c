@@ -212,6 +212,7 @@ set_server_sock() {
 void
 create_listens(char hostname[], char port[], int af) {
 
+
   struct addrinfo hints;
   struct addrinfo *local_res;
   struct addrinfo *local_res_temp;
@@ -242,9 +243,12 @@ create_listens(char hostname[], char port[], int af) {
     return;
   }
 
-  local_res_temp = local_res;
+  local_res_temp = local_res; // addrinfo
+
+  ff_init(argc, argv);
   while (local_res_temp != NULL) {
-    temp_socket = ff_socket(local_res_temp->ai_family,SOCK_STREAM,0);
+    temp_socket = ff_socket(local_res_temp->ai_family, SOCK_STREAM,0);
+
     if (temp_socket == INVALID_SOCKET) {
         local_res_temp = local_res_temp->ai_next;
         continue;
@@ -259,7 +263,7 @@ create_listens(char hostname[], char port[], int af) {
 
     /* still happy and joyful */
     if ((ff_bind(temp_socket,
-	      local_res_temp->ai_addr,
+	      (struct linux_sockaddr *)local_res_temp->ai_addr, //chara check
 	      local_res_temp->ai_addrlen) != SOCKET_ERROR) &&
 	      (ff_listen(temp_socket,1024) != SOCKET_ERROR))  {
 
