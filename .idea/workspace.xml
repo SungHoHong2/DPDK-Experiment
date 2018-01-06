@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e9078c5-8e03-4cf8-a4c9-7856763c4df3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netperf-experiment/netperf/src/netserver.c" afterPath="$PROJECT_DIR$/netperf-experiment/netperf/src/netserver.c" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -26,8 +25,8 @@
       <file leaf-file-name="fstack-server.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/latency-experiment/f-stack-tcp/fstack-server.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="597">
-              <caret line="94" column="30" lean-forward="true" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="55" />
+            <state relative-caret-position="326">
+              <caret line="77" column="10" lean-forward="false" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -39,6 +38,8 @@
     <findStrings>
       <find>ff_socket</find>
       <find>ff_bind</find>
+      <find>loop</find>
+      <find>sockfd</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -96,6 +97,17 @@
               <item name="latency-experiment" type="462c0819:PsiDirectoryNode" />
               <item name="f-stack-tcp" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="DPDK-Experiment" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="netperf-experiment" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DPDK-Experiment" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="netperf-experiment" type="462c0819:PsiDirectoryNode" />
+              <item name="netperf" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -128,12 +140,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515197411813</updated>
-      <workItem from="1515197413886" duration="1770000" />
+      <workItem from="1515197413886" duration="2583000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1770000" />
+    <option name="totallyTimeSpent" value="2583000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
@@ -172,8 +184,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/latency-experiment/f-stack-tcp/fstack-server.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="94" column="30" lean-forward="true" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="55" />
+        <state relative-caret-position="326">
+          <caret line="77" column="10" lean-forward="false" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="10" />
           <folding />
         </state>
       </provider>

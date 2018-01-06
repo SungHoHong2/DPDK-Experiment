@@ -164,6 +164,7 @@ extern	char	*optarg;
 extern	int	optind, opterr;
 
 
+SOCKET temp_socket;
 
 
 /* char  *passphrase = NULL; */
@@ -218,7 +219,6 @@ create_listens(char hostname[], char port[], int af) {
   struct addrinfo *local_res_temp;
   int count, error;
   int on = 1;
-  SOCKET temp_socket;
   struct listen_elt *temp_elt;
 
   memset(&hints,0,sizeof(hints));
@@ -801,6 +801,9 @@ spawn_child() {
 #endif /* HAVE_FORK */
 }
 
+
+
+
 void
 accept_connection(SOCKET listen_fd) {
 
@@ -809,6 +812,14 @@ accept_connection(SOCKET listen_fd) {
 #if defined(SO_KEEPALIVE)
   int on = 1;
 #endif
+
+  printf("server is running...\n");
+  assert((epfd = ff_epoll_create(0)) > 0);
+  ev.data.fd = temp_socket;
+  ev.events = EPOLLIN;
+  ff_epoll_ctl(epfd, EPOLL_CTL_ADD, temp_socket, &ev);
+  // ff_run(loop, NULL);
+
 
   peeraddrlen = sizeof(peeraddr);
   /* while server_control is only used by the WIN32 path, but why
@@ -828,6 +839,10 @@ accept_connection(SOCKET listen_fd) {
   /* spawn_child() only returns when we are the parent */
   close(server_sock);
 }
+
+
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
 
 void
 accept_connections() {
@@ -851,7 +866,8 @@ accept_connections() {
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
         if (FD_ISSET(candidate,&read_fds)) {
-	           accept_connection(candidate);
+
+             accept_connection(candidate);
 	           FD_CLR(candidate,&read_fds);
 	            num_ready--;
       }
@@ -998,10 +1014,10 @@ main(int argc, char *argv[]) {
       fflush(stderr);
       exit(1);
     }
-    //
-    // if (want_daemonize) {
-    //   daemonize();
-    // }
+
+    if (want_daemonize) {
+      daemonize();
+    }
   return 0;
 
 }
