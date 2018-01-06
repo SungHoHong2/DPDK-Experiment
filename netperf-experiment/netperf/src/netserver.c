@@ -400,6 +400,7 @@ process_requests()
 	}
       }
 
+      printf("send_response\n");
       send_response();
       break;
 
@@ -460,10 +461,12 @@ process_requests()
       cpu_stop(1,&temp_rate);
 #endif /* USE_LOOPER */
 
+      printf("send_response\n");
       send_response();
       break;
 
     case DO_TCP_STREAM:
+      printf("recv_tcp_stream\n");
       recv_tcp_stream();
       break;
 
@@ -599,13 +602,6 @@ process_requests()
       recv_omni();
       break;
 #endif
-
-    case PASSPHRASE:
-      if (debug) {
-	fprintf(where,"Ignoring an unexpected passphrase control message\n");
-	fflush(where);
-      }
-      break;
 
     default:
       fprintf(where,"unknown test number %d\n",
