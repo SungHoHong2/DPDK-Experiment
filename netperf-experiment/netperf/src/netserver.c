@@ -522,38 +522,50 @@ process_requests()
 
 #ifdef WANT_SCTP
     case DO_SCTP_STREAM:
+    printf("DO_SCTP_STREAM\n");
+
       recv_sctp_stream();
       break;
 
     case DO_SCTP_STREAM_MANY:
+    printf("DO_SCTP_STREAM_MANY\n");
+
       recv_sctp_stream_1toMany();
       break;
 
     case DO_SCTP_RR:
+    printf("DO_SCTP_RR\n");
+
       recv_sctp_rr();
       break;
 
     case DO_SCTP_RR_MANY:
+    printf("DO_SCTP_RR_MANY\n");
       recv_sctp_rr_1toMany();
       break;
 #endif
 
 #ifdef WANT_SDP
     case DO_SDP_STREAM:
+    printf("DO_SDP_STREAM\n");
+
       recv_sdp_stream();
       break;
 
     case DO_SDP_MAERTS:
+    printf("DO_SDP_MAERTS\n");
       recv_sdp_maerts();
       break;
 
     case DO_SDP_RR:
+    printf("DO_SDP_RR\n");
       recv_sdp_rr();
       break;
 #endif
 
 #ifdef WANT_OMNI
     case DO_OMNI:
+    printf("DO_OMNI\n");
       recv_omni();
       break;
 #endif
