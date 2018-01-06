@@ -135,7 +135,7 @@ int main(int argc, char * argv[])
                       } else {
                       // for wrk purpose
                           int nsend = write(events[i].data.fd, html, PKT_SIZE);
-
+                      }    
                   } else {
                       epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
                       close( events[i].data.fd);
