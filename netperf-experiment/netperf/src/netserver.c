@@ -206,6 +206,7 @@ create_listens(char hostname[], char port[], int af) {
   struct addrinfo *local_res;
   struct addrinfo *local_res_temp;
   int count, error;
+  int on = 1;
   SOCKET temp_socket;
   struct listen_elt *temp_elt;
 
@@ -860,6 +861,14 @@ daemonize() {
   fflush(stderr);
 
   switch (fork()) {
+  case -1:
+    fprintf(stderr,
+	    "%s: fork() error %s (errno %d)\n",
+	    __FUNCTION__,
+	    strerror(errno),
+	    errno);
+    fflush(stderr);
+    exit(1);
   case 0:
 
     /* perhaps belt and suspenders, but if we dump core, perhaps
@@ -870,13 +879,13 @@ daemonize() {
     /* we are the child. we should get a new "where" to match our new
        pid */
 
-// #ifdef HAVE_SETSID
-//       setsid();
-// #else
-//       setpgrp();
-// #endif /* HAVE_SETSID */
-//
-//       signal(SIGCLD, SIG_IGN);
+#ifdef HAVE_SETSID
+      setsid();
+#else
+      setpgrp();
+#endif /* HAVE_SETSID */
+
+      signal(SIGCLD, SIG_IGN);
 
       /* ok, we can start accepting control connections now */
       accept_connections();
