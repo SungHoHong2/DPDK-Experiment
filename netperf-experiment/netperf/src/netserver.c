@@ -849,9 +849,9 @@ accept_connections() {
 
              struct sockaddr_storage peeraddr;
              netperf_socklen_t peeraddrlen;
-             #if defined(SO_KEEPALIVE)
-               int on = 1;
-             #endif
+             // #if defined(SO_KEEPALIVE)
+             //   int on = 1;
+             // #endif
 
              peeraddrlen = sizeof(peeraddr);
              /* while server_control is only used by the WIN32 path, but why
@@ -862,11 +862,11 @@ accept_connections() {
              server_sock = accept(candidate,(struct sockaddr *)&peeraddr,&peeraddrlen);
 
 
-             #if defined(SO_KEEPALIVE)
-             /* we are not terribly concerned if this does not work, it is merely
-                duct tape added to belts and suspenders. raj 2011-07-08 */
-             setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
-             #endif
+             // #if defined(SO_KEEPALIVE)
+             // /* we are not terribly concerned if this does not work, it is merely
+             //    duct tape added to belts and suspenders. raj 2011-07-08 */
+             // setsockopt(server_sock, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
+             // #endif
 
              spawn_child();
              /* spawn_child() only returns when we are the parent */
