@@ -520,44 +520,6 @@ process_requests()
 
 #endif /* WANT_XTI */
 
-#ifdef WANT_SCTP
-    case DO_SCTP_STREAM:
-      recv_sctp_stream();
-      break;
-
-    case DO_SCTP_STREAM_MANY:
-      recv_sctp_stream_1toMany();
-      break;
-
-    case DO_SCTP_RR:
-      recv_sctp_rr();
-      break;
-
-    case DO_SCTP_RR_MANY:
-      recv_sctp_rr_1toMany();
-      break;
-#endif
-
-#ifdef WANT_SDP
-    case DO_SDP_STREAM:
-      recv_sdp_stream();
-      break;
-
-    case DO_SDP_MAERTS:
-      recv_sdp_maerts();
-      break;
-
-    case DO_SDP_RR:
-      recv_sdp_rr();
-      break;
-#endif
-
-#ifdef WANT_OMNI
-    case DO_OMNI:
-      recv_omni();
-      break;
-#endif
-
     default:
       fprintf(where,"unknown test number %d\n",
 	      netperf_request.content.request_type);
