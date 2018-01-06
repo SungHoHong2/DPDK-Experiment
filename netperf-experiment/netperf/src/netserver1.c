@@ -115,6 +115,13 @@ char	netserver_id[]="\
 
 #include "netsh.h"
 
+#include "ff_config.h"
+#include "ff_api.h"
+#include "ff_epoll.h"
+
+#define MAX_EVENTS 512
+#define PKT_SIZE 3000
+
 #ifndef DEBUG_LOG_FILE_DIR
 #if defined(WIN32)
 #define DEBUG_LOG_FILE_DIR ""
@@ -155,6 +162,10 @@ int      suppress_debug = 0;
 
 extern	char	*optarg;
 extern	int	optind, opterr;
+
+
+SOCKET temp_socket;
+
 
 /* char  *passphrase = NULL; */
 
@@ -202,12 +213,12 @@ set_server_sock() {
 void
 create_listens(char hostname[], char port[], int af) {
 
+
   struct addrinfo hints;
   struct addrinfo *local_res;
   struct addrinfo *local_res_temp;
   int count, error;
   int on = 1;
-  SOCKET temp_socket;
   struct listen_elt *temp_elt;
 
   memset(&hints,0,sizeof(hints));
@@ -232,9 +243,11 @@ create_listens(char hostname[], char port[], int af) {
     return;
   }
 
-  local_res_temp = local_res;
+  local_res_temp = local_res; // addrinfo
+
   while (local_res_temp != NULL) {
-    temp_socket = socket(local_res_temp->ai_family,SOCK_STREAM,0);
+    temp_socket = ff_socket(local_res_temp->ai_family, SOCK_STREAM,0);
+
     if (temp_socket == INVALID_SOCKET) {
         local_res_temp = local_res_temp->ai_next;
         continue;
@@ -248,10 +261,10 @@ create_listens(char hostname[], char port[], int af) {
 		   sizeof(on)) == SOCKET_ERROR) { }
 
     /* still happy and joyful */
-    if ((bind(temp_socket,
-	      local_res_temp->ai_addr,
+    if ((ff_bind(temp_socket,
+	      (struct linux_sockaddr *)local_res_temp->ai_addr, //chara check
 	      local_res_temp->ai_addrlen) != SOCKET_ERROR) &&
-	      (listen(temp_socket,1024) != SOCKET_ERROR))  {
+	      (ff_listen(temp_socket,1024) != SOCKET_ERROR))  {
 
         /* OK, now add to the list */
         temp_elt = (struct listen_elt *)malloc(sizeof(struct listen_elt));
@@ -788,6 +801,11 @@ spawn_child() {
 #endif /* HAVE_FORK */
 }
 
+
+SOCKET epfd;
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
+
 void
 accept_connection(SOCKET listen_fd) {
 
@@ -796,6 +814,14 @@ accept_connection(SOCKET listen_fd) {
 #if defined(SO_KEEPALIVE)
   int on = 1;
 #endif
+
+  printf("server is running...\n");
+  epfd = ff_epoll_create(0);
+  ev.data.fd = temp_socket;
+  ev.events = EPOLLIN;
+  ff_epoll_ctl(epfd, EPOLL_CTL_ADD, temp_socket, &ev);
+  // ff_run(loop, NULL);
+
 
   peeraddrlen = sizeof(peeraddr);
   /* while server_control is only used by the WIN32 path, but why
@@ -815,6 +841,10 @@ accept_connection(SOCKET listen_fd) {
   /* spawn_child() only returns when we are the parent */
   close(server_sock);
 }
+
+
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
 
 void
 accept_connections() {
@@ -838,7 +868,8 @@ accept_connections() {
     candidate = 0;
     while ((num_ready) && (candidate <= high_fd)) {
         if (FD_ISSET(candidate,&read_fds)) {
-	           accept_connection(candidate);
+
+             accept_connection(candidate);
 	           FD_CLR(candidate,&read_fds);
 	            num_ready--;
       }
@@ -934,6 +965,8 @@ check_if_inetd() {
 int _cdecl
 main(int argc, char *argv[]) {
 
+
+  ff_init(argc, argv);
   /* Save away the program name */
   program = (char *)malloc(strlen(argv[0]) + 1);
   if (program == NULL) {
@@ -954,8 +987,6 @@ main(int argc, char *argv[]) {
   local_address_family = AF_UNSPEC;
   strncpy(listen_port,TEST_PORT,sizeof(listen_port));
 
-  // scan_netserver_args(argc, argv);
-  // check_if_inetd();
   struct sockaddr_storage name;
   netperf_socklen_t namelen;
 
@@ -964,9 +995,6 @@ main(int argc, char *argv[]) {
       not_inetd = 1;
   }
 
-    /* we are the top netserver process, so we have to create the
-       listen endpoint(s) and decide if we want to daemonize */
-    // setup_listens(local_host_name,listen_port,local_address_family);
     int no_name = 1;  //active
     create_listens("::0",listen_port,AF_INET6);  // active
     create_listens("0.0.0.0",listen_port,AF_INET);  // active
