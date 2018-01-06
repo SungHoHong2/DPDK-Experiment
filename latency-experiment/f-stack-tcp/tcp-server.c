@@ -17,6 +17,7 @@
 #define MAX_EVENTS 512
 #define PKT_SIZE 3000
 
+#define TYPE_SERVER 1 // pingpong 0 original 1
 
 struct epoll_event ev;
 struct epoll_event events[MAX_EVENTS];
@@ -24,12 +25,14 @@ struct epoll_event events[MAX_EVENTS];
 int epfd;
 int sockfd;
 
+char temp[PKT_SIZE];
 
 
 int main(int argc, char * argv[])
 {
     // ff_init(argc, argv);
 
+    memset( temp, '*', PKT_SIZE * sizeof(char));
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     printf("server pktsize: %d\n",PKT_SIZE);
 
@@ -96,8 +99,15 @@ int main(int argc, char * argv[])
                   char buf[PKT_SIZE];
                   size_t readlen = read( events[i].data.fd, buf, sizeof(buf));
                   if(readlen > 0) {
-                      // printf("received length: %ld\n", strlen(buf));
-                      send(events[i].data.fd, buf, sizeof(buf), 0);
+
+                      // for pingpong purposes
+                      if(!TYPE_SERVER){
+                          send(events[i].data.fd, buf, sizeof(buf), 0);
+                      } else {
+                      // for wrk purpose
+                          int nsend = write(events[i].data.fd, temp, PKT_SIZE);
+                      }
+
                   } else {
                       epoll_ctl(epfd, EPOLL_CTL_DEL,  events[i].data.fd, NULL);
                       close( events[i].data.fd);
