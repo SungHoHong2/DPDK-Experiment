@@ -387,74 +387,52 @@ process_requests()
 
     switch (netperf_request.content.request_type) {
 
-    case CPU_CALIBRATE:
-
-      printf("CPU_CALIBRATE\n");
-      netperf_response.content.response_type = CPU_CALIBRATE;
-      temp_rate = calibrate_local_cpu(0.0);
-      bcopy((char *)&temp_rate,
-	    (char *)netperf_response.content.test_specific_data,
-	    sizeof(temp_rate));
-      bcopy((char *)&lib_num_loc_cpus,
-	    (char *)netperf_response.content.test_specific_data +
-	            sizeof(temp_rate),
-	    sizeof(lib_num_loc_cpus));
-      if (debug) {
-	fprintf(where,
-		"netserver: sending CPU information: rate is %g num cpu %d\n",
-		temp_rate,
-		lib_num_loc_cpus);
-	fflush(where);
-      }
-
-      /* we need the cpu_start, cpu_stop in the looper case to kill
-         the child proceses raj 7/95 */
-
-printf("USE_LOOPER\n");
-
-#ifdef USE_LOOPER
-      cpu_start(1);
-      cpu_stop(1,&temp_rate);
-#endif /* USE_LOOPER */
-
-      printf("send_response\n");
-      send_response();
-      break;
 
     case DO_TCP_STREAM:
-      printf("recv_tcp_stream\n");
+      printf("DO_TCP_STREAM\n");
       recv_tcp_stream();
       break;
 
     case DO_TCP_MAERTS:
+    printf("DO_TCP_MAERTS\n");
       recv_tcp_maerts();
       break;
 
     case DO_TCP_RR:
+    printf("DO_TCP_RR\n");
       recv_tcp_rr();
       break;
 
     case DO_TCP_CRR:
+    printf("DO_TCP_CRR\n");
+
       recv_tcp_conn_rr();
       break;
 
     case DO_TCP_CC:
+    printf("DO_TCP_CC\n");
+
       recv_tcp_cc();
       break;
 
 #ifdef DO_1644
     case DO_TCP_TRR:
+    printf("DO_TCP_TRR\n");
       recv_tcp_tran_rr();
       break;
 #endif /* DO_1644 */
 
 #ifdef DO_NBRR
+
     case DO_TCP_NBRR:
+    printf("DO_TCP_NBRR\n");
+
       recv_tcp_nbrr();
       break;
 #endif /* DO_NBRR */
 
     case DO_UDP_STREAM:
+
       recv_udp_stream();
       break;
 
