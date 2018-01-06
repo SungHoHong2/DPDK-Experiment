@@ -9,9 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e9078c5-8e03-4cf8-a4c9-7856763c4df3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/netperf-experiment/netperf/src/netserver.c" afterPath="$PROJECT_DIR$/netperf-experiment/netperf/src/netserver.c" />
-    </list>
+    <list default="true" id="4e9078c5-8e03-4cf8-a4c9-7856763c4df3" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -141,12 +139,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515197411813</updated>
-      <workItem from="1515197413886" duration="2757000" />
+      <workItem from="1515197413886" duration="2993000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2757000" />
+    <option name="totallyTimeSpent" value="2993000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />

@@ -823,6 +823,8 @@ accept_connections() {
   SOCKET high_fd, candidate;
   int num_ready;
 
+  printf("accept_connections....\n");
+
   while (1) {
     FD_ZERO(&write_fds);
     FD_ZERO(&except_fds);
