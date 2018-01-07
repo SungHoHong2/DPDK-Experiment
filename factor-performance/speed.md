@@ -1,7 +1,8 @@
 ### speed
 - **commands**
 ```
-ethtool eth0
+// pipesize
+cat /proc/sys/fs/pipe-max-size
 ```
 
 <br>
@@ -9,5 +10,9 @@ ethtool eth0
 - **results**
 
 ```
+// visasu
+1048576
+
+//fiu
 
 ```
