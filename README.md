@@ -24,13 +24,13 @@
 - [Implemented pingpong for PKTGEN](pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
 - [`Latency Performance Test` by using f-stack & IMB-benchmark](latency-experiment)
-- [`Netper Experiment` for integrating f-stack with the proper benchmark ](netperf-experiment)
+- [`Netperf Experiment` for integrating f-stack with the proper benchmark ](netperf-experiment)
+- [Factors influencing network performance](factor-performance)
+
 
 <br>
 
-### Performance Result
-- `blue line` is tcp
-- `red line` is dpdk
+### Performance Result of TCP DPDK and RDMA
 
-![img](img/dpdk-throughput.png)
-![img](img/dpdk-line-rate.png)
+![image](img/01_latency.png)
+![image](img/01_throughput.png)
