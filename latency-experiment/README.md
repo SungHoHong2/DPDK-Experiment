@@ -41,7 +41,7 @@ wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
 
 <br>
 
-- **[implementing f-stack-tcp](f-stack-tcp)**
+**[implementing f-stack-tcp](f-stack-tcp)**
 ```
 cd f-stack-tcp
 sudo ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
@@ -54,7 +54,7 @@ sudo ./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
 
 <br>
 
-- **testing f-stack with wrk benchmark**
+**testing f-stack with wrk benchmark**
 ```
 ./wrk -t12 -c400 -d30s http://10.218.111.252
 ./wrk -t12 -c400 -d1s http://10.218.111.252
