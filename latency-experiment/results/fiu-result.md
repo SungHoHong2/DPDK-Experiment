@@ -1,3 +1,27 @@
+### NIC configuration
+```
+enp1s0f0  Link encap:Ethernet  HWaddr 0c:c4:7a:3a:35:70                             
+          inet addr:172.23.10.14  Bcast:172.23.255.255  Mask:255.255.0.0            
+          inet6 addr: fe80::ec4:7aff:fe3a:3570/64 Scope:Link                        
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1                        
+          RX packets:123139781 errors:0 dropped:4663880 overruns:0 frame:0          
+          TX packets:119051016 errors:0 dropped:0 overruns:0 carrier:0              
+          collisions:0 txqueuelen:1000                                              
+          RX bytes:117292271669 (117.2 GB)  TX bytes:107105982365 (107.1 GB)        
+
+
+ib0       Link encap:UNSPEC  HWaddr A0-00-02-20-FE-80-00-00-00-00-00-00-00-00-00-00
+          inet addr:172.24.30.31  Bcast:172.24.255.255  Mask:255.255.0.0           
+          inet6 addr: fe80::7efe:9003:9a:7c31/64 Scope:Link                        
+          UP BROADCAST RUNNING MULTICAST  MTU:2044  Metric:1                       
+          RX packets:433544198 errors:0 dropped:0 overruns:0 frame:0               
+          TX packets:143519518 errors:0 dropped:0 overruns:0 carrier:0             
+          collisions:0 txqueuelen:256                                              
+          RX bytes:690295877922 (690.2 GB)  TX bytes:660085999769 (660.0 GB)       
+```
+
+
+
 ### TCP in FIU
 ```
 ./wrk -t2 -c2 -d10s http://172.23.10.15:8888

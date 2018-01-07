@@ -1,10 +1,27 @@
-## visasu tcp
+### NIC configuration
+
+```
+eth2      Link encap:Ethernet  HWaddr e4:1d:2d:d9:b6:40                     
+          inet6 addr: fe80::e61d:2dff:fed9:b640/64 Scope:Link               
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1                
+          RX packets:1195 errors:0 dropped:0 overruns:0 frame:0             
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0              
+          collisions:0 txqueuelen:1000                                      
+          RX bytes:88032 (88.0 KB)  TX bytes:648 (648.0 B)                  
+
+eth3      Link encap:Ethernet  HWaddr e4:1d:2d:d9:b6:41                     
+          inet addr:10.107.30.32  Bcast:10.107.31.255  Mask:255.255.254.0   
+          inet6 addr: fe80::e61d:2dff:fed9:b641/64 Scope:Link               
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1                
+          RX packets:112009661 errors:0 dropped:0 overruns:0 frame:0        
+          TX packets:57641833 errors:0 dropped:0 overruns:0 carrier:0       
+          collisions:0 txqueuelen:1000                                      
+          RX bytes:45040625775 (45.0 GB)  TX bytes:6104511406 (6.1 GB)      
+```
 
 <br>
 
 ### TCP
-- number of connections are allowed per thread
-
 ```
 // thread 2
 ./wrk -t2 -c2 -d10s http://10.107.30.33:8888

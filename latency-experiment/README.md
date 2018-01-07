@@ -56,7 +56,7 @@ sudo ./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
 
 **testing f-stack with wrk benchmark**
 - [test results from visasu](results/visasu-result.md)
-- [test results from fiu]()
+- [test results from fiu](results/fiu-result.md)
 
 ```
 ./wrk -t12 -c400 -d30s http://10.218.111.252
