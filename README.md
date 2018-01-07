@@ -30,7 +30,15 @@
 
 <br>
 
-### Performance Result of TCP DPDK and RDMA
+### Performance Result
 
+- **dpdk vs tcp vs rdma using wrk benchmark**
 ![image](img/01_latency.png)
 ![image](img/01_throughput.png)
+
+<br>
+
+- **dpdk vs tcp result based on customized pingpong**
+
+![img](img/dpdk-throughput.png)
+![img](img/dpdk-line-rate.png)
