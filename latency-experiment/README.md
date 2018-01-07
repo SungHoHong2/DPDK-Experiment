@@ -35,13 +35,8 @@ sudo apt-get install gawk
 
 # the ip address needs to be within the broadcast []
 wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
-
 wget -qO- http://10.107.30.33:8888 | sed -e 's/<[^>]*>//g'
-
 wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
-
-
-
 ```
 
 <br>
@@ -51,8 +46,6 @@ wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
 cd f-stack-tcp
 sudo ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
 sudo ./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
-
-sudo ./helloworld --conf ../config.ini --proc-type=primary --proc-id=0
 
 ./tcp-server
 ./tcp-client
@@ -65,7 +58,6 @@ sudo ./helloworld --conf ../config.ini --proc-type=primary --proc-id=0
 ```
 ./wrk -t12 -c400 -d30s http://10.218.111.252
 ./wrk -t12 -c400 -d1s http://10.218.111.252
-
 
 ./wrk -t12 -c400 -d1s http://10.107.30.102
 ./wrk -t12 -c400 -d1s http://10.107.30.33:8888
