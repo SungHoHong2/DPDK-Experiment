@@ -40,5 +40,5 @@
 
 - **dpdk vs tcp result based on customized pingpong**
 
-&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ![img](img/dpdk-throughput.png)
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ![img](img/dpdk-throughput.png) <br>  
 &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; ![img](img/dpdk-line-rate.png)
