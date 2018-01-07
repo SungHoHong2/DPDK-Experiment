@@ -1,6 +1,6 @@
 ### F-STACK
 
-- **installing F-stack**
+**installing F-stack**
 ```
 # Install from github
 git clone https://github.com/F-Stack/f-stack.git /data/f-stack
