@@ -76,7 +76,7 @@ int main(int argc, char * argv[])
     struct sockaddr_in my_addr;
     bzero(&my_addr, sizeof(my_addr));
     my_addr.sin_family = AF_INET;
-    my_addr.sin_port = htons(80);
+    my_addr.sin_port = htons(8888);
     my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     int ret = bind(sockfd, (struct sockaddr *)&my_addr, sizeof(my_addr));
