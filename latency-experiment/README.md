@@ -35,6 +35,13 @@ sudo apt-get install gawk
 
 # the ip address needs to be within the broadcast []
 wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
+
+wget -qO- http://10.107.30.33:8888 | sed -e 's/<[^>]*>//g'
+
+wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
+
+
+
 ```
 
 <br>
@@ -59,4 +66,24 @@ sudo ./helloworld --conf ../config.ini --proc-type=primary --proc-id=0
 ./wrk -t12 -c400 -d30s http://10.218.111.252
 ./wrk -t12 -c400 -d1s http://10.218.111.252
 
+
+./wrk -t12 -c400 -d1s http://10.107.30.102
+./wrk -t12 -c400 -d1s http://10.107.30.33:8888
+
+
+wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
+```
+
+
+<br>
+
+
+- **CPU affinity**
+```
+1 = Processor 1 (CPU-0)
+10 = Processor 2 (CPU-1)
+100 = Processor 3
+100000000000 = Processor 12
+110 = 2 and 3 only
+101010101010 = 12, 10, 8, 6, 4, 2 only
 ```
