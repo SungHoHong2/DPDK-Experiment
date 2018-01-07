@@ -224,8 +224,6 @@ Requests/sec: 220480.27
 Transfer/sec:    136.67MB                              
 
 
-
-
 ./wrk -t16 -c16 -d10s http://172.24.30.30:8888
 
   Thread Stats   Avg      Stdev     Max   +/- Stdev
