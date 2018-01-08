@@ -5,8 +5,6 @@
 cat /proc/meminfo
 ```
 
-
-- **result**
 ```
 //fiu                             //visasu
 MemTotal:       65859688 kB       MemTotal:       65934712 kB    
