@@ -53,7 +53,6 @@ Hugepagesize:       2048 kB       DirectMap2M:     7096320 kB
 DirectMap4k:      256524 kB       DirectMap1G:    61865984 kB    
 DirectMap2M:     8017920 kB             
 DirectMap1G:    60817408 kB             
-
 ```
 
 |definition| description |
