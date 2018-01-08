@@ -190,7 +190,6 @@ Thread Stats   Avg      Stdev     Max   +/- Stdev
 170874 requests in 10.10s, 105.92MB read          
 Requests/sec:  16919.16                             
 Transfer/sec:     10.49MB                           
-
 ```
 
 ### DPDK
