@@ -43,18 +43,6 @@ PMD: eth_igb_interrupt_action():  Port 1: Link Up - speed 100 Mbps - full-duplex
     - DPDK build configuration settings
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 ### L2 customized test
 
 | item | description |

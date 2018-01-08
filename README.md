@@ -7,13 +7,13 @@
 <br>
 
 ### Common Features
-- [`helloworld` - allocating the pthreads for each logical cores](helloworld)
-- [`skeleton` - basic concpet of tranferring packets](skeleton)
-- [`l2fwd` - basic concpet of l2 packet forwarding](l2fwd)
-- [`crafting Packets` - experiment on creating packets](pkt-craft)
-- [`dpdk packets` - experiment on packet components ](packet-experiment)
-- [`ring` - experiment on ring ](ring-experiment)
-- [`device reading` - getting device configuration data from ceph](device)
+- [`helloworld` - allocating the pthreads for each logical cores](common/helloworld)
+- [`skeleton` - basic concpet of tranferring packets](common/skeleton)
+- [`l2fwd` - basic concpet of l2 packet forwarding](common/l2fwd)
+- [`crafting Packets` - experiment on creating packets](common/pkt-craft)
+- [`dpdk packets` - experiment on packet components ](common/packet-experiment)
+- [`ring` - experiment on ring ](common/ring-experiment)
+- [`device reading` - getting device configuration data from ceph](common/device)
 
 
 <br>
