@@ -22,9 +22,9 @@
 #include "ff_api.h"
 #include "ff_epoll.h"
 
-#define PKT_SIZE 3000
+#define PKT_SIZE 64
 #define MAX_EVENTS 512
-#define TEST_TOGGLE 1   // 0: latency, 1: throughput
+#define TEST_TOGGLE 0   // 0: latency, 1: throughput
 
 #define MAXIMUM_RUN 10000
 #define TIME_LIMIT 10000000
@@ -73,9 +73,10 @@ void print(){
 }
 
 int loop(void *arg) {
+    int i;
     int nevents = ff_epoll_wait(epfd, events, MAX_EVENTS, 0);
     struct epoll_event event;
-    for (int i = 0; i < nevents; ++i) {
+    for (i = 0; i < nevents; ++i) {
         if(events[i].events & EPOLLOUT) {
             if (status++ == 0)
                 printf("connection establised, fd %d\n", events[i].data.fd);
@@ -114,9 +115,8 @@ int loop(void *arg) {
             if (nrecv > 0) succ++;
 
             curr_bytes+=strlen(buffer);
-            // printf("stringlength: %ld\n", strlen(buffer));
+            //printf("stringlength: %ld\n", strlen(buffer));
             print();
-
         }
     }
 }
@@ -143,7 +143,7 @@ int main(int argc,char* argv[]){
   bzero(&serv_addr, sizeof(serv_addr));
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_port = htons(80);
-  serv_addr.sin_addr.s_addr = inet_addr("10.218.111.254");
+  serv_addr.sin_addr.s_addr = inet_addr("10.107.30.102");
 
   assert((epfd = ff_epoll_create(0)) > 0);
   ev.data.fd = sockfd;
