@@ -55,3 +55,24 @@ DirectMap2M:     8017920 kB
 DirectMap1G:    60817408 kB             
 
 ```
+
+|definition| description |
+|--|--|
+| Buffers |
+A buffer, also called buffer memory, is a portion of a computer's memory that is set aside as a temporary holding place for data that is being sent to or received from an external device, such as a hard disk drive (HDD), keyboard or printer. |
+| Active | memory that is being used by a particular process. |
+| Cached | Memory in the pagecache (Diskcache and Shared Memory) |
+| DirectMap4k | The amount of memory being mapped to standard 4k pages |
+| DirectMap4k | The amount of memory being mapped to hugepages |
+
+```
+//fiu                             //visasu
+MemTotal:       65859688 kB       MemTotal:       65934712 kB    
+MemAvailable:   63383336 kB       MemAvailable:   62481708 kB    
+Buffers:          511452 kB       Buffers:          353196 kB     
+PageTables:         5900 kB       PageTables:         2076 kB    
+Hugepagesize:       2048 kB       Hugepagesize:       2048 kB    
+DirectMap4k:      256524 kB       DirectMap4k:      136440 kB    
+DirectMap2M:     8017920 kB       DirectMap2M:     7096320 kB    
+DirectMap1G:    60817408 kB       DirectMap1G:    61865984 kB    
+```

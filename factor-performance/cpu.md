@@ -30,3 +30,7 @@ cache_alignment : 64                                               cache_alignme
 address sizes   : 46 bits physical, 48 bits virtual                address sizes   : 46 bits physical, 48 bits virtual   
 power management:                                                  power management:    
 ```
+
+|definition | description |
+|--|--|
+|BogoMips| the number of million times per second a processor can do absolutely nothing |
