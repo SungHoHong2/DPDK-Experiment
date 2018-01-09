@@ -1,12 +1,12 @@
 SEASTAR ="/home/sungho/seastar"
 TARGET="e01_threads_memory"
-TAEGET="e02_futures_continuation"
+TARGET_2="e02_futures_continuation"
 
 
 all:
 	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
-	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET_2}.cc -o ${TARGET_2}
 
 .PHONY: clean
 clean:
-	rm -f *.o ${TARGET}
+	rm -f *.o ${TARGET} ${TAEGET_2}
