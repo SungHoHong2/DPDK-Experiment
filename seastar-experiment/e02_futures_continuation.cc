@@ -2,7 +2,8 @@
 #include "util/log.hh"
 #include <iostream>
 #include <stdexcept>
-extern seastar::future<> f();
+
+seastar::future<> f();
 
 int main(int argc, char** argv) {
     seastar::app_template app;
