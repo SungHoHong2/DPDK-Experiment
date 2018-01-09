@@ -1,9 +1,9 @@
+SEASTAR ="/home/sungho/seastar"
 TARGET="e01_threads_memory"
 
 
-
 all:
-	c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
 
 
 .PHONY: clean
