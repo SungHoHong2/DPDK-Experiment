@@ -1,7 +1,8 @@
 #include "core/seastar.hh"
 #include "core/reactor.hh"
-#include "core/future-util.hh"
+// #include "core/future-util.hh"
 #include <iostream>
+
 future<> service_loop() {
     return seastar::do_with(seastar::listen(seastar::make_ipv4_address({1234})),
             [] (auto& listener) {
