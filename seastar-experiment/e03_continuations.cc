@@ -1,9 +1,9 @@
 #include "core/app-template.hh"
+#include "util/log.hh"
+#include "core/sleep.hh"
 #include "core/reactor.hh"
 #include <iostream>
 #include <stdexcept>
-#include "core/sleep.hh"
-#include "util/log.hh"
 #include <iostream>
 
 
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 
 
     } catch(...) {
-        cerr << "Failed to start application: "
+        std::cerr << "Failed to start application: "
                   << std::current_exception() << "\n";
         return 1;
     }
