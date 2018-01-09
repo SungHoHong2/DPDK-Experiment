@@ -30,10 +30,7 @@ int main(){
   // sort the vector
   sort(v.begin(),v.end(),[](int i, int j) -> bool{ return (i < j);});
 
-
 	for(int i = 0; i < n; i++) cout << v[i] << " "; cout << endl;
-
-
 
   return 0;
 }
