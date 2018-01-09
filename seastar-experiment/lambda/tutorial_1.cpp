@@ -16,5 +16,8 @@ int main(){
   result = [](int a, int b)-> int {return a + b;}(2,4);
   cout << result << endl;
 
+  auto func = [](int a, int b) -> int { return a+b; };
+  cout << func(2, 3) << endl;
+
   return 0;
 }
