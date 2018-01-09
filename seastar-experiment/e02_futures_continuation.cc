@@ -1,5 +1,6 @@
 #include "core/app-template.hh"
 #include "util/log.hh"
+#include "core/sleep.hh"
 #include <iostream>
 #include <stdexcept>
 
