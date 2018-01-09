@@ -13,5 +13,8 @@ ninja
 
 export SEASTAR=/home/sungho/seastar
 c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-started.cc
+./a.out
+./a.out -c2
+
 
 ```
