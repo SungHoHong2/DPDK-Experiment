@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 extern seastar::future<> f();
+
 int main(int argc, char** argv) {
     seastar::app_template app;
     try {
@@ -13,4 +14,12 @@ int main(int argc, char** argv) {
         return 1;
     }
     return 0;
+}
+
+seastar::future<> f() {
+    std::cout << "Sleeping... " << std::flush;
+    using namespace std::chrono_literals;
+    return seastar::sleep(1s).then([] {
+        std::cout << "Done.\n";
+    });
 }
