@@ -23,15 +23,22 @@ seastar::future<int> slow() {
     return seastar::sleep(100ms).then([] { return 3; });
 }
 
+seastar::future<int> fast() {
+    return seastar::make_ready_future<int>(3);
+}
 
 seastar::future<> f() {  // a future which is useful for chaining multiple continuations one after another
     std::cout << "Sleeping... " << std::flush;
     using namespace std::chrono_literals;
     seastar::sleep(200ms).then([] { std::cout << "200ms " << std::flush; });
     seastar::sleep(100ms).then([] { std::cout << "100ms " << std::flush; });
-    
+
+    fast().then([] (int val) {
+            std::cout << "Fast " << val << "\n";
+    });
+
     slow().then([] (int val) {
-        std::cout << "Got " << val << "\n";
+        std::cout << "Slow " << val << "\n";
     });
     return seastar::sleep(1s).then([] {
         std::cout << "Done.\n";
