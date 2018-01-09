@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "core/sleep.hh"
+#include "util/log.hh"
 #include <iostream>
 
 
