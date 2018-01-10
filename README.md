@@ -25,7 +25,11 @@
 - [Implemented pingpong for TCP](tcp-experiment)
 - [Implemented pingpong for PKTGEN](pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
-- [`Latency Performance Test` by using f-stack & IMB-benchmark](latency-experiment)
+- [`Latency Performance Test` working in visasu](latency-experiment)
+- [`Latency Performance Test` by using f-stack & IMB-benchmark](latency-lab)
+      - testing fstack with wrk benchmark
+      - testing tcp epolling with wrk benchmark
+      - in depth interpretation on how epolling works
 - [`Netperf Experiment` for integrating f-stack with the proper benchmark ](netperf-experiment)
 - [`Seastar Experiment`](seastar-experiment)
 

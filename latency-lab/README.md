@@ -72,7 +72,7 @@ wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
 <br>
 
 
-- **CPU affinity**
+**CPU affinity**
 ```
 1 = Processor 1 (CPU-0)
 10 = Processor 2 (CPU-1)
@@ -81,3 +81,8 @@ wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
 110 = 2 and 3 only
 101010101010 = 12, 10, 8, 6, 4, 2 only
 ```
+
+
+<br>
+
+**[How epolling works](epolling_debug)**
