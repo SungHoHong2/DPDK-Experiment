@@ -22,5 +22,19 @@
 
 
 **Advantages of Epoll**
-- Linear scalability allows you to manage huge amounts of parallel connections with `small amout of worker processes`
+- Linear scalability allows you to manage huge amounts of parallel connections with `small amount of worker processes`
 - faster than one-thread per connection.
+
+
+<br>
+
+**epolling interface**
+- `epoll_create`
+    - Creates an epoll instance.
+    - Returns an fd for the new instance.
+- `epoll_ctl`
+    - Manipulate an epoll instance "epfd"
+    - Returns 0 in case of success
+- `epoll_wait`
+    - Wait for events on an epoll instance "epfd"
+    - Returns the number of triggered events returned in "events" buffer
