@@ -94,7 +94,13 @@ if ((kdpfd = open("/dev/epoll", O_RDWR)) == -1) {
   - **the user must allocate an array of pollfd structures, and pass the number of entries in this array, so there's no fundamental limit**
 
 
+<br> 
+
+**Common things in poll and select**
 - `poll()` and `select()` require the full list of file descriptors to watch on each invocation. The kernel must then walk the list of each file descriptor to be monitored. When this list grows large—it may contain hundreds or even thou‐ sands of file descriptors—walking the list on each invocation becomes a scalability bottleneck.
+- both handle file descriptors in a linear way. The more descriptors you ask them to check the slower they get
+- they all copy file descriptor from kernel to user
+
 
 
 <br>
@@ -111,3 +117,11 @@ if ((kdpfd = open("/dev/epoll", O_RDWR)) == -1) {
 - `Edge-triggered` behavior requires a different approach to programming, commonly utilizing nonblocking I/O, and careful checking for EAGAIN.
   - `Edge- triggered` interrupts are useful when the event itself (the line being asserted) is of interest
   - With `edge-triggered`, you’ll receive the notification but once, when the data first becomes readable: it is the edge, or the change, that causes notification.
+
+<br>
+
+**main advantage of epoll**
+- The cost of epoll is closer to the number of file descriptors that actually have events on them.
+- If you're monitoring 200 file descriptors, but only 100 of them have events on them, then you're (very roughly) only paying for those 100 active file descriptors.   
+- If you have a thousand clients that are mostly idle, then when you use select you're still paying for all one thousand of them. However, with epoll, it's like you've only got a few - you're only paying for the ones that are active at any given time.
+- All this means that epoll will lead to less CPU usage for most workloads
