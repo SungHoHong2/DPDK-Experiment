@@ -11,7 +11,7 @@
 #include <time.h>
 #include <sys/fcntl.h>
 
-#define PORT "3490" // the port client will be connecting to
+#define PORT "1234" // the port client will be connecting to
 // #define PKTSIZE 1464 // max number of bytes we can get at once
 #define PKT_SIZE 64
 
@@ -72,7 +72,7 @@ int main(){
 
 
     // get information of the server
-    if ((rv = getaddrinfo("172.24.30.31", PORT, &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo("10.218.106.44", PORT, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
         return 1;
     }
