@@ -20,8 +20,6 @@ int main(int argc, char** argv) {
     seastar::app_template app;
     try {
         app.run(argc, argv, f);
-
-
     } catch(...) {
         std::cerr << "Failed to start application: "
                   << std::current_exception() << "\n";
@@ -32,7 +30,11 @@ int main(int argc, char** argv) {
 
 
 seastar::future<> service_loop() {
-    return seastar::do_with(seastar::listen(seastar::make_ipv4_address({1234})),
+    socket_address sa;
+    sa = seastar::make_ipv4_address({1234});
+    std::cout << "server started at : " << sa << endl;
+
+    return seastar::do_with(seastar::listen(sa),
             [] (auto& listener) {
         return seastar::keep_doing([&listener] () {
             return listener.accept().then(
