@@ -39,7 +39,8 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 wget -qO- http://10.218.111.253:10000 | sed -e 's/<[^>]*>//g'
 
 
-
 # TCP seastar
-./build/release/apps/httpd/httpd --host-ipv4-addr 10.218.111.252 --netmask-ipv4-addr 255.255.248.0 --gw-ipv4-addr 10.218.111.1 --collectd 0 --smp 2
+./server --host-ipv4-addr 10.218.111.252 --netmask-ipv4-addr 255.255.248.0 --gw-ipv4-addr 10.218.111.1 --collectd 0 --smp 2
+
+wget -qO- http://10.218.111.252:10000 | sed -e 's/<[^>]*>//g'
 ```
