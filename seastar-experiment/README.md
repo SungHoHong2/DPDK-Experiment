@@ -31,5 +31,5 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 
 **seastar server application**
 ```
-./seastar-server --dpdk-pmd --network-stack native --dhcp 0
+./server --dpdk-pmd --network-stack native --dhcp 0
 ```
