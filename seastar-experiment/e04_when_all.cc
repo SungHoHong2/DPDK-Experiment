@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 }
 
 
-future<> service_loop() {
+seastar::future<> service_loop() {
     return seastar::do_with(seastar::listen(seastar::make_ipv4_address({1234})),
             [] (auto& listener) {
         return seastar::keep_doing([&listener] () {
