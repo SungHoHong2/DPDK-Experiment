@@ -27,7 +27,6 @@
 - Linear scalability allows you to manage huge amounts of parallel connections with `small amount of worker processes`
 - faster than one-thread per connection.
 
-
 <br>
 
 **epolling interface**
@@ -72,7 +71,6 @@ if ((kdpfd = open("/dev/epoll", O_RDWR)) == -1) {
  {
 
  }
-
 ```
 
 <br>
@@ -94,7 +92,7 @@ if ((kdpfd = open("/dev/epoll", O_RDWR)) == -1) {
   - **the user must allocate an array of pollfd structures, and pass the number of entries in this array, so there's no fundamental limit**
 
 
-<br> 
+<br>
 
 **Common things in poll and select**
 - `poll()` and `select()` require the full list of file descriptors to watch on each invocation. The kernel must then walk the list of each file descriptor to be monitored. When this list grows large—it may contain hundreds or even thou‐ sands of file descriptors—walking the list on each invocation becomes a scalability bottleneck.
