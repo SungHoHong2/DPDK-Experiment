@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 
 seastar::future<> service_loop() {
     seastar::socket_address sa;
-    sa = seastar::make_ipv4_address({1234});
+    sa = seastar::make_ipv4_address({"10.218.111.253",1234});
     std::cout << "server started at : " << sa << std::endl;
 
     return seastar::do_with(seastar::listen(sa),
