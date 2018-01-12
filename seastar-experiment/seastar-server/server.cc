@@ -19,223 +19,73 @@
  * Copyright 2015 Cloudius Systems
  */
 
-#include "core/reactor.hh"
-#include "core/sstring.hh"
-#include "core/app-template.hh"
-#include "core/circular_buffer.hh"
-#include "core/distributed.hh"
-#include "core/queue.hh"
-#include "core/future-util.hh"
-#include "core/metrics.hh"
-#include <iostream>
-#include <algorithm>
-#include <unordered_map>
-#include <queue>
-#include <bitset>
-#include <limits>
-#include <cctype>
-#include <vector>
-#include "httpd.hh"
-#include "reply.hh"
+#include "http/httpd.hh"
+#include "http/handlers.hh"
+#include "http/function_handlers.hh"
+#include "http/file_handler.hh"
+#include "apps/httpd/demo.json.hh"
+#include "http/api_docs.hh"
 
-using namespace std::chrono_literals;
+namespace bpo = boost::program_options;
 
-namespace seastar {
+using namespace seastar;
+using namespace httpd;
 
-namespace httpd {
-http_stats::http_stats(http_server& server, const sstring& name)
- {
-    namespace sm = seastar::metrics;
-    std::vector<sm::label_instance> labels;
-
-    labels.push_back(sm::label_instance("service", name));
-    _metric_groups.add_group("httpd", {
-            sm::make_derive("connections_total", [&server] { return server.total_connections(); }, sm::description("The total number of connections opened"), labels),
-            sm::make_gauge("connections_current", [&server] { return server.current_connections(); }, sm::description("The current number of open  connections"), labels),
-            sm::make_derive("read_errors", [&server] { return server.read_errors(); }, sm::description("The total number of errors while reading http requests"), labels),
-            sm::make_derive("reply_errors", [&server] { return server.reply_errors(); }, sm::description("The total number of errors while replying to http"), labels),
-            sm::make_derive("requests_served", [&server] { return server.requests_served(); }, sm::description("The total number of http requests served"), labels)
-    });
-}
-
-sstring http_server_control::generate_server_name() {
-    static thread_local uint16_t idgen;
-    return seastar::format("http-{}", idgen++);
-}
-
-future<> connection::do_response_loop() {
-    return _replies.pop_eventually().then(
-        [this] (std::unique_ptr<reply> resp) {
-            if (!resp) {
-                // eof
-                return make_ready_future<>();
-            }
-            _resp = std::move(resp);
-            return start_response().then([this] {
-                        return do_response_loop();
-                    });
-        });
-}
-
-future<> connection::start_response() {
-    if (_resp->_body_writer) {
-        return _resp->write_reply_to_connection(*this).then_wrapped([this] (auto f) {
-            if (f.failed()) {
-                // In case of an error during the write close the connection
-                _server._respond_errors++;
-                _done = true;
-                _replies.abort(std::make_exception_ptr(std::logic_error("Unknown exception during body creation")));
-                _replies.push(std::unique_ptr<reply>());
-                f.ignore_ready_future();
-                return make_ready_future<>();
-            }
-            return _write_buf.write("howdy chara", 10);
-        }).then_wrapped([this ] (auto f) {
-            if (f.failed()) {
-                // We could not write the closing sequence
-                // Something is probably wrong with the connection,
-                // we should close it, so the client will disconnect
-                _done = true;
-                _replies.abort(std::make_exception_ptr(std::logic_error("Unknown exception during body creation")));
-                _replies.push(std::unique_ptr<reply>());
-                f.ignore_ready_future();
-                return make_ready_future<>();
-            } else {
-                return _write_buf.flush();
-            }
-        }).then_wrapped([this] (auto f) {
-            if (f.failed()) {
-                // flush failed. just close the connection
-                _done = true;
-                _replies.abort(std::make_exception_ptr(std::logic_error("Unknown exception during body creation")));
-                _replies.push(std::unique_ptr<reply>());
-                f.ignore_ready_future();
-            }
-            _resp.reset();
-            return make_ready_future<>();
-        });
+class handl : public httpd::handler_base {
+public:
+    virtual future<std::unique_ptr<reply> > handle(const sstring& path,
+            std::unique_ptr<request> req, std::unique_ptr<reply> rep) {
+        rep->_content = "hello";
+        rep->done("html");
+        return make_ready_future<std::unique_ptr<reply>>(std::move(rep));
     }
-    set_headers(*_resp);
-    _resp->_headers["Content-Length"] = to_sstring(
-            _resp->_content.size());
-    return _write_buf.write(_resp->_response_line.begin(),
-            _resp->_response_line.size()).then([this] {
-        return _resp->write_reply_headers(*this);
-    }).then([this] {
-        return _write_buf.write("\r\n", 2);
-    }).then([this] {
-        return write_body();
-    }).then([this] {
-        return _write_buf.flush();
-    }).then([this] {
-        _resp.reset();
+};
+
+void set_routes(routes& r) {
+    function_handler* h1 = new function_handler([](const_req req) {
+        return "hello";
+    });
+    function_handler* h2 = new function_handler([](std::unique_ptr<request> req) {
+        return make_ready_future<json::json_return_type>("json-future");
+    });
+    r.add(operation_type::GET, url("/"), h1);
+    r.add(operation_type::GET, url("/jf"), h2);
+    r.add(operation_type::GET, url("/file").remainder("path"),
+            new directory_handler("/"));
+    demo_json::hello_world.set(r, [] (const_req req) {
+        demo_json::my_object obj;
+        obj.var1 = req.param.at("var1");
+        obj.var2 = req.param.at("var2");
+        demo_json::ns_hello_world::query_enum v = demo_json::ns_hello_world::str2query_enum(req.query_parameters.at("query_enum"));
+        // This demonstrate enum conversion
+        obj.enum_var = v;
+        return obj;
     });
 }
 
-connection::~connection() {
-    --_server._current_connections;
-    _server._connections.erase(_server._connections.iterator_to(*this));
-    _server.maybe_idle();
-}
-
-void connection::on_new_connection() {
-    ++_server._total_connections;
-    ++_server._current_connections;
-    _server._connections.push_back(*this);
-}
-
-future<> connection::read() {
-    return do_until([this] {return _done;}, [this] {
-        return read_one();
-    }).then_wrapped([this] (future<> f) {
-        // swallow error
-        if (f.failed()) {
-            _server._read_errors++;
-        }
-        f.ignore_ready_future();
-        return _replies.push_eventually( {});
-    }).finally([this] {
-        return _read_buf.close();
-    });
-}
-future<> connection::read_one() {
-    _parser.init();
-    return _read_buf.consume(_parser).then([this] () mutable {
-        if (_parser.eof()) {
-            _done = true;
-            return make_ready_future<>();
-        }
-        ++_server._requests_served;
-        std::unique_ptr<httpd::request> req = _parser.get_parsed_request();
-
-        return _replies.not_full().then([req = std::move(req), this] () mutable {
-            return generate_reply(std::move(req));
-        }).then([this](bool done) {
-            _done = done;
+int main(int ac, char** av) {
+    app_template app;
+    app.add_options()("port", bpo::value<uint16_t>()->default_value(10000),
+            "HTTP Server port");
+    return app.run_deprecated(ac, av, [&] {
+        auto&& config = app.configuration();
+        uint16_t port = config["port"].as<uint16_t>();
+        auto server = new http_server_control();
+        auto rb = make_shared<api_registry_builder>("apps/httpd/");
+        server->start().then([server] {
+            return server->set_routes(set_routes);
+        }).then([server, rb]{
+            return server->set_routes([rb](routes& r){rb->set_api_doc(r);});
+        }).then([server, rb]{
+            return server->set_routes([rb](routes& r) {rb->register_function(r, "demo", "hello world application");});
+        }).then([server, port] {
+            return server->listen(port);
+        }).then([server, port] {
+            std::cout << "Seastar HTTP server listening on port " << port << " ...\n";
+            engine().at_exit([server] {
+                return server->stop();
+            });
         });
+
     });
-}
-
-future<> connection::respond() {
-    return do_response_loop().then_wrapped([this] (future<> f) {
-        // swallow error
-        if (f.failed()) {
-            _server._respond_errors++;
-        }
-        f.ignore_ready_future();
-        return _write_buf.close();
-    });
-}
-
-future<> connection::write_body() {
-    return _write_buf.write(_resp->_content.begin(),
-            _resp->_content.size());
-}
-
-void connection::set_headers(reply& resp) {
-    resp._headers["Server"] = "Seastar httpd";
-    resp._headers["Date"] = _server._date;
-}
-
-future<bool> connection::generate_reply(std::unique_ptr<request> req) {
-    auto resp = std::make_unique<reply>();
-    bool conn_keep_alive = false;
-    bool conn_close = false;
-    auto it = req->_headers.find("Connection");
-    if (it != req->_headers.end()) {
-        if (it->second == "Keep-Alive") {
-            conn_keep_alive = true;
-        } else if (it->second == "Close") {
-            conn_close = true;
-        }
-    }
-    bool should_close;
-    // TODO: Handle HTTP/2.0 when it releases
-    resp->set_version(req->_version);
-
-    if (req->_version == "1.0") {
-        if (conn_keep_alive) {
-            resp->_headers["Connection"] = "Keep-Alive";
-        }
-        should_close = !conn_keep_alive;
-    } else if (req->_version == "1.1") {
-        should_close = conn_close;
-    } else {
-        // HTTP/0.9 goes here
-        should_close = true;
-    }
-    sstring url = set_query_param(*req.get());
-    sstring version = req->_version;
-    set_headers(*resp);
-    resp->set_version(version);
-    return _server._routes.handle(url, std::move(req), std::move(resp)).
-    // Caller guarantees enough room
-    then([this, should_close, version = std::move(version)](std::unique_ptr<reply> rep) {
-        rep->set_version(version).done();
-        this->_replies.push(std::move(rep));
-        return make_ready_future<bool>(should_close);
-    });
-}
-}
-
 }
