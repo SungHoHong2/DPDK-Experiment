@@ -35,5 +35,6 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` tls_echo_serv
 ./server --dpdk-pmd --network-stack native --dhcp 0
 
 
+./server --dpdk-pmd --cert catest.pem -k catest.key --network-stack native --dhcp 0
 ./server --cert catest.pem -k catest.key
 ```
