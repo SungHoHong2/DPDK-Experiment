@@ -43,7 +43,7 @@ public:
 
 void set_routes(routes& r) {
     function_handler* h1 = new function_handler([](const_req req) {
-        return ""HTTP/1.1 200 OK\r\n"
+        return "HTTP/1.1 200 OK\r\n"
         "Server: F-Stack\r\n"
         "Date: Sat, 25 Feb 2017 09:26:33 GMT\r\n"
         "Content-Type: text/html\r\n"
