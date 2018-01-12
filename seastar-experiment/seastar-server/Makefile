@@ -3,7 +3,7 @@ TARGET="server"
 TARGET_2="client"
 
 all:
-	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc reply.cc -o ${TARGET}
+	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
 	c++ ${TARGET_2}.cc -o ${TARGET_2}
 
 .PHONY: clean
