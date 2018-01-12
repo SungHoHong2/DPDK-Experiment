@@ -31,5 +31,9 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 
 **seastar server application**
 ```
+c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` tls_echo_server.cc
 ./server --dpdk-pmd --network-stack native --dhcp 0
+
+
+./server --cert catest.pem -k catest.key
 ```
