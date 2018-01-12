@@ -13,8 +13,8 @@ namespace bpo = boost::program_options;
 int main(int ac, char** av) {
     app_template app;
     app.add_options()
-                    ("port", bpo::value<uint16_t>()->default_value(10000), "Server port")
-                    ("address", bpo::value<std::string>()->default_value("127.0.0.1"), "Server address")
+                    ("port", bpo::value<uint16_t>()->default_value(1234), "Server port")
+                    ("address", bpo::value<std::string>()->default_value("10.218.111.253"), "Server address")
                     ("cert,c", bpo::value<std::string>()->required(), "Server certificate file")
                     ("key,k", bpo::value<std::string>()->required(), "Certificate key")
                     ("verbose,v", bpo::value<bool>()->default_value(false)->implicit_value(true), "Verbose")
