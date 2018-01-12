@@ -19,6 +19,4 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 
 c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` server-example.cc
 
-
-
 ```
