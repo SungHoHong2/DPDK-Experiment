@@ -1,5 +1,5 @@
 SEASTAR ="/home/sungho/seastar"
-TARGET="e04_when_all"
+TARGET="e03_continuations"
 
 
 all:
