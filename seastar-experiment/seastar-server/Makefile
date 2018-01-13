@@ -1,5 +1,5 @@
 # SEASTAR ="/home/sungho/seastar"
-SEASTAR="/data1/seastar"
+SEASTAR="/data1/sungho/seastar"
 TARGET="server"
 TARGET_2="client"
 
