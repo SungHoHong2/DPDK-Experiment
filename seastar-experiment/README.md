@@ -37,6 +37,10 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 ./a.out -c2 //running with two threads
 ```
 
+
+CXX=g++-5 make
+
+build/release/apps/httpd/httpd
 sungho@c3n24:/data1/sungho/DPDK-Experiment/seastar-experiment/seastar-server$ c++ `pkg
 -config --cflags --libs $SEASTAR/build/release/seastar.pc` server.cc                  
 In file included from /data1/sungho/seastar/core/ragel.hh:25:0,                       
