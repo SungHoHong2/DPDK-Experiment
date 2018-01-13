@@ -3,7 +3,7 @@ TARGET="e04_when_all"
 
 
 all:
-	g++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	c++ --compiler g++-5 `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
 
 .PHONY: clean
 clean:
