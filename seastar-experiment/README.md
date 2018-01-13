@@ -31,12 +31,21 @@ ninja
 export SEASTAR=/home/sungho/seastar
 
 # visasu
-export SEASTAR=/data1/seastar
-
+export SEASTAR=/data1/sungho/seastar
 c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-started.cc
 ./a.out --dpdk-pmd 1
 ./a.out -c2 //running with two threads
 ```
+
+sungho@c3n24:/data1/sungho/DPDK-Experiment/seastar-experiment/seastar-server$ c++ `pkg
+-config --cflags --libs $SEASTAR/build/release/seastar.pc` server.cc                  
+In file included from /data1/sungho/seastar/core/ragel.hh:25:0,                       
+                 from http/request_parser.rl:24,                                      
+                 from /data1/sungho/seastar/http/httpd.hh:25,                         
+                 from server.cc:22:                                                   
+/data1/sungho/seastar/core/sstring.hh:37:36: fatal error: experimental/string_view: No
+ such file or directory                                                               
+ #include <experimental/string_view>                                                  
 
 <br>
 

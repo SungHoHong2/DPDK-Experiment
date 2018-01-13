@@ -1,4 +1,4 @@
-SEASTAR ="/home/sungho/seastar"
+SEASTAR ="/data1/sungho/seastar"
 TARGET="e04_when_all"
 
 
