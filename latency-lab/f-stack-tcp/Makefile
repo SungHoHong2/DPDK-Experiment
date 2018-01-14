@@ -21,10 +21,10 @@ TARGET_4="fstack-client"
 
 
 all: # for visasu
-	cc -O -gdwarf-2  -I /data1/sungho/visa-fstack/lib -g -o ${TARGET} fstack-server.c ${LIBS}
-	cc -O -gdwarf-2  -I /data1/sungho/visa-fstack/f-stack/lib -g -o ${TARGET_2} tcp-client.c ${LIBS}
-	cc -O -gdwarf-2  -I /data1/sungho/visa-fstack/f-stack/lib -g -o ${TARGET_3} tcp-server.c
-	cc -O -gdwarf-2  -I /data1/sungho/visa-fstack/f-stack/lib -g -o ${TARGET_4} fstack-client.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET} fstack-server.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_2} tcp-client.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_3} tcp-server.c
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_4} fstack-client.c ${LIBS}
 
 .PHONY: clean
 clean:

@@ -6,9 +6,11 @@
 
 # DPDK seastar dkasu
 wget -qO- http://10.218.111.253:10000 | sed -e 's/<[^>]*>//g'
+
+./wrk -t12 -c12 -d1s http://10.218.111.253:10000
 ```
 
-<br> 
+<br>
 
 ### TCP
 ```
