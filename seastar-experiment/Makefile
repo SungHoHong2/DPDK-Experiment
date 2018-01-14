@@ -3,7 +3,7 @@ TARGET="getting-started"
 
 
 all:
-	c++ -std=c++11 `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	g++-5 -std=c++11 `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
 
 .PHONY: clean
 clean:
