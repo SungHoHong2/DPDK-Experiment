@@ -1,5 +1,5 @@
 SEASTAR ="/data1/sungho/seastar"
-TARGET="e04_when_all"
+TARGET="getting-started"
 
 
 all:

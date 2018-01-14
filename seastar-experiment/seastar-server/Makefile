@@ -4,11 +4,9 @@ TARGET ="server"
 TARGET_2="client"
 
 all:
-	g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
-	g++-5  ${TARGET_2}.cc -o ${TARGET_2}
+	c++  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	c++  ${TARGET_2}.cc -o ${TARGET_2}
 
 .PHONY: clean
 clean:
 	rm -f *.o ${TARGET} ${TARGET_2}
-
-	sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 60 --slave /usr/bin/g++ g++ /usr/bin/g++-5
