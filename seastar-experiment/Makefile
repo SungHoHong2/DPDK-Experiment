@@ -1,9 +1,9 @@
-SEASTAR ="/home/sungho/seastar"
+SEASTAR ="/data1/sungho/seastar"
 TARGET="getting-started"
 
 
 all:
-	c++ `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
+	g++-6 `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc -o ${TARGET}
 
 .PHONY: clean
 clean:
