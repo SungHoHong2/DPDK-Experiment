@@ -13,7 +13,6 @@ git clone https://github.com/scylladb/seastar.git
 sudo ./configure.py --enable-dpdk --compiler g++-5
 
 #in case there is an error related to boost
-
 sudo apt-get install build-essential python-dev autotools-dev libicu-dev build-essential libbz2-dev
 wget -O boost_1_66_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.66.0/boost_1_66_0.tar.gz/download
 tar xzvf boost_1_66_0.tar.gz
@@ -37,18 +36,23 @@ c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-start
 ./a.out -c2 //running with two threads
 ```
 
+<br>
+
+**boost version compare**
+
+```
+sungho@wenji-wrk:~$
+dpkg -s libboost-dev | grep 'Version'
+Version: 1.61.0.2
+
+sungho@c3n24
+Version: 1.54.0.1ubuntu1
 
 
-build/release/apps/httpd/httpd
-sungho@c3n24:/data1/sungho/DPDK-Experiment/seastar-experiment/seastar-server$ c++ `pkg
--config --cflags --libs $SEASTAR/build/release/seastar.pc` server.cc                  
-In file included from /data1/sungho/seastar/core/ragel.hh:25:0,                       
-                 from http/request_parser.rl:24,                                      
-                 from /data1/sungho/seastar/http/httpd.hh:25,                         
-                 from server.cc:22:                                                   
-/data1/sungho/seastar/core/sstring.hh:37:36: fatal error: experimental/string_view: No
- such file or directory                                                               
- #include <experimental/string_view>                                                  
+
+
+```
+
 
 <br>
 
@@ -80,7 +84,3 @@ wget -qO- http://10.218.111.253:10000 | sed -e 's/<[^>]*>//g'
 ./server --host-ipv4-addr 10.218.111.252 --netmask-ipv4-addr 255.255.248.0 --gw-ipv4-addr 10.218.111.1 --collectd 0 --smp 2
 wget -qO- http://10.218.111.252:10000 | sed -e 's/<[^>]*>//g'
 ```
-
-
-
-make -C build/release/c-ares CC=gcc
