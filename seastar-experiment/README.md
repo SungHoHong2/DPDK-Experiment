@@ -10,7 +10,7 @@
 sudo apt-get install libaio-dev ninja-build ragel libhwloc-dev libnuma-dev libpciaccess-dev libcrypto++-dev libboost-all-dev
 git clone https://github.com/scylladb/seastar.git
 ./install-dependencies.sh
-sudo ./configure.py --enable-dpdk --compiler g++-5
+sudo ./configure.py --enable-dpdk --compiler g++-6
 
 #in case there is an error related to boost
 sudo apt-get install build-essential python-dev autotools-dev libicu-dev build-essential libbz2-dev
@@ -48,6 +48,7 @@ Version: 1.61.0.2
 sungho@c3n24
 Version: 1.54.0.1ubuntu1
 
+sudo apt-get install libboost-all-dev
 
 
 

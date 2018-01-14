@@ -1,4 +1,4 @@
-SEASTAR ="/data1/sungho/seastar"
+SEASTAR ="/home/sungho/seastar"
 TARGET="getting-started"
 
 
