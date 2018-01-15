@@ -3,23 +3,7 @@ SEASTAR ="/data1/sungho/seastar"
 TARGET ="server"
 
 all:
-	g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc`
-		${TARGET}.cc
-		${SEASTAR}/build/release/net/proxy.cc
-		${SEASTAR}/build/release/net/virtio.cc
-		${SEASTAR}/build/release/net/dpdk.cc
-		${SEASTAR}/build/release/net/ip.cc
-		${SEASTAR}/build/release/net/ethernet.cc
-		${SEASTAR}/build/release/net/arp.cc
-		${SEASTAR}/build/release/net/native-stack.cc
-		${SEASTAR}/build/release/net/ip_checksum.cc
-		${SEASTAR}/build/release/net/udp.cc
-		${SEASTAR}/build/release/net/tcp.cc
-		${SEASTAR}/build/release/net/dhcp.cc
-		${SEASTAR}/build/release/net/tls.cc
-		${SEASTAR}/build/release/net/dns.cc
-		${SEASTAR}/build/release/net/config.cc
-		 -o ${TARGET}
+	g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` ${TARGET}.cc ${SEASTAR}/build/release/net/proxy.cc ${SEASTAR}/build/release/net/virtio.cc ${SEASTAR}/build/release/net/dpdk.cc ${SEASTAR}/build/release/net/ip.cc ${SEASTAR}/build/release/net/ethernet.cc ${SEASTAR}/build/release/net/arp.cc ${SEASTAR}/build/release/net/native-stack.cc ${SEASTAR}/build/release/net/ip_checksum.cc ${SEASTAR}/build/release/net/udp.cc ${SEASTAR}/build/release/net/tcp.cc ${SEASTAR}/build/release/net/dhcp.cc ${SEASTAR}/build/release/net/tls.cc ${SEASTAR}/build/release/net/dns.cc ${SEASTAR}/build/release/net/config.cc -o ${TARGET}
 
 #
 #
