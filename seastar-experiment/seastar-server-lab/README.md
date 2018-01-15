@@ -11,7 +11,6 @@ wget -qO- http://10.218.111.253:10000 | sed -e 's/<[^>]*>//g'
 
 
 # DPDK f-stack
-
 sudo ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=1
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=2
@@ -20,9 +19,6 @@ sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=5
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=6
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=7
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=8
-
-
-
 ```
 
 <br>

@@ -49,6 +49,17 @@ sudo ./fstack-client --conf config_client.ini --proc-type=primary --proc-id=0
 
 ./tcp-server
 ./tcp-client
+
+
+# running on multiple cores  - change the coremask and run
+sudo ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=1
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=2
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=4
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=5
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=6
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=7
+sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=8
 ```
 
 
