@@ -25,7 +25,7 @@ cat /usr/include/boost/version.hpp | grep "BOOST_LIB_VERSION"
 
 
 # compile
-ninja
+sudo ninja
 
 # lab 02
 export SEASTAR=/home/sungho/seastar
@@ -42,11 +42,10 @@ g++-5 `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-sta
 
 **running dpdk**
 ```
-./configure.py --dpdk-target /home/sungho/seastar/dpdk/x86_64-native-linuxapp-gcc
-./a.out --dpdk-pmd --network-stack native --dhcp 0
 
-
-./configure.py --enable-dpdk
+export RTE_SDK=/data1/sungho/seastar/dpdk
+export DESTDIR=/usr/local
+export RTE_TARGET=x86_64-native-linuxapp-gcc
 
 ```
 
