@@ -143,7 +143,7 @@ int main(int ac, char** av) {
     return app.run_deprecated(ac, av, [&] {
         auto&& config = app.configuration();
         // uint16_t port = config["port"].as<uint16_t>();
-        onfig["port"].as<uint16_t>();
+        config["port"].as<uint16_t>();
         // auto server = new http_server_control();
         // auto rb = make_shared<api_registry_builder>("apps/httpd/");
         // server->start().then([server] {
