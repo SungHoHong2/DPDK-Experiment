@@ -73,14 +73,33 @@ Transfer/sec:     10.83MB
 ### F-STACK with 2 threads
 
 ```
-./wrk -t2 -c2 -d10s http://10.218.111.252
+./wrk -t2 -c2 -d10s http://10.218.111.253
 Latency   594.09us    9.90us   1.00ms   95.98%
 Transfer/sec:      2.08MB
 
+Latency   593.93us    8.86us   0.90ms   95.84%
+Transfer/sec:      2.07MB
 
-./wrk -t4 -c4 -d10s http://10.218.111.252
-./wrk -t8 -c8 -d10s http://10.218.111.252
-./wrk -t16 -c16 -d10s http://10.218.111.252
-./wrk -t32 -c32 -d10s http://10.218.111.252
-./wrk -t64 -c64 -d10s http://10.218.111.252
+Latency   593.95us    8.86us   0.97ms   95.57%
+Transfer/sec:      2.08MB
+
+
+./wrk -t4 -c4 -d10s http://10.218.111.253
+Latency   589.25us   31.01us   1.00ms   97.24%
+Transfer/sec:      4.18MB
+
+Latency   588.54us   32.65us   0.94ms   95.12%
+Transfer/sec:      4.20MB
+
+Latency   588.40us   32.97us   1.03ms   94.65%
+Transfer/sec:      4.20MB  
+
+
+./wrk -t8 -c8 -d10s http://10.218.111.253
+
+
+
+./wrk -t16 -c16 -d10s http://10.218.111.253
+./wrk -t32 -c32 -d10s http://10.218.111.253
+./wrk -t64 -c64 -d10s http://10.218.111.253
 ```
