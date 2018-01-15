@@ -14,5 +14,20 @@ httpd works so I need something to add in the makefile
 ```
 
 
-LD_LIBRARY_PATH=/data1/sungho/seastar/dpdk/x86_64-native-linuxapp-gcc/lib/ \
-./server --network-stack native --dpdk-pmd --csum-offload off
+apps = [
+    'apps/httpd/httpd',
+    'apps/seawreck/seawreck',
+    'apps/io_tester/io_tester',
+    'apps/memcached/memcached',
+    'apps/iotune/iotune',
+    'tests/scheduling_group_demo',
+    ]
+
+all_artifacts = apps + tests + ['libseastar.a', 'seastar.pc']
+
+
+arg_parser.add_argument('--with', dest='artifacts', action='append', choices=all_artifacts, default=[])
+args = arg_parser.parse_args()
+
+
+'apps/httpd/httpd': ['apps/httpd/demo.json', 'apps/httpd/main.cc'] + http + libnet + core,
