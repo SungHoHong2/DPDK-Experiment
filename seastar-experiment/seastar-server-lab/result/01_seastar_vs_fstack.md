@@ -96,10 +96,49 @@ Transfer/sec:      4.20MB
 
 
 ./wrk -t8 -c8 -d10s http://10.218.111.253
+Latency   625.44us   98.11us   1.22ms   85.42%
+Transfer/sec:      7.90MB
 
+Latency   624.10us   96.56us   1.12ms   85.87%
+Transfer/sec:      7.91MB
+
+Latency   624.10us   96.56us   1.12ms   85.87%
+Transfer/sec:      7.91M
 
 
 ./wrk -t16 -c16 -d10s http://10.218.111.253
+
+Latency     1.06ms  142.88us   1.53ms   61.69%
+Transfer/sec:      9.31MB
+
+Latency     1.06ms  142.71us   1.58ms   61.83%
+Transfer/sec:      9.31MB
+
+Latency     1.06ms  140.27us   1.51ms   62.06%
+Transfer/sec:      9.29MB
+
+
+
 ./wrk -t32 -c32 -d10s http://10.218.111.253
+
+Latency     2.12ms  148.35us   2.64ms   76.86%
+Transfer/sec:      9.28MB
+
+Latency     2.11ms  155.35us   2.63ms   76.42%
+Transfer/sec:      9.34MB
+
+Latency     2.11ms  181.99us   2.64ms   78.07%
+Transfer/sec:      9.33MB
+
+
 ./wrk -t64 -c64 -d10s http://10.218.111.253
+Latency     4.23ms  306.02us   5.00ms   99.28%
+Transfer/sec:      9.29MB
+
+Latency     4.22ms  361.38us   4.96ms   98.93%
+Transfer/sec:      9.33MB
+
+Latency     4.23ms  227.75us   6.11ms   98.30%
+Transfer/sec:      9.34MB
+
 ```
