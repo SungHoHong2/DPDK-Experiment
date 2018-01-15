@@ -433,24 +433,83 @@ Transfer/sec:      9.31MB
 ```
 ./wrk -t2 -c2 -d10s http://10.218.111.253
 
+Latency   593.83us    9.48us   1.05ms   95.66%
+Transfer/sec:      2.07MB  
 
+Latency   594.03us   10.51us   0.94ms   93.29%
+Transfer/sec:      2.08MB
 
+Latency   594.42us    9.52us   0.85ms   94.71%
+Transfer/sec:      2.08MB
 
 
 ./wrk -t4 -c4 -d10s http://10.218.111.253
+Latency   585.67us   23.40us   0.91ms   88.51%
+Transfer/sec:      4.22MB
+
+Latency   585.29us   26.21us   1.06ms   90.49%
+Transfer/sec:      4.22MB
+
+Latency   588.56us   19.76us   0.92ms   93.14%
+Transfer/sec:      4.20MB
+
+
+
 ./wrk -t8 -c8 -d10s http://10.218.111.253
+Latency   608.37us   80.12us   1.06ms   90.76%   
+Transfer/sec:      8.11MB    
+
+Latency   608.20us   80.74us   0.92ms   90.89%
+Transfer/sec:      8.12MB   
+
+Latency   606.56us   78.51us   0.93ms   91.22%
+Transfer/sec:      8.15MB
+
+
+
 ./wrk -t16 -c16 -d10s http://10.218.111.253
+Latency     1.06ms  140.69us   1.48ms   62.15%
+Transfer/sec:      9.27MB
+
+Latency     1.06ms  142.61us   1.48ms   62.85%
+Transfer/sec:      9.30MB  
+
+Latency     1.06ms  140.93us   1.48ms   62.14%
+Transfer/sec:      9.27MB
+
+
 ./wrk -t32 -c32 -d10s http://10.218.111.253
+
+Latency     2.11ms  182.24us   2.66ms   78.08%
+Transfer/sec:      9.32MB
+
+Latency     2.11ms  484.07us   3.24ms   61.59%
+Transfer/sec:      9.33MB
+
+Latency     2.11ms  185.64us   2.79ms   78.56%
+Transfer/sec:      9.33MB
+
+
 ./wrk -t64 -c64 -d10s http://10.218.111.253
+Latency     4.22ms  415.00us   5.27ms   90.45%
+Transfer/sec:      9.33MB
+
+Latency     4.23ms  823.93us   5.78ms   74.91%
+Transfer/sec:      9.34MB  
+
+Latency     4.22ms  376.35us   5.02ms   83.39%
+Transfer/sec:      9.33MB  
 ```
-
-
 
 
 ### F-STACK with 8 threads
 
 ```
 ./wrk -t2 -c2 -d10s http://10.218.111.253
+
+
+
+
 ./wrk -t4 -c4 -d10s http://10.218.111.253
 ./wrk -t8 -c8 -d10s http://10.218.111.253
 ./wrk -t16 -c16 -d10s http://10.218.111.253
