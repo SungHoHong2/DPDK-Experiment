@@ -353,3 +353,21 @@ Latency     4.23ms  227.75us   6.11ms   98.30%
 Transfer/sec:      9.34MB
 
 ```
+
+
+
+### F-STACK with 1 threads
+
+```
+./wrk -t2 -c2 -d10s http://10.218.111.253
+./wrk -t4 -c4 -d10s http://10.218.111.253
+./wrk -t8 -c8 -d10s http://10.218.111.253
+./wrk -t16 -c16 -d10s http://10.218.111.253
+./wrk -t32 -c32 -d10s http://10.218.111.253
+./wrk -t64 -c64 -d10s http://10.218.111.253
+
+
+
+
+
+```
