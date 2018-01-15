@@ -11,6 +11,8 @@ wget -qO- http://10.218.111.253:10000 | sed -e 's/<[^>]*>//g'
 
 
 # DPDK f-stack
+export FF_PATH=/data/f-stack
+export FF_DPDK=/data/f-stack/dpdk/x86_64-native-linuxapp-gcc
 sudo ./fstack-server --conf config_server.ini --proc-type=primary --proc-id=0
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=1
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=2
