@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    // seastar::app_template app;
+    seastar::app_template app;
     // try {
     //     app.run(argc, argv, [] {
     //         cout << seastar::smp::count << endl
