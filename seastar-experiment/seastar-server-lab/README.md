@@ -20,7 +20,6 @@ sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=5
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=6
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=7
 sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=8
-sudo ./fstack-server --conf config_server.ini --proc-type=secondary --proc-id=9
 
 
 
