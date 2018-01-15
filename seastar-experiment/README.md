@@ -11,6 +11,8 @@ sudo apt-get install libaio-dev ninja-build ragel libhwloc-dev libnuma-dev libpc
 git clone https://github.com/scylladb/seastar.git
 ./install-dependencies.sh
 sudo ./configure.py --enable-dpdk --compiler g++-6
+sudo ./configure.py --compiler g++-6
+
 
 #in case there is an error related to boost
 sudo apt-get install build-essential python-dev autotools-dev libicu-dev build-essential libbz2-dev
@@ -20,8 +22,8 @@ cd boost_1_66_0.tar.gz/
 ./bootstrap.sh --prefix=/usr/
 ./b2
 sudo ./b2 install
+cat /usr/include/boost/version.hpp | grep "BOOST_LIB_VERSION"
 
-/data1/sungho/boost_1_66_0
 
 # compile
 ninja
@@ -32,25 +34,10 @@ export SEASTAR=/home/sungho/seastar
 # visasu
 export SEASTAR=/data1/sungho/seastar
 c++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-started.cc
+
 ./a.out --dpdk-pmd 1
 ./a.out -c2 //running with two threads
 ```
-
-<br>
-
-**boost version compare**
-
-```
-sungho@wenji-wrk:~$
-dpkg -s libboost-dev | grep 'Version'
-Version: 1.61.0.2
-
-sungho@c3n24
-Version: 1.54.0.1ubuntu1
-
-sudo apt-get install libboost-all-dev
-```
-
 
 <br>
 
