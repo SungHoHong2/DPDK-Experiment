@@ -15,5 +15,5 @@ sudo ./start.sh -b ./tcp-server -c config_server.ini
 wget -qO- http://10.107.30.40 | sed -e 's/<[^>]*>//g'
 
 # benchmark
-./wrk -t2 -c2 -d10s http://10.107.30.40 
+./wrk -t2 -c2 -d10s http://10.107.30.40
 ```
