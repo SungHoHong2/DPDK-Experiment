@@ -3,7 +3,7 @@ SEASTAR ="/data1/sungho/seastar"
 TARGET ="server"
 
 all:
-	g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` -lboost_program_options -o ${TARGET}
+	g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` -o ${TARGET}
 
 .PHONY: clean
 clean:
