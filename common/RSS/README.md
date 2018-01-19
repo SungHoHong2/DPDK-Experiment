@@ -35,3 +35,59 @@ static struct rte_eth_conf default_port_conf = {
     },
 };
 ```
+
+<br>
+
+
+**chekcing port info with test-pmd**
+
+```
+testpmd> show port info 1                  
+
+********************* Infos for port 1  *********************   
+MAC address: A0:36:9F:83:AB:BD             
+Driver name: net_e1000_igb                 
+Connect to socket: 0
+memory allocation on the socket: 0         
+Link status: up      
+Link speed: 100 Mbps
+Link duplex: full-duplex                   
+MTU: 1500            
+Promiscuous mode: enabled                  
+Allmulticast mode: disabled                
+Maximum number of MAC addresses: 32        
+Maximum number of MAC addresses of hash filtering: 0            
+VLAN offload:        
+  strip on           
+  filter on          
+  qinq(extend) off   
+Hash key size in bytes: 40                 
+Redirection table size: 128                
+Supported flow types:                      
+  ipv4               
+  ipv4-tcp           
+  ipv4-udp           
+  ipv6               
+  ipv6-tcp           
+  ipv6-udp           
+  unknown            
+  unknown            
+  unknown            
+Max possible RX queues: 8                  
+Max possible number of RXDs per queue: 4096                     
+Min possible number of RXDs per queue: 32  
+RXDs number alignment: 8                   
+Max possible TX queues: 8                  
+Max possible number of TXDs per queue: 4096                     
+Min possible number of TXDs per queue: 32  
+TXDs number alignment: 8                   
+testpmd>             
+
+show port (port_id) rss reta
+
+
+
+sudo ./testpmd -c 0xf -n 4 -- -i --portmask=0x03 --nb-cores=3 --rxq=2 --txq=2
+testpmd> show port 1 rss-hash ipv4|ipv4-frag|ipv4-tcp|ipv4-udp|ipv4-sctp|ipv4-other|ipv6|ipv6-frag|ipv6-tcp|ipv6-udp|ipv6-sctp|ipv6-other|l2-payload|ipv6-ex|ipv6-tcp-ex|ipv6-udp-ex [key]
+
+```
