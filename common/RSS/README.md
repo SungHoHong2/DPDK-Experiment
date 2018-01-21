@@ -8,6 +8,12 @@ This means a multi process application can use the hardware to distribute and sp
 sungho@c3n24:~$ lspci | grep Mellanox                                         
 81:00.0 Ethernet controller: Mellanox Technologies MT27500 Family [ConnectX-3]
 
+
+- [seastar configuration of dpdk](seastar.md)
+- [the problem why f-stack is not working](problem.md)
+- [how seastar distributes packets](seastar_distribution)
+
+
 ```
 static struct rte_eth_conf default_port_conf = {
     .rxmode = {
@@ -86,8 +92,10 @@ testpmd>
 show port (port_id) rss reta
 
 
+sudo ./test-pmd -c 0xf -n 4 -- -i --portmask=0x03 --nb-cores=3 --rxq=2 --txq=2
+
 
 sudo ./testpmd -c 0xf -n 4 -- -i --portmask=0x03 --nb-cores=3 --rxq=2 --txq=2
-testpmd> show port 1 rss-hash ipv4|ipv4-frag|ipv4-tcp|ipv4-udp|ipv4-sctp|ipv4-other|ipv6|ipv6-frag|ipv6-tcp|ipv6-udp|ipv6-sctp|ipv6-other|l2-payload|ipv6-ex|ipv6-tcp-ex|ipv6-udp-ex [key]
+testpmd> show port 1 rss-hash ipv4
 
 ```

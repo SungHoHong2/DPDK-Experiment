@@ -9,6 +9,9 @@ git clone https://github.com/F-Stack/f-stack.git /data/f-stack
 export FF_PATH=/data/f-stack
 export FF_DPDK=/data/f-stack/dpdk/x86_64-native-linuxapp-gcc
 
+export FF_PATH=/home/sungho/f-stack
+export FF_DPDK=/home/sungho/f-stack/dpdk/x86_64-native-linuxapp-gcc
+
 export RTE_SDK=/data/f-stack/dpdk
 export DESTDIR=/usr/local
 export RTE_TARGET=x86_64-native-linuxapp-gcc
