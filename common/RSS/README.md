@@ -8,7 +8,7 @@ This means a multi process application can use the hardware to distribute and sp
 sungho@c3n24:~$ lspci | grep Mellanox                                         
 81:00.0 Ethernet controller: Mellanox Technologies MT27500 Family [ConnectX-3]
 
-
+- [DPDK multiprocess tutorial](dpdk_multi)
 - [seastar configuration of dpdk](seastar.md)
 - [the problem why f-stack is not working](problem.md)
 - [how seastar distributes packets](seastar_distribution)
