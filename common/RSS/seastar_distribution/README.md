@@ -2,9 +2,13 @@
 sudo ./configure.py --enable-dpdk --compiler g++-5
 sudo ninja
 
-sudo gdb --args ./server --dpdk-pmd --network-stack native --dhcp 0 --host-ipv4-addr 10.218.111.253 --netmask-ipv4-addr 255.255.248.0 --gw-ipv4-addr 10.218.111.1 --collectd 0 --smp 2
+sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --smp 2
 
-break /data1/sungho/seastar/net/dpdk.cc:1590
+
+sudo ./server --dpdk-pmd --network-stack native --dhcp 0 --host-ipv4-addr 10.218.111.253 --netmask-ipv4-addr 255.255.248.0 --gw-ipv4-addr 10.218.111.1 --collectd 0 --smp 2
+
+
+./wrk -t2 -c2 -d1s http://10.107.30.40:10000
 ```
 
 
@@ -24,14 +28,14 @@ if (_num_queues > 1) {
     }
 ```
 
-> _rss_table_bits gets the the data
+> CHARA: _rss_table_bits: 16  _dev_info.max_rx_queues: 65408
 
 ```
 future<> interface::dispatch_packet(packet p) {
-    auto eh = p.get_header<eth_hdr>();
+    auto eh = p.get_header<eth_hdr>(); // get the header
     if (eh) {
-        auto i = _proto_map.find(ntoh(eh->eth_proto));
-        if (i != _proto_map.end()) {
+        auto i = _proto_map.find(ntoh(eh->eth_proto)) ;
+        if (i != _proto_map.end()) { // two
             l3_rx_stream& l3 = i->second;
             auto fw = _dev->forward_dst(engine().cpu_id(), [&p, &l3, this] () {
                 auto hwrss = p.rss_hash();
@@ -54,7 +58,7 @@ future<> interface::dispatch_packet(packet p) {
                 // avoid chaining, since queue lenth is unlimited
                 // drop instead.
                 if (l3.ready.available()) {
-                    l3.ready = l3.packet_stream.produce(std::move(p), from);
+                    l3.ready = l3.packet_stream.produce(std::move(p), from); // packet send
                 }
             }
         }
