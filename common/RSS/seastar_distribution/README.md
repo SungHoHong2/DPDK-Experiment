@@ -12,7 +12,7 @@ sudo ./server --dpdk-pmd --network-stack native --dhcp 0 --host-ipv4-addr 10.218
 ```
 
 
-```
+```c
 if (_num_queues > 1) {
     if (_dev_info.reta_size) {
         // RETA size should be a power of 2
@@ -30,7 +30,7 @@ if (_num_queues > 1) {
 
 > CHARA: _rss_table_bits: 16  _dev_info.max_rx_queues: 65408
 
-```
+```c
 future<> interface::dispatch_packet(packet p) {
     auto eh = p.get_header<eth_hdr>(); // get the header
     if (eh) {
