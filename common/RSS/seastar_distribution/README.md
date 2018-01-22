@@ -71,3 +71,32 @@ future<> interface::dispatch_packet(packet p) {
     return make_ready_future<>();
 }
 ```
+
+```c
+class stream {
+  future<> produce(T... data);
+}
+
+inline
+future<>
+stream<T...>::produce(T... data) {
+    auto ret = futurize<void>::apply(_sub->_next, std::move(data)...);
+    if (ret.available() && !ret.failed()) {
+        // Native network stack depends on stream::produce() returning
+        // a ready future to push packets along without dropping.  As
+        // a temporary workaround, special case a ready, unfailed future
+        // and return it immediately, so that then_wrapped(), below,
+        // doesn't convert a ready future to an unready one.
+        return ret;
+    }
+    return ret.then_wrapped([this] (auto&& f) {
+        try {
+            f.get();
+        } catch (...) {
+            _done.set_exception(std::current_exception());
+            // FIXME: tell the producer to stop producing
+            throw;
+        }
+    });
+}
+```
