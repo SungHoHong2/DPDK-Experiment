@@ -51,7 +51,12 @@ future<> interface::dispatch_packet(packet p) {
             });
             if (fw != engine().cpu_id()) {
                 forward(fw, std::move(p));
-            } else {
+
+```
+> The part that only runs when using Mellanox
+
+```c
+            } else {  // when using mellanox it only goes to this part
                 auto h = ntoh(*eh);
                 auto from = h.src_mac;
                 p.trim_front(sizeof(*eh));
