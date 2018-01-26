@@ -3,7 +3,7 @@ SEASTAR ="/data1/sungho/seastar"
 TARGET ="server"
 
 all:
-	g++-5 -Wl,--whole-archive  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` -Wl, --whole-archive ${TARGET}.cc -o ${TARGET}
+	g++-5 -Wl,--whole-archive, `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` -Wl, --whole-archive, ${TARGET}.cc -o ${TARGET}
 
 
 .PHONY: clean
