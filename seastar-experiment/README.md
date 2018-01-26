@@ -38,6 +38,13 @@ g++-5 `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` getting-sta
 ./a.out -c2 //running with two threads
 ```
 
+
+
+-std=gnu++1y -g -Wall -Werror -Wno-error=deprecated-declarations -fvisibility=hidden -pthread -U_FORTIFY_SOURCE -DHAVE_DPDK -march=native -DRTE_MACHINE_CPUFLAG_SSE -DRTE_MACHINE_CPUFLAG_SSE2 -DRTE_MACHINE_CPUFLAG_SSE3 -DRTE_MACHINE_CPUFLAG_SSSE3 -DRTE_MACHINE_CPUFLAG_SSE4_1 -DRTE_MACHINE_CPUFLAG_SSE4_2 -DRTE_MACHINE_CPUFLAG_AES -DRTE_MACHINE_CPUFLAG_PCLMULQDQ -DRTE_MACHINE_CPUFLAG_AVX -DRTE_MACHINE_CPUFLAG_RDRAND -DRTE_MACHINE_CPUFLAG_FSGSBASE -DRTE_MACHINE_CPUFLAG_F16C -DRTE_MACHINE_CPUFLAG_AVX2 -Wno-error=literal-suffix -Wno-literal-suffix -Wno-invalid-offsetof -DBOOST_TEST_DYN_LINK -Wno-overloaded-virtual -Wno-maybe-uninitialized -Wno-sign-compare -Wno-error=cpp -DFMT_HEADER_ONLY -DHAVE_HWLOC -DHAVE_NUMA -O2 -I/data1/sungho/seastar -I/data1/sungho/seastar/build/dpdk/include -I/data1/sungho/seastar/fmt-I/data1/sungho/seastar/build/release/gen -I /data1/sungho/seastar/build/release/c-ares  -Wl,--whole-archive,-lseastar,--no-whole-archive -std=gnu++1y -g -Wall -Werror -Wno-error=deprecated-declarations -fvisibility=hidden -pthread -I/data1/sungho/seastar -U_FORTIFY_SOURCE -DHAVE_DPDK -I/data1/sungho/seastar/build/dpdk/include -march=native -DRTE_MACHINE_CPUFLAG_SSE -DRTE_MACHINE_CPUFLAG_SSE2 -DRTE_MACHINE_CPUFLAG_SSE3 -DRTE_MACHINE_CPUFLAG_SSSE3 -DRTE_MACHINE_CPUFLAG_SSE4_1 -DRTE_MACHINE_CPUFLAG_SSE4_2 -DRTE_MACHINE_CPUFLAG_AES -DRTE_MACHINE_CPUFLAG_PCLMULQDQ -DRTE_MACHINE_CPUFLAG_AVX -DRTE_MACHINE_CPUFLAG_RDRAND -DRTE_MACHINE_CPUFLAG_FSGSBASE -DRTE_MACHINE_CPUFLAG_F16C -DRTE_MACHINE_CPUFLAG_AVX2 -Wno-error=literal-suffix -Wno-literal-suffix -Wno-invalid-offsetof -I/data1/sungho/seastar/fmt -DBOOST_TEST_DYN_LINK -Wno-overloaded-virtual -Wno-maybe-uninitialized -Wno-sign-compare -Wno-error=cpp -DFMT_HEADER_ONLY -DHAVE_HWLOC -DHAVE_NUMA -Wl,--no-as-needed -Wl,--whole-archive -Wl,--no-whole-archive -L/data1/sungho/seastar/build/release -L/data1/sungho/seastar/build/dpdk/lib -lboost_program_options -lboost_system -lboost_filesystem -lstdc++ -lboost_thread -lcryptopp -lgnutls -lgnutlsxx -llz4 -lprotobuf -lgcc_s -lunwind -lyaml-cpp -lrte_pmd_vmxnet3_uio -lrte_pmd_i40e -lrte_pmd_ixgbe -lrte_pmd_e1000 -lrte_pmd_mlx4 -libverbs -lrte_pmd_ring -lrte_pmd_bnxt -lrte_pmd_cxgbe -lrte_pmd_ena -lrte_pmd_enic -lrte_pmd_fm10k -lrte_pmd_nfp -lrte_pmd_qede -lrte_pmd_sfc_efx -lrte_hash -lrte_kvargs -lrte_mbuf -lrte_ethdev -lrte_eal -lrte_mempool -lrte_mempool_ring -lrte_ring -lrte_cmdline -lrte_cfgfile -lrt -lm -ldl -lhwloc -lnuma -lpciaccess -lxml2 -lz -lcares-seastar
+
+
+
+
 <br>
 
 **running dpdk**
@@ -54,40 +61,3 @@ export RTE_TARGET=x86_64-native-linuxapp-gcc
 **seastar server application**
 - [application running in workstation](seastar-server-lab)
 - [application running in visasu](seastar-server)
-
-
-
-
-```
-comerr-dev cython cython3 dh-exec dh-systemd docutils-common git git-man    
-gperf javahelper jq krb5-multidev libbabeltrace-ctf-dev libbabeltrace-dev   
-libblkid-dev libboost-atomic-dev libboost-atomic1.54-dev                    
-libboost-atomic1.54.0 libboost-chrono-dev libboost-chrono1.54-dev           
-libboost-chrono1.54.0 libboost-context-dev libboost-context1.54-dev         
-libboost-context1.54.0 libboost-coroutine-dev libboost-coroutine1.54-dev    
-libboost-date-time-dev libboost-date-time1.54-dev libboost-date-time1.54.0  
-libboost-dev libboost-exception-dev libboost-exception1.54-dev              
-libboost-filesystem-dev libboost-filesystem1.54-dev                         
-libboost-filesystem1.54.0 libboost-graph-dev libboost-graph-parallel-dev    
-libboost-graph-parallel1.54-dev libboost-graph-parallel1.54.0               
-libboost-graph1.54-dev libboost-graph1.54.0 libboost-iostreams-dev          
-libboost-iostreams1.54-dev libboost-locale-dev libboost-locale1.54-dev      
-libboost-locale1.54.0 libboost-log-dev libboost-log1.54-dev                 
-libboost-log1.54.0 libboost-math-dev libboost-math1.54-dev                  
-libboost-math1.54.0 libboost-mpi-dev libboost-mpi-python-dev                
-libboost-mpi-python1.54-dev libboost-mpi-python1.54.0 libboost-mpi1.54-dev  
-libboost-mpi1.54.0 libboost-program-options-dev                             
-libboost-program-options1.54-dev libboost-program-options1.54.0             
-libboost-python-dev libboost-python1.54-dev libboost-python1.54.0           
-libboost-random-dev libboost-random1.54-dev libboost-random1.54.0           
-libboost-regex-dev libboost-regex1.54-dev libboost-regex1.54.0              
-libboost-serialization-dev libboost-serialization1.54-dev                   
-libboost-serialization1.54.0 libboost-signals-dev libboost-signals1.54-dev  
-libboost-signals1.54.0 libboost-system-dev libboost-system1.54-dev          
-libboost-system1.54.0 libboost-test-dev libboost-test1.54-dev               
-libboost-test1.54.0 libboost-thread-dev libboost-thread1.54-dev             
-libboost-thread1.54.0 libboost-timer-dev libboost-timer1.54-dev             
-libboost-timer1.54.0 libboost-tools-dev libboost-wave-dev                   
-libboost-wave1.54-dev libboost-wave1.54.0 libboost1.54-dev                  
-libboost1.54-tools-dev libc6-dbg libcephfs1 libcr0 libfcgi0ldbl libfuse-dev
-```
