@@ -1,6 +1,6 @@
 # SEASTAR ="/home/sungho/seastar"
-# SEASTAR ="/data1/sungho/seastar"
-SEASTAR ="/home/users/sungho/seastar"
+SEASTAR ="/data1/sungho/seastar"
+# SEASTAR ="/home/users/sungho/seastar"
 TARGET ="dpdk_server"
 # TARGET = "tcp_server"
 
