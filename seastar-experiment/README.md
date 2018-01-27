@@ -32,7 +32,14 @@ export SEASTAR=/home/sungho/seastar
 
 # visasu
 export SEASTAR=/data1/sungho/seastar
+
+# fiu
+export SEASTAR=/home/users/sungho/seastar
+
 g++-5 `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` server.cc -o server
+
+g++ `pkg-config --cflags --libs $SEASTAR/build/release/seastar.pc` server.cc -o server
+
 
 ./a.out --dpdk-pmd 1
 ./a.out -c2 //running with two threads
