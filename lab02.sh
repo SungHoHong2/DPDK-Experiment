@@ -17,8 +17,8 @@ ip link set enp4s0f1 mtu 9000
 sudo ifconfig enp4s0f0 down
 sudo ifconfig enp4s0f1 down
 wait
-sudo ./tools/dpdk-devbind.py --bind=igb_uio enp4s0f0
-sudo ./tools/dpdk-devbind.py --bind=igb_uio enp4s0f1
+sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp4s0f0
+sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp4s0f1
 
 
 # ceph-dpdk

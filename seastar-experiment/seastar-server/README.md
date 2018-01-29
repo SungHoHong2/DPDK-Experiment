@@ -8,6 +8,7 @@ sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --h
 ./tcp_server --smp 2
 ```
 
+sudo setcap 'cap_sys_nice=eip' tcp_server
 
 ```
 # testing in visasu in dpdk
@@ -34,13 +35,13 @@ wget -qO- http://10.107.30.33:10000 | sed -e 's/<[^>]*>//g'
 
 ```
 # testing in FIU with rdma
-wget -qO- http://172.24.30.31:10000 | sed -e 's/<[^>]*>//g'
+wget -qO- http://172.24.30.30:10000 | sed -e 's/<[^>]*>//g'
 
 # benchmark
-./wrk -t2 -c2 -d10s http://172.24.30.31:10000
-./wrk -t4 -c4 -d10s http://172.24.30.31:10000
-./wrk -t8 -c8 -d10s http://172.24.30.31:10000
-./wrk -t16 -c16 -d10s http://172.24.30.31:10000
-./wrk -t32 -c32 -d10s http://172.24.30.31:10000
-./wrk -t64 -c64 -d10s http://172.24.30.31:10000
+./wrk -t2 -c2 -d10s http://172.24.30.30:10000
+./wrk -t4 -c4 -d10s http://172.24.30.30:10000
+./wrk -t8 -c8 -d10s http://172.24.30.30:10000
+./wrk -t16 -c16 -d10s http://172.24.30.30:10000
+./wrk -t32 -c32 -d10s http://172.24.30.30:10000
+./wrk -t64 -c64 -d10s http://172.24.30.30:10000
 ```
