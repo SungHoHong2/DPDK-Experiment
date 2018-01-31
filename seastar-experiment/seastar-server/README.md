@@ -8,8 +8,6 @@ sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --h
 ./tcp_server --smp 2
 ```
 
-sudo setcap 'cap_sys_nice=eip' tcp_server
-
 ```
 # testing in visasu in dpdk
 wget -qO- http://10.107.30.40:10000 | sed -e 's/<[^>]*>//g'

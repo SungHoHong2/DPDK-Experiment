@@ -6,9 +6,6 @@
 git clone https://github.com/F-Stack/f-stack.git /data/f-stack
 
 # Compile F-Stack
-export FF_PATH=/data/f-stack
-export FF_DPDK=/data/f-stack/dpdk/x86_64-native-linuxapp-gcc
-
 export FF_PATH=/home/sungho/f-stack
 export FF_DPDK=/home/sungho/f-stack/dpdk/x86_64-native-linuxapp-gcc
 
@@ -37,7 +34,7 @@ sudo apt-get install gawk
 ./example. ./helloworld  --conf config.ini --proc-type=primary --proc-id=0
 
 # the ip address needs to be within the broadcast []
-wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
+wget -qO- http://10.218.111.253 | sed -e 's/<[^>]*>//g'
 wget -qO- http://10.107.30.33:8888 | sed -e 's/<[^>]*>//g'
 wget -qO- http://10.107.30.102 | sed -e 's/<[^>]*>//g'
 ```
