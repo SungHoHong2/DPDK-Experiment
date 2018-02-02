@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
 #define NUM_THREADS     5
@@ -18,10 +19,12 @@ int main (int argc, char *argv[])
    for(t=0; t<NUM_THREADS; t++){
       printf("In main: creating thread %ld\n", t);
       rc = pthread_create(&threads[t], NULL, PrintHello, (void *)t);
-      if (rc){
+    if (rc){
          printf("ERROR; return code from pthread_create() is %d\n", rc);
          exit(-1);
       }
    }
    pthread_exit(NULL);
+
+   return 0;
 }
