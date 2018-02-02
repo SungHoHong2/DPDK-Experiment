@@ -2,30 +2,41 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-int g = 0;
+#define NUM_THREADS 2
 
-void *myThreadFun(void *vargp)
-{
-    // Store the value argument passed to this thread
-    int *myid = (int *)vargp;
+/* create thread argument struct for thr_func() */
+typedef struct _thread_data_t {
+  int tid;
+  double stuff;
+} thread_data_t;
 
-    // Let us create a static variable to observe its changes
-    static int s = 0;
-    // Change static and global variables
-    ++s; ++g;
-    // Print the argument, static and global variables
-    printf("Thread ID: %d, Static: %d, Global: %d\n", *myid, ++s, ++g);
+/* thread function */
+void *thr_func(void *arg) {
+  thread_data_t *data = (thread_data_t *)arg;
+
+  printf("hello from thr_func, thread id: %d\n", data->tid);
+
+  pthread_exit(NULL);
 }
 
+int main(int argc, char **argv) {
+  pthread_t thr[NUM_THREADS];
+  int i, rc;
+  /* create a thread_data_t argument array */
+  thread_data_t thr_data[NUM_THREADS];
 
-int main()
-{
-    int i;
-    pthread_t tid;
-    // Let us create three threads
-    for (i = 0; i < 3; i++)
-        pthread_create(&tid, NULL, myThreadFun, (void *)i);
+  /* create threads */
+  for (i = 0; i < NUM_THREADS; ++i) {
+    thr_data[i].tid = i;
+    if ((rc = pthread_create(&thr[i], NULL, thr_func, &thr_data[i]))) {
+      fprintf(stderr, "error: pthread_create, rc: %d\n", rc);
+      return EXIT_FAILURE;
+    }
+  }
+  /* block until all threads complete */
+  for (i = 0; i < NUM_THREADS; ++i) {
+    pthread_join(thr[i], NULL);
+  }
 
-    pthread_exit(NULL);
-    return 0;
+  return EXIT_SUCCESS;
 }
