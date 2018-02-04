@@ -7,6 +7,8 @@ make
 
 // change the core numbers in fstack (binary to hexadecimal)
 sudo ./start.sh -b ./fstack-server -c config_server.ini
+sudo ./start.sh -b ./fstack-polling -c config_server.ini
+
 sudo ./start.sh -b ./tcp-server -c config_server.ini
 ```
 
