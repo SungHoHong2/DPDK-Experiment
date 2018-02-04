@@ -13,9 +13,15 @@
 #define MAX_EVENTS 512
 
 /* kevent set */
-struct kevent kevSet;
+// struct kevent kevSet;
 /* events */
-struct kevent events[MAX_EVENTS];
+// struct kevent events[MAX_EVENTS];
+
+
+
+struct epoll_event ev;
+struct epoll_event events[MAX_EVENTS];
+
 /* kq */
 int kq;
 int sockfd;
