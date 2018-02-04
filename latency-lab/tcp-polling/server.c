@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
   // add argument smp with number
   // allocate the pthread by pointers
 
-  int total_thread = atoi(argv[0]);
+  int total_thread = atoi(argv[1]);
 
    printf("total num of thread: %d\n", total_thread);
 
