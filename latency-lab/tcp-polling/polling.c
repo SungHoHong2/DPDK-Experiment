@@ -290,7 +290,7 @@ int main (int argc, char *argv[])
           /* Data was received                                 */
           /*****************************************************/
           len = rc;
-          printf("  %d bytes received\n", len);
+          // printf("  %d bytes received\n", len);
 
           /*****************************************************/
           /* Echo the data back to the client                  */
@@ -298,7 +298,6 @@ int main (int argc, char *argv[])
           // rc = send(fds[i].fd, buffer, len, 0);
 
           rc = write( fds[i].fd, html, sizeof(html));
-
 
 
           if (rc < 0)

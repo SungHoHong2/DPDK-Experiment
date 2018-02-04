@@ -15,7 +15,7 @@ sudo ./start.sh -b ./tcp-server -c config_server.ini
 ```
 # prove
 wget -qO- http://10.218.111.254 | sed -e 's/<[^>]*>//g'
-wget -qO- http://10.218.111.252 | sed -e 's/<[^>]*>//g'
+wget -qO- http://10.218.111.252:8888 | sed -e 's/<[^>]*>//g'
 
 
 
