@@ -20,9 +20,9 @@ int main (int argc, char *argv[])
   printf("total num of thread: %d\n", total_thread);
 
   // allocate the pthread by pointers
-  pthread_t **threads;
+  pthread_t *threads;
 
-  threads = malloc(total_thread*sizeof(*threads));
+  threads = malloc(total_thread*sizeof(pthread_t));
 
    int rc;
    long t;
