@@ -15,9 +15,9 @@
 #define MAX_EVENTS 512
 
 /* kevent set */
-struct kevent kevSet;
+struct event kevSet;
 /* events */
-struct kevent events[MAX_EVENTS];
+struct event events[MAX_EVENTS];
 
 
 
