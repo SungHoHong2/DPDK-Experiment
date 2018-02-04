@@ -9,7 +9,8 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <assert.h>
-#include <sys/kevent.h>
+#include <sys/epoll.h>
+#include <sys/event.h>
 
 
 #define MAX_EVENTS 512
