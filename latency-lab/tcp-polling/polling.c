@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
   struct sockaddr_in6   addr;
   int    timeout;
   struct pollfd fds[200];
-  int    nfds = 2, current_size = 0, i, j;
+  int    nfds =1, current_size = 0, i, j;
 
   /*************************************************************/
   /* Create an AF_INET6 stream socket to receive incoming      */
