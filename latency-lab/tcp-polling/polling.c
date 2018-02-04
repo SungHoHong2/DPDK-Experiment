@@ -9,21 +9,17 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <assert.h>
-#include <sys/epoll.h>
-#include <sys/event.h>
+#include <sys/poll.h>
 
 
 #define MAX_EVENTS 512
 
 /* kevent set */
-// struct kevent kevSet;
+struct kevent kevSet;
 /* events */
-// struct kevent events[MAX_EVENTS];
+struct kevent events[MAX_EVENTS];
 
 
-
-struct epoll_event ev;
-struct epoll_event events[MAX_EVENTS];
 
 /* kq */
 int kq;
