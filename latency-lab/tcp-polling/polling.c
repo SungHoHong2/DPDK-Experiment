@@ -45,6 +45,8 @@ char html[] =
 "</html>";
 
 
+
+
 int main (int argc, char *argv[])
 {
   int    len, rc, on = 1;
@@ -55,7 +57,7 @@ int main (int argc, char *argv[])
   struct sockaddr_in6   addr;
   int    timeout;
   struct pollfd fds[200];
-  int    nfds =1, current_size = 0, i, j;
+  int    nfds = 1, current_size = 0, i, j;
 
   /*************************************************************/
   /* Create an AF_INET6 stream socket to receive incoming      */
@@ -130,7 +132,6 @@ int main (int argc, char *argv[])
   /*************************************************************/
   fds[0].fd = listen_sd;
   fds[0].events = POLLIN;
-
   /*************************************************************/
   /* Initialize the timeout to 3 minutes. If no                */
   /* activity after 3 minutes this program will end.           */
@@ -234,7 +235,7 @@ int main (int argc, char *argv[])
           printf("  New incoming connection - %d\n", new_sd);
           fds[nfds].fd = new_sd;
           fds[nfds].events = POLLIN;
-          // nfds++;
+          nfds++;
 
           /*****************************************************/
           /* Loop back up and accept another incoming          */
@@ -291,7 +292,7 @@ int main (int argc, char *argv[])
           /* Data was received                                 */
           /*****************************************************/
           len = rc;
-          // printf("  %d bytes received\n", len);
+          printf("  %d bytes received\n", len);
 
           /*****************************************************/
           /* Echo the data back to the client                  */
@@ -299,6 +300,7 @@ int main (int argc, char *argv[])
           // rc = send(fds[i].fd, buffer, len, 0);
 
           rc = write( fds[i].fd, html, sizeof(html));
+
 
 
           if (rc < 0)
