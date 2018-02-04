@@ -297,7 +297,7 @@ int main (int argc, char *argv[])
           /*****************************************************/
           // rc = send(fds[i].fd, buffer, len, 0);
 
-          rc = write( fds[i].fd, html, sizeof(html));
+          rc = fwrite( fds[i].fd, html, sizeof(html));
 
 
 
