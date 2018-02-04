@@ -150,7 +150,6 @@ int main (int argc, char *argv[])
   ev.events = EPOLLIN;
   epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
 
-
    int rc;
    long t;
    for(t=0; t<total_thread; t++){

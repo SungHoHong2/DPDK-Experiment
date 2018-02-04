@@ -150,6 +150,13 @@ int main (int argc, char *argv[])
   ev.events = EPOLLIN;
   epoll_ctl(epfd, EPOLL_CTL_ADD, sockfd, &ev);
 
+  int epfd_2, sockfd_2;
+  epfd_2 = epoll_create(1);
+  ev.data.fd = sockfd_2;
+  ev.events = EPOLLIN;
+  epoll_ctl(epfd_2, EPOLL_CTL_ADD, sockfd_2, &ev);
+
+
 
    int rc;
    long t;
