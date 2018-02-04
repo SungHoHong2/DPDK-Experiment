@@ -22,7 +22,7 @@ int main (int argc, char *argv[])
   // allocate the pthread by pointers
   pthread_t *threads;
 
-  threads = (pthread_t*)malloc(sizeof(pthread_t)*total_thread);
+  threads = malloc(sizeof(pthread_t)*total_thread);
 
    int rc;
    long t;
