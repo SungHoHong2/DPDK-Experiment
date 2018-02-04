@@ -18,6 +18,7 @@ TARGET="fstack-server"
 TARGET_2="tcp-client"
 TARGET_3="tcp-server"
 TARGET_4="fstack-client"
+TARGET_5="fstack-polling"
 
 
 all: # for visasu
@@ -25,6 +26,8 @@ all: # for visasu
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_2} tcp-client.c ${LIBS}
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_3} tcp-server.c
 	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_4} fstack-client.c ${LIBS}
+	cc -O -gdwarf-2  -I /data/f-stack/lib -g -o ${TARGET_5} fstack-polling.c ${LIBS}
+
 
 .PHONY: clean
 clean:

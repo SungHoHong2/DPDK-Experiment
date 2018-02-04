@@ -20,7 +20,6 @@ struct event kevSet;
 struct event events[MAX_EVENTS];
 
 
-
 /* kq */
 int kq;
 int sockfd;

@@ -1,8 +1,8 @@
 ### RUNNING F-STACK in WORKSTATION LAB
 
 ```
-export FF_PATH=/data/visa-fstack/
-export FF_DPDK=/data/visa-fstack/dpdk/x86_64-native-linuxapp-gcc
+export FF_PATH=/data/f-stack/
+export FF_DPDK=/data/f-stack/dpdk/x86_64-native-linuxapp-gcc
 make
 
 // change the core numbers in fstack (binary to hexadecimal)
