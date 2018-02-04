@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
   struct sockaddr_in6   addr;
   int    timeout;
   struct pollfd fds[200];
-  int    nfds = 2, current_size = 0, i, j;
+  int    nfds = 4, current_size = 0, i, j;
 
   /*************************************************************/
   /* Create an AF_INET6 stream socket to receive incoming      */
@@ -233,7 +233,7 @@ int main (int argc, char *argv[])
           printf("  New incoming connection - %d\n", new_sd);
           fds[nfds].fd = new_sd;
           fds[nfds].events = POLLIN;
-          // nfds++;
+          nfds++;
 
           /*****************************************************/
           /* Loop back up and accept another incoming          */
