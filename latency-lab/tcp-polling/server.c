@@ -20,13 +20,13 @@ int main (int argc, char *argv[])
   printf("total num of thread: %d\n", total_thread);
 
   // allocate the pthread by pointers
-  pthread_t **threads;
+  pthread_t *threads;
 
-  threads = malloc(total_thread*sizeof(*threads));
+  threads = (pthread_t*)malloc(sizeof(pthread_t)*total_thread);
 
    int rc;
    long t;
-   for(t=0; t<NUM_THREADS; t++){
+   for(t=0; t<total_thread; t++){
       printf("In main: creating thread %ld\n", t);
       rc = pthread_create(threads[t], NULL, PrintHello, (void *)t);
     if (rc){
