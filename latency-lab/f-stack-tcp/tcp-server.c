@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 #define MAX_EVENTS 512
-#define PKT_SIZE 3000
+#define PKT_SIZE 256
 
 #define TYPE_SERVER 1 // pingpong 0 original 1
 
