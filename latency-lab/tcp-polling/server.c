@@ -16,13 +16,14 @@ void *PrintHello(void *threadid)
 int main (int argc, char *argv[])
 {
   // add argument smp with number
-  // allocate the pthread by pointers
-
   int total_thread = atoi(argv[1]);
+  printf("total num of thread: %d\n", total_thread);
 
-   printf("total num of thread: %d\n", total_thread);
+  // allocate the pthread by pointers
+  pthread_t **threads;
 
-   pthread_t threads[NUM_THREADS];
+  threads = malloc(total_thread*sizeof(*threads));
+
    int rc;
    long t;
    for(t=0; t<NUM_THREADS; t++){
