@@ -9,10 +9,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eea83f99-615e-452b-b967-19b94ffc3dc4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latency-lab/f-stack-tcp/tcp-server.c" afterPath="$PROJECT_DIR$/latency-lab/f-stack-tcp/tcp-server.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/latency-lab/tcp-polling/server.c" afterPath="$PROJECT_DIR$/latency-lab/tcp-polling/server.c" />
-    </list>
+    <list default="true" id="eea83f99-615e-452b-b967-19b94ffc3dc4" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +23,8 @@
       <file leaf-file-name="tcp-server.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/latency-lab/f-stack-tcp/tcp-server.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="125" column="37" lean-forward="true" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
+            <state relative-caret-position="357">
+              <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -139,12 +136,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1517769939608</updated>
-      <workItem from="1517769941764" duration="1010000" />
+      <workItem from="1517769941764" duration="1062000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1010000" />
+    <option name="totallyTimeSpent" value="1062000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="751" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -199,8 +196,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/latency-lab/f-stack-tcp/tcp-server.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="125" column="37" lean-forward="true" selection-start-line="125" selection-start-column="37" selection-end-line="125" selection-end-column="37" />
+        <state relative-caret-position="357">
+          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="11" />
           <folding />
         </state>
       </provider>

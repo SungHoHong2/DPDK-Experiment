@@ -19,6 +19,9 @@
 struct epoll_event ev;
 struct epoll_event events[MAX_EVENTS];
 
+int epfd;
+int sockfd;
+
 char html[] =
 "HTTP/1.1 200 OK\r\n"
 "Server: F-Stack\r\n"
