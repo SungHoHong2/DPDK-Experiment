@@ -135,12 +135,8 @@ void *connection_handler(void *socket_desc)
 
     if(read_size == 0)
     {
-        puts("Client disconnected");
+        // puts("Client disconnected");
         fflush(stdout);
-    }
-    else if(read_size == -1)
-    {
-        perror("recv failed");
     }
 
     //Free the socket pointer
