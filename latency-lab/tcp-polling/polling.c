@@ -130,6 +130,9 @@ int main (int argc, char *argv[])
   /*************************************************************/
   fds[0].fd = listen_sd;
   fds[0].events = POLLIN;
+
+  fds[1].fd = listen_sd;
+  fds[1].events = POLLIN;
   /*************************************************************/
   /* Initialize the timeout to 3 minutes. If no                */
   /* activity after 3 minutes this program will end.           */
