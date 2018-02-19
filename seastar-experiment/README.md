@@ -19,6 +19,10 @@ wget -O boost_1_66_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1
 tar xzvf boost_1_66_0.tar.gz
 cd boost_1_66_0.tar.gz/
 ./bootstrap.sh --prefix=/usr/
+
+# if the compiled files still point to the old libraries
+change the bootstrap.sh -> LIBDIR=/usr/lib/x86_64-linux-gnu
+
 ./b2
 sudo ./b2 install
 cat /usr/include/boost/version.hpp | grep "BOOST_LIB_VERSION"

@@ -157,7 +157,6 @@ int main (int argc, char *argv[])
   epoll_ctl(epfd_2, EPOLL_CTL_ADD, sockfd_2, &ev);
 
 
-
    int rc;
    long t;
    for(t=0; t<total_thread; t++){
@@ -168,6 +167,9 @@ int main (int argc, char *argv[])
          exit(-1);
       }
    }
+
+
+
    pthread_exit(NULL);
 
    return 0;
