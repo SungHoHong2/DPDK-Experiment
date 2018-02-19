@@ -21,6 +21,13 @@
 - [Official DPDK Performance results](common/performance/README.md)
 
 
+### Related Papers
+- [Removing Roadblocks from SDN: OpenFLow Software Switch Performance on Intel DPDK](papers/06680560.pdf)
+- [Supporting Fine-Grained Network Functions through Intel DPDK](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6984043)
+
+
+
+
 <br>
 
 ### Performance Test
