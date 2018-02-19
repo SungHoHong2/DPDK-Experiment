@@ -3,7 +3,7 @@
 ### Prerequisites
 - [Network Dictionary](https://docs.google.com/document/d/1ovVb2subuS-UQl161BGVeXlWYFnu6jngM4QcB81HNpw/edit?usp=sharing)
 - [DPDK Dictionary](https://docs.google.com/document/d/1sOiMM1qw4DNYUfDTZYZ2L_ZUbv6R7lVD48AmClV51Mo/edit?usp=sharing)
-
+- [Related Papers](papers)
 <br>
 
 ### Common Features
@@ -19,14 +19,6 @@
 - [Experiment on `RSS`](common/RSS)
   - finding out the reason why f-stack has trouble with distributing the packets
 - [Official DPDK Performance results](common/performance/README.md)
-
-
-### Related Papers
-- [Removing Roadblocks from SDN: OpenFLow Software Switch Performance on Intel DPDK](papers/06680560.pdf)
-- [Supporting Fine-Grained Network Functions through Intel DPDK](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6984043)
-
-
-
 
 <br>
 
