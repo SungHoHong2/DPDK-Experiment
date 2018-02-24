@@ -1,37 +1,48 @@
+### information focused on how the DPDK results are evaluated
+- [Comparison of Frameworks for High-Performance Packet IO](dpdk_focused/1.md)
+  - the paper is really good for evaluating DPDK, we should use this
 
+- [Comparison of High-Performance Packet Processing Frameworks on NUMA](dpdk_focused/2.md)
+  - this is also a good but different way of comparing DPDK
+
+
+<br>
 
 ### Related Papers
-- [Removing Roadblocks from SDN: OpenFLow Software Switch Performance on Intel DPDK](1.md)
-- [Supporting Fine-Grained Network Functions through Intel DPDK](2.md)
-- [Enhancing VNF performance by exploiting SR-IOV and DPDK packet processing acceleration](3.md)
-- [DPDK-based Implementation of Application-tailored Networks on End User Nodes](4.md)
-- [High speed packet forwarding compiled from protocol independent data plane specifications](5.md)
-- [Study on the Implementation of a Virtual Switch using Intel DPDK](6.md)
-- [User-Specific Network Service Functions in an SDN-enabled Network Node](7.md)
-- [DPDK-based Improvement of Packet Forwarding](8.md)
-- [DPDK Open vSwitch performance validation with mirroring feature](9.md)
-- [USIW: Design and Implementation of Userspace Software iWARP using DPDK](10.md)
+The papers I have searched was mostly unrelated to the performance comparison between DPDK and RDMA <br>
+The papers focused on how to improve NFV by using DPDK <br>
+Info about how they improved the DPDK was included, but still it was consdiered as one of the factors to increase the overall performance
 
-
-- [DEMU: A DPDK-based network latency emulator](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7972145)
-- [A new model for DPDK-based virtual switches](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8004211)
-- [NFPA: Network Function Performance Analyzer](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7387395)
-- [The Evolution of OpenVSwitch](https://events.static.linuxfound.org/sites/events/files/slides/Evolution%20of%20OVS.pdf)
-- [High speed packet forwarding compiled from protocol independent data plane specifications](http://delivery.acm.org/10.1145/2960000/2959080/p629-laki.pdf?ip=209.147.139.226&id=2959080&acc=PUBLIC&key=B63ACEF81C6334F5%2EBD7B0059B564CDBA%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1519067503_ea6126d839483a4b6587cd36cc05b52b)
-- [Toward a software-based network: integrating software defined networking and network function virtualization](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7113223)
-- [Integration of LwIP Stack over Intel(R) DPDK for High Throughput Packet Delivery to Applications](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7172761)
-- [High-performance vSwitch of the user, by the user, for the user](http://dpdksummit.com/Archive/pdf/2014USA/DPDK-SFSummit2014-HighPerformancevSwitch.pdf)
-- [Network stack challenges at increasing speeds](https://events.static.linuxfound.org/sites/events/files/slides/net_stack_challenges_100G_1.pdf)
-- [A Host-Based Performance Comparison of 40G NFV Environments Focusing on Packet Processing Architectures and Virtual Switches](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7956046)
-- [Building Fast but Flexible Software Routers](http://delivery.acm.org/10.1145/3110000/3101086/p101-Gallenmuller.pdf?ip=209.147.139.226&id=3101086&acc=ACTIVE%20SERVICE&key=B63ACEF81C6334F5%2EBD7B0059B564CDBA%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1519068559_882ec0dae4fc5a2bc2b66954b3657916)- [Ruru: High-speed, Flow-level Latency Measurement and Visualization of Live Internet Traffic](https://dl.acm.org/ft_gateway.cfm?id=3131981&ftid=1900250&dwn=1&CFID=8889632&CFTOKEN=9f8e0366f0783128-DA165448-BFA6-D89C-A8A5B884E9342D6D)
-- [IDOpenFlow: An OpenFlow switch to support identifier-locator split communication](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7603553)
-- [MACSAD: Multi-Architecture Compiler System for Abstract Dataplanes (aka Partnering P4 with ODP)](http://delivery.acm.org/10.1145/2960000/2959077/p623-patra.pdf?ip=209.147.139.226&id=2959077&acc=PUBLIC&key=B63ACEF81C6334F5%2EBD7B0059B564CDBA%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&__acm__=1519068858_8e437bf29b075a59b6a9c6e2e361f252)
-- [DPDK and MKL; Enabling technologies for near deterministic cloud-based signal processing](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7182086)
-- [PacketUsher: a DPDK-Based Packet I/O Engine for Commodity PC](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7636896)
-- [Study on DDoS attacks based on DPDK in cloud computing](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7977325)
-- [An Experimental review on Intel DPDK L2 Forwarding](http://www.ripublication.com/ijaer17/ijaerv12n18_96.pdf)
-- [Packet processing on FPGA SoC with DPDK](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7577395)
-- [DPDK for COMBO Network Cards](http://excel.fit.vutbr.cz/submissions/2016/008/8.pdf)    
-- [Agile and fine programmable optical interconnection provisioning in data center network](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8024763)
-- [Big Data Technologies for Ultra-High-Speed Data Transfer and Processing](https://www.intel.co.id/content/dam/www/public/us/en/documents/white-papers/big-data-xeon-processor-e5-ultra-high-speed-aspera-whitepaper.pdf)
-- [OpenFunction: An extensible data plane abstraction protocol for platform-independent software-defined middleboxes](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7784463)
+- [Removing Roadblocks from SDN: OpenFLow Software Switch Performance on Intel DPDK](related_papers/1.md)
+- [Supporting Fine-Grained Network Functions through Intel DPDK](related_papers/2.md)
+- [Enhancing VNF performance by exploiting SR-IOV and DPDK packet processing acceleration](related_papers/3.md)
+- [DPDK-based Implementation of Application-tailored Networks on End User Nodes](related_papers/4.md)
+- [High speed packet forwarding compiled from protocol independent data plane specifications](related_papers/5.md)
+- [Study on the Implementation of a Virtual Switch using Intel DPDK](related_papers/6.md)
+- [User-Specific Network Service Functions in an SDN-enabled Network Node](related_papers/7.md)
+- [DPDK-based Improvement of Packet Forwarding](related_papers/8.md)
+- [DPDK Open vSwitch performance validation with mirroring feature](related_papers/9.md)
+- [USIW: Design and Implementation of Userspace Software iWARP using DPDK](related_papers/10.md)
+- [DEMU: A DPDK-based network latency emulator](related_papers/11.md)
+- [A new model for DPDK-based virtual switches](related_papers/12.md)
+- [NFPA: Network Function Performance Analyzer](related_papers/13.md)
+- The Evolution of OpenVSwitch
+- [High speed packet forwarding compiled from protocol independent data plane specifications](related_papers/14.md)
+- [Toward a software-based network: integrating software defined networking and network function virtualization](related_papers/16.md)
+- [Integration of LwIP Stack over Intel(R) DPDK for High Throughput Packet Delivery to Applications](related_papers/17.md)
+- High-performance vSwitch of the user, by the user, for the user
+- [Network stack challenges at increasing speeds](related_papers/19.md)
+- A Host-Based Performance Comparison of 40G NFV Environments Focusing on Packet Processing Architectures and Virtual Switches
+- Building Fast but Flexible Software Routers
+- Ruru: High-speed, Flow-level Latency Measurement and Visualization of Live Internet Traffic
+- IDOpenFlow: An OpenFlow switch to support identifier-locator split communication
+- MACSAD: Multi-Architecture Compiler System for Abstract Dataplanes (aka Partnering P4 with ODP)
+- [DPDK and MKL; Enabling technologies for near deterministic cloud-based signal processing](related_papers/20.md)
+- [PacketUsher: a DPDK-Based Packet I/O Engine for Commodity PC](related_papers/21.md)
+- Study on DDoS attacks based on DPDK in cloud computing
+- [An Experimental review on Intel DPDK L2 Forwarding](related_papers/22.md)
+- [Packet processing on FPGA SoC with DPDK](related_papers/23.md)
+- DPDK for COMBO Network Cards    
+- [Agile and fine programmable optical interconnection provisioning in data center network](related_papers/25.md)
+- [Big Data Technologies for Ultra-High-Speed Data Transfer and Processing](related_papers/26.md)
+- [OpenFunction: An extensible data plane abstraction protocol for platform-independent software-defined middleboxes](related_papers/27.md)
