@@ -60,7 +60,7 @@ public:
 
         future<> ping(int times) {
             // memset(packet, '*', BUFFER_SIZE * sizeof(char));
-            return _write_buf.write("ping").then([this] {
+            return _write_buf.write("pong").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
