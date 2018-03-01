@@ -70,11 +70,11 @@ public:
                     }
                     auto str = std::string(buf.get(), buf.size());
                     if (str != packetz) {
-                        std::cout << str << std::endl;
+                        std::cout << str << strlen(str) << std::endl;
                         return make_ready_future();
                     }
                     if (times > 0) {  // this depends the number times running // chara
-                        std::cout << str << std::endl;
+                        std::cout << str << strlen(str) << std::endl;
                         return ping(times - 1);
                     } else {
                         return make_ready_future();
