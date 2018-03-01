@@ -141,10 +141,12 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						print_stats();
-      						/* reset the timer */
-									if(latency_diff>=latency_timelimit) force_quit=1;
-
+      						// print_stats();
+      						// /* reset the timer */
+									if(latency_diff>=TIMER){
+										 	print_stats();
+											force_quit=1;
+									}
 									timer_tsc = 0;
       					}
       				}
