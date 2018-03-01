@@ -14,6 +14,9 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static int rx_msg_size = 4 * 1024;
 static std::string str_txbuf(tx_msg_size, 'X');
+const size_t BUFFER_SIZE = 10;
+
+
 
 class tcp_server {
     std::vector<server_socket> _tcp_listeners;
@@ -70,8 +73,7 @@ public:
                 return make_ready_future();
             }
             // Expect 4 bytes cmd from client
-            size_t n = 4;
-            return _read_buf.read_exactly(n).then([this] (temporary_buffer<char> buf) {
+            return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
                 if (buf.size() == 0) {
                     return make_ready_future();
                 }
