@@ -117,13 +117,7 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						print_stats();
-									// if(!first_start){
-									// 		first_start = 1;
-									// } else {
-									// 		force_quit = 1;
-									// }
-      						/* reset the timer */
+      						// print_stats();
 									timer_tsc = 0;
       					}
       				}
@@ -142,6 +136,11 @@ static void l2fwd_main_loop(void){
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
+
+								char *rtn;
+								rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
+								printf("received: %s\n", rtn);
+
 								// port_statistics[portid].rx += rte_pktmbuf_pkt_len(m);
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 								l2fwd_mac_updating(m, portid);
