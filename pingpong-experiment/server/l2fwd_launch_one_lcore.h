@@ -118,7 +118,7 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						// print_stats();
+      						print_stats();
 									timer_tsc = 0;
       					}
       				}
@@ -140,7 +140,7 @@ static void l2fwd_main_loop(void){
 
 								char *rtn;
 								rtn = rte_pktmbuf_mtod_offset(m, char *, 80);
-								printf("received: %s\n", rtn);
+								// printf("received: %s\n", rtn);
 
 								// port_statistics[portid].rx += rte_pktmbuf_pkt_len(m);
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
