@@ -1,6 +1,6 @@
 #include <time.h>
 const int LATENCY = 0, LIMIT = 100000;
-const int THROUGHPUT = 1, TIMER = 1;
+const int THROUGHPUT = 1, TIMER = 10;
 static time_t start, end; //adding timer
 
 /* Print out statistics on packets dropped */
