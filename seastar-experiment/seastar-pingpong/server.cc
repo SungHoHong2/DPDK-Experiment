@@ -79,7 +79,7 @@ public:
                 // pingpong test
                 if (cmd == str_ping) {
                     // this is where you get the string ping!
-                    std::cout << str_ping << std::endl;
+                    // std::cout << str_ping << std::endl;
                     return _write_buf.write(str_pong).then([this] {
                         return _write_buf.flush();
                     }).then([this] {

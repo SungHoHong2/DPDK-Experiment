@@ -78,7 +78,7 @@ public:
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
-                    if (times > 0) {
+                    if (times > 0) {  // this depends the number times running // chara
                         return ping(times - 1);
                     } else {
                         return make_ready_future();
