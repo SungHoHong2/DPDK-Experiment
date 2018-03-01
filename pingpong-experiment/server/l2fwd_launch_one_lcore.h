@@ -140,7 +140,7 @@ static void l2fwd_main_loop(void){
 
 								char *rtn;
 								rtn = rte_pktmbuf_mtod_offset(m, char *, 80);
-								// printf("received: %s\n", rtn);
+								printf("received: %s\n", rtn);
 
 								// port_statistics[portid].rx += rte_pktmbuf_pkt_len(m);
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
