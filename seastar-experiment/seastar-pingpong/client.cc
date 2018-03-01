@@ -60,7 +60,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            return _write_buf.write("pong").then([this] {
+            return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
@@ -69,7 +69,7 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    if (str != "pong") {
+                    if (str != packetz) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
