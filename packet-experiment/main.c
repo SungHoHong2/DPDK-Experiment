@@ -118,7 +118,7 @@ int main(int argc, char **argv){
 
 
 	// manipulating packet
-	// test_one_pktmbuf();
+	test_one_pktmbuf();
 
 	// customized action
 	// custom_pktmbuf();
