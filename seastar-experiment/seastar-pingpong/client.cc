@@ -7,6 +7,7 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
+static time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
 const int LATENCY = 1, LIMIT = 100000;
