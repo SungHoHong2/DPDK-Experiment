@@ -157,7 +157,7 @@ int main(int ac, char ** av) {
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
 
-    cout << "test: " << packetz << endl;
+    std::cout << "test: " << packetz << std::endl;
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
