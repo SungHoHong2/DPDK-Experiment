@@ -14,7 +14,7 @@ static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
 const size_t BUFFER_SIZE = 10;
-string packetz;
+static std::string packetz(BUFFER_SIZE,'*');
 const int LATENCY = 1, LIMIT = 100000;
 const int THROUGHPUT = 0, TIMER = 10;
 int total_throughput = 0;
@@ -157,7 +157,7 @@ int main(int ac, char ** av) {
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
 
-    packetz.assign(BUFFER_SIZE, '*');
+    cout << "test: " << packetz << endl;
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
