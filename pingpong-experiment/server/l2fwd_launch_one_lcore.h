@@ -1,4 +1,6 @@
 #include <time.h>
+#include <rte_mbuf.h>
+
 
 /* Print out statistics on packets dropped */
 static void print_stats(void){
