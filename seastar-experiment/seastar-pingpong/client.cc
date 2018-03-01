@@ -70,7 +70,7 @@ public:
                     }
                     auto str = std::string(buf.get(), buf.size());
                     if (str != packetz) {
-                        fprint(std::cerr, "illegal packet received: %d\n", buf.size());
+                        std::cout << str << std::endl;
                         return make_ready_future();
                     }
                     if (times > 0) {  // this depends the number times running // chara
