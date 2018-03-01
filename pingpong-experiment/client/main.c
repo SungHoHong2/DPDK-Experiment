@@ -86,12 +86,6 @@ static uint64_t timer_period = 10; /* default period is 10 seconds */
 static volatile bool force_quit;
 
 
-const int LATENCY = 1, LIMIT = 100000;
-const int THROUGHPUT = 0, TIMER = 10;
-static time_t start, end; //adding timer
-static double latency_diff;
-// static double latency_timelimit = 10.0;
-
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
 

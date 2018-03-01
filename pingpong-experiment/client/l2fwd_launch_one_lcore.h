@@ -1,5 +1,7 @@
 #include <time.h>
-
+const int LATENCY = 0, LIMIT = 100000;
+const int THROUGHPUT = 1, TIMER = 1;
+static time_t start, end; //adding timer
 
 /* Print out statistics on packets dropped */
 static void print_stats(void){
@@ -26,9 +28,6 @@ static void print_stats(void){
 			continue;
 
 
-		latency_diff = difftime( time(0), start);
-
-
 		printf("\nByte statistics for port %u ------------------------------"
 				 "\nPKT-SIZE: %d"
 			   "\nByte received: %24"PRIu64
@@ -38,10 +37,6 @@ static void print_stats(void){
 			   port_statistics[portid].rx_bytes,
 				 latency_diff);
 
-		// total_packets_dropped += port_statistics[portid].dropped;
-		// total_packets_tx += port_statistics[portid].tx;
-		// total_packets_rx += port_statistics[portid].rx;
-
 		printf("\nPacket statistics for port %u ------------------------------"
 			   "\nPacket sent: %24"PRIu64
 			   "\nPacket received: %20"PRIu64
@@ -50,22 +45,7 @@ static void print_stats(void){
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
-
-		// total_packets_dropped += port_statistics[portid].dropped;
-		// total_packets_tx += port_statistics[portid].tx;
-		// total_packets_rx += port_statistics[portid].rx;
 	}
-
-
-	// printf("\nPackets statistics ==============================="
-	// 	   "\nPackets sent: %18"PRIu64
-	// 	   "\nPackets received: %14"PRIu64
-	// 	   "\nPackets dropped: %15"PRIu64
-  //      "\nAggregated time (sec): %f",
-	// 	   total_packets_tx,
-	// 	   total_packets_rx,
-	// 	   total_packets_dropped,
-  //      latency_diff);
 	printf("\n====================================================\n");
 }
 
@@ -143,7 +123,7 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
       						// /* reset the timer */
-									if(latency_diff>=TIMER){
+									if(difftime( time(0), start)>=TIMER){
 										 	print_stats();
 											force_quit=1;
 									}
@@ -170,49 +150,7 @@ static void l2fwd_main_loop(void){
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
-
-						/*
-		         * Sending packets in bulk
-		         */
-
-						// unsigned i;
-						// struct rte_mbuf *mrm[NB_MBUF];
-						// int ret = 0;
-            //
-						// for (i=0; i<NB_MBUF; i++)
-						// 	mrm[i] = NULL;
-            //
-						// char *data;
-						// /* alloc NB_MBUF mbufs */
-						// for (i=0; i<NB_MBUF; i++) {
-						// 	mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-						// 	data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
-						// 	memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
-						// 	l2fwd_mac_updating(mrm[i], portid);
-            //
-						// 	if (mrm[i] == NULL) {
-						// 		printf("rte_pktmbuf_alloc() failed (%u)\n", i);
-						// 		ret = -1;
-						// 		break;
-						// 	}
-						// }
-            //
-						// sent = rte_eth_tx_burst(portid, 0, mrm, i);
-            //
-						// if (sent){
-						// 	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
-						// }
-            //
-						// for (i=0; i<NB_MBUF; i++)
-						// 		rte_pktmbuf_free(mrm[i]);
-
-
-						/*
-						 * sending the packet individually
-						 */
-
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
 
@@ -233,6 +171,7 @@ static void l2fwd_main_loop(void){
 
 static int
 l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy){
+	if (THROUGHPUT) time(&start);
 	l2fwd_main_loop();
 	return 0;
 }
