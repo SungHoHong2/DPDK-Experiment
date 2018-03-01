@@ -59,7 +59,6 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            memset(packetz, '*', BUFFER_SIZE * sizeof(char));
             return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -157,6 +156,7 @@ int main(int ac, char ** av) {
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
 
+    memset(packetz, '*', BUFFER_SIZE * sizeof(char));
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
