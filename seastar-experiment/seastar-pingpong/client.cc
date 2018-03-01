@@ -19,7 +19,7 @@ transport protocol = transport::TCP;
 
 class client {
 private:
-    static constexpr unsigned _pings_per_connection = 10000;
+    static constexpr unsigned _pings_per_connection = 10;
     unsigned _total_pings;
     unsigned _concurrent_connections;
     ipv4_addr _server_addr;
@@ -79,7 +79,6 @@ public:
                         return make_ready_future();
                     }
                     if (times > 0) {  // this depends the number times running // chara
-
                         std::cout << str << std::endl;
                         return ping(times - 1);
                     } else {
@@ -218,7 +217,7 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->required(), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
-        ("conn", bpo::value<unsigned>()->default_value(16), "nr connections per cpu")
+        ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
 
