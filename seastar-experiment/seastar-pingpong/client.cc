@@ -80,7 +80,7 @@ public:
                     }
                     if (times > 0) {  // this depends the number times running // chara
 
-                        cout << str << endl;
+                        std::cout << str << std::endl;
                         return ping(times - 1);
                     } else {
                         return make_ready_future();
