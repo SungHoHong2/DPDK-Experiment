@@ -145,7 +145,7 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
 							  port_statistics[portid].rx_bytes += strlen(rtn); //rte_pktmbuf_pkt_len(pkts_burst[j]);
-								printf("receiving: %s\n",rtn);
+								// printf("receiving: %s\n",rtn);
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
@@ -153,8 +153,7 @@ static void l2fwd_main_loop(void){
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						//memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
 						strcpy(data, "chara");
-						printf("sending: %s\n",data);
-
+						// printf("sending: %s\n",data);
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
 
