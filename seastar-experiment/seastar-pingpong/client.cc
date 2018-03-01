@@ -13,7 +13,7 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
-const size_t BUFFER_SIZE = 10; char packet[10];
+const size_t BUFFER_SIZE = 10; char packetz[10];
 const int LATENCY = 1, LIMIT = 100000;
 const int THROUGHPUT = 0, TIMER = 10;
 int total_throughput = 0;
@@ -59,7 +59,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            memset(packet, '*', BUFFER_SIZE * sizeof(char));
+            memset(packetz, '*', BUFFER_SIZE * sizeof(char));
             return _write_buf.write(packet).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
