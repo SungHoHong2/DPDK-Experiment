@@ -139,7 +139,7 @@ static void l2fwd_main_loop(void){
 
 								char *data;
 								char *rtn;
-								data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
+								data = rte_pktmbuf_append(m, MBUF_DATA_LEN);
 								rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data);
 								printf("received: %s\n", rtn);
 
