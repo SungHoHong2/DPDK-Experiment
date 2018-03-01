@@ -1,6 +1,7 @@
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
+#include <sys/time.h>
 
 using namespace seastar;
 using namespace net;
@@ -12,9 +13,25 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
+const size_t BUFFER_SIZE = 10; char packet[10];
+const int LATENCY = 1, LIMIT = 100000;
+const int THROUGHPUT = 0, TIMER = 10;
+int total_throughput = 0;
+uint64_t start_time, end_time;
+
+uint64_t getTimeStamp() {
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+}
+
+
+
+
+
+
 class client;
 distributed<client> clients;
-
 transport protocol = transport::TCP;
 
 class client {
@@ -42,7 +59,8 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            return _write_buf.write("ping").then([this] {
+            memset(packet, '*', BUFFER_SIZE * sizeof(char));
+            return _write_buf.write(packet).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
@@ -51,7 +69,7 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    if (str != "pong") {
+                    if (str != packet) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
@@ -133,7 +151,7 @@ namespace bpo = boost::program_options;
 int main(int ac, char ** av) {
     app_template app;
     app.add_options()
-        ("server", bpo::value<std::string>()->required(), "Server address")
+        ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
@@ -152,11 +170,6 @@ int main(int ac, char ** av) {
             protocol = transport::SCTP;
         } else {
             fprint(std::cerr, "Error: --proto=tcp|sctp\n");
-            return engine().exit(1);
-        }
-
-        if (!client::tests.count(test)) {
-            fprint(std::cerr, "Error: -test=ping | rxrx | txtx\n");
             return engine().exit(1);
         }
 
