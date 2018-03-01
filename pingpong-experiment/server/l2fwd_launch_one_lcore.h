@@ -29,7 +29,7 @@ static void print_stats(void){
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64,
 			   portid,
-				 PKT_SIZE, 
+				 PKT_SIZE,
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
@@ -60,8 +60,8 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	/* 02:00:00:00:00:xx */
 	tmp = &eth->d_addr.addr_bytes[0];
 
-	// a0:36:9f:83:ab:bc
-	*((uint64_t *)tmp) = 0xbcab839f36a0 + ((uint64_t)dest_portid << 40);
+	// 00:1B:21:A6:D4:D5
+	*((uint64_t *)tmp) = 0xd5d4a6211b00 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
