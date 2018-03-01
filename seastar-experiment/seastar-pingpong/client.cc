@@ -59,7 +59,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            memset(packet, '*', BUFFER_SIZE * sizeof(char));
+            // memset(packet, '*', BUFFER_SIZE * sizeof(char));
             return _write_buf.write("ping").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
