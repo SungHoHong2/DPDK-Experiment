@@ -41,29 +41,6 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> do_read() {
-            return _read_buf.read_exactly(rx_msg_size).then([this] (temporary_buffer<char> buf) {
-                _bytes_read += buf.size();
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                } else {
-                    return do_read();
-                }
-            });
-        }
-
-        future<> do_write(int end) {
-            if (end == 0) {
-                return make_ready_future();
-            }
-            return _write_buf.write(str_txbuf).then([this] {
-                _bytes_write += tx_msg_size;
-                return _write_buf.flush();
-            }).then([this, end] {
-                return do_write(end - 1);
-            });
-        }
-
         future<> ping(int times) {
             return _write_buf.write("ping").then([this] {
                 return _write_buf.flush();
@@ -87,28 +64,6 @@ public:
                 });
             });
         }
-
-        future<size_t> rxrx() {
-            return _write_buf.write("rxrx").then([this] {
-                return _write_buf.flush();
-            }).then([this] {
-                return do_write(tx_msg_nr).then([this] {
-                    return _write_buf.close();
-                }).then([this] {
-                    return make_ready_future<size_t>(_bytes_write);
-                });
-            });
-        }
-
-        future<size_t> txtx() {
-            return _write_buf.write("txtx").then([this] {
-                return _write_buf.flush();
-            }).then([this] {
-                return do_read().then([this] {
-                    return make_ready_future<size_t>(_bytes_read);
-                });
-            });
-        }
     };
 
     future<> ping_test(connection *conn) {
@@ -119,21 +74,6 @@ public:
         });
     }
 
-    future<> rxrx_test(connection *conn) {
-        auto started = lowres_clock::now();
-        return conn->rxrx().then([started] (size_t bytes) {
-            auto finished = lowres_clock::now();
-            clients.invoke_on(0, &client::rxtx_report, started, finished, bytes);
-        });
-    }
-
-    future<> txtx_test(connection *conn) {
-        auto started = lowres_clock::now();
-        return conn->txtx().then([started] (size_t bytes) {
-            auto finished = lowres_clock::now();
-            clients.invoke_on(0, &client::rxtx_report, started, finished, bytes);
-        });
-    }
 
     void ping_report(lowres_clock::time_point started, lowres_clock::time_point finished) {
         if (_earliest_started > started)
@@ -157,28 +97,6 @@ public:
         }
     }
 
-    void rxtx_report(lowres_clock::time_point started, lowres_clock::time_point finished, size_t bytes) {
-        if (_earliest_started > started)
-            _earliest_started = started;
-        if (_latest_finished < finished)
-            _latest_finished = finished;
-        _processed_bytes += bytes;
-        if (++_num_reported == _concurrent_connections) {
-            auto elapsed = _latest_finished - _earliest_started;
-            auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-            auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
-            fprint(std::cout, "========== %s ============\n", _test);
-            fprint(std::cout, "Server: %s\n", _server_addr);
-            fprint(std::cout, "Connections: %u\n", _concurrent_connections);
-            fprint(std::cout, "Bytes Received(MiB): %u\n", _processed_bytes/1024/1024);
-            fprint(std::cout, "Total Time(Secs): %f\n", secs);
-            fprint(std::cout, "Bandwidth(Gbits/Sec): %f\n",
-                static_cast<double>((_processed_bytes * 8)) / (1000 * 1000 * 1000) / secs);
-            clients.stop().then([] {
-                engine().exit(0);
-            });
-        }
-    }
 
     future<> start(ipv4_addr server_addr, std::string test, unsigned ncon) {
         _server_addr = server_addr;
@@ -250,6 +168,4 @@ int main(int ac, char ** av) {
 
 const std::map<std::string, client::test_fn> client::tests = {
         {"ping", &client::ping_test},
-        {"rxrx", &client::rxrx_test},
-        {"txtx", &client::txtx_test},
 };
