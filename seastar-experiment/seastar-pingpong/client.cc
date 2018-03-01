@@ -7,12 +7,6 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
-static int rx_msg_size = 4 * 1024;
-static int tx_msg_total_size = 100 * 1024 * 1024;
-static int tx_msg_size = 4 * 1024;
-static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
-static std::string str_txbuf(tx_msg_size, 'X');
-
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
 const int LATENCY = 1, LIMIT = 100000;
@@ -25,11 +19,6 @@ uint64_t getTimeStamp() {
     gettimeofday(&tv,NULL);
     return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
 }
-
-
-
-
-
 
 class client;
 distributed<client> clients;
@@ -69,12 +58,12 @@ public:
                         std::cout << str << str.length() << std::endl;
                         return make_ready_future();
                     }
-                    if (times > 0) {  // this depends the number times running // chara
+                    // if (times > 0) {  // this depends the number times running // chara
                         std::cout << str << str.length() << std::endl;
-                        return ping(times - 1);
-                    } else {
-                        return make_ready_future();
-                    }
+                        return ping(times);
+                    // } else {
+                    //     return make_ready_future();
+                    // }
                 });
             });
         }
@@ -155,6 +144,9 @@ int main(int ac, char ** av) {
 
     std::cout << "test: " << packetz << std::endl;
 
+
+
+
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
@@ -171,6 +163,12 @@ int main(int ac, char ** av) {
             return engine().exit(1);
         }
 
+        // INITIALIZE THE TEST BEGIN
+        if (THROUGHPUT) time(&start);
+        if (LATENCY){
+                   start_time = getTimeStamp();
+                   total_throughput = 0;
+        }
         clients.start().then([server, test, ncon] () {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
