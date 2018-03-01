@@ -69,10 +69,10 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    if (str != packet) {
-                        fprint(std::cerr, "illegal packet received: %d\n", buf.size());
-                        return make_ready_future();
-                    }
+                    // if (str != packet) {
+                    //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
+                    //     return make_ready_future();
+                    // }
                     if (times > 0) {  // this depends the number times running // chara
                         std::cout << str << std::endl;
                         return ping(times - 1);
