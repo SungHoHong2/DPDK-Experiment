@@ -63,11 +63,7 @@ public:
             return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
-                return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
-                    if (buf.size() != 4) {
-                        fprint(std::cerr, "illegal packet received: %d\n", buf.size());
-                        return make_ready_future();
-                    }
+                return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
                     if (str != packetz) {
                         std::cout << str << str.length() << std::endl;
