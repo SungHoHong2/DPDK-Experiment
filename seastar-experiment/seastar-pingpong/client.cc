@@ -13,7 +13,7 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
-const size_t BUFFER_SIZE = 10; char packetz[10];
+const size_t BUFFER_SIZE = 10; char packetz[3];
 const int LATENCY = 1, LIMIT = 100000;
 const int THROUGHPUT = 0, TIMER = 10;
 int total_throughput = 0;
