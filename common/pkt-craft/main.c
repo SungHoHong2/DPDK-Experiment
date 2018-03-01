@@ -91,7 +91,8 @@ int main(int argc, char **argv){
 
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
-	printf("lenght of DPDK offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
+	printf("length of DPDK offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
+	printf("data of DPDK offset: %s\n", rtn);  // lenght of the offset: 456
   rte_pktmbuf_free(m);
 
 
