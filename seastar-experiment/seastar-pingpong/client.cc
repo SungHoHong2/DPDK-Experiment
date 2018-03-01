@@ -13,7 +13,8 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
-const size_t BUFFER_SIZE = 10; char packet[10];
+const size_t BUFFER_SIZE = 10;
+string packetz;
 const int LATENCY = 1, LIMIT = 100000;
 const int THROUGHPUT = 0, TIMER = 10;
 int total_throughput = 0;
@@ -59,7 +60,6 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            // memset(packet, '*', BUFFER_SIZE * sizeof(char));
             return _write_buf.write("pong").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -156,6 +156,8 @@ int main(int ac, char ** av) {
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
+
+    packetz.assign(BUFFER_SIZE, '*');
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
