@@ -13,7 +13,7 @@ static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
 
-const size_t BUFFER_SIZE = 10; char packetz[3];
+const size_t BUFFER_SIZE = 10; char packet[10];
 const int LATENCY = 1, LIMIT = 100000;
 const int THROUGHPUT = 0, TIMER = 10;
 int total_throughput = 0;
@@ -59,7 +59,8 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            return _write_buf.write(packetz).then([this] {
+            memset(packet, '*', BUFFER_SIZE * sizeof(char));
+            return _write_buf.write("ping").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
@@ -68,10 +69,10 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    // if (str != packet) {
-                    //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
-                    //     return make_ready_future();
-                    // }
+                    if (str != "pong") {
+                        fprint(std::cerr, "illegal packet received: %d\n", buf.size());
+                        return make_ready_future();
+                    }
                     if (times > 0) {  // this depends the number times running // chara
                         std::cout << str << std::endl;
                         return ping(times - 1);
@@ -156,7 +157,6 @@ int main(int ac, char ** av) {
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
 
-    memset(packetz, '*', BUFFER_SIZE * sizeof(char));
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
