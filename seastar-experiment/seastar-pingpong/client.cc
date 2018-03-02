@@ -60,13 +60,13 @@ public:
                         return make_ready_future();
                     }
 
-                    if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-                          return make_ready_future();
-                    }
-                    else if(LATENCY && total_throughput >= LIMIT){
-                          end_time = getTimeStamp();
-                          return make_ready_future();
-                    }
+                    // if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+                    //       return make_ready_future();
+                    // }
+                    // else if(LATENCY && total_throughput >= LIMIT){
+                    //       end_time = getTimeStamp();
+                    //       return make_ready_future();
+                    // }
 
                     total_throughput+=str.length();
                     // std::cout << str << str.length() << std::endl;
