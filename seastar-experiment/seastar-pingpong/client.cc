@@ -9,7 +9,6 @@ using namespace std::chrono_literals;
 
 time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
-static std::string packetz(BUFFER_SIZE,'*');
 int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*BUFFER_SIZE;
 double total_throughput = 0;
 uint64_t start_time, end_time;
@@ -49,6 +48,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
+            std::string packetz(BUFFER_SIZE,'*');
             return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
