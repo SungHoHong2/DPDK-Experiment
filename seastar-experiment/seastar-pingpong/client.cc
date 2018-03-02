@@ -168,8 +168,8 @@ int main(int ac, char ** av) {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
 
-
         if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+            std::cout << difftime(time(0), start) << "  " << TIMER << std::endl;
           return engine().exit(1);
         }
         else if(LATENCY && total_throughput >= LIMIT){
