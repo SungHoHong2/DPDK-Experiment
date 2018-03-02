@@ -1,7 +1,14 @@
 #include <time.h>
 // const int LATENCY = 0, LIMIT = 100000;
 // const int THROUGHPUT = 1, TIMER = 10;
+int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*PKT_SIZE;
+uint64_t start_time, end_time;
 
+uint64_t getTimeStamp() {
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+}
 
 // static time_t start, end; //adding timer
 
