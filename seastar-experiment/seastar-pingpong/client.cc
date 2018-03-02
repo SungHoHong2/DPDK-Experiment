@@ -10,8 +10,8 @@ using namespace std::chrono_literals;
 time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
-int LATENCY = 0, LIMIT = 100000;
-int THROUGHPUT = 1, TIMER = 1;
+int LATENCY = 1, LIMIT = 100000;
+int THROUGHPUT = 0, TIMER = 1;
 int total_throughput = 0;
 uint64_t start_time, end_time;
 
@@ -50,13 +50,6 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-
-          if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-              std::cout << "dd" << std::endl;
-              return make_ready_future();
-          }
-
-
             return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -68,6 +61,11 @@ public:
                     }
 
                     total_throughput+=str.length();
+                    if(LATENCY && total_throughput >= LIMIT){
+                        end_time = getTimeStamp();
+                        printf("total latency: %ld for the sending the size %d using %ld packet size\n", end_time - start_time, LIMIT, BUFFER_SIZE);
+                        return make_ready_future();
+                    }
                     // std::cout << str << str.length() << std::endl;
                     return ping(times);
                 });
