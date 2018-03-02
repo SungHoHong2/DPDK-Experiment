@@ -51,7 +51,7 @@ public:
 
         future<> ping(int times) {
 
-           std::cout << str << str.length() << std::endl;
+           std::cout << "dd" << std::endl;
 
 
             return _write_buf.write(packetz).then([this] {
