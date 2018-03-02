@@ -59,12 +59,10 @@ public:
                         std::cout << str << str.length() << std::endl;
                         return make_ready_future();
                     }
-                    // if (times > 0) {  // this depends the number times running // chara
+
                         std::cout << str << str.length() << std::endl;
                         return ping(times);
-                    // } else {
-                    //     return make_ready_future();
-                    // }
+
                 });
             });
         }
@@ -74,12 +72,12 @@ public:
         auto started = lowres_clock::now();
         return conn->ping(_pings_per_connection).then([started] {
             auto finished = lowres_clock::now();
-            clients.invoke_on(0, &client::ping_report, started, finished);
+            clients.invoke_on(0, &client::ping_report);
         });
     }
 
 
-    void ping_report(lowres_clock::time_point started, lowres_clock::time_point finished) {
+    void ping_report() {
         if (_earliest_started > started)
             _earliest_started = started;
         if (_latest_finished < finished)
