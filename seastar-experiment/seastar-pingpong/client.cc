@@ -84,7 +84,7 @@ public:
         if (++_num_reported == _concurrent_connections) {
             end_time = getTimeStamp();
             printf("total latency: %ld for the sending the size %d using %ld packet size\n", end_time - start_time, LIMIT, BUFFER_SIZE);
-            std::cout << "throughput: " <<  (total_throughput)/((end_time - start_time)*1000000) << " mbytes" << std::endl;
+            std::cout << "throughput: " <<  (total_throughput)/((end_time - start_time)*1000000) << " bytes" << std::endl;
             clients.stop().then([] {
                 engine().exit(0);
             });
