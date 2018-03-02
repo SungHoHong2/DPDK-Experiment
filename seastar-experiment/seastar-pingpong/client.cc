@@ -61,6 +61,12 @@ public:
                     }
 
                     total_throughput+=str.length();
+
+                    if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+                      
+                    }
+
+
                     if(LATENCY && total_throughput >= LIMIT){
                         return make_ready_future();
                     }
@@ -81,19 +87,8 @@ public:
 
     void ping_report() {
         if (++_num_reported == _concurrent_connections) {
-
             end_time = getTimeStamp();
             printf("total latency: %ld for the sending the size %d using %ld packet size\n", end_time - start_time, LIMIT, BUFFER_SIZE);
-            // auto elapsed = _latest_finished - _earliest_started;
-            // auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-            // auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
-            // fprint(std::cout, "========== ping ============\n");
-            // fprint(std::cout, "Server: %s\n", _server_addr);
-            // fprint(std::cout,"Connections: %u\n", _concurrent_connections);
-            // fprint(std::cout, "Total PingPong: %u\n", _total_pings);
-            // fprint(std::cout, "Total Time(Secs): %f\n", secs);
-            // fprint(std::cout, "Requests/Sec: %f\n",
-            //     static_cast<double>(_total_pings) / secs);
             clients.stop().then([] {
                 engine().exit(0);
             });
