@@ -7,13 +7,7 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
-time_t start; //adding timer
-const size_t BUFFER_SIZE = 10;
-static std::string packetz(BUFFER_SIZE,'*');
-int LATENCY = 0, LIMIT = 100000;
-int THROUGHPUT = 1, TIMER = 1;
-int total_throughput = 0;
-uint64_t start_time, end_time;
+
 
 uint64_t getTimeStamp() {
     struct timeval tv;
@@ -26,6 +20,15 @@ distributed<client> clients;
 transport protocol = transport::TCP;
 
 class client {
+
+time_t start; //adding timer
+const size_t BUFFER_SIZE = 10;
+static std::string packetz(BUFFER_SIZE,'*');
+int LATENCY = 0, LIMIT = 100000;
+int THROUGHPUT = 1, TIMER = 1;
+int total_throughput = 0;
+uint64_t start_time, end_time;
+
 private:
     static constexpr unsigned _pings_per_connection = 10;
     unsigned _total_pings;
