@@ -8,12 +8,12 @@ using namespace net;
 using namespace std::chrono_literals;
 
 static time_t start; //adding timer
-const size_t BUFFER_SIZE = 10;
+static size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
-const int LATENCY = 0, LIMIT = 100000;
-const int THROUGHPUT = 1, TIMER = 1;
-int total_throughput = 0;
-uint64_t start_time, end_time;
+static int LATENCY = 0, LIMIT = 100000;
+static int THROUGHPUT = 1, TIMER = 1;
+static int total_throughput = 0;
+static uint64_t start_time, end_time;
 
 uint64_t getTimeStamp() {
     struct timeval tv;
