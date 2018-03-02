@@ -28,31 +28,15 @@ static void print_stats(void){
 		/* Clear screen and move to top left */
 	printf("%s%s", clr, topLeft);
 
-	printf("\nDPDK Pingpong Client ====================================");
-
 	for (portid = 0; portid < RTE_MAX_ETHPORTS; portid++) {
 		/* skip disabled ports */
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 
-
-		printf("\nByte statistics for port %u ------------------------------"
-				 "\nPKT-SIZE: %d"
-			   "\nByte received: %f",
-			   portid,
-				 PKT_SIZE,
-			   port_statistics[portid].rx_bytes);
-
-		printf("\nPacket statistics for port %u ------------------------------"
-			   "\nPacket sent: %24"PRIu64
-			   "\nPacket received: %20"PRIu64
-			   "\nPacket dropped: %21"PRIu64,
-			   portid,
-			   port_statistics[portid].tx,
-			   port_statistics[portid].rx,
-			   port_statistics[portid].dropped);
+			printf("sending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
+			printf("latency: %ld\n", end_time - start_time);
+			printf("throughput: %f Mbytes",(port_statistics[1].rx_bytes/1048576)/((end_time - start_time)/1000000));
 	}
-	printf("\n====================================================\n");
 }
 
 
@@ -181,8 +165,5 @@ static void l2fwd_main_loop(void){
 static int
 l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy){
 	l2fwd_main_loop();
-	printf("\nsending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
-	printf("latency: %ld\n", end_time - start_time);
-	printf("throughput: %f Mbytes",(port_statistics[1].rx_bytes/1048576)/((end_time - start_time)/1000000));
 	return 0;
 }
