@@ -133,7 +133,7 @@ static void l2fwd_main_loop(void){
       						// print_stats();
       						// /* reset the timer */
 									if(difftime( time(0), start)>=TIMER){
-										 	// print_stats();
+										 	print_stats();
 											force_quit=1;
 									}
 									timer_tsc = 0;
@@ -156,10 +156,9 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
 
-								port_statistics[portid].rx_bytes += strlen(rtn); //rte_pktmbuf_pkt_len(pkts_burst[j]);
-
-								printf("%s\n",rtn);
-
+								for(int s=0; s<strlen(rtn); s++){
+										if(rtn[s]=='*') port_statistics[portid].rx_bytes += 1 //rte_pktmbuf_pkt_len(pkts_burst[j]);
+								}
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
