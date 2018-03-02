@@ -63,7 +63,7 @@ public:
                     total_throughput+=str.length();
 
                     if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-                      
+
                     }
 
 
@@ -149,7 +149,7 @@ int main(int ac, char ** av) {
                total_throughput = 0;
     }
 
-    return app.run_deprecated(ac, av, [&app] {
+    return static app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
