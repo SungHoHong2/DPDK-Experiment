@@ -50,7 +50,8 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
-            return _write_buf.write(packetz).then([this] {
+            std::string packeti(BUFFER_SIZE,'*');
+            return _write_buf.write(packeti).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
