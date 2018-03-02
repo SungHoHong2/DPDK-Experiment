@@ -10,8 +10,8 @@ using namespace std::chrono_literals;
 static time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
-const int LATENCY = 1, LIMIT = 100000;
-const int THROUGHPUT = 0, TIMER = 10;
+const int LATENCY = 0, LIMIT = 100000;
+const int THROUGHPUT = 1, TIMER = 1;
 int total_throughput = 0;
 uint64_t start_time, end_time;
 
@@ -60,18 +60,31 @@ public:
                         return make_ready_future();
                     }
 
-                        std::cout << str << str.length() << std::endl;
-                        return ping(times);
+                    if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+                          return make_ready_future();
+                    }
+                    else if(LATENCY && total_throughput >= LIMIT){
+                          end_time = getTimeStamp();
+                          return make_ready_future();
+                    }
 
+                    total_throughput+=str.length();
+                    // std::cout << str << str.length() << std::endl;
+                    return ping(times);
                 });
             });
         }
     };
 
     future<> ping_test(connection *conn) {
-        auto started = lowres_clock::now();
-        return conn->ping(_pings_per_connection).then([started] {
-            auto finished = lowres_clock::now();
+
+        // INITIALIZE THE TEST BEGIN
+        if (THROUGHPUT) time(&start);
+        if (LATENCY){
+                   start_time = getTimeStamp();
+                   total_throughput = 0;
+        }
+        return conn->ping(_pings_per_connection).then([] {
             clients.invoke_on(0, &client::ping_report);
         });
     }
@@ -158,12 +171,6 @@ int main(int ac, char ** av) {
             return engine().exit(1);
         }
 
-        // INITIALIZE THE TEST BEGIN
-        if (THROUGHPUT) time(&start);
-        if (LATENCY){
-                   start_time = getTimeStamp();
-                   total_throughput = 0;
-        }
         clients.start().then([server, test, ncon] () {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
