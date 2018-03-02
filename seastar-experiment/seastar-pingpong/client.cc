@@ -50,6 +50,10 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping(int times) {
+
+           std::cout << str << str.length() << std::endl;
+
+
             return _write_buf.write(packetz).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -167,18 +171,6 @@ int main(int ac, char ** av) {
         clients.start().then([server, test, ncon] () {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
-
-        std::cout << difftime(time(0), start) << "  " << TIMER << std::endl;
-
-        if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-            std::cout << difftime(time(0), start) << "  " << TIMER << std::endl;
-          return engine().exit(1);
-        }
-        else if(LATENCY && total_throughput >= LIMIT){
-              end_time = getTimeStamp();
-              return engine().exit(1);
-        }
-
 
     });
 }
