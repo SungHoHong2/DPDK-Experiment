@@ -60,9 +60,6 @@ public:
                         return make_ready_future();
                     }
 
-                    if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-                          return make_ready_future();
-                    }
                     // else if(LATENCY && total_throughput >= LIMIT){
                     //       end_time = getTimeStamp();
                     //       return make_ready_future();
@@ -175,6 +172,12 @@ int main(int ac, char ** av) {
         clients.start().then([server, test, ncon] () {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
+
+
+        if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+          return engine().exit(1);
+        }
+
     });
 }
 
