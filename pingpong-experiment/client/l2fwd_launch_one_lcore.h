@@ -54,27 +54,11 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	void *tmp;
 
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
-
-	/* 02:00:00:00:00:xx */
-	// A0:36:9F:83:AB:BD
-	// 0x00 00 00 00 00 02
 	tmp = &eth->d_addr.addr_bytes[0];
-
-	// 0x 00 00 00 00 00 02
-  //    A0:36:9F:83:AB:BD
-	// 0x 00 00 00 00 00 02
-
-  // 0x bd ab 83 9f 36 a0
-  // 0x000000000002
-  // 0x0000000002
-	// 00 bd ab 83 9f 36 a0
 	// A0:36:9F:83:AB:BD
 	*((uint64_t *)tmp) = 0x00ab839f36a0  + ((uint64_t)dest_portid << 40);
-	// *((uint64_t *)tmp) = 0xbdab839f36a0 + ((uint64_t)dest_portid << 40);
-
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
-
 }
 
 
@@ -130,7 +114,7 @@ static void l2fwd_main_loop(void){
       				if (unlikely(timer_tsc >= timer_period)) {
       					/* do this only on master core */
       					if (lcore_id == rte_get_master_lcore()) {
-      						// print_stats();
+      						print_stats();
       						// /* reset the timer */
 									if(difftime( time(0), start)>=TIMER){
 										 	print_stats();
@@ -146,8 +130,8 @@ static void l2fwd_main_loop(void){
         /*
          * Read packet from RX queues
          */
-        for (i = 0; i < qconf->n_rx_port; i++) {
-          	portid = qconf->rx_port_list[i];
+        // for (i = 0; i < qconf->n_rx_port; i++) {
+          	portid = 1;
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
                  		pkts_burst, MAX_PKT_BURST);
 
@@ -159,7 +143,7 @@ static void l2fwd_main_loop(void){
 								for(int s=0; s<strlen(rtn); s++){
 										if(rtn[s]=='*') {
 											port_statistics[portid].rx_bytes += 1; //rte_pktmbuf_pkt_len(pkts_burst[j]);
-											printf("%c",rtn[s]);
+											// printf("%c",rtn[s]);
 										}
 								}
 								rte_pktmbuf_free(pkts_burst[j]);
@@ -177,7 +161,7 @@ static void l2fwd_main_loop(void){
 							port_statistics[portid].tx += sent;
 						}
 						rte_pktmbuf_free(rm[0]);
-        }
+        // }
       }
 
 }

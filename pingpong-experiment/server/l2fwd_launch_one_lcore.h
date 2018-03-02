@@ -34,18 +34,7 @@ static void print_stats(void){
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
 			   port_statistics[portid].dropped);
-
-		// total_packets_dropped += port_statistics[portid].dropped;
-		// total_packets_tx += port_statistics[portid].tx;
-		// total_packets_rx += port_statistics[portid].rx;
 	}
-	// printf("\nAggregate statistics ==============================="
-	// 	   "\nPackets sent: %18"PRIu64
-	// 	   "\nPackets received: %14"PRIu64
-	// 	   "\npackets dropped: %15"PRIu64
-	// 	   total_packets_tx,
-	// 	   total_packets_rx,
-	// 	   total_packets_dropped);
 	printf("\n====================================================\n");
 }
 
@@ -57,16 +46,9 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	void *tmp;
 
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
-
-	/* 02:00:00:00:00:xx */
 	tmp = &eth->d_addr.addr_bytes[0];
-
-  // 0x001b21a6d4d4
-
-  // 0x00d5d4a6211b00
 	// 00:1B:21:A6:D4:D5
 	*((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
-
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
 
@@ -95,7 +77,6 @@ static void l2fwd_main_loop(void){
   		RTE_LOG(INFO, L2FWD, "lcore %u has nothing to do\n", lcore_id);
   		return;
   	}
-
 
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
@@ -132,20 +113,13 @@ static void l2fwd_main_loop(void){
         /*
          * Read packet from RX queues
          */
-        for (i = 0; i < qconf->n_rx_port; i++) {
-          	portid = qconf->rx_port_list[i];
-
+        // for (i = 0; i < qconf->n_rx_port; i++) {
+          	portid = 1;
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
           	port_statistics[portid].rx += nb_rx;
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
-
-								char *rtn;
-								rtn = rte_pktmbuf_mtod_offset(m, char *, 80);
-								// printf("received: %s\n", rtn);
-
-								// port_statistics[portid].rx += rte_pktmbuf_pkt_len(m);
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 								l2fwd_mac_updating(m, portid);
 						    buffer = tx_buffer[portid];
@@ -154,7 +128,7 @@ static void l2fwd_main_loop(void){
 								if(sent)
 								port_statistics[portid].tx += sent;
 						}
-        	}
+        	// }
       }
 
 }
