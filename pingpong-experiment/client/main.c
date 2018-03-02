@@ -45,7 +45,7 @@
 //#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
-static int PKT_SIZE 64 // sending packet size over 1600 the performance degrades
+static int PKT_SIZE 64; // sending packet size over 1600 the performance degrades
 static int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*PKT_SIZE;
 static uint64_t start_time, end_time;
 
