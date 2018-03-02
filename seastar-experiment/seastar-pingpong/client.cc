@@ -60,11 +60,6 @@ public:
                         return make_ready_future();
                     }
 
-                    // else if(LATENCY && total_throughput >= LIMIT){
-                    //       end_time = getTimeStamp();
-                    //       return make_ready_future();
-                    // }
-
                     total_throughput+=str.length();
                     // std::cout << str << str.length() << std::endl;
                     return ping(times);
@@ -177,6 +172,11 @@ int main(int ac, char ** av) {
         if(THROUGHPUT && difftime(time(0), start)>=TIMER){
           return engine().exit(1);
         }
+        else if(LATENCY && total_throughput >= LIMIT){
+              end_time = getTimeStamp();
+              return engine().exit(1);
+        }
+
 
     });
 }
