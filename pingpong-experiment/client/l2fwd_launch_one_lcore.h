@@ -1,4 +1,4 @@
-#include <time.h>
+#include <sys/time.h>
 // const int LATENCY = 0, LIMIT = 100000;
 // const int THROUGHPUT = 1, TIMER = 10;
 
@@ -38,7 +38,7 @@ static void print_stats(void){
 
 		printf("\nByte statistics for port %u ------------------------------"
 				 "\nPKT-SIZE: %d"
-			   "\nByte received: %24"PRIu64,
+			   "\nByte received: %f"PRIu64,
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].rx_bytes);
