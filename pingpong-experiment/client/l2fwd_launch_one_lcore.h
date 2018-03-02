@@ -129,7 +129,7 @@ static void l2fwd_main_loop(void){
 									if(port_statistics[portid].rx_bytes>=LIMIT){
 										  end_time = getTimeStamp();
 											// print_stats();
-											printf("sending the size %d using %ld byte packet\n", LIMIT, PKT_SIZE);
+											printf("sending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
 										  printf("latency: %ld\n", end_time - start_time);
 										  printf("throughput: %f Mbytes",(port_statistics[portid].rx_bytes/1048576)/((end_time - start_time)/1000000));
 											force_quit=1;
