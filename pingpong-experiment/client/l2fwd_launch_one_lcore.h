@@ -158,7 +158,7 @@ static void l2fwd_main_loop(void){
 
 								port_statistics[portid].rx_bytes += strlen(rtn); //rte_pktmbuf_pkt_len(pkts_burst[j]);
 
-								if(rtn[0]=='*') println(rtn);
+								if(rtn[0]=='*') printf("%s\n",rtn);
 
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
