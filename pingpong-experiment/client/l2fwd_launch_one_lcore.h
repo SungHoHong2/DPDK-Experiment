@@ -157,7 +157,7 @@ static void l2fwd_main_loop(void){
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
 
 								for(int s=0; s<strlen(rtn); s++){
-										if(rtn[s]=='*') port_statistics[portid].rx_bytes += 1 //rte_pktmbuf_pkt_len(pkts_burst[j]);
+										if(rtn[s]=='*') port_statistics[portid].rx_bytes += 1; //rte_pktmbuf_pkt_len(pkts_burst[j]);
 								}
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
