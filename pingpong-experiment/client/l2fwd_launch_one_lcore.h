@@ -1,8 +1,7 @@
 #include <time.h>
 // const int LATENCY = 0, LIMIT = 100000;
 // const int THROUGHPUT = 1, TIMER = 10;
-int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*PKT_SIZE;
-uint64_t start_time, end_time;
+
 
 uint64_t getTimeStamp() {
     struct timeval tv;
@@ -96,9 +95,10 @@ static void l2fwd_main_loop(void){
   		return;
   	}
 
-		time (&start); //useful call
-		char *data, *rtn;
+		start_time = getTimeStamp();
 
+
+		char *data, *rtn;
     while (!force_quit) {
         cur_tsc = rte_rdtsc();
         /*
@@ -183,7 +183,6 @@ static void l2fwd_main_loop(void){
 
 static int
 l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy){
-	start_time = getTimeStamp();
 	l2fwd_main_loop();
 	return 0;
 }

@@ -46,7 +46,13 @@
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 64 // sending packet size over 1600 the performance degrades
+#define PINGS 100000
+#define LIMIT 100000 * 64;
+uint64_t start_time, end_time;
+
 // TUNABLES END
+
+
 
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
