@@ -211,7 +211,7 @@ int main(int ac, char** av) {
            print("Total requests: %u\n", total_reqs);
            print("Total time: %f\n", secs);
            print("Requests/sec: %f\n", static_cast<double>(total_reqs) / secs);
-           print("Sec/Requests: %f\n", static_cast<double>(secs)/static_cast<double>(total_reqs));
+           print("usec/Requests: %f\n", static_cast<double>(secs*1000000)/static_cast<double>(total_reqs));
            print("==========     done     ============\n");
            return http_clients->stop().then([http_clients] {
                // FIXME: If we call engine().exit(0) here to exit when
