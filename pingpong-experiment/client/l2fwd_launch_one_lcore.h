@@ -1,7 +1,9 @@
 #include <time.h>
-const int LATENCY = 0, LIMIT = 100000;
-const int THROUGHPUT = 1, TIMER = 10;
-static time_t start, end; //adding timer
+// const int LATENCY = 0, LIMIT = 100000;
+// const int THROUGHPUT = 1, TIMER = 10;
+
+
+// static time_t start, end; //adding timer
 
 /* Print out statistics on packets dropped */
 static void print_stats(void){
@@ -116,8 +118,13 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						print_stats();
       						// /* reset the timer */
-									if(difftime( time(0), start)>=TIMER){
-										 	print_stats();
+
+									if(port_statistics[portid].rx_bytes>=LIMIT){
+										  end_time = getTimeStamp();
+											// print_stats();
+											printf("sending the size %d using %ld byte packet\n", LIMIT, PKT_SIZE);
+										  printf("latency: %ld\n", end_time - start_time);
+										  printf("throughput: %f Mbytes",(port_statistics[portid].rx_bytes/1048576)/((end_time - start_time)/1000000));
 											force_quit=1;
 									}
 									timer_tsc = 0;
@@ -169,7 +176,7 @@ static void l2fwd_main_loop(void){
 
 static int
 l2fwd_launch_one_lcore(__attribute__((unused)) void *dummy){
-	if (THROUGHPUT) time(&start);
+	start_time = getTimeStamp();
 	l2fwd_main_loop();
 	return 0;
 }

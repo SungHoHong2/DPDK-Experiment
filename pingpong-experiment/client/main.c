@@ -46,6 +46,14 @@
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 64 // sending packet size over 1600 the performance degrades
+int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*PKT_SIZE;
+uint64_t start_time, end_time;
+
+uint64_t getTimeStamp() {
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+}
 // TUNABLES END
 
 
