@@ -11,7 +11,7 @@ time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
 int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*BUFFER_SIZE;
-int total_throughput = 0;
+double total_throughput = 0;
 uint64_t start_time, end_time;
 
 uint64_t getTimeStamp() {
@@ -84,7 +84,7 @@ public:
         if (++_num_reported == _concurrent_connections) {
             end_time = getTimeStamp();
             printf("total latency: %ld for the sending the size %d using %ld packet size\n", end_time - start_time, LIMIT, BUFFER_SIZE);
-            std::cout << "throughput: " <<  (total_throughput)/((end_time - start_time)*1000000) << " bytes" << std::endl;
+            std::cout << "throughput: " <<  (total_throughput)/((end_time - start_time)/1000000) << " bytes" << std::endl;
             clients.stop().then([] {
                 engine().exit(0);
             });
