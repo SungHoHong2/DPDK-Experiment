@@ -78,12 +78,6 @@ public:
 
     future<> ping_test(connection *conn) {
 
-        // INITIALIZE THE TEST BEGIN
-        // if (THROUGHPUT) time(&start);
-        // if (LATENCY){
-        //            start_time = getTimeStamp();
-        //            total_throughput = 0;
-        // }
         return conn->ping(_pings_per_connection).then([] {
             clients.invoke_on(0, &client::ping_report);
         });
@@ -154,6 +148,13 @@ int main(int ac, char ** av) {
 
 
 
+
+    // INITIALIZE THE TEST BEGIN
+    if (THROUGHPUT) time(&start);
+    if (LATENCY){
+               start_time = getTimeStamp();
+               total_throughput = 0;
+    }
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
