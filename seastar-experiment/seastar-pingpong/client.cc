@@ -51,7 +51,10 @@ public:
 
         future<> ping(int times) {
 
-           std::cout << "dd" << std::endl;
+          if(THROUGHPUT && difftime(time(0), start)>=TIMER){
+              std::cout << "dd" << std::endl;
+              return make_ready_future();
+          }
 
 
             return _write_buf.write(packetz).then([this] {
