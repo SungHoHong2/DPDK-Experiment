@@ -56,10 +56,21 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
 
 	/* 02:00:00:00:00:xx */
+	// A0:36:9F:83:AB:BD
+	// 0x00 00 00 00 00 02
 	tmp = &eth->d_addr.addr_bytes[0];
 
+
+	// 0x 00 00 00 00 00 02
+  //    A0:36:9F:83:AB:BD
+	// 0x 00 00 00 00 00 02
+
+  // 0x bd ab 83 9f 36 a0
+  // 0x000000000002
+  // 0x0000000002
+	// 00 bd ab 83 9f 36 a0
 	// A0:36:9F:83:AB:BD
-	*((uint64_t *)tmp) = 0x0000000002 + ((uint64_t)dest_portid << 40);
+	*((uint64_t *)tmp) = 0x00bdab839f36a0  + ((uint64_t)dest_portid << 40);
 	// *((uint64_t *)tmp) = 0xbdab839f36a0 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
