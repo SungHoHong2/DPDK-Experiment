@@ -10,8 +10,7 @@ using namespace std::chrono_literals;
 time_t start; //adding timer
 const size_t BUFFER_SIZE = 10;
 static std::string packetz(BUFFER_SIZE,'*');
-int LATENCY = 1, LIMIT = 100000;
-int THROUGHPUT = 0, TIMER = 1;
+int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*BUFFER_SIZE;
 int total_throughput = 0;
 uint64_t start_time, end_time;
 
@@ -61,10 +60,6 @@ public:
                     }
 
                     total_throughput+=str.length();
-
-                    if(THROUGHPUT && difftime(time(0), start)>=TIMER){
-
-                    }
 
 
                     if(LATENCY && total_throughput >= LIMIT){
@@ -140,16 +135,13 @@ int main(int ac, char ** av) {
     std::cout << "test: " << packetz << std::endl;
 
 
-
-
     // INITIALIZE THE TEST BEGIN
-    if (THROUGHPUT) time(&start);
     if (LATENCY){
                start_time = getTimeStamp();
                total_throughput = 0;
     }
 
-    return static app.run_deprecated(ac, av, [&app] {
+    return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
