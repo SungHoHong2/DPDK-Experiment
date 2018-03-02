@@ -37,7 +37,6 @@ static void print_stats(void){
 			printf("\nsending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
 			printf("latency: %ld\n", end_time - start_time);
 			printf("throughput: %f Mbytes",(port_statistics[1].rx_bytes/1048576)/((end_time - start_time)/1000000));
-			   port_statistics[portid].dropped);
 	}
 }
 
@@ -111,7 +110,6 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
       						// /* reset the timer */
-
 									if(port_statistics[portid].rx_bytes>=LIMIT){
 										  end_time = getTimeStamp();
 											print_stats();
