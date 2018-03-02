@@ -70,7 +70,7 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
   // 0x0000000002
 	// 00 bd ab 83 9f 36 a0
 	// A0:36:9F:83:AB:BD
-	*((uint64_t *)tmp) = 0x00bdab839f36a0  + ((uint64_t)dest_portid << 40);
+	*((uint64_t *)tmp) = 0x00ab839f36a0  + ((uint64_t)dest_portid << 40);
 	// *((uint64_t *)tmp) = 0xbdab839f36a0 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
