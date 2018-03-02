@@ -9,6 +9,17 @@ sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --h
 ```
 
 ```
+for running server c3n25 shipreck
+cp seawreck into server
+export SEASTAR=/data1/sungho/seastar
+g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` --whole-archive,-lseastar -lrte_pmd_mlx4 -libverbs server.cc -Wl, -o server
+
+
+sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --smp 2
+```
+
+
+```
 # testing in visasu in dpdk
 wget -qO- http://10.107.30.40:10000 | sed -e 's/<[^>]*>//g'
 
