@@ -83,9 +83,9 @@ public:
     void ping_report() {
         if (++_num_reported == _concurrent_connections) {
             end_time = getTimeStamp();
-            printf("sending the size %d using %ld packet size\n", LIMIT, BUFFER_SIZE);
+            printf("sending the size %d using %ld byte packet\n", LIMIT, BUFFER_SIZE);
             printf("latency: %ld\n", end_time - start_time);
-            std::cout << "throughput: " <<  (total_throughput/1048576)/((end_time - start_time)/1000000) << " bytes" << std::endl;
+            std::cout << "throughput: " <<  (total_throughput/1048576)/((end_time - start_time)/1000000) << " Mbytes" << std::endl;
             clients.stop().then([] {
                 engine().exit(0);
             });
@@ -133,9 +133,6 @@ int main(int ac, char ** av) {
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ;
-
-    std::cout << "test: " << packetz << std::endl;
-
 
     // INITIALIZE THE TEST BEGIN
     if (LATENCY){
