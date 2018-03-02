@@ -38,7 +38,7 @@ static void print_stats(void){
 
 		printf("\nByte statistics for port %u ------------------------------"
 				 "\nPKT-SIZE: %d"
-			   "\nByte received: %f"PRIu64,
+			   "\nByte received: %f",
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].rx_bytes);
@@ -129,6 +129,7 @@ static void l2fwd_main_loop(void){
 									if(port_statistics[portid].rx_bytes>=LIMIT){
 										  end_time = getTimeStamp();
 											// print_stats();
+											printf("%s%s", clr, topLeft);
 											printf("sending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
 										  printf("latency: %ld\n", end_time - start_time);
 										  printf("throughput: %f Mbytes",(port_statistics[portid].rx_bytes/1048576)/((end_time - start_time)/1000000));
