@@ -78,10 +78,6 @@ public:
 
 
     void ping_report() {
-        if (_earliest_started > started)
-            _earliest_started = started;
-        if (_latest_finished < finished)
-            _latest_finished = finished;
         if (++_num_reported == _concurrent_connections) {
             auto elapsed = _latest_finished - _earliest_started;
             auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
