@@ -108,13 +108,12 @@ l2fwd_parse_args(int argc, char **argv){
 				printf("invalid timer period\n");
 				return -1;
 			}
-
-			// change packet size
-			PKT_SIZE = l2fwd_parse_timer_period(optarg);
-
-
 			timer_period = 1;
 			break;
+
+		case 'z':
+			PKT_SIZE =
+
 
 		/* long options */
 		case 0:
