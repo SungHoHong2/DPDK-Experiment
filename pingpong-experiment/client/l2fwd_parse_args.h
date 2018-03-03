@@ -108,12 +108,8 @@ l2fwd_parse_args(int argc, char **argv){
 				printf("invalid timer period\n");
 				return -1;
 			}
-			timer_period = 1;
+			timer_period = timer_secs;
 			break;
-
-		case 'z':
-			PKT_SIZE =
-
 
 		/* long options */
 		case 0:
