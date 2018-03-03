@@ -134,8 +134,8 @@ static void l2fwd_main_loop(void){
 
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
-
-								for(int s=0; s<strlen(rtn); s++){
+                int s;
+								for(s=0; s<strlen(rtn); s++){
 										if(rtn[s]=='*') {
 											port_statistics[portid].rx_bytes += 1; //rte_pktmbuf_pkt_len(pkts_burst[j]);
 											// printf("%c",rtn[s]);
