@@ -73,6 +73,7 @@ static unsigned int l2fwd_rx_queue_per_lcore = 1;
 
 struct rte_mempool *l2fwd_pktmbuf_pool = NULL;
 struct rte_mempool *test_pktmbuf_pool = NULL;
+static int packet_size;
 
 
 /* MAC updating enabled by default */
