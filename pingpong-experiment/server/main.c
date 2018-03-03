@@ -44,7 +44,7 @@
 // #define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
-int PKT_SIZE = 0; // sending packet size
+#define PKT_SIZE 128 // sending packet size
 
 
 // make ../../pingpong-experiment/client/
