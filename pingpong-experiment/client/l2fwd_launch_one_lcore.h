@@ -130,7 +130,7 @@ static void l2fwd_main_loop(void){
          * Read packet from RX queues
          */
         // for (i = 0; i < qconf->n_rx_port; i++) {
-        if(PKT_NUMBUF == 1){
+        // if(PKT_NUMBUF == 1){
           	portid = 1;
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0,
                  		pkts_burst, MAX_PKT_BURST);
@@ -162,42 +162,42 @@ static void l2fwd_main_loop(void){
 						}
 						rte_pktmbuf_free(rm[0]);
         // }
-      }
-      else {
-          // sending by bulk
-          unsigned i;
-          struct rte_mbuf *mrm[PKT_NUMBUF];
-          int ret = 0;
-
-          for (i=0; i<PKT_NUMBUF; i++)
-          	mrm[i] = NULL;
-
-          char *data;
-          /* alloc NB_MBUF mbufs */
-          for (i=0; i<PKT_NUMBUF; i++) {
-          	mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
-          	data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
-          	// memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
-            memset(data, '*', rte_pktmbuf_pkt_len(mrm[i]));
-          	l2fwd_mac_updating(mrm[i], portid);
-
-          	if (mrm[i] == NULL) {
-          		printf("rte_pktmbuf_alloc() failed (%u)\n", i);
-          		ret = -1;
-          		break;
-          	}
-          }
-
-          sent = rte_eth_tx_burst(portid, PKT_NUMBUF, mrm, i);
-
-          if (sent){
-          	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
-          }
-
-          for (i=0; i<PKT_NUMBUF; i++)
-          		rte_pktmbuf_free(mrm[i]);
-
-      }
+      // }
+      // else {
+      //     // sending by bulk
+      //     unsigned i;
+      //     struct rte_mbuf *mrm[NB_MBUF];
+      //     int ret = 0;
+      //
+      //     for (i=0; i<NB_MBUF; i++)
+      //     	mrm[i] = NULL;
+      //
+      //     char *data;
+      //     /* alloc NB_MBUF mbufs */
+      //     for (i=0; i<PKT_NUMBUF; i++) {
+      //     	mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
+      //     	data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
+      //     	// memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
+      //       memset(data, '*', rte_pktmbuf_pkt_len(mrm[i]));
+      //     	l2fwd_mac_updating(mrm[i], portid);
+      //
+      //     	if (mrm[i] == NULL) {
+      //     		printf("rte_pktmbuf_alloc() failed (%u)\n", i);
+      //     		ret = -1;
+      //     		break;
+      //     	}
+      //     }
+      //
+      //     sent = rte_eth_tx_burst(portid, NB_MBUF, mrm, i);
+      //
+      //     if (sent){
+      //     	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
+      //     }
+      //
+      //     for (i=0; i<NB_MBUF; i++)
+      //     		rte_pktmbuf_free(mrm[i]);
+      //
+      // }
 
 
       }
