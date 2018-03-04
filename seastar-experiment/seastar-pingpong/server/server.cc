@@ -104,7 +104,7 @@ int main(int ac, char** av) {
             server->invoke_on_all(&tcp_server::listen, ipv4_addr{port});
             // Invoke a method on all Service instances in parallel.
         }).then([port] {
-            std::cout << "Seastar TCP server listening on port " << port << " ...\n";
+            std::cout << "Seastar TCP server listening on port " << port << "with buffer " << BUFFER_SIZE  <<"...\n";
         });
     });
 }
