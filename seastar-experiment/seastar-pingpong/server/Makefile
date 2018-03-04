@@ -1,5 +1,5 @@
 SEASTAR ="/data1/sungho/seastar"
-TARGET = "server"
+TARGET = "client"
 
 all:
 
