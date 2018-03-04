@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 time_t start; //adding timer
 size_t BUFFER_SIZE = 64;
-int LATENCY = 1, PINGS = 1000000, LIMIT = PINGS*BUFFER_SIZE;
+int LATENCY = 1, PINGS = 1000000;
 double total_throughput = 0;
 uint64_t start_time, end_time;
 std::string packetz(BUFFER_SIZE,'*');
@@ -62,7 +62,7 @@ public:
                     // }
                     total_throughput+=str.length();
 
-                    if(LATENCY && total_throughput >= LIMIT){
+                    if(LATENCY && total_throughput >= (BUFFER_SIZE*PINGS)){
                         return make_ready_future();
                     }
                     // std::cout << str << str.length() << std::endl;
@@ -83,7 +83,7 @@ public:
     void ping_report() {
         if (++_num_reported == _concurrent_connections) {
             end_time = getTimeStamp();
-            printf("sending the size %d using %ld byte packet\n", LIMIT, BUFFER_SIZE);
+            printf("sending the %d pings using %ld byte packet\n", PINGS, BUFFER_SIZE);
             printf("latency: %ld\n", end_time - start_time);
             std::cout << "throughput: " <<  (total_throughput/1048576)/((end_time - start_time)/1000000) << " Mbytes" << std::endl;
             clients.stop().then([] {
