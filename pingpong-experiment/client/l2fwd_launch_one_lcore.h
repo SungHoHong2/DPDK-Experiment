@@ -166,10 +166,10 @@ static void l2fwd_main_loop(void){
       // else {
       //     // sending by bulk
       //     unsigned i;
-      //     struct rte_mbuf *mrm[NB_MBUF];
+      //     struct rte_mbuf *mrm[PKT_NUMBUF];
       //     int ret = 0;
       //
-      //     for (i=0; i<NB_MBUF; i++)
+      //     for (i=0; i<PKT_NUMBUF; i++)
       //     	mrm[i] = NULL;
       //
       //     char *data;
@@ -177,8 +177,7 @@ static void l2fwd_main_loop(void){
       //     for (i=0; i<PKT_NUMBUF; i++) {
       //     	mrm[i] = rte_pktmbuf_alloc(test_pktmbuf_pool);
       //     	data = rte_pktmbuf_append(mrm[i], PKT_SIZE);
-      //     	// memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
-      //       memset(data, '*', rte_pktmbuf_pkt_len(mrm[i]));
+      //     	memset(data, 0xff, rte_pktmbuf_pkt_len(mrm[i]));
       //     	l2fwd_mac_updating(mrm[i], portid);
       //
       //     	if (mrm[i] == NULL) {
@@ -188,13 +187,13 @@ static void l2fwd_main_loop(void){
       //     	}
       //     }
       //
-      //     sent = rte_eth_tx_burst(portid, NB_MBUF, mrm, i);
+      //     sent = rte_eth_tx_burst(portid, 0, mrm, i);
       //
       //     if (sent){
       //     	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
       //     }
       //
-      //     for (i=0; i<NB_MBUF; i++)
+      //     for (i=0; i<PKT_NUMBUF; i++)
       //     		rte_pktmbuf_free(mrm[i]);
       //
       // }
