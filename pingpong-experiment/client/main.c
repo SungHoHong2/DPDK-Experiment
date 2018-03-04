@@ -39,14 +39,14 @@
 #include <rte_mbuf.h>
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
-#define NB_MBUF   2
+#define NB_MBUF   8192
 
 // TUNABLES BEGIN
 //#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE  2048 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 512 // sending packet size over 1600 the performance degrades
-#define PKT_NUMBUF 2 // 1 : send one at a time 2 : multiple sends
+#define PKT_NUMBUF 2
 #define PINGS 1000000
 uint64_t start_time, end_time;
 
