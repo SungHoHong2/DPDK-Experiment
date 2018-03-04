@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace seastar;
-const size_t BUFFER_SIZE = 10;
+size_t BUFFER_SIZE = 64;
 
 class tcp_server {
     std::vector<server_socket> _tcp_listeners;
@@ -102,6 +102,9 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char** av) {
     app_template app;
+    app.add_options()
+        ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
+    ;
 
     return app.run_deprecated(ac, av, [&] {
         uint16_t port = 1234; // assign the port value from the app_template
@@ -109,7 +112,7 @@ int main(int ac, char** av) {
         // The distributed template manages a sharded service,
         // by creating a copy of the service on each shard, providing mechanisms
         // to communicate with each shard's copy, and a way to stop the service.
-
+        BUFFER_SIZE = config["buffer"].as<unsigned>();
         //Starts Service by constructing an instance on every logical core with a copy of args passed to the constructor.
         server->start().then([server = std::move(server), port] () mutable {
             engine().at_exit([server] {
