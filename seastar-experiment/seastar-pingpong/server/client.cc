@@ -56,10 +56,10 @@ public:
             }).then([this, times] {
                 return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
-                    if (str != packetz) {
-                        std::cout << str << str.length() << std::endl;
-                        return make_ready_future();
-                    }
+                    // if (str != packetz) {
+                    //     std::cout << str << str.length() << std::endl;
+                    //     return make_ready_future();
+                    // }
                     total_throughput+=str.length();
 
                     if(LATENCY && total_throughput >= LIMIT){
