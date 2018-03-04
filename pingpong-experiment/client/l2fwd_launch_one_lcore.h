@@ -188,7 +188,7 @@ static void l2fwd_main_loop(void){
           	}
           }
 
-          sent = rte_eth_tx_burst(portid, 0, mrm, i);
+          sent = rte_eth_tx_burst(portid, NB_MBUF, mrm, i);
 
           if (sent){
           	port_statistics[portid].tx += sent; //* rte_pktmbuf_pkt_len(rm[0]);
