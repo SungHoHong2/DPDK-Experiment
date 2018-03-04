@@ -121,7 +121,7 @@ static void l2fwd_main_loop(void){
           	portid = 1;
           	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
           	port_statistics[portid].rx += nb_rx;
-
+						unsigned dst_port;
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
