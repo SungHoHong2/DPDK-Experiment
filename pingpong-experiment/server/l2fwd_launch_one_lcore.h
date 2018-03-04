@@ -125,9 +125,11 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
-								l2fwd_mac_updating(m, portid);
-						    buffer = tx_buffer[portid];
-								sent = rte_eth_tx_buffer(portid, j, buffer, m);
+
+								dst_port = l2fwd_dst_ports[portid];
+								l2fwd_mac_updating(m, dst_port);
+						    buffer = tx_buffer[dst_port];
+								sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
 
 								if(sent)
 								port_statistics[portid].tx += sent;
