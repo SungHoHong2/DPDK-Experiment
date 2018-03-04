@@ -119,7 +119,7 @@ static void l2fwd_main_loop(void){
          */
         // for (i = 0; i < qconf->n_rx_port; i++) {
           	portid = 1;
-          	nb_rx = rte_eth_rx_burst((uint8_t) portid, 0, pkts_burst, MAX_PKT_BURST);
+          	nb_rx = rte_eth_rx_burst((uint8_t) portid, 2, pkts_burst, MAX_PKT_BURST);
           	port_statistics[portid].rx += nb_rx;
 						unsigned dst_port;
 						for (j = 0; j < nb_rx; j++) {
