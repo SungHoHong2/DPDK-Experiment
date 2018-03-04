@@ -8,7 +8,7 @@ using namespace net;
 using namespace std::chrono_literals;
 
 time_t start; //adding timer
-const size_t BUFFER_SIZE = 64;
+size_t BUFFER_SIZE = 64;
 int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*BUFFER_SIZE;
 double total_throughput = 0;
 uint64_t start_time, end_time;
