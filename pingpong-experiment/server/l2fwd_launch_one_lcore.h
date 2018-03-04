@@ -48,10 +48,10 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
 	tmp = &eth->d_addr.addr_bytes[0];
 	// WORKSTATION 00:1B:21:A6:D4:D5
-	// *((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
+	*((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
 
-	// ASU E4:1D:2D:D9:BF:B1
-	*((uint64_t *)tmp) = 0xb1bfd92d1de4 + ((uint64_t)dest_portid << 40);
+	// ASU c1n24 E4:1D:2D:D9:BF:B1
+	// *((uint64_t *)tmp) = 0xb1bfd92d1de4 + ((uint64_t)dest_portid << 40);
 
 	/* src addr */
 	ether_addr_copy(&l2fwd_ports_eth_addr[dest_portid], &eth->s_addr);
