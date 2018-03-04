@@ -76,25 +76,6 @@ public:
                     });
             });
         }
-        future<> do_write(int end) {
-            if (end == 0) {
-                return make_ready_future<>();
-            }
-            return _write_buf.write(str_txbuf).then([this] {
-                return _write_buf.flush();
-            }).then([this, end] {
-                return do_write(end - 1);
-            });
-        }
-        future<> do_read() {
-            return _read_buf.read_exactly(rx_msg_size).then([this] (temporary_buffer<char> buf) {
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                } else {
-                    return do_read();  // read the file until it
-                }
-            });
-        }
     };
 };
 
