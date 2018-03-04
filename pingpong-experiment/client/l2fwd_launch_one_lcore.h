@@ -34,7 +34,7 @@ static void print_stats(void){
 		if ((l2fwd_enabled_port_mask & (1 << portid)) == 0)
 			continue;
 
-			printf("\nsending the size %d using %d byte packet\n", LIMIT, PKT_SIZE);
+			printf("\nsending the %d pings using %d byte packet\n", PINGS, PKT_SIZE);
 			printf("latency: %ld\n", end_time - start_time);
 			printf("throughput: %f Mbytes",(port_statistics[1].rx_bytes/1048576)/((end_time - start_time)/1000000));
 	}
@@ -114,7 +114,7 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
       						// /* reset the timer */
-									if(port_statistics[portid].rx_bytes>=LIMIT){
+									if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
 										  end_time = getTimeStamp();
 											print_stats();
 											force_quit=1;
