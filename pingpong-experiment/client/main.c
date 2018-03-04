@@ -46,7 +46,7 @@
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE  2048 // RTE_MBUF_DEFAULT_BUF_SIZE
 #define PKT_SIZE 512 // sending packet size over 1600 the performance degrades
-#define PKT_NUMBUF 1
+#define PKT_NUMBUF 2
 #define PINGS 1000000
 uint64_t start_time, end_time;
 
