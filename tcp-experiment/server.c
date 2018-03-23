@@ -18,7 +18,7 @@
 #include <sys/fcntl.h>
 
 
-#define PORT "3490"  // the port users will be connecting to
+#define PORT "1234"  // the port users will be connecting to
 #define PKT_SIZE 64 // max number of bytes we can get at once
 #define BACKLOG 10     // how many pending connections queue will hold
 
