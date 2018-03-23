@@ -8,8 +8,8 @@ using namespace net;
 using namespace std::chrono_literals;
 
 time_t start; //adding timer
-const size_t BUFFER_SIZE = 10;
-int LATENCY = 1, PINGS = 100000, LIMIT = PINGS*BUFFER_SIZE;
+size_t BUFFER_SIZE = 64;
+int LATENCY = 1, PINGS = 1000000;
 double total_throughput = 0;
 uint64_t start_time, end_time;
 std::string packetz(BUFFER_SIZE,'*');
@@ -56,15 +56,13 @@ public:
             }).then([this, times] {
                 return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
-                    if (str != packetz) {
-                        std::cout << str << str.length() << std::endl;
-                        return make_ready_future();
-                    }
-
+                    // if (str != packetz) {
+                    //     std::cout << str << str.length() << std::endl;
+                    //     return make_ready_future();
+                    // }
                     total_throughput+=str.length();
 
-
-                    if(LATENCY && total_throughput >= LIMIT){
+                    if(LATENCY && total_throughput >= (BUFFER_SIZE*PINGS)){
                         return make_ready_future();
                     }
                     // std::cout << str << str.length() << std::endl;
@@ -85,7 +83,7 @@ public:
     void ping_report() {
         if (++_num_reported == _concurrent_connections) {
             end_time = getTimeStamp();
-            printf("sending the size %d using %ld byte packet\n", LIMIT, BUFFER_SIZE);
+            printf("sending the %d pings using %ld byte packet\n", PINGS, BUFFER_SIZE);
             printf("latency: %ld\n", end_time - start_time);
             std::cout << "throughput: " <<  (total_throughput/1048576)/((end_time - start_time)/1000000) << " Mbytes" << std::endl;
             clients.stop().then([] {
@@ -132,8 +130,9 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
-        ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
+        ("conn", bpo::value<unsigned>()->default_value(2), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
+        ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
         ;
 
     // INITIALIZE THE TEST BEGIN
@@ -148,6 +147,7 @@ int main(int ac, char ** av) {
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         auto proto = config["proto"].as<std::string>();
+        BUFFER_SIZE = config["buffer"].as<unsigned>();
 
         if (proto == "tcp") {
             protocol = transport::TCP;
