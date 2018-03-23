@@ -47,7 +47,7 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 
 	eth = rte_pktmbuf_mtod(m, struct ether_hdr *);
 	tmp = &eth->d_addr.addr_bytes[0];
-	// WORKSTATION 00:1B:21:A6:D4:D5
+	// wenji WORKSTATION 00:1B:21:A6:D4:D5
 	*((uint64_t *)tmp) = 0xd4d4a6211b00 + ((uint64_t)dest_portid << 40);
 
 	// ASU c1n24 E4:1D:2D:D9:BF:B1
