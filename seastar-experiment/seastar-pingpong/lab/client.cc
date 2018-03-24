@@ -59,7 +59,7 @@ public:
             total_ping_identifier++;
             std::cout << "before: " << " : " << str << std::endl;
 
-            if(s.length()>4){
+            if(str.length()>4){
               str = "ping";
             }
 
