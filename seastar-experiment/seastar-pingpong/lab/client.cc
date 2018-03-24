@@ -140,8 +140,8 @@ int main(int ac, char ** av) {
         ("server", bpo::value<std::string>()->default_value("192.168.56.101"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
-        ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp");
-        ("smp", bpo::value<unsigned>()->default_value(1), "smp")
+        ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
+        ("smp", bpo::value<unsigned>()->default_value(1), "smp");
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
