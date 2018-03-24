@@ -48,6 +48,7 @@ public:
             std::string str = "";
             int total = 4;
             int temp = total-tenth;
+            int s;
             for(s=0; s<temp; s++){
                 str.append("0");
             }
