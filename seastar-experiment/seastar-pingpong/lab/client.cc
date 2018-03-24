@@ -57,10 +57,10 @@ public:
             str.append(msg);
 
             std::cout << "before: "  << str << std::endl;
-            return _write_buf.write(str).then([this] {
+            return _write_buf.write("ping").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
-                return _read_buf.read_exactly(5).then([this, times] (temporary_buffer<char> buf) {
+                return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
                     if (buf.size() != 5) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
