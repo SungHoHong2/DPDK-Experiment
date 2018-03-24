@@ -62,7 +62,8 @@ public:
             if(str.length()>4){
               str = "ping";
             }
-
+            
+            str = "ping"
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
