@@ -56,6 +56,7 @@ public:
             auto msg = std::to_string(times);
             str.append(msg);
 
+            std::cout << "before: "  << str << std::endl;
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -65,7 +66,7 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    std::cout << "chara: "  << str << std::endl;
+                    std::cout << "after: "  << str << std::endl;
 
                     if (times > 0) {
                         return ping(times - 1);
