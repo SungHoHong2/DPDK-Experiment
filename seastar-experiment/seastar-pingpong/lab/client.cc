@@ -141,7 +141,7 @@ int main(int ac, char ** av) {
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp");
-
+        ("smp", bpo::value<unsigned>()->default_value(1), "smp")
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
