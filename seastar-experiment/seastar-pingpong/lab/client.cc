@@ -41,28 +41,6 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> do_read() {
-            return _read_buf.read_exactly(rx_msg_size).then([this] (temporary_buffer<char> buf) {
-                _bytes_read += buf.size();
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                } else {
-                    return do_read();
-                }
-            });
-        }
-
-        future<> do_write(int end) {
-            if (end == 0) {
-                return make_ready_future();
-            }
-            return _write_buf.write(str_txbuf).then([this] {
-                _bytes_write += tx_msg_size;
-                return _write_buf.flush();
-            }).then([this, end] {
-                return do_write(end - 1);
-            });
-        }
 
         future<> ping(int times) {
             return _write_buf.write("ping").then([this] {
@@ -83,28 +61,6 @@ public:
                     } else {
                         return make_ready_future();
                     }
-                });
-            });
-        }
-
-        future<size_t> rxrx() {
-            return _write_buf.write("rxrx").then([this] {
-                return _write_buf.flush();
-            }).then([this] {
-                return do_write(tx_msg_nr).then([this] {
-                    return _write_buf.close();
-                }).then([this] {
-                    return make_ready_future<size_t>(_bytes_write);
-                });
-            });
-        }
-
-        future<size_t> txtx() {
-            return _write_buf.write("txtx").then([this] {
-                return _write_buf.flush();
-            }).then([this] {
-                return do_read().then([this] {
-                    return make_ready_future<size_t>(_bytes_read);
                 });
             });
         }
