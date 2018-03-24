@@ -57,7 +57,7 @@ public:
             str.append(s);
 
             total_ping_identifier++;
-            std::cout << "before: " << " : " << str << std::endl;
+            std::cout << str.length() << " : " << str << std::endl;
 
             if(str.length()>4){
               str = "ping";
