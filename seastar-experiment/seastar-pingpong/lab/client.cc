@@ -61,7 +61,7 @@ public:
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
-                    if (buf.size() != 5) {
+                    if (buf.size() != 4) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
