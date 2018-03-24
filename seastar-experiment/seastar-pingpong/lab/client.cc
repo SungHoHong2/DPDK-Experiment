@@ -45,19 +45,20 @@ public:
 
         future<> ping(int times) {
 
+            total_ping_identifier++;
             std::string str = "";
-            int total = 5;
-            int tenth = times/10;
+            int total = 4;
+            int tenth = total_ping_identifier/10;
             int temp = total-tenth;
             int s;
             for(s=0; s<temp; s++){
                 str.append("0");
             }
-            auto msg = std::to_string(times);
+            auto msg = std::to_string(total_ping_identifier);
             str.append(msg);
 
             std::cout << "before: "  << str << std::endl;
-            return _write_buf.write(str).then([this] {
+            return _write_buf.write("ping11").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(6).then([this, times] (temporary_buffer<char> buf) {
