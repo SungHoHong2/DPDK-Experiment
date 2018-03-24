@@ -19,7 +19,7 @@ transport protocol = transport::TCP;
 
 class client {
 private:
-    static constexpr unsigned _pings_per_connection = 10;
+    static constexpr unsigned _pings_per_connection = 10000;
     unsigned _total_pings;
     unsigned _concurrent_connections;
     ipv4_addr _server_addr;
@@ -118,22 +118,6 @@ public:
         });
     }
 
-    future<> rxrx_test(connection *conn) {
-        auto started = lowres_clock::now();
-        return conn->rxrx().then([started] (size_t bytes) {
-            auto finished = lowres_clock::now();
-            clients.invoke_on(0, &client::rxtx_report, started, finished, bytes);
-        });
-    }
-
-    future<> txtx_test(connection *conn) {
-        auto started = lowres_clock::now();
-        return conn->txtx().then([started] (size_t bytes) {
-            auto finished = lowres_clock::now();
-            clients.invoke_on(0, &client::rxtx_report, started, finished, bytes);
-        });
-    }
-
     void ping_report(lowres_clock::time_point started, lowres_clock::time_point finished) {
         if (_earliest_started > started)
             _earliest_started = started;
@@ -156,28 +140,6 @@ public:
         }
     }
 
-    void rxtx_report(lowres_clock::time_point started, lowres_clock::time_point finished, size_t bytes) {
-        if (_earliest_started > started)
-            _earliest_started = started;
-        if (_latest_finished < finished)
-            _latest_finished = finished;
-        _processed_bytes += bytes;
-        if (++_num_reported == _concurrent_connections) {
-            auto elapsed = _latest_finished - _earliest_started;
-            auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-            auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
-            fprint(std::cout, "========== %s ============\n", _test);
-            fprint(std::cout, "Server: %s\n", _server_addr);
-            fprint(std::cout, "Connections: %u\n", _concurrent_connections);
-            fprint(std::cout, "Bytes Received(MiB): %u\n", _processed_bytes/1024/1024);
-            fprint(std::cout, "Total Time(Secs): %f\n", secs);
-            fprint(std::cout, "Bandwidth(Gbits/Sec): %f\n",
-                static_cast<double>((_processed_bytes * 8)) / (1000 * 1000 * 1000) / secs);
-            clients.stop().then([] {
-                engine().exit(0);
-            });
-        }
-    }
 
     future<> start(ipv4_addr server_addr, std::string test, unsigned ncon) {
         _server_addr = server_addr;
