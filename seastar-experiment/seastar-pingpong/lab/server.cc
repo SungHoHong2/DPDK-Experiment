@@ -92,7 +92,7 @@ public:
                 }
                 auto cmd = std::string(buf.get(), buf.size());
                 // pingpong test
-                if (cmd == str_ping) {
+                // if (cmd == str_ping) {
                     // this is where you get the string ping!
                     return _write_buf.write(cmd).then([this] {
                         return _write_buf.flush();
@@ -100,19 +100,19 @@ public:
                         return this->read();
                     });
                 // server tx test
-                } else if (cmd == str_txtx) {
-                    return tx_test();
+                // } else if (cmd == str_txtx) {
+                    // return tx_test();
                 // server tx test
-                } else if (cmd == str_rxrx) {
-                    return rx_test();
+                // } else if (cmd == str_rxrx) {
+                    // return rx_test();
                 // unknow test
-                } else {
-                    return _write_buf.write(str_unknow).then([this] {
-                        return _write_buf.flush();
-                    }).then([] {
-                        return make_ready_future();
-                    });
-                }
+                // } else {
+                //     return _write_buf.write(str_unknow).then([this] {
+                //         return _write_buf.flush();
+                //     }).then([] {
+                //         return make_ready_future();
+                //     });
+                // }
             });
         }
         future<> do_write(int end) {
