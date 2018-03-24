@@ -46,7 +46,7 @@ public:
         future<> ping(int times) {
 
             std::string str = "";
-            int total = 4;
+            int total = 5;
             int tenth = times/10;
             int temp = total-tenth;
             int s;
@@ -60,8 +60,8 @@ public:
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
-                return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
-                    if (buf.size() != 4) {
+                return _read_buf.read_exactly(5).then([this, times] (temporary_buffer<char> buf) {
+                    if (buf.size() != 5) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
