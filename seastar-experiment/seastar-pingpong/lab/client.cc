@@ -60,7 +60,7 @@ public:
             total_ping_identifier++;
 
 
-            std::cout << "before: "  total_ping_identifier << " : " << str << std::endl;
+            std::cout << "before: " << total_ping_identifier << " : " << str << std::endl;
 
 
 
