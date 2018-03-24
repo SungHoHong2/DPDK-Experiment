@@ -45,9 +45,10 @@ public:
 
         future<> ping(int times) {
 
-            total_ping_identifier++;
             std::string str = "";
             int total = 4;
+
+
             int tenth = total_ping_identifier/10;
             int temp = total-tenth;
             int s;
@@ -56,8 +57,13 @@ public:
             }
             auto msg = std::to_string(total_ping_identifier);
             str.append(msg);
+            total_ping_identifier++;
 
-            std::cout << "before: "  << str << std::endl;
+
+            std::cout << "before: "  total_ping_identifier << " : " << str << std::endl;
+
+
+
             return _write_buf.write("ping").then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
