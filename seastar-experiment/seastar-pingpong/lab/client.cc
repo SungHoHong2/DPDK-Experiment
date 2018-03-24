@@ -46,10 +46,10 @@ public:
         future<> ping(int times) {
 
             std::string str = "";
-            int i, v, tenth;
+            int v, tenth;
             int total = 4;
 
-            std::string s = std::to_string(i);
+            std::string s = std::to_string(total_ping_identifier);
             tenth = s.length();
             for(v=0; v<(total-tenth); v++){
                 str.append("0");
