@@ -47,6 +47,7 @@ public:
 
             std::string str = "";
             int total = 4;
+            int tenth = times/10;
             int temp = total-tenth;
             int s;
             for(s=0; s<temp; s++){
