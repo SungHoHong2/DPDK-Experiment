@@ -45,7 +45,14 @@ public:
 
         future<> ping(int times) {
 
-            std::string str = "9999";
+            std::string str = "";
+            int total = 4;
+            int temp = total-tenth;
+            for(s=0; s<temp; s++){
+                str.append("0");
+            }
+            auto msg = to_string(times);
+            str.append(msg);
 
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
@@ -58,15 +65,6 @@ public:
                     auto str = std::string(buf.get(), buf.size());
                     std::cout << "chara: "  << str << std::endl;
 
-
-
-
-
-
-                    // if (str != "pong") {
-                    //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
-                    //     return make_ready_future();
-                    // }
                     if (times > 0) {
                         return ping(times - 1);
                     } else {
