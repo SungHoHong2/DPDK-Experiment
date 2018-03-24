@@ -95,7 +95,7 @@ public:
                 // pingpong test
                 if (cmd == str_ping) {
                     // this is where you get the string ping!
-                    return _write_buf.write(str_pong).then([this] {
+                    return _write_buf.write(cmd).then([this] {
                         return _write_buf.flush();
                     }).then([this] {
                         return this->read();
