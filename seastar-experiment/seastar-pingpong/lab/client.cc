@@ -52,7 +52,7 @@ public:
             for(s=0; s<temp; s++){
                 str.append("0");
             }
-            auto msg = to_string(times);
+            auto msg = std::to_string(times);
             str.append(msg);
 
             return _write_buf.write(str).then([this] {
