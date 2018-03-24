@@ -46,21 +46,18 @@ public:
         future<> ping(int times) {
 
             std::string str = "";
+            int i, v, tenth;
             int total = 4;
 
-
-            int tenth = total_ping_identifier/10;
-            int temp = total-tenth;
-            int s;
-            for(s=0; s<temp; s++){
+            std::string s = std::to_string(i);
+            tenth = s.length();
+            for(v=0; v<(total-tenth); v++){
                 str.append("0");
             }
-            auto msg = std::to_string(total_ping_identifier);
-            str.append(msg);
+            str.append(s);
+
             total_ping_identifier++;
-
-
-            std::cout << "before: " << total_ping_identifier << " : " << str << std::endl;
+            std::cout << "before: " << " : " << str << std::endl;
 
 
 
