@@ -86,8 +86,7 @@ public:
                 return make_ready_future();
             }
             // Expect 4 bytes cmd from client
-            size_t n = 4;
-            return _read_buf.read_exactly(n).then([this] (temporary_buffer<char> buf) {
+            return _read_buf.read_exactly(5).then([this] (temporary_buffer<char> buf) {
                 if (buf.size() == 0) {
                     return make_ready_future();
                 }

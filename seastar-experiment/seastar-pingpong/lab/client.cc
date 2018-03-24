@@ -11,6 +11,7 @@ static int tx_msg_total_size = 100 * 1024 * 1024;
 static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
+static int total_ping_identifier = 0;
 
 class client;
 distributed<client> clients;
@@ -44,18 +45,23 @@ public:
 
         future<> ping(int times) {
 
+            string str = "9999";
 
-            return _write_buf.write("ping").then([this] {
+            return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
-                    if (buf.size() != 4) {
+                    if (buf.size() !== 4) {
                         fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-
                     std::cout << "chara: "  << str << std::endl;
+
+
+
+
+
 
                     // if (str != "pong") {
                     //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
@@ -137,7 +143,7 @@ namespace bpo = boost::program_options;
 int main(int ac, char ** av) {
     app_template app;
     app.add_options()
-        ("server", bpo::value<std::string>()->default_value("192.168.56.101"), "Server address")
+        ("server", bpo::value<std::string>()->default_value("192.168.56.101:1234"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
