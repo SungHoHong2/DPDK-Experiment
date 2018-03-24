@@ -63,7 +63,7 @@ public:
               str = "ping";
             }
 
-            str = "0000";
+            // str = "0000";
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
