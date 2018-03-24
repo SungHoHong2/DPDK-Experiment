@@ -19,7 +19,7 @@ transport protocol = transport::TCP;
 
 class client {
 private:
-    static constexpr unsigned _pings_per_connection = 10000;
+    static constexpr unsigned _pings_per_connection = 10;
     unsigned _total_pings;
     unsigned _concurrent_connections;
     ipv4_addr _server_addr;
