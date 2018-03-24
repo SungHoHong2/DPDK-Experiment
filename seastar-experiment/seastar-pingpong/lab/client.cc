@@ -59,9 +59,11 @@ public:
             total_ping_identifier++;
             std::cout << "before: " << " : " << str << std::endl;
 
+            if(s.length()>4){
+              str = "ping";
+            }
 
-
-            return _write_buf.write("ping").then([this] {
+            return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(4).then([this, times] (temporary_buffer<char> buf) {
