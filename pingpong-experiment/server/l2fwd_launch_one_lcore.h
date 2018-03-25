@@ -28,12 +28,15 @@ static void print_stats(void){
 				 "\nPKT-SIZE: %d"
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
-			   "\nPackets dropped: %21"PRIu64,
+			   "\nPackets dropped: %21"PRIu64
+				 "\ttest: %21"PRIu64,
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].tx,
 			   port_statistics[portid].rx,
-			   port_statistics[portid].dropped);
+			   port_statistics[portid].dropped,
+				 port_statistics[portid].test
+			 );
 	}
 	printf("\n====================================================\n");
 }
@@ -130,12 +133,25 @@ static void l2fwd_main_loop(void){
 
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
+
+
+								// ??
+								m->timestamp;
+
+
+
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 
 								dst_port = l2fwd_dst_ports[portid];
 								l2fwd_mac_updating(m, dst_port);
 						    buffer = tx_buffer[dst_port];
 								sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
+
+
+								/** Valid if PKT_RX_TIMESTAMP is set. The unit and time reference
+								 * are not normalized but are always the same for a given port.
+								 */
+
 
 								if(sent)
 								port_statistics[portid].tx += sent;

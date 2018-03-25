@@ -57,13 +57,11 @@ public:
             str.append(s);
 
             total_ping_identifier++;
-            std::cout << str.length() << " : " << str << std::endl;
-
+            std::cout << str << std::endl;
             if(str.length()>4){
               str = "ping";
             }
 
-            // str = "0000";
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
