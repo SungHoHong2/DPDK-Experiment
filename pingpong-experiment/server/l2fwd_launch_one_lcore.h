@@ -29,7 +29,7 @@ static void print_stats(void){
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64
-				 "\ttest: %21"PRIu64,
+				 "\ntest: %21"PRIu64,
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].tx,
@@ -134,12 +134,6 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								m = pkts_burst[j];
 
-
-								// ??
-								m->timestamp;
-
-
-
 								rte_prefetch0(rte_pktmbuf_mtod(m, void *));
 
 								dst_port = l2fwd_dst_ports[portid];
@@ -155,6 +149,8 @@ static void l2fwd_main_loop(void){
 
 								if(sent)
 								port_statistics[portid].tx += sent;
+								port_statistics[portid].test = m->timestamp;
+
 						}
         	// }
       }
