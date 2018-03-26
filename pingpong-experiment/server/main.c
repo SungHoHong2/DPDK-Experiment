@@ -268,6 +268,18 @@ int main(int argc, char **argv){
   		tx_buffer[portid] = rte_zmalloc_socket("tx_buffer", RTE_ETH_TX_BUFFER_SIZE(MAX_PKT_BURST), 0, rte_eth_dev_socket_id(portid));
       rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
+			/* driver info */
+			struct ethtool_drvinfo info;
+			if (rte_ethtool_get_drvinfo(portid, &info)) {
+					printf("Error getting info for port %i\n", portid);
+					return;
+				}
+
+			printf("___________report from Chara______________\n");
+			printf("Port %i driver: %s (ver: %s)\n",portid, info.driver, info.version);
+			printf("firmware-version: %s\n", info.fw_version);
+			printf("bus-info: %s\n", info.bus_info);
+
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
 			if (dev_info.pci_dev)
@@ -284,8 +296,9 @@ int main(int argc, char **argv){
 			int64_t nsec;
 			rte_eth_timesync_read_time(portid, &net_time);
 			nsec = ((uint64_t) net_time.tv_sec * NSEC_PER_SEC) + net_time.tv_nsec;
-			printf("gettime from chara: %ld\n",nsec);
+			printf("gettime from NIC: %ld\n",nsec);
 
+			printf("___________report from Chara______________\n");
 
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
