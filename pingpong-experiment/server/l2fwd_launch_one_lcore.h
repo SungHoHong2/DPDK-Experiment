@@ -29,7 +29,7 @@ static void print_stats(void){
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64
-				 "\ntest: %21"PRIu64,
+				 "\ntest: %d"PRIu64,
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].tx,
@@ -146,9 +146,12 @@ static void l2fwd_main_loop(void){
 								 * are not normalized but are always the same for a given port.
 								 */
 
-								if(sent)
-								port_statistics[portid].tx += sent;
-								port_statistics[portid].test += sent;
+								if(sent){
+									port_statistics[portid].tx += sent;
+									port_statistics[portid].test += sent;
+								}
+
+
 								// port_statistics[portid].test += m->timestamp;
 
 						}
