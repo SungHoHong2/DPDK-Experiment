@@ -268,11 +268,18 @@ int main(int argc, char **argv){
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
 
+			struct rte_pci_device *pci_dev;
+			pci_dev = RTE_ETH_DEV_TO_PCI(eth_dev);
+			rte_eth_copy_pci_info(eth_dev, pci_dev);
+			printf("pci_dev: (%x)\n", pci_dev->id.device_id);
+
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
       /* Start device */
   		ret = rte_eth_dev_start(portid);
+
+
 
       rte_eth_promiscuous_enable(portid);
       printf("Port %u, MAC address: %02X:%02X:%02X:%02X:%02X:%02X\n\n",
