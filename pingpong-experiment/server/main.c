@@ -276,12 +276,6 @@ int main(int argc, char **argv){
 					dev_info.pci_dev->addr.function);
 
 
-			struct rte_pci_device *pci_dev =
-			E1000_DEV_TO_PCI(dev);
-
-
-			printf("pci_dev: (%x)\n", pci_dev->id.device_id);
-
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
