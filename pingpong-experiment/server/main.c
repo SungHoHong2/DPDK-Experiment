@@ -37,6 +37,9 @@
 #include <rte_ethdev.h>
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
+#include <limits.h>
+#include <sys/time.h>
+#include <getopt.h>
 
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
