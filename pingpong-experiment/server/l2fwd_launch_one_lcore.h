@@ -99,7 +99,7 @@ static void l2fwd_main_loop(void){
                 sent = rte_eth_tx_buffer_flush(portid, 0, buffer);
                 if (sent){
                   port_statistics[portid].tx += sent;
-								
+
 									port_statistics[portid].test += sent;
 
 								}
@@ -144,6 +144,8 @@ static void l2fwd_main_loop(void){
 								l2fwd_mac_updating(m, dst_port);
 						    buffer = tx_buffer[dst_port];
 								sent = rte_eth_tx_buffer(dst_port, 0, buffer, m);
+
+
 
 
 								/** Valid if PKT_RX_TIMESTAMP is set. The unit and time reference

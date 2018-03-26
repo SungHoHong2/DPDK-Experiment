@@ -276,6 +276,12 @@ int main(int argc, char **argv){
 					dev_info.pci_dev->addr.function);
 
 
+			struct timespec net_time, sys_time;
+			// clock_gettime(CLOCK_REALTIME, &sys_time);
+			int64_t nsec;
+			rte_eth_timesync_read_time(portid, &net_time);
+			printf("gettime from chara: %ld",(int64_t)timespec64_to_ns(&net_time));
+
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
