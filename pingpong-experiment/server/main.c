@@ -269,7 +269,7 @@ int main(int argc, char **argv){
       rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
 			/* driver info */
-			struct ethtool_drvinfo einfo;
+			ethtool_drvinfo einfo;
 			if (rte_ethtool_get_drvinfo(portid, &einfo)) {
 					printf("Error getting info for port %i\n", portid);
 					return;
