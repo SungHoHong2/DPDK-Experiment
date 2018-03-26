@@ -284,7 +284,7 @@ int main(int argc, char **argv){
 			int64_t nsec;
 			rte_eth_timesync_read_time(portid, &net_time);
 			nsec = ((uint64_t) net_time.tv_sec * NSEC_PER_SEC) + net_time.tv_nsec
-			printf("gettime from chara: %ld\n",nsec;
+			printf("gettime from chara: %ld\n",nsec);
 
 
       /* read the packet loss */
