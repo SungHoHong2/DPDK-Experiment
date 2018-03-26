@@ -29,7 +29,7 @@ static void print_stats(void){
 			   "\nPackets sent: %24"PRIu64
 			   "\nPackets received: %20"PRIu64
 			   "\nPackets dropped: %21"PRIu64
-				 "\ntest: %d"PRIu64,
+				 "\ntest: %ld"PRIu64,
 			   portid,
 				 PKT_SIZE,
 			   port_statistics[portid].tx,
