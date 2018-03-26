@@ -196,7 +196,7 @@ int main(int argc, char **argv){
  			last_port = portid;
 
  		nb_ports_in_mask++;
- 		// rte_eth_dev_info_get(portid, &dev_info);
+ 		rte_eth_dev_info_get(portid, &dev_info);
  	}
 
   if (nb_ports_in_mask % 2) {
@@ -267,10 +267,19 @@ int main(int argc, char **argv){
 
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
+			if (dev_info.pci_dev)
+				snprintf(drvinfo->bus_info, sizeof(drvinfo->bus_info),
+					"chara pci_devid in third: %04x:%02x:%02x.%x\n",
+					dev_info.pci_dev->addr.domain,
+					dev_info.pci_dev->addr.bus,
+					dev_info.pci_dev->addr.devid,
+					dev_info.pci_dev->addr.function);
 
-			struct rte_pci_device *pci_dev;
-			pci_dev = RTE_ETH_DEV_TO_PCI(eth_dev);
-			rte_eth_copy_pci_info(eth_dev, pci_dev);
+
+			struct rte_pci_device *pci_dev =
+			E1000_DEV_TO_PCI(dev);
+
+
 			printf("pci_dev: (%x)\n", pci_dev->id.device_id);
 
       /* read the packet loss */
