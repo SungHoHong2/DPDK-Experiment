@@ -269,14 +269,13 @@ int main(int argc, char **argv){
   		tx_buffer[portid] = rte_zmalloc_socket("tx_buffer", RTE_ETH_TX_BUFFER_SIZE(MAX_PKT_BURST), 0, rte_eth_dev_socket_id(portid));
       rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
+			printf("___________report from Chara______________\n");
 			/* driver info */
 			struct ethtool_drvinfo einfo;
 			if (rte_ethtool_get_drvinfo(portid, &einfo)) {
 					printf("Error getting info for port %i\n", portid);
-					return;
 				}
 
-			printf("___________report from Chara______________\n");
 			printf("Port %i driver: %s (ver: %s)\n",portid, einfo.driver, einfo.version);
 			printf("firmware-version: %s\n", einfo.fw_version);
 			printf("bus-info: %s\n", einfo.bus_info);
