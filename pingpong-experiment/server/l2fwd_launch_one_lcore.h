@@ -148,7 +148,8 @@ static void l2fwd_main_loop(void){
 
 								if(sent)
 								port_statistics[portid].tx += sent;
-								port_statistics[portid].test += m->timestamp;
+								port_statistics[portid].test += sent;
+								// port_statistics[portid].test += m->timestamp;
 
 						}
         	// }
