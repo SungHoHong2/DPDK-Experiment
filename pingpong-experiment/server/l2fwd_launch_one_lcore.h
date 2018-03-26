@@ -146,10 +146,10 @@ static void l2fwd_main_loop(void){
 								 * are not normalized but are always the same for a given port.
 								 */
 
-								if(sent){
-									port_statistics[portid].tx +=  m->timestamp;
-									port_statistics[portid].test += sent;
-								}
+								// if(sent){
+								// 	port_statistics[portid].tx +=  m->timestamp;
+								// 	port_statistics[portid].test += sent;
+								// }
 
 
 								// port_statistics[portid].test += m->timestamp;
