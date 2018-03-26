@@ -283,7 +283,9 @@ int main(int argc, char **argv){
 			// clock_gettime(CLOCK_REALTIME, &sys_time);
 			int64_t nsec;
 			rte_eth_timesync_read_time(portid, &net_time);
-			printf("gettime from chara: %ld",(int64_t)timespec64_to_ns(&net_time));
+			nsec = ((uint64_t) ts->tv_sec * NSEC_PER_SEC) + ts->tv_nsec
+			printf("gettime from chara: %ld\n",nsec;
+
 
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
