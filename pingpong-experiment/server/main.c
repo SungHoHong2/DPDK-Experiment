@@ -41,7 +41,7 @@
 #include <sys/time.h>
 #include <getopt.h>
 #include "rte_ethtool.h"
-#include "ethapp.h"
+// #include "ethapp.h"
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
