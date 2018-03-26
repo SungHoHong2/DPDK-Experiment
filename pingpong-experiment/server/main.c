@@ -279,11 +279,11 @@ int main(int argc, char **argv){
 					dev_info.pci_dev->addr.function);
 
 
-			struct timespec net_time, sys_time;
+			struct timespec net_time;
 			// clock_gettime(CLOCK_REALTIME, &sys_time);
 			int64_t nsec;
 			rte_eth_timesync_read_time(portid, &net_time);
-			nsec = ((uint64_t) ts->tv_sec * NSEC_PER_SEC) + ts->tv_nsec
+			nsec = ((uint64_t) net_time.tv_sec * NSEC_PER_SEC) + net_time.tv_nsec
 			printf("gettime from chara: %ld\n",nsec;
 
 
