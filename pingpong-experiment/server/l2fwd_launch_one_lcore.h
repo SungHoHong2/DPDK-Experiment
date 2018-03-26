@@ -147,7 +147,7 @@ static void l2fwd_main_loop(void){
 								 */
 
 								if(sent){
-									port_statistics[portid].tx += timestamp;
+									port_statistics[portid].tx +=  m->timestamp;
 									port_statistics[portid].test += sent;
 								}
 
