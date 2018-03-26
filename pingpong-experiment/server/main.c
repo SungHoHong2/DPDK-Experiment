@@ -40,7 +40,8 @@
 #include <limits.h>
 #include <sys/time.h>
 #include <getopt.h>
-
+#include "rte_ethtool.h"
+#include "ethapp.h"
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
@@ -269,7 +270,7 @@ int main(int argc, char **argv){
       rte_eth_tx_buffer_init(tx_buffer[portid], MAX_PKT_BURST);
 
 			/* driver info */
-			ethtool_drvinfo einfo;
+			struct ethtool_drvinfo einfo;
 			if (rte_ethtool_get_drvinfo(portid, &einfo)) {
 					printf("Error getting info for port %i\n", portid);
 					return;
