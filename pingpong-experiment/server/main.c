@@ -268,7 +268,7 @@ int main(int argc, char **argv){
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
 			if (dev_info.pci_dev)
-				snprintf(drvinfo->bus_info, sizeof(drvinfo->bus_info),
+				printf(
 					"chara pci_devid in third: %04x:%02x:%02x.%x\n",
 					dev_info.pci_dev->addr.domain,
 					dev_info.pci_dev->addr.bus,
