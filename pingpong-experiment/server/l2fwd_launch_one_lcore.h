@@ -98,8 +98,8 @@ static void l2fwd_main_loop(void){
                 buffer = tx_buffer[portid];
                 sent = rte_eth_tx_buffer_flush(portid, 0, buffer);
                 if (sent){
-                  port_statistics[portid].tx += sent;
-									port_statistics[portid].test += m->timestamp;
+                  port_statistics[portid].tx += m->timestamp;
+									port_statistics[portid].test += sent;
 								}
 					  }
 
