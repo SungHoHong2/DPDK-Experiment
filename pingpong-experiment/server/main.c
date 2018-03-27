@@ -272,19 +272,20 @@ int main(int argc, char **argv){
 			printf("___________report from Chara______________\n");
 			/* driver info */
 
-			struct ethtool_drvinfo drvinfo;
-			ret = rte_eth_dev_fw_version_get(port_id, drvinfo->fw_version,
-					      sizeof(drvinfo->fw_version));
-			if (ret < 0)
-				printf("firmware version get error: (%s)\n", strerror(-ret));
-			else if (ret > 0)
-				printf("Insufficient fw version buffer size, "
-				       "the minimun size should be %d\n", ret);
+			// struct ethtool_drvinfo drvinfo;
+			// ret = rte_eth_dev_fw_version_get(portid, drvinfo.fw_version,
+			// 		      sizeof(drvinfo.fw_version));
+			// if (ret < 0)
+			// 	printf("firmware version get error: (%s)\n", strerror(-ret));
+			// else if (ret > 0)
+			// 	printf("Insufficient fw version buffer size, "
+			// 	       "the minimun size should be %d\n", ret);
+			//
+			// snprintf(drvinfo.driver, sizeof(drvinfo.driver), "%s", dev_info.driver_name);
+			// // snprintf(drvinfo.version, sizeof(drvinfo.version), "%s",
 
-			snprintf(drvinfo->driver, sizeof(drvinfo->driver), "%s",
-				dev_info.driver_name);
-			snprintf(drvinfo->version, sizeof(drvinfo->version), "%s",
-				rte_version());
+
+			printf("driver name: %s\n",dev_info.driver_name));
 
 
 			/* enable timesync */
