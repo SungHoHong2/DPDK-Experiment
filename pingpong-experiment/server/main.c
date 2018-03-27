@@ -42,6 +42,8 @@
 #include <getopt.h>
 #include <rte_ethdev.h>
 #include <rte_ether.h>
+#include <net/if.h>
+
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
@@ -272,21 +274,11 @@ int main(int argc, char **argv){
 			printf("___________report from Chara______________\n");
 			/* driver info */
 
-			// struct ethtool_drvinfo drvinfo;
-			// ret = rte_eth_dev_fw_version_get(portid, drvinfo.fw_version,
-			// 		      sizeof(drvinfo.fw_version));
-			// if (ret < 0)
-			// 	printf("firmware version get error: (%s)\n", strerror(-ret));
-			// else if (ret > 0)
-			// 	printf("Insufficient fw version buffer size, "
-			// 	       "the minimun size should be %d\n", ret);
-			//
-			// snprintf(drvinfo.driver, sizeof(drvinfo.driver), "%s", dev_info.driver_name);
-			// // snprintf(drvinfo.version, sizeof(drvinfo.version), "%s",
-
-
 			printf("driver name: %s\n",dev_info.driver_name);
 
+			char interfaceName[IFNAMSIZ];
+			char *interface = if_indextoname(dev_info.if_index, &interfaceName); /* retrieve the name of interface 1 */
+			printf("interface name: %s\n",interface);
 
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
