@@ -11,7 +11,7 @@ include $(RTE_SDK)/mk/rte.vars.mk
 APP = l2fwd
 
 # all source are stored in SRCS-y
-SRCS-y := main.c rte_ethtool.c
+SRCS-y := main.c
 
 CFLAGS += -O3 -g
 

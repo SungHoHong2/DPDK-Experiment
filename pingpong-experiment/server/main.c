@@ -40,8 +40,8 @@
 #include <limits.h>
 #include <sys/time.h>
 #include <getopt.h>
-#include "rte_ethtool.h"
-// #include "ethapp.h"
+#include <rte_ethdev.h>
+#include <rte_ether.h>
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
@@ -271,14 +271,21 @@ int main(int argc, char **argv){
 
 			printf("___________report from Chara______________\n");
 			/* driver info */
-			struct ethtool_drvinfo einfo;
-			if (rte_ethtool_get_drvinfo(portid, &einfo)) {
-					printf("Error getting info for port %i\n", portid);
-				}
 
-			printf("Port %i driver: %s (ver: %s)\n",portid, einfo.driver, einfo.version);
-			printf("firmware-version: %s\n", einfo.fw_version);
-			printf("bus-info: %s\n", einfo.bus_info);
+			struct ethtool_drvinfo drvinfo;
+			ret = rte_eth_dev_fw_version_get(port_id, drvinfo->fw_version,
+					      sizeof(drvinfo->fw_version));
+			if (ret < 0)
+				printf("firmware version get error: (%s)\n", strerror(-ret));
+			else if (ret > 0)
+				printf("Insufficient fw version buffer size, "
+				       "the minimun size should be %d\n", ret);
+
+			snprintf(drvinfo->driver, sizeof(drvinfo->driver), "%s",
+				dev_info.driver_name);
+			snprintf(drvinfo->version, sizeof(drvinfo->version), "%s",
+				rte_version());
+
 
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
