@@ -275,10 +275,10 @@ int main(int argc, char **argv){
 			/* driver info */
 
 			printf("driver name: %s\n",dev_info.driver_name);
-
-			char interfaceName[IFNAMSIZ];
-			char *interface = if_indextoname(dev_info.if_index, &interfaceName); /* retrieve the name of interface 1 */
-			printf("interface name: %s\n",interface);
+			printf("interface name: %d\n",dev_info.if_index);
+			// char interfaceName[IFNAMSIZ];
+			// char *interface = if_indextoname(dev_info.if_index, &interfaceName); /* retrieve the name of interface 1 */
+			// printf("interface name: %s\n",interface);
 
 			/* enable timesync */
 			rte_eth_timesync_enable(portid);
