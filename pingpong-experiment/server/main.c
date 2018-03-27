@@ -285,7 +285,7 @@ int main(int argc, char **argv){
 			// // snprintf(drvinfo.version, sizeof(drvinfo.version), "%s",
 
 
-			printf("driver name: %s\n",dev_info.driver_name));
+			printf("driver name: %s\n",dev_info.driver_name);
 
 
 			/* enable timesync */
