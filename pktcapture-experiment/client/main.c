@@ -277,6 +277,9 @@ int main(int argc, char **argv){
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
+			/* initialize packet capture framework */
+			rte_pdump_init(NULL);
+
       /* Start device */
   		ret = rte_eth_dev_start(portid);
 
@@ -318,6 +321,8 @@ int main(int argc, char **argv){
 		printf(" Done\n");
 	}
 
+	/* uninitialize packet capture framework */
+	rte_pdump_uninit();
 
   return ret;
 }
