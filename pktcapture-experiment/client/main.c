@@ -38,6 +38,11 @@
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
 
+#ifdef RTE_LIBRTE_PDUMP
+#include <rte_pdump.h>
+#endif
+
+
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
 
@@ -278,7 +283,9 @@ int main(int argc, char **argv){
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
 			/* initialize packet capture framework */
+			#ifdef RTE_LIBRTE_PDUMP
 			rte_pdump_init(NULL);
+			#endif
 
       /* Start device */
   		ret = rte_eth_dev_start(portid);
@@ -322,7 +329,8 @@ int main(int argc, char **argv){
 	}
 
 	/* uninitialize packet capture framework */
+	#ifdef RTE_LIBRTE_PDUMP
 	rte_pdump_uninit();
-
+	#endif 
   return ret;
 }
