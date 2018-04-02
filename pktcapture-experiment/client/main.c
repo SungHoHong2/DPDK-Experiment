@@ -331,6 +331,7 @@ int main(int argc, char **argv){
 	/* uninitialize packet capture framework */
 	#ifdef RTE_LIBRTE_PDUMP
 	rte_pdump_uninit();
-	#endif 
+	#endif
+
   return ret;
 }
