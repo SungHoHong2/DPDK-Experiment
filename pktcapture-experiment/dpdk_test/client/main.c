@@ -38,15 +38,25 @@
 #include <rte_mempool.h>
 #include <rte_mbuf.h>
 
+#ifdef RTE_LIBRTE_PDUMP
+#include <rte_pdump.h>
+#endif
+
+
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
 
 // TUNABLES BEGIN
 //#define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
-#define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
-#define PKT_SIZE 1518 // sending packet size over 1600 the performance degrades
+#define RTE_MBUF_SIZE 2048 // 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
+#define PKT_SIZE 64 // sending packet size over 1600 the performance degrades
+#define PINGS 1000000
+uint64_t start_time, end_time;
+
 // TUNABLES END
+
+
 
 
 #define BURST_TX_DRAIN_US 100 /* TX drain every ~100us */
@@ -86,10 +96,6 @@ static uint64_t timer_period = 10; /* default period is 10 seconds */
 static volatile bool force_quit;
 
 
-static time_t start, end; //adding timer
-static double latency_diff;
-static double latency_timelimit = 10.0;
-
 #include "signal_handler.h"
 #include "l2fwd_parse_args.h"
 
@@ -125,7 +131,7 @@ struct l2fwd_port_statistics {
 	uint64_t tx;
 	uint64_t rx;
 	uint64_t dropped;
-	uint64_t rx_bytes;
+	double rx_bytes;
 } __rte_cache_aligned;
 struct l2fwd_port_statistics port_statistics[RTE_MAX_ETHPORTS];
 #include "l2fwd_launch_one_lcore.h"
@@ -276,9 +282,13 @@ int main(int argc, char **argv){
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
 
+			/* initialize packet capture framework */
+			#ifdef RTE_LIBRTE_PDUMP
+			rte_pdump_init(NULL);
+			#endif
+
       /* Start device */
   		ret = rte_eth_dev_start(portid);
-
       rte_eth_promiscuous_enable(portid);
       printf("Port %u, MAC address: %02X:%02X:%02X:%02X:%02X:%02X\n\n",
   				(unsigned) portid,
@@ -317,6 +327,10 @@ int main(int argc, char **argv){
 		printf(" Done\n");
 	}
 
+	/* uninitialize packet capture framework */
+	#ifdef RTE_LIBRTE_PDUMP
+	rte_pdump_uninit();
+	#endif
 
   return ret;
 }

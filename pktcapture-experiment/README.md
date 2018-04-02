@@ -14,3 +14,13 @@ tcpdump -ttttt -qns 0 -A -r /tmp/chara2.pcap >> chara_output
 ./build/l2fwd -l 0 -d librte_pmd_e1000.so -d librte_mempool_ring.so  -- -q 8 -p 0x2 -T 1
 ./build/l2fwd -l 0 -d librte_pmd_e1000.so -d librte_mempool_ring.so  -- -q 8 -p 0x2 -T 1
 ```
+
+
+### installing seastar with pdump
+```
+#1
+add the pdump initialization code in dpdk.cc
+
+#2
+update build.ninja -> add lrte_pdump
+```
