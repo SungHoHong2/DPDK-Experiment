@@ -20,6 +20,11 @@ sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f2
 sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f3
 
 
+# re-installing DPDK
+rm -rf /usr/local/lib/rte_*
+rm -rf /usr/local/include/dpdk
+
+
 # ceph-dpdk
 export RTE_SDK=/home/sungho/ceph-12.2.0/src/dpdk-17
 export DESTDIR=/usr/local

@@ -44,6 +44,10 @@
 #include <rte_ether.h>
 #include <net/if.h>
 
+#ifdef RTE_LIBRTE_PDUMP
+#include <rte_pdump.h>
+#endif
+
 
 #define RTE_LOGTYPE_L2FWD RTE_LOGTYPE_USER1
 #define NB_MBUF   8192
@@ -300,7 +304,10 @@ int main(int argc, char **argv){
 
 			printf("___________report from Chara______________\n");
 			/* initialize packet capture framework */
+			#ifdef RTE_LIBRTE_PDUMP
 			rte_pdump_init(NULL);
+			#endif
+
 
       /* read the packet loss */
       ret = rte_eth_tx_buffer_set_err_callback(tx_buffer[portid], rte_eth_tx_buffer_count_callback, &port_statistics[portid].dropped);
@@ -352,7 +359,9 @@ int main(int argc, char **argv){
 	}
 
 	/* uninitialize packet capture framework */
+	#ifdef RTE_LIBRTE_PDUMP
 	rte_pdump_uninit();
+	#endif
 
   return ret;
 }
