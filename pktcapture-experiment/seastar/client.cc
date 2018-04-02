@@ -6,7 +6,6 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
-static int rx_msg_size = 4 * 1024;
 static int tx_msg_total_size = 100 * 1024 * 1024;
 static int tx_msg_size = 4 * 1024;
 static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
