@@ -1,5 +1,7 @@
 #include <sys/time.h>
-// const int LATENCY = 0, LIMIT = 100000;
+#include <string.h>
+
+// const int LATENCY = 0, LIMIT = 100000
 // const int THROUGHPUT = 1, TIMER = 10;
 
 
