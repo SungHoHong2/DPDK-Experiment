@@ -152,7 +152,7 @@ static void l2fwd_main_loop(void){
 
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
+						// memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
             int t;
             for(t=0; t<rte_pktmbuf_pkt_len(rm[0]); t++)
               memset(data, (char)t, 0);
