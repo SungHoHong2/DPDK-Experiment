@@ -61,7 +61,6 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 }
 
 
-
 /* main processing loop */
 static void l2fwd_main_loop(void){
     struct rte_mbuf *pkts_burst[MAX_PKT_BURST];
@@ -116,7 +115,8 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
       						// /* reset the timer */
-									if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
+									// if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
+                  if(syc>9999){
 										  end_time = getTimeStamp();
 											print_stats();
 											force_quit=1;
@@ -158,20 +158,18 @@ static void l2fwd_main_loop(void){
 
 
 
-            string example ="12345";
 
 
-
-						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
-            memset(data+20*sizeof(char), example[0], 20*sizeof(char));
-            memset(data+21*sizeof(char), example[1], 21*sizeof(char));
-            memset(data+22*sizeof(char), example[2], 22*sizeof(char));
-            memset(data+23*sizeof(char), example[3], 23*sizeof(char));
-            memset(data+24*sizeof(char), example[4], 24*sizeof(char));
-            memset(data+25*sizeof(char), '*', 25*sizeof(char));
+            char *example ="12345";
 
 
-
+            memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
+            memset(data+20*sizeof(char), signarray[syc][0], 20*sizeof(char));
+            memset(data+21*sizeof(char), signarray[syc][1], 21*sizeof(char));
+            memset(data+22*sizeof(char), signarray[syc][2], 22*sizeof(char));
+            memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
+            memset(data+25*sizeof(char), '*', 24*sizeof(char));
+            syc++;
 
             // data = "howdy chara";
             // memset(data, '0', 9);
@@ -180,8 +178,7 @@ static void l2fwd_main_loop(void){
 
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
-
-            usleep(1);
+            usleep(100);
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
