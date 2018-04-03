@@ -157,10 +157,10 @@ static void l2fwd_main_loop(void){
             char *example ="1234";
 
 						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
-            memset(data+20*sizeof(char), example[0], 21*sizeof(char));
-            memset(data+22*sizeof(char), example[1], 23*sizeof(char));
-            memset(data+24*sizeof(char), example[2], 25*sizeof(char));
-            memset(data+26*sizeof(char), example[3], 27*sizeof(char));
+            memset(data+20*sizeof(char), example[0], 20*sizeof(char));
+            memset(data+21*sizeof(char), example[1], 21*sizeof(char));
+            memset(data+22*sizeof(char), example[2], 22*sizeof(char));
+            memset(data+23*sizeof(char), example[3], 23*sizeof(char));
 
 
 
