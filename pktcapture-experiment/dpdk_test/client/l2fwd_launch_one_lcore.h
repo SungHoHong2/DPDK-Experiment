@@ -152,9 +152,11 @@ static void l2fwd_main_loop(void){
 
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, '*', rte_pktmbuf_pkt_len(rm[0])-9);
+						// memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
             // data = "howdy chara";
-            memset(data, '0', 9);
+            // memset(data, '0', 9);
+
+            data = "****************************************************************";
 
             printf("send: %s\n",data);
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
