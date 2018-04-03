@@ -156,7 +156,7 @@ static void l2fwd_main_loop(void){
 
 
 
-            char *example ="12345";
+            string example ="12345";
 
 
 
@@ -166,8 +166,9 @@ static void l2fwd_main_loop(void){
             memset(data+22*sizeof(char), example[2], 22*sizeof(char));
             memset(data+23*sizeof(char), example[3], 23*sizeof(char));
             memset(data+24*sizeof(char), example[4], 24*sizeof(char));
-
             memset(data+25*sizeof(char), '*', 25*sizeof(char));
+
+
 
 
             // data = "howdy chara";
