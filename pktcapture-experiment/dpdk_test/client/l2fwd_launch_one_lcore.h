@@ -152,17 +152,18 @@ static void l2fwd_main_loop(void){
 
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
+						// memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
+            // memset(data+20*sizeof(char), '0', 21*sizeof(char));
+            // memset(data+22*sizeof(char), '1', 23*sizeof(char));
+            // memset(data+24*sizeof(char), '2', 35*sizeof(char));
+            // memset(data+26*sizeof(char), '.', 30*sizeof(char));
 
-            memset(data+20*sizeof(char), '0', 21*sizeof(char));
-            memset(data+22*sizeof(char), '1', 23*sizeof(char));
-            memset(data+24*sizeof(char), '2', 35*sizeof(char));
-            memset(data+26*sizeof(char), '.', 30*sizeof(char));
+
 
             // data = "howdy chara";
             // memset(data, '0', 9);
 
-          //  data = "***01234********************************************************";
+            data = "***01234********************************************************";
 
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
