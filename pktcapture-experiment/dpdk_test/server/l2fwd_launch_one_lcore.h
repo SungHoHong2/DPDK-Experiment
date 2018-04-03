@@ -117,7 +117,6 @@ static void l2fwd_main_loop(void){
 									/* testing PtoP */
 
 
-
       						print_stats();
 									timer_tsc = 0;
       					}
