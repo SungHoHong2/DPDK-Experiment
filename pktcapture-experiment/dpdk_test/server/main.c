@@ -54,7 +54,7 @@
 // #define MAX_PKT_BURST 32
 #define MAX_PKT_BURST 32
 #define RTE_MBUF_SIZE 2048 // RTE_MBUF_DEFAULT_BUF_SIZE
-#define PKT_SIZE 64 // sending packet size
+#define PKT_SIZE 5 // sending packet size
 #define NSEC_PER_SEC        1000000000L
 
 // make ../../pingpong-experiment/client/

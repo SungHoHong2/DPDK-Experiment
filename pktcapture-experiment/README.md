@@ -28,8 +28,6 @@ sudo ./client --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --h
 
 ./build/l2fwd -l 0 -- -q 8 -p 0x2 -T 1
 sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx0.pcap,rx-dev=/tmp/dpdk_rx0.pcap'
-sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx0.pcap'
-
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx0.pcap >> chara_output
 ```
 
