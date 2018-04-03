@@ -154,14 +154,23 @@ static void l2fwd_main_loop(void){
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 
 
-            char *example ="1234";
+
+
+            char *example ="12345";
 
 						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
-            memset(data+20*sizeof(char), example[0], 20*sizeof(char));
-            memset(data+21*sizeof(char), example[1], 21*sizeof(char));
-            memset(data+22*sizeof(char), example[2], 22*sizeof(char));
-            memset(data+23*sizeof(char), example[3], 23*sizeof(char));
 
+            data+20*sizeof(char) = '1';
+            data+21*sizeof(char) = '2';
+            data+22*sizeof(char) = '3';
+            data+23*sizeof(char) = '4';
+            data+24*sizeof(char) = '5';
+
+            // memset(data+20*sizeof(char), example[0], 20*sizeof(char));
+            // memset(data+21*sizeof(char), example[1], 21*sizeof(char));
+            // memset(data+22*sizeof(char), example[2], 22*sizeof(char));
+            // memset(data+23*sizeof(char), example[3], 23*sizeof(char));
+            memset(data+24*sizeof(char), '*', 24*sizeof(char));
 
 
             // data = "howdy chara";
