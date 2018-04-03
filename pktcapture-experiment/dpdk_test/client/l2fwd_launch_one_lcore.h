@@ -156,9 +156,8 @@ static void l2fwd_main_loop(void){
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 						// memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
             memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
-            for(int i=5; i<10; i++){
-                data[i] = '9';
-            }
+            memset(data, '9', 5);
+
 
             // printf("send: %s\n",data);
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
