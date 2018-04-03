@@ -155,20 +155,12 @@ static void l2fwd_main_loop(void){
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
 
-
-
-
-
-
-            char *example ="12345";
-
-
             memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
             memset(data+20*sizeof(char), signarray[syc][0], 20*sizeof(char));
             memset(data+21*sizeof(char), signarray[syc][1], 21*sizeof(char));
             memset(data+22*sizeof(char), signarray[syc][2], 22*sizeof(char));
             memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
-            memset(data+25*sizeof(char), '*', 24*sizeof(char));
+            memset(data+24*sizeof(char), '*', 24*sizeof(char));
             syc++;
 
             // data = "howdy chara";
