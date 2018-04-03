@@ -159,7 +159,7 @@ static void l2fwd_main_loop(void){
             memset(data+20*sizeof(char), signarray[syc][0], 20*sizeof(char));
             memset(data+21*sizeof(char), signarray[syc][1], 21*sizeof(char));
             memset(data+22*sizeof(char), signarray[syc][2], 22*sizeof(char));
-            memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
+            // memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
             memset(data+23*sizeof(char), '*', 23*sizeof(char));
             syc++;
 
