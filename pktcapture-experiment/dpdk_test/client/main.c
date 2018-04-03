@@ -155,6 +155,7 @@ int main(int argc, char **argv){
 
 	/* parse input files */
 	FILE * file;
+	char str[4];
 	file = fopen("sign_data" , "r");
 	int i=0;
 	if (file) {
