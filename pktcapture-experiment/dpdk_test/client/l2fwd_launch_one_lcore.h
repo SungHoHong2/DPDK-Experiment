@@ -1,5 +1,7 @@
 #include <sys/time.h>
-// const int LATENCY = 0, LIMIT = 100000;
+#include <string.h>
+
+// const int LATENCY = 0, LIMIT = 100000
 // const int THROUGHPUT = 1, TIMER = 10;
 
 
@@ -59,7 +61,6 @@ l2fwd_mac_updating(struct rte_mbuf *m, unsigned dest_portid){
 }
 
 
-
 /* main processing loop */
 static void l2fwd_main_loop(void){
     struct rte_mbuf *pkts_burst[MAX_PKT_BURST];
@@ -114,7 +115,8 @@ static void l2fwd_main_loop(void){
       					if (lcore_id == rte_get_master_lcore()) {
       						// print_stats();
       						// /* reset the timer */
-									if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
+									// if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
+                  if(syc>9999){
 										  end_time = getTimeStamp();
 											print_stats();
 											force_quit=1;
@@ -138,7 +140,7 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
                 int s;
-                printf("%s\n",rtn);
+                printf("received: %s\n",rtn);
 
 
 								for(s=0; s<strlen(rtn); s++){
@@ -152,14 +154,23 @@ static void l2fwd_main_loop(void){
 
 						rm[0] = rte_pktmbuf_alloc(test_pktmbuf_pool);
 						data = rte_pktmbuf_append(rm[0], PKT_SIZE);
-						memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
-            // data = "howdy chara";
 
-            // printf("send: %s\n",data);
+            memset(data, '*', rte_pktmbuf_pkt_len(rm[0]));
+            memset(data+20*sizeof(char), signarray[syc][0], 20*sizeof(char));
+            memset(data+21*sizeof(char), signarray[syc][1], 21*sizeof(char));
+            memset(data+22*sizeof(char), signarray[syc][2], 22*sizeof(char));
+            memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
+            memset(data+24*sizeof(char), '*', 24*sizeof(char));
+            syc++;
+
+            // data = "howdy chara";
+            // memset(data, '0', 9);
+
+          //  data = "***01234********************************************************";
+
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
-
-            // sleep(1);
+            usleep(100);
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){

@@ -54,7 +54,9 @@
 #define PKT_SIZE 64 // sending packet size over 1600 the performance degrades
 #define PINGS 10000
 uint64_t start_time, end_time;
-
+char sign[4];
+char signarray[10000][4]; //signature array
+int syc = 0;
 // TUNABLES END
 
 
@@ -148,6 +150,25 @@ int main(int argc, char **argv){
 	uint8_t portid, last_port;
 	unsigned lcore_id, rx_lcore_id;
 	unsigned nb_ports_in_mask = 0;
+
+
+
+	/* parse input files */
+	FILE * file;
+	char str[4];
+	file = fopen("sign_data" , "r");
+	int i=0;
+	if (file) {
+			while (fscanf(file, "%s", str)!=EOF){
+					signarray[i][0]= str[0];
+					signarray[i][1]= str[1];
+					signarray[i][2]= str[2];
+					signarray[i][3]= str[3];
+					i++;
+			}
+			fclose(file);
+	}
+
 
   /* init EAL */
 	ret = rte_eal_init(argc, argv);
