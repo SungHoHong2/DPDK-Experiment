@@ -140,7 +140,7 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
                 int s;
-                printf("received: %s\n",rtn);
+                // printf("received: %s\n",rtn);
 
 
 								for(s=0; s<strlen(rtn); s++){
@@ -170,7 +170,7 @@ static void l2fwd_main_loop(void){
 
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
-            usleep(100);
+            usleep(1);
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
