@@ -21,22 +21,24 @@ update build/release/seastar.pc
 
 ### capture packets from dpdk pdump
 ```
-sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0
-
-sudo ./client --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.41 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --server "10.107.30.40:1234"
-
-
 ./build/l2fwd -l 0 -- -q 8 -p 0x2 -T 1
-sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx1.pcap,rx-dev=/tmp/dpdk_rx1.pcap'
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx1.pcap >> chara_send
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx1.pcap >> chara_recv
+sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx5.pcap,rx-dev=/tmp/dpdk_rx5.pcap'
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx5.pcap >> chara_send
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx5.pcap >> chara_recv
 
+cp chara_send /home/sungho/DPDK-Experiment/pktcapture-experiment/sender_tx
+cp chara_recv /home/sungho/DPDK-Experiment/pktcapture-experiment/sender_rx
+
+cp chara_send /home/sungho/DPDK-Experiment/pktcapture-experiment/receiver_tx
+cp chara_recv /home/sungho/DPDK-Experiment/pktcapture-experiment/receiver_rx
 ```
 
 ### capture packets from tcp
 ```
+./server
+./client --server <ip address>
+
 sudo tshark -n -i eno1 -T fields -e frame.time_relative -e ip.src -Y "ip.src == 10.218.111.252 || ip.src == 10.218.104.170" -e data.data
 
 sudo tshark -n -i enp0s31f6 -T fields -e frame.time_relative -e ip.src -Y "ip.src == 10.218.104.170 || ip.src == 10.218.111.252" -e data.data
-
 ```
