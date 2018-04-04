@@ -22,9 +22,9 @@ update build/release/seastar.pc
 ### capture packets from dpdk pdump
 ```
 ./build/l2fwd -l 0 -- -q 8 -p 0x2 -T 1
-sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx5.pcap,rx-dev=/tmp/dpdk_rx5.pcap'
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx5.pcap >> chara_send
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx5.pcap >> chara_recv
+sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx6.pcap,rx-dev=/tmp/dpdk_rx6.pcap'
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx6.pcap >> chara_send
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx6.pcap >> chara_recv
 
 cp chara_send /home/sungho/DPDK-Experiment/pktcapture-experiment/sender_tx
 cp chara_recv /home/sungho/DPDK-Experiment/pktcapture-experiment/sender_rx
