@@ -160,7 +160,7 @@ static void l2fwd_main_loop(void){
             memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
             memset(data+24*sizeof(char), '*', 24*sizeof(char));
             syc++;
-            printf("sent: %s\n",data);
+            // printf("sent: %s\n",data);
             // data = "howdy chara";
             // memset(data, '0', 9);
 
