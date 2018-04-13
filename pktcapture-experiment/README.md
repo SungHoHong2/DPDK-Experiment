@@ -22,16 +22,15 @@ update build/release/seastar.pc
 ### capture packets from dpdk pdump
 ```
 ./build/l2fwd -l 0 -- -q 8 -p 0x2 -T 1
-sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx8.pcap,rx-dev=/tmp/dpdk_rx8.pcap'
+sudo ./dpdk-pdump -- --pdump 'port=1,queue=*,tx-dev=/tmp/dpdk_tx8.pcap,rx-dev=/tmp/dpdk_rx9.pcap'
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx7.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/sender7_tx
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx7.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/sender7_rx
 
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx7.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/receiver_tx
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx7.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/receiver_rx
 
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx7.pcap >> receiver_rx
 
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx8.pcap >> receiver_rx
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx9.pcap >> receiver_rx
 
 ```
 
