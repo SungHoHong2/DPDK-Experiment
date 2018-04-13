@@ -160,7 +160,7 @@ static void l2fwd_main_loop(void){
             memset(data+23*sizeof(char), signarray[syc][3], 23*sizeof(char));
             memset(data+24*sizeof(char), '*', 24*sizeof(char));
             syc++;
-
+            printf("sent: %s\n",data);
             // data = "howdy chara";
             // memset(data, '0', 9);
 
@@ -168,7 +168,7 @@ static void l2fwd_main_loop(void){
 
 						rte_prefetch0(rte_pktmbuf_mtod(rm[0], void *));
 						l2fwd_mac_updating(rm[0], portid);
-            usleep(500);
+            usleep(1);
 						sent = rte_eth_tx_burst(portid, 0, rm, 1);
 
 						if (sent){
