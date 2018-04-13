@@ -117,7 +117,7 @@ static void l2fwd_main_loop(void){
       						// /* reset the timer */
 									// if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
                   if(syc>9999){
-										  // end_time = getTimeStamp();
+										  end_time = getTimeStamp();
 											print_stats();
 											force_quit=1;
 									}
