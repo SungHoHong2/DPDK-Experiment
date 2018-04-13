@@ -117,7 +117,7 @@ static void l2fwd_main_loop(void){
       						// /* reset the timer */
 									// if(port_statistics[portid].rx_bytes>=(PINGS * PKT_SIZE)){
                   if(syc>9999){
-										  end_time = getTimeStamp();
+										 // end_time = getTimeStamp();
 											print_stats();
 											force_quit=1;
 									}
@@ -140,15 +140,13 @@ static void l2fwd_main_loop(void){
 						for (j = 0; j < nb_rx; j++) {
 								rtn = rte_pktmbuf_mtod_offset(pkts_burst[j], char *, sizeof(data));
                 int s;
-                // printf("received: %s\n",rtn);
-
-
-								for(s=0; s<strlen(rtn); s++){
-										if(rtn[s]=='*') {
-											port_statistics[portid].rx_bytes += 1; //rte_pktmbuf_pkt_len(pkts_burst[j]);
-										  // printf("%c",rtn[s]);
-										}
-								}
+                printf("received: %s\n",rtn);
+								// for(s=0; s<strlen(rtn); s++){
+								// 		if(rtn[s]=='*') {
+								// 			port_statistics[portid].rx_bytes += 1; //rte_pktmbuf_pkt_len(pkts_burst[j]);
+								// 		  // printf("%c",rtn[s]);
+								// 		}
+								// }
 								rte_pktmbuf_free(pkts_burst[j]);
 						}
 
