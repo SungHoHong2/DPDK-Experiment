@@ -30,7 +30,7 @@ tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx0.pcap >> /home/sungho/DPDK-Experiment/p
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/receiver0_rx
 
 
-tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx9.pcap >> receiver_rx
+tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> receiver_rx
 
 ```
 

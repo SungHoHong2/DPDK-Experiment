@@ -10,6 +10,16 @@ using namespace std::chrono_literals;
 // static int tx_msg_size = 4 * 1024;
 // static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 // static std::string str_txbuf(tx_msg_size, 'X');
+
+
+static time_t start, end; //adding timer
+
+uint64_t getTimeStamp() {
+    struct timeval tv;
+    gettimeofday(&tv,NULL);
+    return tv.tv_sec*(uint64_t)1000000+tv.tv_usec;
+}
+
 static int total_ping_identifier = 0;
 
 class client;
@@ -56,7 +66,7 @@ public:
             str.append(s);
 
             total_ping_identifier++;
-            std::cout << str << std::endl;
+            // std::cout << str << std::endl;
             if(str.length()>4){
               str = "ping";
             }
@@ -71,7 +81,7 @@ public:
                         return make_ready_future();
                     }
                     auto str = std::string(buf.get(), buf.size());
-                    std::cout << "after: "  << str << std::endl;
+                    // std::cout << "after: "  << str << std::endl;
 
                     if (times > 0) {
                         return ping(times - 1);
@@ -101,12 +111,15 @@ public:
             auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
             auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
             fprint(std::cout, "========== ping ============\n");
-            fprint(std::cout, "Server: %s\n", _server_addr);
-            fprint(std::cout,"Connections: %u\n", _concurrent_connections);
-            fprint(std::cout, "Total PingPong: %u\n", _total_pings);
-            fprint(std::cout, "Total Time(Secs): %f\n", secs);
-            fprint(std::cout, "Requests/Sec: %f\n",
-                static_cast<double>(_total_pings) / secs);
+            // fprint(std::cout, "Server: %s\n", _server_addr);
+            // fprint(std::cout,"Connections: %u\n", _concurrent_connections);
+            // fprint(std::cout, "Total PingPong: %u\n", _total_pings);
+            // fprint(std::cout, "Total Time(Secs): %f\n", secs);
+            // fprint(std::cout, "Requests/Sec: %f\n",
+                // static_cast<double>(_total_pings) / secs);
+
+            end_time = getTimeStamp();
+            printf("latency: %ld\n", end_time - start_time);
             clients.stop().then([] {
                 engine().exit(0);
             });
@@ -120,6 +133,7 @@ public:
         _total_pings = _pings_per_connection * _concurrent_connections;
         _test = test;
 
+        start_time = getTimeStamp();
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
@@ -177,6 +191,7 @@ int main(int ac, char ** av) {
         }
 
         clients.start().then([server, test, ncon] () {
+
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
         });
     });
