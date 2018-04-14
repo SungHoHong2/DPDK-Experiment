@@ -107,9 +107,9 @@ public:
         if (_latest_finished < finished)
             _latest_finished = finished;
         if (++_num_reported == _concurrent_connections) {
-            auto elapsed = _latest_finished - _earliest_started;
-            auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-            auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
+            // auto elapsed = _latest_finished - _earliest_started;
+            // auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+            // auto secs = static_cast<double>(usecs) / static_cast<double>(1000 * 1000);
             fprint(std::cout, "========== ping ============\n");
             // fprint(std::cout, "Server: %s\n", _server_addr);
             // fprint(std::cout,"Connections: %u\n", _concurrent_connections);
