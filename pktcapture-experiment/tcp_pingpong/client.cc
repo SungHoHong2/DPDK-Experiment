@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 // static std::string str_txbuf(tx_msg_size, 'X');
 
 
-static time_t start, end; //adding timer
+uint64_t start_time, end_time;
 
 uint64_t getTimeStamp() {
     struct timeval tv;
