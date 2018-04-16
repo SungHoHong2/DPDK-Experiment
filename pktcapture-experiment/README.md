@@ -1,23 +1,7 @@
 ### Pingpong
-- run the server from dkasu
-- run the client from wenji-wrk
+- run the client from dkasu
+- run the server from wenji-wrk
 
-
-<br>
-
-### install dpdk pdump
-```
-#1
-add the pdump initialization code in dpdk.cc
-
-#2
-update build.ninja -> add lrte_pdump
-
-#
-update build/release/seastar.pc
-```
-
-<br>
 
 ### capture packets from dpdk pdump
 ```
@@ -28,8 +12,6 @@ tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> /home/sungho/DPDK-Experiment/p
 
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_tx0.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/receiver0_tx
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> /home/sungho/DPDK-Experiment/pktcapture-experiment/dpdk_test/result/receiver0_rx
-
-
 tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> receiver_rx
 
 ```
@@ -40,7 +22,6 @@ tcpdump -ttttt -qns 0 -A -r /tmp/dpdk_rx0.pcap >> receiver_rx
 ./client --server <ip address>
 
 sudo tshark -n -i eno1 -T fields -e frame.time_relative -e ip.src -Y "ip.src == 10.218.111.252 || ip.src == 10.218.104.170" -e data.data >> receiver_tcp
-
 
 sudo tshark -n -i enp0s31f6 -T fields -e frame.time_relative -e ip.src -Y "ip.src == 10.218.104.170 || ip.src == 10.218.111.252" -e data.data >> sender_tcp
 
