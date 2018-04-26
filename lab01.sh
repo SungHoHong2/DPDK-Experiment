@@ -1,6 +1,7 @@
 sudo modprobe uio
 sudo insmod build/kmod/igb_uio.ko
 sudo insmod build/kmod/rte_kni.ko
+sudo insmod build/kmod/rte_kni.ko kthread_mode=multiple
 
 # echo 2048 | sudo tee /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
 echo 1048576 | sudo tee /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
@@ -18,6 +19,7 @@ sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f0
 sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f1
 sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f2
 sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f3
+
 
 
 # re-installing DPDK

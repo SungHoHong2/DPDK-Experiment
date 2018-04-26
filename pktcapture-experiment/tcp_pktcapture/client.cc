@@ -1,6 +1,8 @@
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
+#include <fstream>
+
 
 using namespace seastar;
 using namespace net;
