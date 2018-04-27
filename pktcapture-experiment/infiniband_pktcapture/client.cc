@@ -163,7 +163,6 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
     app_template app;
-    outfile.open("userspace_latency");
 
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("192.168.56.101:1234"), "Server address")
