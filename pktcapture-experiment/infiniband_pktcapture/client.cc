@@ -1,7 +1,6 @@
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
-#include <fstream>
 
 
 using namespace seastar;
@@ -164,7 +163,6 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
     app_template app;
-    ofstream outfile;
     outfile.open("userspace_latency");
 
     app.add_options()
