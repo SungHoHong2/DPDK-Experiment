@@ -1,6 +1,6 @@
 SEASTAR ="/data/sungho/seastar"
 TARGET = "server"
-
+TARGET_2 = "client"
 
 all:
 	# fiu c1n14
