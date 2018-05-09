@@ -39,16 +39,16 @@ sudo update-alternatives --install /usr/bin/ld ld /usr/bin/ld-2.26 100
 ```
 config=(port, rx, core)
 # core 1
-sudo ./build/ans -c 0x4 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,2)" --enable-kni --enable-ipsync                       
+sudo ./build/ans -c 0x4 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,2)" --enable-kni --enable-ipsync
 
 
-sudo ./build/ans -c 0x2 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1)" --enable-kni --enable-ipsync                       
+sudo ./build/ans -c 0x2 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1)" --enable-kni --enable-ipsync
 
 # core 2
-sudo ./build/ans -c 0x6 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1),(1,1,2)" --enable-kni --enable-ipsync                       
+sudo ./build/ans -c 0x6 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1),(1,1,2)" --enable-kni --enable-ipsync
 
 # core 4
-sudo ./build/ans -c 0x1E -n 8 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1),(1,1,2),(1,2,3),(1,3,4)" --enable-kni --enable-ipsync            
+sudo ./build/ans -c 0x1E -n 8 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1),(1,1,2),(1,2,3),(1,3,4)" --enable-kni --enable-ipsync
 
 
 
@@ -74,7 +74,7 @@ mpirun -np 2 --hostfile hosts_dpdk ./IMB-MPI1 PingPong
 **run file in server**
 ```
 cp ans /data1/sungho/DPDK-Experiment/seastar-experiment/seastar-server/server
-sudo ./server -c 0x2 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1)" --enable-kni --enable-ipsync                       
+sudo ./server -c 0x2 -n 1 --base-virtaddr=0x2aaa2aa0000 -- -p 0x2 --config="(1,0,1)" --enable-kni --enable-ipsync
 
 
 ip addr add 10.107.30.40 dev veth1

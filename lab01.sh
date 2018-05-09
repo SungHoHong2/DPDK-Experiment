@@ -21,7 +21,6 @@ sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f2
 sudo ./usertools/dpdk-devbind.py --bind=igb_uio enp3s0f3
 
 
-
 # re-installing DPDK
 rm -rf /usr/local/lib/rte_*
 rm -rf /usr/local/include/dpdk

@@ -4,6 +4,7 @@
 # dpdk enabled
 sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --smp 2
 
+
 # TCP seastar
 ./tcp_server --smp 2
 ```
@@ -16,7 +17,7 @@ g++-5  `pkg-config --cflags --libs ${SEASTAR}/build/release/seastar.pc` --whole-
 
 sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --smp 1
 
-sudo ./client --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.41 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --server "10.107.30.40:1234"
+sudo ./server --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.41 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --server "10.107.30.40:10000"
 
 VMA_SPEC=latency LD_PRELOAD=libvma.so numactl --cpunodebind=1 taskset -c 0-2  ./tcp_server --smp 2
 ```
