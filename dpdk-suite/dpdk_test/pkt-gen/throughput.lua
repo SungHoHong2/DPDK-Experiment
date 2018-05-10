@@ -10,6 +10,8 @@ pktgen.screen("on");
 pktgen.dst_mac("1", "start", "00:1B:21:A6:D4:D5");
 pktgen.start("1");
 
+pktgen.delay(10000);
+
 -- pause
 pktgen.cls();
 pktgen.screen("off");
@@ -27,4 +29,4 @@ pktgen.screen("on");
 
 pktgen.dst_mac("1", "start", "00:1B:21:A6:D4:D5");
 pktgen.start("1");
-pktgen.delay(5000);
+pktgen.delay(10000);
