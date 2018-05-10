@@ -7,11 +7,8 @@ pktgen.set("all", "size", 256);
 pktgen.set("all", "burst", 128);
 pktgen.screen("on");
 
-local seq_table = {
-    ["eth_dst_addr"] = "00:1B:21:A6:D4:D5",
-    ["pktSize"] = 128
-  };
-pktgen.seqTable(0, "all", seq_table );
+
+pktgen.dst_mac("0", "start", "00:1B:21:A6:D4:D5");
 pktgen.start("0");
 
 pktgen.delay(5000);
