@@ -123,7 +123,7 @@ static const struct rte_eth_conf port_conf = {
 		.hw_strip_crc   = 1, /**< CRC stripped by hardware */
 	},
 	.txmode = {
-		.mq_mode = ETH_MQ_TX_NONE,
+		.mq_mode = ETH_MQ_TX_DCB,
 	},
 };
 
@@ -690,7 +690,7 @@ main(int argc, char **argv)
 			rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup:err=%d, port=%u\n",
 				ret, (unsigned) portid);
 
-
+	// chara
 		fflush(stdout);
 		ret = rte_eth_tx_queue_setup(portid, 1, nb_txd,
 				rte_eth_dev_socket_id(portid),
