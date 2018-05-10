@@ -35,4 +35,4 @@ pktgen.screen("off");
 pktgen.clear("all");
 pktgen.reset("all");
 
-pktgen.pause("end"\n", 2000);
+pktgen.pause("end\n", 2000);
