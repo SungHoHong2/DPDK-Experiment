@@ -10,8 +10,3 @@ pktgen.screen("on");
 
 pktgen.dst_mac("0", "start", "00:1B:21:A6:D4:D5");
 pktgen.start("0");
-
-pktgen.delay(5000);
-
-pktgen.screen("done\n");
-prints("pktgen.info", pktgen.info);
