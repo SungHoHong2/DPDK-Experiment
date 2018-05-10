@@ -7,6 +7,5 @@ pktgen.set("all", "size", 256);
 pktgen.set("all", "burst", 128);
 pktgen.screen("on");
 
-
-pktgen.dst_mac("0", "start", "00:1B:21:A6:D4:D5");
-pktgen.start("0");
+pktgen.dst_mac("1", "start", "00:1B:21:A6:D4:D5");
+pktgen.start("1");

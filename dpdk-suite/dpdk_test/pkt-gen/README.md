@@ -3,7 +3,7 @@ https://www.intel.com/content/dam/www/public/us/en/documents/guides/dpdk-testpmd
 ### Running file
 ```
 # 00:1B:21:A6:D4:D5
-./app/x86_64-native-linuxapp-gcc/pktgen -l 0-4 -n 3 -- -P -m "[1:3].0, [2:4].1" -f throughput.lua
+./app/x86_64-native-linuxapp-gcc/pktgen -l 0-4 -n 3 -- -P -m "[2:4].1" -f throughput.lua
 ```
 
 ### PKTGEN sending packet
