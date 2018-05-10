@@ -1,15 +1,10 @@
 https://www.intel.com/content/dam/www/public/us/en/documents/guides/dpdk-testpmd-application-user-guide.pdf
 
+### Running file
 ```
 # 00:1B:21:A6:D4:D5
-set 0 dst mac 00:1B:21:A6:D4:D5
-
-./app/x86_64-native-linuxapp-gcc/pktgen -l 0-4 -n 3 -- -P -m "[1:3].0, [2:4].1"
-
-/home/sungho/pktgen-3.4.2/app/pktgen-arp.c:59
-/home/sungho/pktgen-3.4.2/app/pktgen-cmds.c:97
+./app/x86_64-native-linuxapp-gcc/pktgen -l 0-4 -n 3 -- -P -m "[1:3].0, [2:4].1" -f test/main.lua
 ```
-
 
 ### PKTGEN sending packet
 ```c++
@@ -29,16 +24,12 @@ set 0 dst mac 00:1B:21:A6:D4:D5
       m->index  23
       void single_set_dst_mac(port_info_t *info, struct ether_addr *mac);
 
-
-
-
-
-
 /home/sungho/pktgen-3.4.2/lib/cli/cli_string_fns.c:246
-
-
 /home/sungho/pktgen-3.4.2/app/pktgen-cmds.c:1002
+```
 
+### LUI Script
 
+```
 
 ```
