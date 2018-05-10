@@ -668,9 +668,20 @@ main(int argc, char **argv)
 
 		rte_eth_macaddr_get(portid,&l2fwd_ports_eth_addr[portid]);
 
+
+
 		/* init one RX queue */
 		fflush(stdout);
 		ret = rte_eth_rx_queue_setup(portid, 0, nb_rxd,
+					     rte_eth_dev_socket_id(portid),
+					     NULL,
+					     l2fwd_pktmbuf_pool);
+		if (ret < 0)
+			rte_exit(EXIT_FAILURE, "rte_eth_rx_queue_setup:err=%d, port=%u\n",
+				  ret, (unsigned) portid);
+
+		fflush(stdout);
+		ret = rte_eth_rx_queue_setup(portid, 1, nb_rxd,
 					     rte_eth_dev_socket_id(portid),
 					     NULL,
 					     l2fwd_pktmbuf_pool);
@@ -686,6 +697,19 @@ main(int argc, char **argv)
 		if (ret < 0)
 			rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup:err=%d, port=%u\n",
 				ret, (unsigned) portid);
+
+
+		fflush(stdout);
+		ret = rte_eth_tx_queue_setup(portid, 1, nb_txd,
+				rte_eth_dev_socket_id(portid),
+				NULL);
+		if (ret < 0)
+			rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup:err=%d, port=%u\n",
+				ret, (unsigned) portid);
+
+
+
+
 
 		/* Initialize TX buffers */
 		tx_buffer[portid] = rte_zmalloc_socket("tx_buffer",
