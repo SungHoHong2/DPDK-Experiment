@@ -1,5 +1,10 @@
 ### DPDK-MPI
 
+**in case your MPI library is not working properly**
+```
+sudo apt-get purge mpi openmpi-common
+```
+
 ```
 export MPICC=/home/sungho/mpich
 export PATH=/home/you/mpich-install/bin:$PATH

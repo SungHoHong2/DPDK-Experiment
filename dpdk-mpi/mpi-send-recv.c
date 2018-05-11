@@ -3,19 +3,23 @@
 
 int main(int argc, char **argv) {
 
-  int my_rank;
-  int size;
-  MPI_Init(&argc, &argv); /*START MPI */
+  // Find out rank, size
+  int world_rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
+  int world_size;
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-/*DETERMINE RANK OF THIS PROCESSOR*/
-  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+  int number;
+  if (world_rank == 0) {
+      number = -1;
+      MPI_Send(&number, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
+  } else if (world_rank == 1) {
+      MPI_Recv(&number, 1, MPI_INT, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+      printf("Process 1 received number %d from process 0\n",
+             number);
+  }
 
- /*DETERMINE TOTAL NUMBER OF PROCESSORS*/
-  MPI_Comm_size(MPI_COMM_WORLD, &size);
-
-
-  printf("Hello world! I'm rank (processor number) %d of size %d\n", my_rank, size);
-
-  MPI_Finalize();  /* EXIT MPI */
+  
 
 }
