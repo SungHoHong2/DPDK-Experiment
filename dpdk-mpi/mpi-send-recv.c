@@ -1,5 +1,5 @@
-#include < mpi.h>   /* PROVIDES THE BASIC MPI DEFINITION AND TYPES */
-#include  < stdio.h>
+#include <mpi.h>   /* PROVIDES THE BASIC MPI DEFINITION AND TYPES */
+#include  <stdio.h>
 
 int main(int argc, char **argv) {
 
