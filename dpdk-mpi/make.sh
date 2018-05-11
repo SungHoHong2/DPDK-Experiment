@@ -11,4 +11,4 @@ else
 sudo mpicc -o $1 $1.c
 wait
 mpirun -n 2 -hostfile hosts_file ./$1
-if
+fi
