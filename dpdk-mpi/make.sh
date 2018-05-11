@@ -10,5 +10,5 @@ echo "I will just update"
 else
 sudo mpicc -o $1 $1.c
 wait
-echo ./mpirun -n 2 -hostfile hosts_file ./$1
+echo mpirun -n 2 -hostfile hosts_file ./$1
 fi
