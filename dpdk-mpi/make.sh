@@ -5,13 +5,17 @@ wait
 if [ "$1" = "hellow" ]
 then
 mpicc -o hellow hellow.c
-wait
+# wait
+elif [ "$1" = "hellow_run" ]
+then
 mpirun -n 4 -hostfile hosts_file ./hellow
 
 elif [ "$1" = "mpi_send_recv" ]
 then
 mpicc -o mpi-send-recv mpi-send-recv.c
-wait
-# mpirun -n 2 -hostfile hosts_file ./mpi-send-recv
-mpirun -n 2 ./send_recv
+
+elif [ "$1" = "mpi_send_recv_run" ]
+then
+mpirun -n 2 -hostfile hosts_file ./mpi-send-recv
+
 fi
