@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv) {
   // Initialize the MPI environment
-  MPI_Init(NULL, NULL);
+  MPI_Init(0, 0);
   // Find out rank, size
   int world_rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
