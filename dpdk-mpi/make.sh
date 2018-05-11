@@ -10,6 +10,6 @@ echo mpirun -n 4 -hostfile hosts_file ./hellow
 elif [ "$1" = "mpi_send_recv" ]
 then
 sudo mpicc -o mpi-send-recv mpi-send-recv.c
-echo mpirun -n 2 -hostfile hosts_file ./mpi-send-recv
+echo mpirun -n 2 ./mpi-send-recv
 
 fi
