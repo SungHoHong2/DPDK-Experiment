@@ -1,5 +1,5 @@
 export MPICC=/home/sungho/mpich
-export PATH=/home/you/mpich-install/bin:$PATH
+export PATH=/home/sungho/mpich/bin:$PATH
 sudo git pull origin master
 wait
 if [ "$1" = "hellow" ]
