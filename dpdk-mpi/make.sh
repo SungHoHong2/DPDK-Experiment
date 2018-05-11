@@ -5,7 +5,7 @@ sudo git pull origin master
 
 if [ "$1" = "" ]
 then
-echo "I will just update\n"
+echo "I will just update"
 
 else
 sudo mpicc -o $1 $1.c
