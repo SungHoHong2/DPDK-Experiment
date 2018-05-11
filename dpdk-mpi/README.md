@@ -11,6 +11,8 @@ export PATH=/home/sungho/mpich/bin:$PATH
 
 mpicc -o hellow hellow.c
 mpirun -n 4 -hostfile hosts_file ./hellow
+mpirun -n 4 ./hellow
+
 mpiexec -f hosts_file -n 2 ./hellow
 ```
 
@@ -25,14 +27,8 @@ tools/bootstrap/external/external_common_launch.c:102
 // ssh connection is made for the number of processes
 tools/bootstrap/external/external_common_launch.c:181
 
-
-
-
-
-
 pm/pmiserv/pmiserv_pmi.c:65
 pm/pmiserv/pmiserv_pmi.c:71
-
 pm/pmiserv/pmiserv_pmi.c:155
 
 /home/sungho/mpich-3.2/src/mpi/pt2pt/send.c:63   int MPI_Send(const void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)

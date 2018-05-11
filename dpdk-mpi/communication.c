@@ -6,16 +6,19 @@ int main( int argc, char *argv[] )
 {
     int rank;
     int size;
+    int numbertoreceive, numbertosend=77;
 
     MPI_Init( 0, 0 );
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
-    printf( "Hello world from process %d of %d\n", rank, size );
+    printf( "communication from process %d of %d\n", rank, size );
 
-
-
-
-
+    if (rank==0){
+        MPI_Recv( &numbertoreceive, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+        printf("Number received is: %d\n", numbertoreceive);
+     }
+     else if(rank == 1)
+        MPI_Send( &numbertosend, 1, MPI_INT, 0, 10, MPI_COMM_WORLD);
 
     MPI_Finalize();
     return 0;
