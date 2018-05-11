@@ -6,6 +6,7 @@ if [ "$1" = "hellow" ]
 then
 sudo mpicc -o hellow hellow.c
 wait
+wait
 mpirun -n 4 -hostfile hosts_file ./hellow
 
 elif [ "$1" = "mpi_send_recv" ]
