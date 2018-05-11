@@ -5,7 +5,5 @@ if [ "$1" = "mpi_send_recv" ]
 then
 mpicc -o mpi-send-recv mpi-send-recv.c
 wait
-mpirun -n 4 -hostfile hosts_file ./mpi-send-recv
-
-
+mpirun -n 1 -hostfile hosts_file ./mpi-send-recv
 fi
