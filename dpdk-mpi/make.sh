@@ -4,5 +4,3 @@ sudo git pull origin master
 
 sudo mpicc -o $1 $1.c
 mpirun -n 2 -hostfile hosts_file ./$1
-
-fi
