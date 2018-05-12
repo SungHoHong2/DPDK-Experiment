@@ -104,9 +104,12 @@ public:
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
 
-            try {
+            std::cout << "howdy first" << std::endl;
+          try {
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
+                std::cout << "howdy second" << std::endl;
+
                 (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
