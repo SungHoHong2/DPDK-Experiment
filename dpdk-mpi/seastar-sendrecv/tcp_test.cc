@@ -118,7 +118,7 @@ public:
         }
 
         if(connect_failure)
-            sleep(1s).then([erver_addr, test, ncon] { return start(server_addr, test, ncon); });
+            sleep(1s).then([server_addr, test, ncon] { return start(server_addr, test, ncon); });
 
         return make_ready_future();
     }
