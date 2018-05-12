@@ -109,7 +109,7 @@ int main(int ac, char** av) {
     });
 
 
-    app.run(argc, argv, [] {
+    app.run(ac, av, [] {
         std::cout << "Sleeping... " << std::flush;
         using namespace std::chrono_literals;
         return seastar::sleep(1s).then([] {
