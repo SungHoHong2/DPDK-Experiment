@@ -50,18 +50,18 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> ping(int times) {
+        future<> ping() {
             std::string packeti(BUFFER_SIZE,'*');
             return _write_buf.write(packeti).then([this] {
                 std::cout << "write" << std::endl;
                 return _write_buf.flush();
 
-            }).then([this, times] {
-                return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
+            }).then([this] {
+                return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
                     std::cout << "read" << std::endl;
                     // std::cout << str << str.length() << std::endl;
-                    return _read_buf.flush();
+                    return ping();
                 });
             });
         }
