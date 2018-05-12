@@ -36,7 +36,7 @@ struct tcp_test {
 
 int main(int ac, char** av) {
     boost::program_options::variables_map opts;
-    // opts.insert(std::make_pair("tap-device", boost::program_options::variable_value(std::string("tap0"), false)));
+    opts.insert(std::make_pair("tap-device", boost::program_options::variable_value(std::string("tap0"), false)));
     //
     // auto vnet = create_virtio_net_device(opts);
     // interface netif(std::move(vnet));
