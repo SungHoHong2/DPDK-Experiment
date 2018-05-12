@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-eastar::future<int> slow() {
+seastar::future<int> slow() {
     using namespace std::chrono_literals;
     return seastar::sleep(100ms).then([] { return 3; });
 }
