@@ -68,8 +68,7 @@ public:
     };
 
     future<> ping_test(connection *conn) {
-
-        return conn->ping(_pings_per_connection).then([] {
+        return conn->ping().then([] {
             clients.invoke_on(0, &client::ping_report);
         });
     }
