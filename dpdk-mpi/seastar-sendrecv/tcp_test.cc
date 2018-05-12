@@ -7,7 +7,6 @@
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
-bool connect_failure = false;
 
 time_t start; //adding timer
 size_t BUFFER_SIZE = 64;
@@ -103,36 +102,19 @@ public:
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
-
-            std::cout << "howdy first" << std::endl;
-          try {
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                std::cout << "howdy second" << std::endl;
-
                 (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
                     } catch (std::exception& ex) {
-                        connect_failure = true;
-                        std::cout << "connectino failed" << std::endl;
-                        // fprint(std::cerr, "request error: %s\n", ex.what());
+                        fprint(std::cerr, "request error: %s\n", ex.what());
                     }
                 });
             });
-          } catch (std::exception& ex) {
-            std::cout << "howdy failed" << std::endl;
-          }
-
         }
 
-        if(connect_failure){
-            sleep(1s).then([this, server_addr, test, ncon] {
-              connect_failure = false;
-              return start(server_addr, test, ncon);
-            });
-        }
 
         return make_ready_future();
     }
@@ -151,7 +133,7 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
-        ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
+        ("conn", bpo::value<unsigned>()->default_value(2), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
         ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
         ;
