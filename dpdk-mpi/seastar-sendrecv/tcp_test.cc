@@ -153,18 +153,17 @@ int main(int ac, char ** av) {
         BUFFER_SIZE = config["buffer"].as<unsigned>();
         protocol = transport::TCP;
 
-        // if (proto == "tcp") {
-        //     protocol = transport::TCP;
-        // } else if (proto == "sctp") {
-        //     protocol = transport::SCTP;
-        // } else {
-        //     fprint(std::cerr, "Error: --proto=tcp|sctp\n");
-        //     return engine().exit(1);
-        // }
 
-        clients.start().then([server, test, ncon] () {
-            clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
-        });
+        std::cout << "finding connection" << std::endl
+        using namespace std::chrono_literals;
+        sleep(200ms).then([server, test, ncon] {
+          clients.start().then([server, test, ncon] () {
+              clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
+          });
+        );
+
+
+
 
     });
 }
