@@ -4,17 +4,20 @@
 #include <iostream>
 
 
-seastar::future<int> incr(int i) {
+eastar::future<int> slow() {
     using namespace std::chrono_literals;
-    return seastar::sleep(10ms).then([i] { return i + 1; });
+    return seastar::sleep(100ms).then([] { return 3; });
 }
 
 seastar::future<> f() {
-    return incr(3).then([] (int val) {
+    return slow().then([] (int val) {
         std::cout << "Got " << val << "\n";
     });
 }
 
 
-    return 0;
+
+int main(int argc, char** argv) {
+    seastar::app_template app;
+    app.run(argc, argv, f);
 }
