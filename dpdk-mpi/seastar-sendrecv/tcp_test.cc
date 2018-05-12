@@ -111,7 +111,7 @@ public:
                         f.get();
                     } catch (std::exception& ex) {
                         connect_failure = true;
-                        cout << "connectino failed" << endl;
+                        std::cout << "connectino failed" << std::endl;
                         // fprint(std::cerr, "request error: %s\n", ex.what());
                     }
                 });
