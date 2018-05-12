@@ -8,7 +8,6 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
-std::string packetz(BUFFER_SIZE,'*');
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
 

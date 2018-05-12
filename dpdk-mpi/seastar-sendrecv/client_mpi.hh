@@ -1,3 +1,4 @@
+std::string packetz(BUFFER_SIZE,'*');
 
 class client;
 distributed<client> clients;
