@@ -12,6 +12,7 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 size_t BUFFER_SIZE = 64;
+
 #include "server_mpi.hh"
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
@@ -21,12 +22,10 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("conn", bpo::value<unsigned>()->default_value(2), "nr connections per cpu")
-        ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
-        ;
+        ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size");
 
 
     return app.run_deprecated(ac, av, [&app] {
-
         uint16_t port = 1234; // assign the port value from the app_template
         auto server = new distributed<tcp_server>; // run distributed object
         auto&& config = app.configuration();
@@ -45,7 +44,6 @@ int main(int ac, char ** av) {
         auto con_server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
-        auto proto = config["proto"].as<std::string>();
         protocol = transport::TCP;
 
         std::cout << "finding connection" << std::endl;
