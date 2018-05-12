@@ -154,7 +154,7 @@ int main(int ac, char ** av) {
         protocol = transport::TCP;
 
 
-        std::cout << "finding connection" << std::endl
+        std::cout << "finding connection" << std::endl;
         using namespace std::chrono_literals;
         sleep(200ms).then([server, test, ncon] {
           clients.start().then([server, test, ncon] () {
