@@ -8,7 +8,7 @@
 using namespace seastar;
 size_t BUFFER_SIZE = 64;
 
-#include "sever_mpi.hh"
+#include "server_mpi.hh"
 
 
 namespace bpo = boost::program_options;
