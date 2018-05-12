@@ -1,3 +1,6 @@
+#include <boost/interprocess/managed_shared_memory.hpp>
+#include <cstdlib> //std::system
+#include <sstream>
 #include "core/reactor.hh"
 #include "core/app-template.hh"
 #include "core/temporary_buffer.hh"
@@ -7,6 +10,7 @@
 #include <vector>
 #include <sys/time.h>
 #include <iostream>
+
 
 using namespace seastar;
 using namespace net;
