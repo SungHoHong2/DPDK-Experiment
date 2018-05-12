@@ -44,7 +44,7 @@ int main(int ac, char ** av) {
             std::cout << "Seastar TCP server listening on port " << port << " with buffer " << BUFFER_SIZE  <<"...\n";
         });
 
-        auto server = config["server"].as<std::string>();
+        server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         auto proto = config["proto"].as<std::string>();
