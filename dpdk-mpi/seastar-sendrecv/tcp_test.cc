@@ -103,6 +103,8 @@ public:
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
+
+            try {
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
                 (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
@@ -116,6 +118,10 @@ public:
                     }
                 });
             });
+          } catch (std::exception& ex) {
+            std::cout << "howdy failed" << std::endl;
+          }
+
         }
 
         if(connect_failure){
