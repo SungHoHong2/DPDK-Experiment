@@ -53,16 +53,12 @@ public:
         future<> ping(int times) {
             std::string packeti(BUFFER_SIZE,'*');
             return _write_buf.write(packeti).then([this] {
+                std::cout << "write" << std::endl;
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
-                    // if (str != packetz) {
-                    //     std::cout << str << str.length() << std::endl;
-                    //     return make_ready_future();
-                    // }
-                    total_throughput+=str.length();
-
+                    std::cout << "read" << std::endl;
                     if(LATENCY && total_throughput >= (BUFFER_SIZE*PINGS)){
                         return make_ready_future();
                     }
@@ -83,10 +79,6 @@ public:
 
     void ping_report() {
         if (++_num_reported == _concurrent_connections) {
-            end_time = getTimeStamp();
-            printf("sending the %d pings using %ld byte packet\n", PINGS, BUFFER_SIZE);
-            printf("latency: %ld\n", end_time - start_time);
-            std::cout << "throughput: " <<  (total_throughput/1048576)/((end_time - start_time)/1000000) << " Mbytes" << std::endl;
             clients.stop().then([] {
                 engine().exit(0);
             });
