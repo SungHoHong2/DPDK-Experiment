@@ -1,6 +1,7 @@
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
+#include "core/sleep.hh"
 #include <sys/time.h>
 
 using namespace seastar;
@@ -117,7 +118,7 @@ public:
         }
 
         if(connect_failure)
-            start(server_addr, test, ncon);
+            sleep(1s).then([erver_addr, test, ncon] { return start(server_addr, test, ncon); });
 
         return make_ready_future();
     }
