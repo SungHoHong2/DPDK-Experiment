@@ -117,8 +117,12 @@ public:
             });
         }
 
-        if(connect_failure)
-            sleep(1s).then([this, server_addr, test, ncon] { return start(server_addr, test, ncon); });
+        if(connect_failure){
+            sleep(1s).then([this, server_addr, test, ncon] {
+              connect_failure = false;
+              return start(server_addr, test, ncon);
+            });
+        }
 
         return make_ready_future();
     }
