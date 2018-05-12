@@ -89,7 +89,7 @@ int main(int ac, char** av) {
         ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
     ;
 
-     app.run_deprecated(ac, av, [&app] {
+    return app.run_deprecated(ac, av, [&app] {
         uint16_t port = 1234; // assign the port value from the app_template
         auto server = new distributed<tcp_server>; // run distributed object
         // The distributed template manages a sharded service,
@@ -107,19 +107,14 @@ int main(int ac, char** av) {
         }).then([port] {
             std::cout << "Seastar TCP server listening on port " << port << " with buffer " << BUFFER_SIZE  <<"...\n";
         });
-    });
 
-
-    app.run(ac, av, [] {
         std::cout << "Sleeping... " << std::flush;
         using namespace std::chrono_literals;
-        return seastar::sleep(1s).then([] {
+        seastar::sleep(1s).then([] {
             std::cout << "Done.\n";
         });
+
     });
 
 
-
-
-    return 0;
 }
