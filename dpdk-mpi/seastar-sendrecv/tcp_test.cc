@@ -7,7 +7,7 @@
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
-
+size_t BUFFER_SIZE = 64;
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
 
