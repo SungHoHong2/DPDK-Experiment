@@ -44,16 +44,16 @@ int main(int ac, char ** av) {
             std::cout << "Seastar TCP server listening on port " << port << " with buffer " << BUFFER_SIZE  <<"...\n";
         });
 
-        server = config["server"].as<std::string>();
+        auto con_server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         auto proto = config["proto"].as<std::string>();
         protocol = transport::TCP;
 
         std::cout << "finding connection" << std::endl;
-        sleep(10s).then([server, test, ncon] {
-          clients.start().then([server, test, ncon] () {
-              clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
+        sleep(10s).then([con_server, test, ncon] {
+          clients.start().then([con_server, test, ncon] () {
+              clients.invoke_on_all(&client::start, ipv4_addr{con_server}, test, ncon);
           });
         });
 
