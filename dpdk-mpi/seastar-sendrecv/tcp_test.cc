@@ -1,5 +1,8 @@
+#include "core/app-template.hh"
+#include "core/future.hh"
 #include "core/sleep.hh"
 #include <iostream>
+
 
 seastar::future<int> incr(int i) {
     using namespace std::chrono_literals;
