@@ -16,7 +16,7 @@ mpirun -n 4 ./hellow
 mpiexec -f hosts_file -n 2 ./hellow
 ```
 
-**MPI_SEND expeiment**
+**MPI_SEND and RECV experiment**
 ```c++
 gdb --args mpirun -n 2 ./mpi-send-recv
 ui/mpich/mpiexec.c:152
@@ -26,13 +26,21 @@ tools/bootstrap/src/bsci_launch.c:12
 tools/bootstrap/external/external_common_launch.c:102
 // ssh connection is made for the number of processes
 tools/bootstrap/external/external_common_launch.c:181
+tools/bootstrap/external/external_common_launch.c:324  // POLLING
+tools/demux/demux.c:80
+      HYD_status HYDT_dmx_register_fd(int num_fds, int *fd, HYD_event_t events, void *userp,
+      HYD_status(*callback) (int fd, HYD_event_t events, void *userp))
+ui/mpich/mpiexec.c:343  /* Wait for their completion */
+      status = HYD_pmci_wait_for_completion(timeout);
+      communication from process 1 of 2
+      communication from process 0 of 2
+      Number received is: 77
+```
 
-pm/pmiserv/pmiserv_pmi.c:65
-pm/pmiserv/pmiserv_pmi.c:71
-pm/pmiserv/pmiserv_pmi.c:155
-
-/home/sungho/mpich-3.2/src/mpi/pt2pt/send.c:63   int MPI_Send(const void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)
-
+**socket implementation**
+- the location where the socket API is used
+```c++
+utils/sock/sock.c
 
 
 
