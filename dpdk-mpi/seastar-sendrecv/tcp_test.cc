@@ -3,12 +3,12 @@
 #include "core/distributed.hh"
 #include "core/sleep.hh"
 #include <sys/time.h>
-std::string packetz(BUFFER_SIZE,'*');
 
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
+std::string packetz(BUFFER_SIZE,'*');
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
 
