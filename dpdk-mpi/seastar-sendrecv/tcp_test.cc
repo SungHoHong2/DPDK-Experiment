@@ -103,7 +103,7 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, server_addr, test, ncon] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                (this->*tests.at(test))(conn).then_wrapped([conn, server_addr, test, ncon] (auto&& f) {
+                (this->*tests.at(test))(conn).then_wrapped([this, conn, server_addr, test, ncon] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
