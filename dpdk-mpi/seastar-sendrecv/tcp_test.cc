@@ -55,15 +55,13 @@ public:
             return _write_buf.write(packeti).then([this] {
                 std::cout << "write" << std::endl;
                 return _write_buf.flush();
+
             }).then([this, times] {
                 return _read_buf.read_exactly(BUFFER_SIZE).then([this, times] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
                     std::cout << "read" << std::endl;
-                    if(LATENCY && total_throughput >= (BUFFER_SIZE*PINGS)){
-                        return make_ready_future();
-                    }
                     // std::cout << str << str.length() << std::endl;
-                    return ping(times);
+                    return _read_buf.flush();
                 });
             });
         }
@@ -96,7 +94,7 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
+                ping_test(conn).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
@@ -104,6 +102,18 @@ public:
                         fprint(std::cerr, "request error: %s\n", ex.what());
                     }
                 });
+
+                //
+                // (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
+                //     delete conn;
+                //     try {
+                //         f.get();
+                //     } catch (std::exception& ex) {
+                //         fprint(std::cerr, "request error: %s\n", ex.what());
+                //     }
+                // });
+
+
             });
         }
 
