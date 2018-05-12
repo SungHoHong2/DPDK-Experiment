@@ -6,4 +6,4 @@ all:
 
 .PHONY: clean
 clean:
-	rm -f *.o ${TARGET}
+	rm -f *.o ${TARGET} --smp 1
