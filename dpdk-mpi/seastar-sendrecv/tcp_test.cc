@@ -67,20 +67,20 @@ public:
         }
     };
 
-    future<> ping_test(connection *conn) {
-        return conn->ping().then([] {
-            clients.invoke_on(0, &client::ping_report);
-        });
-    }
-
-
-    void ping_report() {
-        if (++_num_reported == _concurrent_connections) {
-            clients.stop().then([] {
-                engine().exit(0);
-            });
-        }
-    }
+    // future<> ping_test(connection *conn) {
+    //     return conn->ping().then([] {
+    //         clients.invoke_on(0, &client::ping_report);
+    //     });
+    // }
+    //
+    //
+    // void ping_report() {
+    //     if (++_num_reported == _concurrent_connections) {
+    //         clients.stop().then([] {
+    //             engine().exit(0);
+    //         });
+    //     }
+    // }
 
 
     future<> start(ipv4_addr server_addr, std::string test, unsigned ncon) {
@@ -93,7 +93,7 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                ping_test(conn).then_wrapped([conn] (auto&& f) {
+                conn->ping().then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
@@ -139,11 +139,6 @@ int main(int ac, char ** av) {
         ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size")
         ;
 
-    // INITIALIZE THE TEST BEGIN
-    if (LATENCY){
-               start_time = getTimeStamp();
-               total_throughput = 0;
-    }
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
@@ -163,12 +158,9 @@ int main(int ac, char ** av) {
           });
         });
 
-
-
-
     });
 }
 
-const std::map<std::string, client::test_fn> client::tests = {
-        {"ping", &client::ping_test},
-};
+// const std::map<std::string, client::test_fn> client::tests = {
+//         {"ping", &client::ping_test},
+// };
