@@ -30,7 +30,9 @@ int main (int argc, char *argv[]){
     const ShmemAllocator alloc_inst (segment.get_segment_manager());
     MyVector *myvector = segment.construct<MyVector>("MyVector")(alloc_inst);
 
-
+  //Create allocators
+   CharAllocator     charallocator  (shm.get_segment_manager());
+   StringAllocator   stringallocator(shm.get_segment_manager());
     MyShmString mystring(charallocator);
       mystring = "howdy\t";
 
