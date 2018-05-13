@@ -4,10 +4,11 @@
 #include <boost/interprocess/allocators/allocator.hpp>
 #include <string>
 #include <cstdlib> //std::system
-
-
 #include <sstream>
 #include <iostream>
+
+using namespace boost::interprocess;
+
 
 int main (int argc, char *argv[]){
 
