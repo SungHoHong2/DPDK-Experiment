@@ -21,12 +21,16 @@ int main (int argc, char *argv[]){
   //Use vector in reverse order
   std::sort(myvector->rbegin(), myvector->rend());
 
-
-  for (auto i = myvector->begin(); i != myvector->end(); ++i)
+  int s=0;
+  for (auto i = myvector->begin(); i != myvector->end(); ++i){
         std::cout << *i << ' ';
+        s++;
+  }
+  myvector.erase(myvector.begin(), myvector.begin() + s);
+
 
   //When done, destroy the vector from the segment
-  segment.destroy<MyVector>("MyVector");
+  // segment.destroy<MyVector>("MyVector");
 
    return 0;
 }
