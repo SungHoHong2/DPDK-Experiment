@@ -24,7 +24,7 @@ int main (int argc, char *argv[]){
   //Open the managed segment
   managed_shared_memory segment(open_only, "MySharedMemory");
   //Find the vector using the c-string name
-  MyVector *myvector = segment.find<MyVector>("myshmvector").first;
+  MyVector *myvector = segment.find<vector>("myshmvector").first;
   //Use vector in reverse order
   std::sort(myvector->rbegin(), myvector->rend());
 
