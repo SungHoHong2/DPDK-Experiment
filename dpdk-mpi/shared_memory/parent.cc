@@ -26,7 +26,7 @@ int main (int argc, char *argv[]){
     MyVector *myvector = segment.construct<MyVector>("MyVector")(alloc_inst);
 
     for(int i = 0; i < 100; ++i)  //Insert data in the vector
-       myvector->push_back(i);
+       myvector->push_back("howdy!\t");
 
      while(1){};
 
