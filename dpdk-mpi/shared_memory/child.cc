@@ -26,7 +26,7 @@ int main (int argc, char *argv[]){
         std::cout << *i << ' ';
         s++;
   }
-  myvector.erase(myvector->begin(), myvector->begin() + s);
+  myvector->erase(myvector->begin(), myvector->begin() + s);
 
 
   //When done, destroy the vector from the segment
