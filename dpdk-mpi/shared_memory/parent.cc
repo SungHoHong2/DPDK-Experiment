@@ -9,8 +9,12 @@
 
 using namespace boost::interprocess;
 
-typedef allocator<int, managed_shared_memory::segment_manager>  ShmemAllocator;
-typedef vector<int, ShmemAllocator> MyVector;
+//Typedefs
+typedef allocator<char, managed_shared_memory::segment_manager> CharAllocator;
+typedef basic_string<char, std::char_traits<char>, CharAllocator> MyShmString;
+
+typedef allocator<MyShmString, managed_shared_memory::segment_manager>  ShmemAllocator;
+typedef vector<MyShmString, ShmemAllocator> MyVector;
 
 
 int main (int argc, char *argv[]){
@@ -25,8 +29,13 @@ int main (int argc, char *argv[]){
     const ShmemAllocator alloc_inst (segment.get_segment_manager());
     MyVector *myvector = segment.construct<MyVector>("MyVector")(alloc_inst);
 
+
+    MyShmString mystring(charallocator);
+      mystring = "howdy\t";
+
+
     for(int i = 0; i < 100; ++i)  //Insert data in the vector
-       myvector->push_back("howdy!\t");
+       myvector->push_back(mystring);
 
      while(1){};
 
