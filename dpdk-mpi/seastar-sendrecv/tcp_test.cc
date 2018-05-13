@@ -45,9 +45,6 @@ int main(int ac, char ** av) {
     managed_shared_memory::handle_t handle = segment.get_handle_from_address(shptr);
 
 
-
-
-
     app_template app;
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
