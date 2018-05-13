@@ -1,6 +1,5 @@
 sudo git pull origin master
 wait
-all:
 sudo g++ -g parent.cc  -O2  -lrt  -lboost_system  -lpthread -o parent
 
 wait
