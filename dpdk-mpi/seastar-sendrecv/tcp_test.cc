@@ -73,6 +73,8 @@ int main(int ac, char ** av) {
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
 
+
+        // in MPI, this runs on a while loop
         std::cout << "finding connection" << std::endl;
         sleep(10s).then([con_server, test, ncon] {
           clients.start().then([con_server, test, ncon] () {

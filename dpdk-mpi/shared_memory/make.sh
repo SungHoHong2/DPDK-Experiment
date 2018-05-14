@@ -6,3 +6,5 @@ sudo g++ -g child.cc  -O2  -lrt  -lboost_system  -lpthread -o child
 wait
 echo ./parent
 echo ./child
+
+# sudo gcc -g parent.cc  -O2  -lrt  -lboost_system  -lpthread -o parent

@@ -16,7 +16,7 @@ mpirun -n 4 ./hellow
 mpiexec -f hosts_file -n 2 ./hellow
 ```
 
-**MPI_SEND and RECV experiment**
+**HYD experiment**
 ```c++
 gdb --args mpirun -n 2 ./mpi-send-recv
 ui/mpich/mpiexec.c:152
@@ -37,11 +37,12 @@ ui/mpich/mpiexec.c:343  /* Wait for their completion */
       Number received is: 77
 ```
 
-**socket implementation**
-- the location where the socket API is used
+**socket send and recv**
+- tested with `communication.c`
+
 ```c++
 utils/sock/sock.c
-
+utils/sock/sock.c:233 // when it reads from other node
 
 
 
