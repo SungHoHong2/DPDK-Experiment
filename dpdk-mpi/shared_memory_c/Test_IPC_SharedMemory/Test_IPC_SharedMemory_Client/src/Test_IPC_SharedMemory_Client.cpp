@@ -6,8 +6,6 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,19 +33,19 @@ int main() {
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
     if(shmId == -1){
-        cout << "[Client][Error]shmget fail. id:" << shmId << endl;;
+        printf("[Client][Error]shmget fail. id: %d\n", sh\nmId)l
         exit(EXIT_FAILURE);
     }
 
     pShardMemory = shmat(shmId, (void*)0, 0);
     if(pShardMemory == (void*)-1){
-        cout << "[Client][Error]shmat fail."<< endl;;
+        // cout << "[Client][Error]shmat fail."<< endl;;
         exit(EXIT_FAILURE);
     }
     else{
         pShardStuff = (struct shared_use_st *) pShardMemory;
 
-        cout << "[Client]shmat success. flag:" << pShardStuff->written_by_you << endl;;
+        // cout << "[Client]shmat success. flag:" << pShardStuff->written_by_you << endl;;
 
         while(running){
 
@@ -55,7 +53,8 @@ int main() {
                 sleep(1);
             }
 
-            cout << "[Client]Enter text :"<< endl;
+            printf("[Client]Enter text :\n");
+
             fgets(buffer, TEXT_SIZE, stdin);
 
             strncpy(pShardStuff->data, buffer, TEXT_SIZE);
@@ -66,7 +65,7 @@ int main() {
         }
 
         if(shmdt(pShardMemory) == -1){
-            cout << "[Client][Error] shmdt fail."<< endl;;
+            printf("[Client][Error] shmdt fail.\n");
             exit(EXIT_FAILURE);
         }
     }
