@@ -11,7 +11,7 @@ void* create_shared_memory(size_t size) {
   // The buffer will be shared (meaning other processes can access it), but
   // anonymous (meaning third-party processes cannot obtain an address for it),
   // so only this process and its children will be able to use it:
-  int visibility = MAP_SHARED;
+  int visibility = MAP_ANONYMOUS | MAP_SHARED;
 
   // The remaining parameters to `mmap()` are not important for this use case,
   // but the manpage for `mmap` explains their purpose.
