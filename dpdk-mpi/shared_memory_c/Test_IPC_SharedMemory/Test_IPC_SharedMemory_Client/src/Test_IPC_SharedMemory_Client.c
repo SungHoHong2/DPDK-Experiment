@@ -30,7 +30,7 @@ int main() {
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
     if(shmId == -1){
-        printf("[Client][Error]shmget fail. id: %d\n", sh\nmId)l
+        printf("[Client][Error]shmget fail. id: %d\n", shmId);
         exit(EXIT_FAILURE);
     }
 
