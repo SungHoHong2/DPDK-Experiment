@@ -1,7 +1,7 @@
 TARGET = example
 
 all:
-	gcc -g ${TARGET}.cc -o ${TARGET}
+	gcc -g ${TARGET}.c -o ${TARGET}
 
 .PHONY: clean
 clean:
