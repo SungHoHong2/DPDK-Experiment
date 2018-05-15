@@ -85,7 +85,7 @@ int main(int ac, char ** av) {
 
         // in MPI, this runs on a while loop
         std::cout << "finding connection" << std::endl;
-        sleep(5s).then([con_server, test, ncon] {
+        sleep(10s).then([con_server, test, ncon] {
           clients.start().then([con_server, test, ncon] () {
               clients.invoke_on_all(&client::start, ipv4_addr{con_server}, test, ncon);
           });
