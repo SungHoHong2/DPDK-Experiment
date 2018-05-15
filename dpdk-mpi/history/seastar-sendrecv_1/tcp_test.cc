@@ -15,7 +15,7 @@
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
-using namespace boost::interprocess;
+// using namespace boost::interprocess;
 
 size_t BUFFER_SIZE = 64;
 
