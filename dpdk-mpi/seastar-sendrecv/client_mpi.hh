@@ -2,8 +2,8 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-static auto started = 0;
-static auto ended = 0;
+static long int started = 0;
+static long int ended = 0;
 
 class client {
 private:
