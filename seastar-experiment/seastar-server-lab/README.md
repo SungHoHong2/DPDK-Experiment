@@ -34,12 +34,12 @@ wget -qO- http://10.218.111.252:10000 | sed -e 's/<[^>]*>//g'
 ```
 
 
-# The primary network interface  
-auto p5p1                        
-iface p5p1 inet static           
-address 10.107.30.34             
-netmask 255.255.254.0            
-network 10.107.30.0              
-broadcast 10.107.31.255          
-gateway 10.107.30.1              
-dns-nameservers 129.219.17.200   
+# The primary network interface
+auto p5p1
+iface p5p1 inet static
+address 10.107.30.34
+netmask 255.255.254.0
+network 10.107.30.0
+broadcast 10.107.31.255
+gateway 10.107.30.1
+dns-nameservers 129.219.17.200
