@@ -50,9 +50,13 @@ int main() {
             // fgets(buffer, TEXT_SIZE, stdin);
 
             printf("starting with %d", test_case[s]);
-            std::string s(test_case[s], 'a');
-
-            strncpy(pShardStuff->data, s, TEXT_SIZE);
+            int i=0;
+            for(i=0; i<test_case[s]-1; i++){
+              buffer[i]='*';
+            }
+            buffer[i]='\0';
+            
+            strncpy(pShardStuff->data, buffer, TEXT_SIZE);
             s++;
             pShardStuff->written_by_you = 1;
             if(s==sizeof(test_case)){
