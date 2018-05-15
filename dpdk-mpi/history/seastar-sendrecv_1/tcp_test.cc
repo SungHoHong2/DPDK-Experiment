@@ -1,6 +1,6 @@
-// #include <boost/interprocess/managed_shared_memory.hpp>
-// #include <cstdlib> //std::system
-// #include <sstream>
+#include <boost/interprocess/managed_shared_memory.hpp>
+#include <cstdlib> //std::system
+#include <sstream>
 #include "core/reactor.hh"
 #include "core/app-template.hh"
 #include "core/temporary_buffer.hh"
@@ -25,24 +25,24 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
 
-    //Remove shared memory on construction and destruction
-    // struct shm_remove
-    // {
-    //    shm_remove() {  shared_memory_object::remove("MySharedMemory"); }
-    //    ~shm_remove(){  shared_memory_object::remove("MySharedMemory"); }
-    // } remover;
-    //
-    // managed_shared_memory segment(create_only, "MySharedMemory", 65536);
-    //
-    // //Allocate a portion of the segment (raw memory)
-    // std::size_t free_memory = segment.get_free_memory();
-    // void * shptr = segment.allocate(1024/*bytes to allocate*/);
-    //
-    // //Check invariant
-    // if(free_memory <= segment.get_free_memory())
-    //    return 1;
-    //
-    // managed_shared_memory::handle_t handle = segment.get_handle_from_address(shptr);
+    Remove shared memory on construction and destruction
+    struct shm_remove
+    {
+       shm_remove() {  shared_memory_object::remove("MySharedMemory"); }
+       ~shm_remove(){  shared_memory_object::remove("MySharedMemory"); }
+    } remover;
+
+    managed_shared_memory segment(create_only, "MySharedMemory", 65536);
+
+    //Allocate a portion of the segment (raw memory)
+    std::size_t free_memory = segment.get_free_memory();
+    void * shptr = segment.allocate(1024/*bytes to allocate*/);
+
+    //Check invariant
+    if(free_memory <= segment.get_free_memory())
+       return 1;
+
+    managed_shared_memory::handle_t handle = segment.get_handle_from_address(shptr);
 
 
     app_template app;
