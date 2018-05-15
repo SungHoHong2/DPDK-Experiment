@@ -10,6 +10,10 @@
 #include <vector>
 #include <sys/time.h>
 #include <iostream>
+
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include "testIpcShardMemory.h"
 
 using namespace seastar;
