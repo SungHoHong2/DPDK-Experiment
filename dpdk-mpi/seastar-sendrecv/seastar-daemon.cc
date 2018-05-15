@@ -37,7 +37,7 @@ int main(int ac, char ** av) {
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
     if(shmId == -1){
-        cout << "[Servier][Error]shmget fail. id:" << shmId << endl;;
+        std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << std::endl;;
         exit(EXIT_FAILURE);
     }
 
