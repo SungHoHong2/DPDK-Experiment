@@ -33,7 +33,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping() {
-                std::string packeti(1,'\0');
+                std::string packeti(0,'\0');
 
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
@@ -61,8 +61,6 @@ public:
                         return ping();
                     });
                 });
-
-
         }
     };
 
@@ -71,7 +69,7 @@ public:
         _concurrent_connections = ncon * smp::count;
         _total_pings = _pings_per_connection * _concurrent_connections;
         _test = test;
-
+        std::cout << "daemon interface is ready" << std::endl;
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
@@ -87,8 +85,6 @@ public:
 
             });
         }
-
-
         return make_ready_future();
     }
     future<> stop() {
