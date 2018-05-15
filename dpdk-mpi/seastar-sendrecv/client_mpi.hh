@@ -2,8 +2,8 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-static auto started;
-static auto ended;
+static steady_clock_type::time_point started;
+static steady_clock_type::time_point ended;
 
 class client {
 private:
