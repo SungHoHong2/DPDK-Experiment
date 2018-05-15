@@ -16,7 +16,7 @@ private:
     unsigned _num_reported;
     int running = 1;
     void *pShardMemory = (void*)0;
-    shared_use_st *pShardStuff;
+    shared_use_st *pShardStuff; // need to put this as a ping argument
     int shmId;
 
 public:
@@ -34,13 +34,14 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> ping() {
+        future<> ping(shared_use_st *pShardStuff) {
             std::string packeti(BUFFER_SIZE,'*');
 
-                if(pShardStuff->written_by_you == 1){
-                    std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                    pShardStuff->written_by_you = 0;
-                }
+                // this part has to be a static member
+                // if(pShardStuff->written_by_you == 1){
+                //     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                //     pShardStuff->written_by_you = 0;
+                // }
 
                 return _write_buf.write(packeti).then([this] {
                     // std::cout << pShardStuff->data << std::endl;
@@ -84,15 +85,16 @@ public:
             exit(EXIT_FAILURE);
         }
 
+        // you will have to put this as a argument
         pShardStuff = (struct shared_use_st *) pShardMemory;
         pShardStuff->written_by_you = 0;
         std::cout << "[Servier]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
-            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
+            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test, pShardStuff] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                conn->ping().then_wrapped([conn] (auto&& f) {
+                conn->ping(pShardStuff).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
