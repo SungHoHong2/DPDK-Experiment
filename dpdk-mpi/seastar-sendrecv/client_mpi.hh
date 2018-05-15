@@ -33,7 +33,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping() {
-                std::string packeti(BUFFER_SIZE,'\0');
+                std::string packeti="";
 
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
