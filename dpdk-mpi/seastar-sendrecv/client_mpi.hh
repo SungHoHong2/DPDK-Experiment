@@ -1,12 +1,9 @@
-#include <time.h>
-static time_t started; //adding timer
-static double ended; //adding timer
-
 
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-
+static lowres_clock::time_point started;
+static lowres_clock::time_point ended;
 
 class client {
 private:
@@ -15,6 +12,7 @@ private:
     unsigned _concurrent_connections;
     ipv4_addr _server_addr;
     std::string _test;
+
 
 public:
     class connection {
@@ -37,7 +35,8 @@ public:
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                    time (&start);
+                    started = steady_clock_type::now();
+
                     // char arr[ ] = "This is a test";
                     std::string packetii(pShardStuff->data);
                     packeti = packetii;
@@ -56,8 +55,11 @@ public:
                         // std::cout << "read" << std::endl;
                         if(buf.size()>1){
                         std::cout << buf.size() << std::endl;
-                        ended = difftime(time(0), started);
-                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << ended << "::" << std::endl;
+
+                        ended = steady_clock_type::now();
+                        auto elapsed = ended-started;
+                        auto usecs = (elapsed).count();
+                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << "::" << std::endl;
 
                         }
                         return ping();
