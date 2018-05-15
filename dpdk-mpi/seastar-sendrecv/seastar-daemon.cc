@@ -10,6 +10,7 @@
 #include <vector>
 #include <sys/time.h>
 #include <iostream>
+#include <string.h>
 
 #include <sys/types.h>
 #include <sys/ipc.h>

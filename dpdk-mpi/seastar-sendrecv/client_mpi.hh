@@ -42,7 +42,7 @@ public:
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                     char arr[ ] = "This is a test";
-                    packeti(arr);
+                    packeti(arr, BUFFER_SIZE);
                     // packeti(pShardStuff->data);
                     pShardStuff->written_by_you = 0;
                 }
