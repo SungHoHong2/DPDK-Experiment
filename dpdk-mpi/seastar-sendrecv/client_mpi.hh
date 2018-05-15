@@ -34,7 +34,7 @@ public:
 
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
-                    std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                    // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                     started = steady_clock_type::now();
 
                     // char arr[ ] = "This is a test";
