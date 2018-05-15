@@ -2,7 +2,6 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-static shared_use_st *pShardStuff;
 
 
 class client {
@@ -72,26 +71,6 @@ public:
         _concurrent_connections = ncon * smp::count;
         _total_pings = _pings_per_connection * _concurrent_connections;
         _test = test;
-
-
-        srand((unsigned int)getpid());
-        shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
-
-        if(shmId == -1){
-            std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
-            exit(EXIT_FAILURE);
-        }
-
-        pShardMemory = shmat(shmId, (void*)0, 0);
-        if(pShardMemory == (void*)-1){
-            std::cout << "[Servier][Error]shmat fail."<< std::endl;;
-            exit(EXIT_FAILURE);
-        }
-
-        // you will have to put this as a argument
-        pShardStuff = (struct shared_use_st *) pShardMemory;
-        pShardStuff->written_by_you = 0;
-        std::cout << "[Servier]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
