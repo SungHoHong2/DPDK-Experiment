@@ -2,8 +2,6 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-static long int started = 0;
-static long int ended = 0;
 
 class client {
 private:
@@ -25,7 +23,8 @@ public:
         output_stream<char> _write_buf;
         size_t _bytes_read = 0;
         size_t _bytes_write = 0;
-
+        auto started = 0;
+        auto ended = 0;
 
     public:
         connection(connected_socket&& fd)
@@ -33,7 +32,7 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> ping() {
+        future<> ping(auto started, auto ended) {
                 std::string packeti(1,'\0');
 
                 // this part has to be a static member
@@ -52,7 +51,7 @@ public:
                     // std::cout << "write" << std::endl;
                     return _write_buf.flush();
 
-                }).then([this] {
+                }).then([this, started, ended] {
                     return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
@@ -83,9 +82,9 @@ public:
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
-            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
+            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test, started, ended] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                conn->ping().then_wrapped([conn] (auto&& f) {
+                conn->ping(started, ended).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
