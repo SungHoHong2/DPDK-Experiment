@@ -48,11 +48,11 @@ public:
                     std::cout << "write" << std::endl;
                     return _write_buf.flush();
 
-                }).then([this] {
+                }).then([this, pShardStuff] {
                     return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
-                        return ping();
+                        return ping(pShardStuff);
                     });
                 });
 
