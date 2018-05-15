@@ -61,8 +61,8 @@ public:
 
                         ended = lowres_clock::now();
                         auto elapsed = ended-started;
-                        auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << "::" << ended.count() - started.count() << std::endl;
+                        auto usecs = (elapsed).count();
+                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << "::" << std::endl;
 
                         }
                         return ping();
