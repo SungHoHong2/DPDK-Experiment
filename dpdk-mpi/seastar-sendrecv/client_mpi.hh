@@ -14,7 +14,10 @@ private:
     lowres_clock::time_point _latest_finished;
     size_t _processed_bytes;
     unsigned _num_reported;
-
+    int running = 1;
+    void *pShardMemory = (void*)0;
+    shared_use_st *pShardStuff;
+    int shmId;
 
 public:
     class connection {
@@ -23,10 +26,7 @@ public:
         output_stream<char> _write_buf;
         size_t _bytes_read = 0;
         size_t _bytes_write = 0;
-        int running = 1;
-        void *pShardMemory = (void*)0;
-        shared_use_st *pShardStuff;
-        int shmId;
+
 
     public:
         connection(connected_socket&& fd)
@@ -37,19 +37,14 @@ public:
         future<> ping() {
             std::string packeti(BUFFER_SIZE,'*');
 
-            srand((unsigned int)getpid());
-            shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
-
-            if(shmId == -1){
-                std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
-                exit(EXIT_FAILURE);
-            }
 
 
-                if(pShardStuff->written_by_you == 1){
-                    std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                    pShardStuff->written_by_you = 0;
-                }
+
+
+                // if(pShardStuff->written_by_you == 1){
+                //     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                //     pShardStuff->written_by_you = 0;
+                // }
 
                 return _write_buf.write(packeti).then([this] {
                     // std::cout << pShardStuff->data << std::endl;
@@ -77,6 +72,25 @@ public:
         _concurrent_connections = ncon * smp::count;
         _total_pings = _pings_per_connection * _concurrent_connections;
         _test = test;
+
+
+        srand((unsigned int)getpid());
+        shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+
+        if(shmId == -1){
+            std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
+            exit(EXIT_FAILURE);
+        }
+
+        pShardMemory = shmat(shmId, (void*)0, 0);
+        if(pShardMemory == (void*)-1){
+            std::cout << "[Servier][Error]shmat fail."<< std::endl;;
+            exit(EXIT_FAILURE);
+        }
+
+        pShardStuff = (struct shared_use_st *) pShardMemory;
+        pShardStuff->written_by_you = 0;
+        std::cout << "[Servier]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
