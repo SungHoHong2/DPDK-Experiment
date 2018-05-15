@@ -40,7 +40,6 @@ int main(int ac, char ** av) {
         exit(EXIT_FAILURE);
     }
 
-
     app_template app;
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")

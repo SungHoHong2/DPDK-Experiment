@@ -46,9 +46,9 @@ int main() {
 
             strncpy(pShardStuff->data, buffer, TEXT_SIZE);
             pShardStuff->written_by_you = 1;
-            if(strncmp(pShardStuff->data, "end", 3) == 0){
-                running = 0;
-            }
+            // if(strncmp(pShardStuff->data, "end", 3) == 0){
+            //     running = 0;
+            // }
         }
 
         if(shmdt(pShardMemory) == -1){
