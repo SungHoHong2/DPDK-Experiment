@@ -36,13 +36,14 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping() {
-            std::string packeti(BUFFER_SIZE,'*');
+            std::string packeti(BUFFER_SIZE,'\0');
 
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                    packeti(pShardStuff->data);
                     pShardStuff->written_by_you = 0;
-
+                }
 
                 return _write_buf.write(packeti).then([this] {
                     // std::cout << pShardStuff->data << std::endl;
@@ -50,16 +51,13 @@ public:
                     return _write_buf.flush();
 
                 }).then([this] {
-                    return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
+                    return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
-                        std::cout << "read" << std::endl;
+                        // std::cout << "read" << std::endl;
+                        std::cout << str << std::endl;
                         return ping();
                     });
                 });
-
-            }
-
-            return ping();
 
 
         }

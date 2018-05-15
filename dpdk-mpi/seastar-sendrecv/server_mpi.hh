@@ -54,7 +54,7 @@ public:
                 return make_ready_future();
             }
             // Expect 4 bytes cmd from client
-            return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
+            return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                 if (buf.size() == 0) {
                     return make_ready_future();
                 }
@@ -68,7 +68,7 @@ public:
             });
         }
 
-        
+
 
 
 

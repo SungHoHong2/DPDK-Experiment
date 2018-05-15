@@ -8,15 +8,10 @@
 #ifndef TESTIPCSHARDMEMORY_H_
 #define TESTIPCSHARDMEMORY_H_
 
-
-
-#define TEXT_SIZE 2048
 #define KEY_ID 2016
-
-
 struct shared_use_st {
     int written_by_you;
-    char data[TEXT_SIZE];
+    char data[BUFFER_SIZE];
 };
 
 
