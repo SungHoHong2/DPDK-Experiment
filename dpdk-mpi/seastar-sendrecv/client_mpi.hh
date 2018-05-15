@@ -25,9 +25,9 @@ public:
         size_t _bytes_write = 0;
         int running = 1;
         void *pShardMemory = (void*)0;
-        struct shared_use_st *pShardStuff;
+        shared_use_st *pShardStuff;
         int shmId;
-        
+
     public:
         connection(connected_socket&& fd)
             : _fd(std::move(fd))
