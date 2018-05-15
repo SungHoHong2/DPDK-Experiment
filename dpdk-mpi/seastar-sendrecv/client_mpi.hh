@@ -54,8 +54,7 @@ public:
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
                         if(buf.size()>1){
-                        std::cout << buf.size() << std::endl;
-
+                        // std::cout << buf.size() << std::endl;
                         ended = steady_clock_type::now();
                         auto elapsed = ended-started;
                         auto usecs = (elapsed).count();
