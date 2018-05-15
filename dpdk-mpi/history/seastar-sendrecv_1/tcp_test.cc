@@ -25,7 +25,7 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
 
-    Remove shared memory on construction and destruction
+    // Remove shared memory on construction and destruction
     struct shm_remove
     {
        shm_remove() {  shared_memory_object::remove("MySharedMemory"); }
