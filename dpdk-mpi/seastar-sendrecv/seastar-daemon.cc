@@ -29,6 +29,10 @@ namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
 
+    int running = 1;
+    void *pShardMemory = (void*)0;
+    int shmId;
+  
     srand((unsigned int)getpid());
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 

@@ -15,9 +15,7 @@ private:
     lowres_clock::time_point _latest_finished;
     size_t _processed_bytes;
     unsigned _num_reported;
-    int running = 1;
-    void *pShardMemory = (void*)0;
-    int shmId;
+
 
 public:
     class connection {
