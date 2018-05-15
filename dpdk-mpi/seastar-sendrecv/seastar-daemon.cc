@@ -10,14 +10,11 @@
 #include <vector>
 #include <sys/time.h>
 #include <iostream>
-
+#include "testIpcShardMemory.h"
 
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
-
-
-
 
 size_t BUFFER_SIZE = 64;
 
@@ -26,6 +23,21 @@ size_t BUFFER_SIZE = 64;
 namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
+
+    int running = 1;
+    void *pShardMemory = (void*)0;
+    struct shared_use_st *pShardStuff;
+    int shmId;
+
+    srand((unsigned int)getpid());
+    shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+
+    if(shmId == -1){
+        cout << "[Servier][Error]shmget fail. id:" << shmId << endl;;
+        exit(EXIT_FAILURE);
+    }
+
+
 
     app_template app;
     app.add_options()
