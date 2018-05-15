@@ -20,26 +20,12 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 
-size_t BUFFER_SIZE = 64;
-int running = 1;
-void *pShardMemory = (void*)0;
-struct shared_use_st *pShardStuff;
-int shmId;
 
 #include "server_mpi.hh"
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
-
-    srand((unsigned int)getpid());
-    shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
-
-    if(shmId == -1){
-        std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
-        exit(EXIT_FAILURE);
-    }
-
     app_template app;
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
