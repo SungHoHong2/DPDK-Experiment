@@ -36,14 +36,16 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping() {
-            std::string packeti(BUFFER_SIZE,'\0');
+                std::string packeti(BUFFER_SIZE,'\0');
 
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                     char arr[ ] = "This is a test";
                     std::string packetii(arr);
+                    packeti = packetii;
                     // packeti(pShardStuff->data);
+
                     pShardStuff->written_by_you = 0;
                 }
 
