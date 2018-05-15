@@ -2,8 +2,6 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
-static double started;
-static double ended;
 
 
 class client {
@@ -40,11 +38,11 @@ public:
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                    started = lowres_clock::now();
                     // char arr[ ] = "This is a test";
                     std::string packetii(pShardStuff->data);
                     packeti = packetii;
                     // packeti(pShardStuff->data);
+
                     pShardStuff->written_by_you = 0;
                 }
 
@@ -57,14 +55,9 @@ public:
                     return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
-                        if(buf.size()>1){
+                        if(buf.size()>1)
                         std::cout << buf.size() << std::endl;
-                        auto usecs = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
 
-                        ended = lowres_clock::now();
-                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
-
-                        }
                         return ping();
                     });
                 });
