@@ -1,6 +1,6 @@
 #include <time.h>
-static time_t start; //adding timer
-static double end; //adding timer
+static time_t started; //adding timer
+static double ended; //adding timer
 
 
 class client;
@@ -56,8 +56,8 @@ public:
                         // std::cout << "read" << std::endl;
                         if(buf.size()>1){
                         std::cout << buf.size() << std::endl;
-                        end = difftime(time(0), start);
-                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << end << "::" << std::endl;
+                        ended = difftime(time(0), started);
+                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << ended << "::" << std::endl;
 
                         }
                         return ping();
