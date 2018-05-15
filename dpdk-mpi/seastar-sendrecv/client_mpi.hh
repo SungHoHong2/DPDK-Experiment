@@ -2,6 +2,8 @@
 class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
+static shared_use_st *pShardStuff;
+
 
 class client {
 private:
@@ -16,7 +18,6 @@ private:
     unsigned _num_reported;
     int running = 1;
     void *pShardMemory = (void*)0;
-    shared_use_st *pShardStuff; // need to put this as a ping argument
     int shmId;
 
 public:
@@ -34,7 +35,7 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> ping(shared_use_st *pShardStuff) {
+        future<> ping() {
             std::string packeti(BUFFER_SIZE,'*');
 
                 // this part has to be a static member
@@ -48,11 +49,11 @@ public:
                     std::cout << "write" << std::endl;
                     return _write_buf.flush();
 
-                }).then([this, pShardStuff] {
-                    return _read_buf.read_exactly(BUFFER_SIZE).then([this, pShardStuff] (temporary_buffer<char> buf) {
+                }).then([this] {
+                    return _read_buf.read_exactly(BUFFER_SIZE).then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
-                        return ping(pShardStuff);
+                        return ping();
                     });
                 });
 
@@ -92,9 +93,9 @@ public:
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
-            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test, pShardStuff] (connected_socket fd) {
+            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                conn->ping(pShardStuff).then_wrapped([conn] (auto&& f) {
+                conn->ping().then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
