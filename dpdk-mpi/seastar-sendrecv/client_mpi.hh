@@ -55,7 +55,7 @@ public:
                     return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                         auto str = std::string(buf.get(), buf.size());
                         // std::cout << "read" << std::endl;
-                        std::cout << str << std::endl;
+                        std::cout << buf.size() << std::endl;
                         return ping();
                     });
                 });
