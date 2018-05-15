@@ -3,7 +3,7 @@ class client;
 distributed<client> clients;
 transport protocol = transport::TCP;
 static lowres_clock::time_point started;
-static lowres_clock::time_point finished;
+static lowres_clock::time_point ended;
 
 class client {
 private:
