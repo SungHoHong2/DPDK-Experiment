@@ -69,7 +69,7 @@ int main(int ac, char ** av) {
         });
 
         auto con_server = config["server"].as<std::string>();
-        auto test = config["test"].as<std::string>();
+        // auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
 
