@@ -49,6 +49,7 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("conn", bpo::value<unsigned>()->default_value(2), "nr connections per cpu")
+        ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size");
 
 
@@ -69,7 +70,7 @@ int main(int ac, char ** av) {
         });
 
         auto con_server = config["server"].as<std::string>();
-        // auto test = config["test"].as<std::string>();
+        auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
 
