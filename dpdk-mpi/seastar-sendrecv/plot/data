@@ -1,0 +1,25 @@
+message size: 2  latency(usec): 579379
+message size: 4  latency(usec): 654772
+message size: 8  latency(usec): 652844
+message size: 16         latency(usec): 661762
+message size: 32         latency(usec): 709595
+message size: 64         latency(usec): 718436
+message size: 128        latency(usec): 705909
+message size: 256        latency(usec): 656940
+message size: 512        latency(usec): 925757
+message size: 1024       latency(usec): 1212828
+message size: 2048       latency(usec): 1468754
+message size: 2048       latency(usec): 1439533
+
+513881
+507881
+624860
+509843
+625263
+764775
+511825
+555929
+895889
+1329709
+1356780
+1556686
