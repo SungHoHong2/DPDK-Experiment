@@ -14,10 +14,7 @@ private:
     lowres_clock::time_point _latest_finished;
     size_t _processed_bytes;
     unsigned _num_reported;
-    int running = 1;
-    void *pShardMemory = (void*)0;
-    struct shared_use_st *pShardStuff;
-    int shmId;
+
 
 public:
     class connection {
@@ -26,6 +23,11 @@ public:
         output_stream<char> _write_buf;
         size_t _bytes_read = 0;
         size_t _bytes_write = 0;
+        int running = 1;
+        void *pShardMemory = (void*)0;
+        struct shared_use_st *pShardStuff;
+        int shmId;
+        
     public:
         connection(connected_socket&& fd)
             : _fd(std::move(fd))
