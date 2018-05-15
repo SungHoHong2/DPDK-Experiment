@@ -1,6 +1,6 @@
-#include <boost/interprocess/managed_shared_memory.hpp>
-#include <cstdlib> //std::system
-#include <sstream>
+// #include <boost/interprocess/managed_shared_memory.hpp>
+// #include <cstdlib> //std::system
+// #include <sstream>
 #include "core/reactor.hh"
 #include "core/app-template.hh"
 #include "core/temporary_buffer.hh"
@@ -44,6 +44,7 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("10.218.111.252:1234"), "Server address")
         ("conn", bpo::value<unsigned>()->default_value(2), "nr connections per cpu")
+        ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("buffer", bpo::value<unsigned>()->default_value(64), "buffer size");
 
 
