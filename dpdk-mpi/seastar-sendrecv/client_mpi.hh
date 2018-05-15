@@ -14,7 +14,6 @@ private:
     lowres_clock::time_point _latest_finished;
     size_t _processed_bytes;
     unsigned _num_reported;
-    size_t BUFFER_SIZE = 64;
     int running = 1;
     void *pShardMemory = (void*)0;
     struct shared_use_st *pShardStuff;
