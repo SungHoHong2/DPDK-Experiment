@@ -59,7 +59,7 @@ public:
                         ended = steady_clock_type::now();
                         auto elapsed = ended-started;
                         auto usecs = (elapsed).count();
-                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << "::" << std::endl;
+                        std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
 
                         }
                         return ping();

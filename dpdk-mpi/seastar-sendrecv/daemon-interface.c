@@ -35,25 +35,29 @@ int main() {
         pShardStuff = (struct shared_use_st *) pShardMemory;
         // cout << "[Client]shmat success. flag:" << pShardStuff->written_by_you << endl;;
         int test_case[] = {
-          1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384,
+          2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384,
           32768, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304
         };
 
+        int s =0;
         while(running){
 
             while(pShardStuff->written_by_you == 1){
                 sleep(1);
             }
 
-            printf("[Client]Enter text :\n");
+            // printf("[Client]Enter text :\n");
+            // fgets(buffer, TEXT_SIZE, stdin);
 
-            fgets(buffer, TEXT_SIZE, stdin);
+            printf("starting with %d", test_case[s]);
+            std::string s(test_case[s], 'a');
 
-            strncpy(pShardStuff->data, buffer, TEXT_SIZE);
+            strncpy(pShardStuff->data, s, TEXT_SIZE);
+            s++;
             pShardStuff->written_by_you = 1;
-            // if(strncmp(pShardStuff->data, "end", 3) == 0){
-            //     running = 0;
-            // }
+            if(s==sizeof(test_case)){
+              break;
+            }
         }
 
         if(shmdt(pShardMemory) == -1){

@@ -10,7 +10,7 @@
 
 
 
-#define TEXT_SIZE 2048
+#define TEXT_SIZE 4194304
 #define KEY_ID 2016
 
 struct shared_use_st {
