@@ -41,8 +41,8 @@ public:
                 // this part has to be a static member
                 if(pShardStuff->written_by_you == 1){
                     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                    char arr[ ] = "This is a test";
-                    std::string packetii(arr);
+                    // char arr[ ] = "This is a test";
+                    std::string packetii(pShardStuff->data);
                     packeti = packetii;
                     // packeti(pShardStuff->data);
 
