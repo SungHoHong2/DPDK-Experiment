@@ -21,8 +21,8 @@ using namespace net;
 using namespace std::chrono_literals;
 
 size_t BUFFER_SIZE = 64;
-static shared_use_st *pShardStuff;
 #include "testIpcShardMemory.h"
+static shared_use_st *pShardStuff;
 #include "server_mpi.hh"
 #include "client_mpi.hh"
 namespace bpo = boost::program_options;
@@ -32,7 +32,7 @@ int main(int ac, char ** av) {
     int running = 1;
     void *pShardMemory = (void*)0;
     int shmId;
-  
+
     srand((unsigned int)getpid());
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
