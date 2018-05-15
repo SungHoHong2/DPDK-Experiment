@@ -30,15 +30,14 @@ public:
         future<> ping() {
             std::string packeti(BUFFER_SIZE,'*');
 
-            // if(pShardStuff->written_by_you == 1){
-            //     std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-            //     pShardStuff->written_by_you = 0;
-            // }
-
+            if(pShardStuff->written_by_you == 1){
+                std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                pShardStuff->written_by_you = 0;
+            }
 
                 return _write_buf.write(packeti).then([this] {
-                    std::cout << pShardStuff->data << std::endl;
-                    // std::cout << "write" << std::endl;
+                    // std::cout << pShardStuff->data << std::endl;
+                    std::cout << "write" << std::endl;
                     return _write_buf.flush();
 
                 }).then([this] {
