@@ -67,6 +67,13 @@ int main(int ac, char ** av) {
         auto&& config = app.configuration();
         BUFFER_SIZE = config["buffer"].as<unsigned>();
 
+        std::string serverip = config["server"].as<std::string>
+
+        if(serverip.compare("10.218.111.252:1234")==0){
+          std::cout << "this is server howdy" << std::endl;
+        }
+
+
         server->start().then([server = std::move(server), port] () mutable {
             engine().at_exit([server] {
                 return server->stop();
