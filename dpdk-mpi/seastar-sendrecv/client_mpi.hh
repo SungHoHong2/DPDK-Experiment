@@ -30,6 +30,8 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> ping() {
+
+                std::cout << "ping begin" <<std::endl;
                 std::string packeti(1,'\0');
 
                 // this part has to be a static member
