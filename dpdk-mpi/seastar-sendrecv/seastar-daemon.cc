@@ -72,7 +72,7 @@ int main(int ac, char ** av) {
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
 
-        if(con_server.compare("10.218.111.252:1234")!=0){
+        if(con_server.compare("10.218.111.253:1234")!=0){
               std::cout << "this will act as a server" << std::endl;
 
               server->start().then([server = std::move(server), port] () mutable {
