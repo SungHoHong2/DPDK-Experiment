@@ -12,7 +12,7 @@ static std::string str_txtx{"txtx"};
 static std::string str_rxrx{"rxrx"};
 static std::string str_pong{"pong"};
 static std::string str_unknow{"unknow cmd"};
-static int tx_msg_total_size = 100 * 1024 * 1024;
+// static int tx_msg_total_size = 100 * 1024 * 1024;
 static int tx_msg_size = 4 * 1024;
 // static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 // static int rx_msg_size = 4 * 1024;
@@ -125,22 +125,22 @@ public:
                 return do_write(end - 1);
             });
         }
-        future<> tx_test() {
-            return do_write(tx_msg_nr).then([this] {
-                return _write_buf.close();
-            }).then([] {
-                return make_ready_future<>();
-            });
-        }
-        future<> do_read() {
-            return _read_buf.read_exactly(rx_msg_size).then([this] (temporary_buffer<char> buf) {
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                } else {
-                    return do_read();
-                }
-            });
-        }
+        // future<> tx_test() {
+        //     return do_write(tx_msg_nr).then([this] {
+        //         return _write_buf.close();
+        //     }).then([] {
+        //         return make_ready_future<>();
+        //     });
+        // }
+        // future<> do_read() {
+        //     return _read_buf.read_exactly(rx_msg_size).then([this] (temporary_buffer<char> buf) {
+        //         if (buf.size() == 0) {
+        //             return make_ready_future();
+        //         } else {
+        //             return do_read();
+        //         }
+        //     });
+        // }
         future<> rx_test() {
             return do_read().then([] {
                 return make_ready_future<>();
