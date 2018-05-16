@@ -10,6 +10,9 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 static shared_use_st *pShardStuff;
+static steady_clock_type::time_point started;
+static steady_clock_type::time_point ended;
+
 
 // static int rx_msg_size = 4 * 1024;
 // static int tx_msg_total_size = 100 * 1024 * 1024;
@@ -70,7 +73,7 @@ public:
                         // this part has to be a static member
             if(pShardStuff->written_by_you == 1){
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                // started = steady_clock_type::now();
+                started = steady_clock_type::now();
                 // char arr[ ] = "This is a test";
                 std::string packetii(pShardStuff->data);
                 str = packetii;
@@ -89,8 +92,10 @@ public:
                     // }
                     auto str = std::string(buf.get(), buf.size());
                     if(buf.size()!=1){
-                          std::cout << "after: "  << str << std::endl;
-                          
+                            ended = steady_clock_type::now();
+                            auto elapsed = ended-started;
+                            auto usecs = (elapsed).count();
+                            std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                     }
 
                     return ping();
