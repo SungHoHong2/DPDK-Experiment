@@ -141,11 +141,11 @@ public:
         //         }
         //     });
         // }
-        future<> rx_test() {
-            return do_read().then([] {
-                return make_ready_future<>();
-            });
-        }
+        // future<> rx_test() {
+        //     return do_read().then([] {
+        //         return make_ready_future<>();
+        //     });
+        // }
     };
 };
 
