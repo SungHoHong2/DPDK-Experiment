@@ -62,6 +62,19 @@ public:
               str = "ping";
             }
 
+                        // this part has to be a static member
+            if(pShardStuff->written_by_you == 1){
+                // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                started = steady_clock_type::now();
+                // char arr[ ] = "This is a test";
+                std::string packetii(pShardStuff->data);
+                str = packetii;
+                // packeti(pShardStuff->data);
+                pShardStuff->written_by_you = 0;
+            }
+
+
+
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
@@ -147,6 +160,25 @@ public:
 namespace bpo = boost::program_options;
 
 int main(int ac, char ** av) {
+
+    int running = 1;
+    void *pShardMemory = (void*)0;
+    int shmId;
+
+    srand((unsigned int)getpid());
+    shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+
+    if(shmId == -1){
+        std::cout << "[shared memory][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
+        exit(EXIT_FAILURE);
+    }
+
+    pShardMemory = shmat(shmId, (void*)0, 0);
+    if(pShardMemory == (void*)-1){
+        std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
+        exit(EXIT_FAILURE);
+    }
+
     app_template app;
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("192.168.56.101:1234"), "Server address")

@@ -107,20 +107,6 @@ public:
                     }).then([this] {
                         return this->read();
                     });
-                // server tx test
-                // } else if (cmd == str_txtx) {
-                    // return tx_test();
-                // server tx test
-                // } else if (cmd == str_rxrx) {
-                    // return rx_test();
-                // unknow test
-                // } else {
-                //     return _write_buf.write(str_unknow).then([this] {
-                //         return _write_buf.flush();
-                //     }).then([] {
-                //         return make_ready_future();
-                //     });
-                // }
             });
         }
         future<> do_write(int end) {
