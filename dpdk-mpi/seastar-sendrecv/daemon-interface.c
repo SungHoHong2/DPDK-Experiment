@@ -59,9 +59,9 @@ int main() {
             strncpy(pShardStuff->data, buffer, TEXT_SIZE);
             s++;
             pShardStuff->written_by_you = 1;
-            if(s==sizeof(test_case)){
-              break;
-            }
+            // if(s==sizeof(test_case)){
+            //   break;
+            // }
         }
 
         if(shmdt(pShardMemory) == -1){
