@@ -1,3 +1,6 @@
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
