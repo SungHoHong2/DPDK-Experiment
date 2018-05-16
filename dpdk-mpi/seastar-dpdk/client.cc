@@ -48,24 +48,24 @@ public:
             , _write_buf(_fd.output()) {}
 
 
-        future<> ping(int times) {
+        future<> ping() {
 
-            std::string str = "";
-            int v, tenth;
-            int total = 4;
-
-            std::string s = std::to_string(total_ping_identifier);
-            tenth = s.length();
-            for(v=0; v<(total-tenth); v++){
-                str.append("0");
-            }
-            str.append(s);
-
-            total_ping_identifier++;
-            std::cout << str << std::endl;
-            if(str.length()>4){
-              str = "ping";
-            }
+            std::string str = "1";
+            // int v, tenth;
+            // int total = 4;
+            //
+            // std::string s = std::to_string(total_ping_identifier);
+            // tenth = s.length();
+            // for(v=0; v<(total-tenth); v++){
+            //     str.append("0");
+            // }
+            // str.append(s);
+            //
+            // total_ping_identifier++;
+            // std::cout << str << std::endl;
+            // if(str.length()>4){
+            //   str = "ping";
+            // }
 
                         // this part has to be a static member
             if(pShardStuff->written_by_you == 1){
@@ -79,20 +79,19 @@ public:
             }
 
 
-
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this, times] {
                 return _read_buf.read().then([this, times] (temporary_buffer<char> buf) {
-                    if (buf.size() != 4) {
-                        fprint(std::cerr, "illegal packet received: %d\n", buf.size());
-                        return make_ready_future();
-                    }
+                    // if (buf.size() != 4) {
+                    //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
+                    //     return make_ready_future();
+                    // }
                     auto str = std::string(buf.get(), buf.size());
                     std::cout << "after: "  << str << std::endl;
 
                     if (times > 0) {
-                        return ping(times - 1);
+                        return ping();
                     } else {
                         return make_ready_future();
                     }
@@ -103,7 +102,7 @@ public:
 
     future<> ping_test(connection *conn) {
         auto started = lowres_clock::now();
-        return conn->ping(_pings_per_connection).then([started] {
+        return conn->ping().then([started] {
             auto finished = lowres_clock::now();
             clients.invoke_on(0, &client::ping_report, started, finished);
         });
