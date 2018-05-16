@@ -33,16 +33,16 @@ public:
                 std::string packeti(1,'\0');
 
                 // this part has to be a static member
-                // if(pShardStuff->written_by_you == 1){
-                //     // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                //     started = steady_clock_type::now();
-                //
-                //     // char arr[ ] = "This is a test";
-                //     std::string packetii(pShardStuff->data);
-                //     packeti = packetii;
-                //     // packeti(pShardStuff->data);
-                //     pShardStuff->written_by_you = 0;
-                // }
+                if(pShardStuff->written_by_you == 1){
+                    // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                    started = steady_clock_type::now();
+
+                    // char arr[ ] = "This is a test";
+                    std::string packetii(pShardStuff->data);
+                    packeti = packetii;
+                    // packeti(pShardStuff->data);
+                    pShardStuff->written_by_you = 0;
+                }
 
                 return _write_buf.write(packeti).then([this] {
                     // std::cout << pShardStuff->data << std::endl;
