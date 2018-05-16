@@ -88,7 +88,11 @@ public:
                     //     return make_ready_future();
                     // }
                     auto str = std::string(buf.get(), buf.size());
-                    std::cout << "after: "  << str << std::endl;
+                    if(buf.size()!=1){
+                          std::cout << "after: "  << str << std::endl;
+                          
+                    }
+
                     return ping();
 
                 });
