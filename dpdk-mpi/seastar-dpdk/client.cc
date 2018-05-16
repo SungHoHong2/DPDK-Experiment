@@ -81,20 +81,16 @@ public:
 
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
-            }).then([this, times] {
-                return _read_buf.read().then([this, times] (temporary_buffer<char> buf) {
+            }).then([this] {
+                return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                     // if (buf.size() != 4) {
                     //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
                     //     return make_ready_future();
                     // }
                     auto str = std::string(buf.get(), buf.size());
                     std::cout << "after: "  << str << std::endl;
+                    return ping();
 
-                    if (times > 0) {
-                        return ping();
-                    } else {
-                        return make_ready_future();
-                    }
                 });
             });
         }
