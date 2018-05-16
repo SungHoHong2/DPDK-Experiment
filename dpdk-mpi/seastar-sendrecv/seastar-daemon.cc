@@ -72,8 +72,8 @@ int main(int ac, char ** av) {
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
 
-        // if(con_server.compare("10.218.111.253:1234")==0){
-              // std::cout << "this will act as a server" << std::endl;
+        if(con_server.compare("10.218.111.253:1234")==0){
+              std::cout << "this will act as a server" << std::endl;
 
               server->start().then([server = std::move(server), port] () mutable {
                   engine().at_exit([server] {
@@ -85,8 +85,8 @@ int main(int ac, char ** av) {
                   std::cout << "Seastar TCP server listening on port " << port << " with buffer " << BUFFER_SIZE  <<"...\n";
               });
 
-       // }else {
-              // std::cout << "this will act as a client" << std::endl;
+       }else {
+              std::cout << "this will act as a client" << std::endl;
 
               // in MPI, this runs on a while loop
               std::cout << "finding connection :: " << std::endl;
@@ -96,7 +96,7 @@ int main(int ac, char ** av) {
                 });
               });
 
-             // }
+             }
 
     });
 }
