@@ -68,7 +68,9 @@ int main(int ac, char ** av) {
         BUFFER_SIZE = config["buffer"].as<unsigned>();
 
         auto con_server = config["server"].as<std::string>();
-        std::cout << port << server  <<"...\n";
+        auto test = config["test"].as<std::string>();
+        auto ncon = config["conn"].as<unsigned>();
+        protocol = transport::TCP;
 
         if(con_server.compare("10.218.111.252:1234")!=0){
               std::cout << "this will act as a server" << std::endl;
@@ -85,9 +87,6 @@ int main(int ac, char ** av) {
 
        }else {
               std::cout << "this will act as a client" << std::endl;
-              auto test = config["test"].as<std::string>();
-              auto ncon = config["conn"].as<unsigned>();
-              protocol = transport::TCP;
 
               // in MPI, this runs on a while loop
               std::cout << "finding connection :: " << std::endl;
