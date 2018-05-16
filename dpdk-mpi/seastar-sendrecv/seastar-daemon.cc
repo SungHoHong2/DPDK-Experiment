@@ -68,6 +68,7 @@ int main(int ac, char ** av) {
         BUFFER_SIZE = config["buffer"].as<unsigned>();
 
         auto con_server = config["server"].as<std::string>();
+        std::cout << port << server  <<"...\n";
 
         if(con_server.compare("10.218.111.252:1234")!=0){
               std::cout << "this will act as a server" << std::endl;
@@ -89,7 +90,7 @@ int main(int ac, char ** av) {
               protocol = transport::TCP;
 
               // in MPI, this runs on a while loop
-              std::cout << "finding connection :: " << port << server << std::endl;
+              std::cout << "finding connection :: " << std::endl;
               sleep(10s).then([con_server, test, ncon] {
                 clients.start().then([con_server, test, ncon] () {
                     clients.invoke_on_all(&client::start, ipv4_addr{con_server}, test, ncon);
