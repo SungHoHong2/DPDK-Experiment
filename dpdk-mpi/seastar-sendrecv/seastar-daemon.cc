@@ -37,20 +37,20 @@ int main(int ac, char ** av) {
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
     if(shmId == -1){
-        std::cout << "[Servier][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
+        std::cout << "[shared memory][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
         exit(EXIT_FAILURE);
     }
 
     pShardMemory = shmat(shmId, (void*)0, 0);
     if(pShardMemory == (void*)-1){
-        std::cout << "[Servier][Error]shmat fail."<< std::endl;;
+        std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
         exit(EXIT_FAILURE);
     }
 
     // you will have to put this as a argument
     pShardStuff = (struct shared_use_st *) pShardMemory;
     pShardStuff->written_by_you = 0;
-    std::cout << "[Servier]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
+    std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
 
     app_template app;
@@ -88,7 +88,6 @@ int main(int ac, char ** av) {
               auto ncon = config["conn"].as<unsigned>();
               protocol = transport::TCP;
 
-
               // in MPI, this runs on a while loop
               std::cout << "finding connection" << std::endl;
               sleep(10s).then([con_server, test, ncon] {
@@ -97,7 +96,7 @@ int main(int ac, char ** av) {
                 });
               });
 
-      }
+             }
 
     });
 }
