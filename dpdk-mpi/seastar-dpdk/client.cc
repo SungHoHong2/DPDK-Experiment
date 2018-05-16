@@ -1,10 +1,12 @@
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
+#include "testIpcShardMemory.h"
 
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
+static shared_use_st *pShardStuff;
 
 // static int rx_msg_size = 4 * 1024;
 // static int tx_msg_total_size = 100 * 1024 * 1024;
@@ -178,6 +180,12 @@ int main(int ac, char ** av) {
         std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
         exit(EXIT_FAILURE);
     }
+
+    // you will have to put this as a argument
+    pShardStuff = (struct shared_use_st *) pShardMemory;
+    pShardStuff->written_by_you = 0;
+    std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
+
 
     app_template app;
     app.add_options()
