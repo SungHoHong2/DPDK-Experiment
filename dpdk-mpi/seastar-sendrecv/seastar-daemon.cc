@@ -67,9 +67,9 @@ int main(int ac, char ** av) {
         auto&& config = app.configuration();
         BUFFER_SIZE = config["buffer"].as<unsigned>();
 
-        std::string serverip = config["server"].as<std::string>
+        auto con_server = config["server"].as<std::string>();
 
-        if(serverip.compare("10.218.111.252:1234")==0){
+        if(con_server.compare("10.218.111.252:1234")==0){
           std::cout << "this is server howdy" << std::endl;
         }
 
@@ -84,7 +84,6 @@ int main(int ac, char ** av) {
             std::cout << "Seastar TCP server listening on port " << port << " with buffer " << BUFFER_SIZE  <<"...\n";
         });
 
-        auto con_server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
