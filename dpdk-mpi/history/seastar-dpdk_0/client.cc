@@ -14,6 +14,13 @@ static steady_clock_type::time_point started;
 static steady_clock_type::time_point ended;
 
 
+// static int rx_msg_size = 4 * 1024;
+// static int tx_msg_total_size = 100 * 1024 * 1024;
+static int tx_msg_size = 4 * 1024;
+// static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
+static std::string str_txbuf(tx_msg_size, 'X');
+// static int total_ping_identifier = 0;
+
 class client;
 distributed<client> clients;
 
@@ -45,19 +52,44 @@ public:
 
 
         future<> ping() {
+
             std::string str = "1";
+            // int v, tenth;
+            // int total = 4;
+            //
+            // std::string s = std::to_string(total_ping_identifier);
+            // tenth = s.length();
+            // for(v=0; v<(total-tenth); v++){
+            //     str.append("0");
+            // }
+            // str.append(s);
+            //
+            // total_ping_identifier++;
+            // std::cout << str << std::endl;
+            // if(str.length()>4){
+            //   str = "ping";
+            // }
+
+                        // this part has to be a static member
             if(pShardStuff->written_by_you == 1){
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                 started = steady_clock_type::now();
+                // char arr[ ] = "This is a test";
                 std::string packetii(pShardStuff->data);
                 str = packetii;
+                // packeti(pShardStuff->data);
                 pShardStuff->written_by_you = 0;
             }
+
 
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this] {
                 return _read_buf.read().then([this] (temporary_buffer<char> buf) {
+                    // if (buf.size() != 4) {
+                    //     fprint(std::cerr, "illegal packet received: %d\n", buf.size());
+                    //     return make_ready_future();
+                    // }
                     auto str = std::string(buf.get(), buf.size());
                     if(buf.size()!=1){
                             ended = steady_clock_type::now();
@@ -65,6 +97,7 @@ public:
                             auto usecs = (elapsed).count();
                             std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                     }
+
                     return ping();
 
                 });
@@ -167,7 +200,7 @@ int main(int ac, char ** av) {
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
         ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp");
-        ("smp", bpo::value<unsigned>()->default_value(1), "smp");
+        // ("smp", bpo::value<unsigned>()->default_value(1), "smp");
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
@@ -176,7 +209,14 @@ int main(int ac, char ** av) {
         auto ncon = config["conn"].as<unsigned>();
         auto proto = config["proto"].as<std::string>();
 
-        protocol = transport::TCP;
+        if (proto == "tcp") {
+            protocol = transport::TCP;
+        } else if (proto == "sctp") {
+            protocol = transport::SCTP;
+        } else {
+            fprint(std::cerr, "Error: --proto=tcp|sctp\n");
+            return engine().exit(1);
+        }
 
         if (!client::tests.count(test)) {
             fprint(std::cerr, "Error: -test=ping | rxrx | txtx\n");
