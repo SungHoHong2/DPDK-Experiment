@@ -15,8 +15,8 @@ echo "\n"
 # sudo ./seastar-daemon  --dpdk-pmd  --dpdk-port-index 1  --network-stack native --dhcp 0 --host-ipv4-addr 10.218.111.254  --server "10.218.111.253:1234" --smp 1
 
 str="c3n24"
-content=$(cat /etc/hostname)
-elif [ "$str" == "$content" ]
+content=`cat /etc/hostname`
+elif [ "$str" = "$content" ]
 then
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
 sudo git pull origin master
@@ -31,8 +31,8 @@ echo "compiled the daemon-interface.c"
 
 
 str2="c3n25"
-content=$(cat /etc/hostname)
-elif [ "$str2" == "$content" ]
+content=`cat /etc/hostname`
+elif [ "$str2" = "$content" ]
 then
 sudo gcc daemon-interface.c -o daemon-interface
 echo "compiled the daemon-interface.c"
