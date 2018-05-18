@@ -103,11 +103,10 @@ public:
     }
 
 
-    future<> start(ipv4_addr server_addr, std::string test, unsigned ncon) {
+    future<> start(ipv4_addr server_addr,  unsigned ncon) {
         _server_addr = server_addr;
         _concurrent_connections = ncon * smp::count;
         _total_pings = _pings_per_connection * _concurrent_connections;
-        _test = test;
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
@@ -175,8 +174,8 @@ int main(int ac, char ** av) {
 
 
 
-        clients.start().then([server, test, ncon] () {
-            clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
+        clients.start().then([server, ncon] () {
+            clients.invoke_on_all(&client::start, ipv4_addr{server}, ncon);
         });
     });
 }
