@@ -2,7 +2,7 @@
 reset
 set terminal png
 set term png size 600, 600
-set output "mpi-latency.png"
+set output "posix-latency.png"
 
 load "grid.cfg"
 load "xyboarder.cfg"
@@ -33,3 +33,24 @@ plot "data" using (log($1)):2:xtic(1) title 'SMP 1' ls 2, \
      "data" using (log($1)):3:xtic(1) title 'SMP 2' ls 3, \
      "data" using (log($1)):4:xtic(1) title 'SMP 4' ls 4, \
      "data" using (log($1)):5:xtic(1) title 'SMP 8' ls 5
+
+
+set output "dpdk-latency.png"
+plot "dpdk-data" using (log($1)):2:xtic(1) title 'SMP 1' ls 2, \
+     "dpdk-data" using (log($1)):3:xtic(1) title 'SMP 2' ls 3, \
+     "dpdk-data" using (log($1)):4:xtic(1) title 'SMP 4' ls 4, \
+     "dpdk-data" using (log($1)):5:xtic(1) title 'SMP 8' ls 5
+
+
+
+set output "cmp-latency.png"
+plot "data" using (log($1)):5:xtic(1) title 'POSIX SMP 8' ls 2, \
+     "dpdk-data" using (log($1)):5:xtic(1) title 'DPDK SMP 8' ls 3
+
+
+set yrange [0:200000];
+set output "dpdk-latency-2.png"
+plot "dpdk-data" using (log($1)):2:xtic(1) title 'SMP 1' ls 2, \
+   "dpdk-data" using (log($1)):3:xtic(1) title 'SMP 2' ls 3, \
+   "dpdk-data" using (log($1)):4:xtic(1) title 'SMP 4' ls 4, \
+   "dpdk-data" using (log($1)):5:xtic(1) title 'SMP 8' ls 5
