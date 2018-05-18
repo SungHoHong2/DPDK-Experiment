@@ -14,17 +14,15 @@ echo "\n"
 # sudo ./seastar-daemon  --dpdk-pmd  --dpdk-port-index 1  --network-stack native --dhcp 0 --host-ipv4-addr 10.218.111.253  --server "10.218.111.254:1234" --smp 1
 # sudo ./seastar-daemon  --dpdk-pmd  --dpdk-port-index 1  --network-stack native --dhcp 0 --host-ipv4-addr 10.218.111.254  --server "10.218.111.253:1234" --smp 1
 
-str="c3n24"
-content=`cat /etc/hostname`
+MESSAGE_CON="c3n24"
+MESSAGE_ARG=`cat /etc/hostname`
 
-elif [ "$str" = "$content" ]
+elif [ "$MESSAGE_ARG" = "$content" ]
 then
 
-echo "$content"
-echo "$str"
 
-MY_MESSAGE="Hello World"
-echo $MY_MESSAGE
+echo $MESSAGE_CON
+echo $MESSAGE_ARG
 
 
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
