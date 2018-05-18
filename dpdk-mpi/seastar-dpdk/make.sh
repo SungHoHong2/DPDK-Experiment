@@ -17,6 +17,9 @@ echo "\n"
 MESSAGE_CON="c3n24"
 MESSAGE_ARG=`cat /etc/hostname`
 
+echo $MESSAGE_CON
+echo $MESSAGE_ARG
+
 elif [ "$MESSAGE_ARG" = "$content" ]
 then
 
