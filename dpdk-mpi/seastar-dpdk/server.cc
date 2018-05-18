@@ -13,7 +13,7 @@ using namespace seastar;
 
 size_t BUFFER_SIZE = 64;
 #include "testIpcShardMemory.h"
-static shared_use_st *pShardStuff;
+// static shared_use_st *pShardStuff;
 
 static std::string str_ping{"ping"};
 static std::string str_txtx{"txtx"};
