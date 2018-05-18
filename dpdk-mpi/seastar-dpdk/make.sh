@@ -17,8 +17,8 @@ echo "\n"
 str="c3n24"
 content=`cat /etc/hostname`
 
-echo $content
-echo $str
+echo "$content"
+echo "$str"
 
 
 elif [ "$str" = "$content" ]
