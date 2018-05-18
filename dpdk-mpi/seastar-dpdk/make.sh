@@ -16,7 +16,7 @@ echo "\n"
 
 str="c3n24"
 content=$(cat /etc/hostname)
-elif [ "$str" = "$content" ]
+elif [ "$str" == "$content" ]
 then
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
 sudo git pull origin master
@@ -32,7 +32,7 @@ echo "compiled the daemon-interface.c"
 
 str2="c3n25"
 content=$(cat /etc/hostname)
-elif [ "$str2" = "$content" ]
+elif [ "$str2" == "$content" ]
 then
 sudo gcc daemon-interface.c -o daemon-interface
 echo "compiled the daemon-interface.c"
