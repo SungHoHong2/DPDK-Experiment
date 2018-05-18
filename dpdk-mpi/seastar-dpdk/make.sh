@@ -1,4 +1,4 @@
-
+#!/bin/sh
 if [ "$1" = "workstation" ]
 then
 sudo git pull origin master
