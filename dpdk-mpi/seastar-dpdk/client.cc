@@ -180,6 +180,6 @@ int main(int ac, char ** av) {
     });
 }
 
-// const std::map<std::string, client::test_fn> client::tests = {
-//         {"ping", &client::ping_test},
-// };
+const std::map<std::string, client::test_fn> client::tests = {
+        {"ping", &client::ping_test},
+};
