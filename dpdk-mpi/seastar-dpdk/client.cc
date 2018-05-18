@@ -113,7 +113,7 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this, test] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                (this->*tests.at(test))(conn).then_wrapped([conn] (auto&& f) {
+                (this->*tests.at("ping"))(conn).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
@@ -170,15 +170,10 @@ int main(int ac, char ** av) {
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
-        auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
-
         protocol = transport::TCP;
 
-        if (!client::tests.count(test)) {
-            fprint(std::cerr, "Error: -test=ping | rxrx | txtx\n");
-            return engine().exit(1);
-        }
+
 
         clients.start().then([server, test, ncon] () {
             clients.invoke_on_all(&client::start, ipv4_addr{server}, test, ncon);
@@ -186,6 +181,6 @@ int main(int ac, char ** av) {
     });
 }
 
-const std::map<std::string, client::test_fn> client::tests = {
-        {"ping", &client::ping_test},
-};
+// const std::map<std::string, client::test_fn> client::tests = {
+//         {"ping", &client::ping_test},
+// };
