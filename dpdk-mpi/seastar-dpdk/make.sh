@@ -16,6 +16,11 @@ echo "\n"
 
 str="c3n24"
 content=`cat /etc/hostname`
+
+echo $content
+echo $str
+
+
 elif [ "$str" = "$content" ]
 then
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
