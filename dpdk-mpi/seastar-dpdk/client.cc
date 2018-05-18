@@ -19,7 +19,7 @@ static steady_clock_type::time_point ended;
 static int tx_msg_size = 4 * 1024;
 // static int tx_msg_nr = tx_msg_total_size / tx_msg_size;
 static std::string str_txbuf(tx_msg_size, 'X');
-static int total_ping_identifier = 0;
+// static int total_ping_identifier = 0;
 
 class client;
 distributed<client> clients;
