@@ -18,7 +18,7 @@ fi
 
 str="c3n24"
 content=`cat /etc/hostname`
-if [ "$MESSAGE_ARG" = "$content" ]
+if [ "$str" = "$content" ]
 then
 
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
@@ -32,9 +32,9 @@ sudo /data1/sungho/DPDK-Experiment/pktcapture-experiment/tcp_pktcapture/server -
 fi
 
 
-str2="c3n25"
+str="c3n25"
 content=`cat /etc/hostname`
-if [ "$str2" = "$content" ]
+if [ "$str" = "$content" ]
 then
 cd /data1/sungho/DPDK-Experiment/dpdk-mpi/seastar-dpdk
 sudo git pull origin master
