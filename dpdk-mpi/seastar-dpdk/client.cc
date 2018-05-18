@@ -165,16 +165,13 @@ int main(int ac, char ** av) {
     app.add_options()
         ("server", bpo::value<std::string>()->default_value("192.168.56.101:1234"), "Server address")
         ("test", bpo::value<std::string>()->default_value("ping"), "test type(ping | rxrx | txtx)")
-        ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu")
-        ("proto", bpo::value<std::string>()->default_value("tcp"), "transport protocol tcp|sctp")
-        ("smp", bpo::value<unsigned>()->default_value(1), "smp");
+        ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu");
 
     return app.run_deprecated(ac, av, [&app] {
         auto&& config = app.configuration();
         auto server = config["server"].as<std::string>();
         auto test = config["test"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
-        auto proto = config["proto"].as<std::string>();
 
         protocol = transport::TCP;
 
