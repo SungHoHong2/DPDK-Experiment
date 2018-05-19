@@ -10,8 +10,8 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 namespace bpo = boost::program_options;
-#include "client.hh"
 static shared_use_st *pShardStuff;
+#include "client.hh"
 
 
 distributed<client> clients;
