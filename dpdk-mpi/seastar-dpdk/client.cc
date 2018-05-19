@@ -46,9 +46,6 @@ public:
         future<> ping() {
 
             std::string str = "1";
-            if(pShardStuff->written_by_you == 0){
-                  return make_ready_future();
-            }
 
             if(pShardStuff->written_by_you == 1){
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
@@ -56,6 +53,10 @@ public:
                 std::string packetii(pShardStuff->data);
                 str = packetii;
                 pShardStuff->written_by_you = 0;
+            }
+
+            if(str.size()==1){
+                    return make_ready_future();
             }
 
             return _write_buf.write(str).then([this] {
