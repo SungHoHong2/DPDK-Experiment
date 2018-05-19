@@ -40,7 +40,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
     else{
-        pShardStuff2 = (struct shared_use_st *) pShardMemory;
+        pShardStuff2 = (struct shared_use_st *) pShardMemory2;
         while(running){
             while(pShardStuff2->written_by_you == 0){
                 sleep(1);

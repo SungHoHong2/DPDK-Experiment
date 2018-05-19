@@ -22,6 +22,8 @@ int main(int ac, char** av) {
 
     int running = 1;
     void *pShardMemory = (void*)0;
+    void *pShardMemory2 = (void*)0;
+
     int shmId, shmId2;
 
     srand((unsigned int)getpid());
@@ -39,7 +41,7 @@ int main(int ac, char** av) {
         exit(EXIT_FAILURE);
     }
 
-    pShardMemory = shmat(shmId2, (void*)0, 0);
+    pShardMemory2 = shmat(shmId2, (void*)0, 0);
     if(pShardMemory == (void*)-1){
         std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
         exit(EXIT_FAILURE);
@@ -51,7 +53,7 @@ int main(int ac, char** av) {
     std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
 
-    pShardStuff2 = (struct shared_use_st *) pShardMemory;
+    pShardStuff2 = (struct shared_use_st *) pShardMemory2;
     pShardStuff->written_by_you = 0;
     std::cout << "[shared memory]shmat success. flag:" << pShardStuff2->written_by_you << std::endl;;
 
