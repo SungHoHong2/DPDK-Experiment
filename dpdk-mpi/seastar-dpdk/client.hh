@@ -44,10 +44,11 @@ public:
                 return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                     auto str = std::string(buf.get(), buf.size());
                     if(buf.size()!=1){
-                            ended = steady_clock_type::now();
-                            auto elapsed = ended-started;
-                            auto usecs = (elapsed).count();
-                            std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
+                            // ended = steady_clock_type::now();
+                            // auto elapsed = ended-started;
+                            // auto usecs = (elapsed).count();
+                            // std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
+                            std::cout << buf.size() << std::endl;
                             pShardStuff->written_by_you = 0;
                     }
                     return ping();

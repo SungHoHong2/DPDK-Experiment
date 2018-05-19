@@ -58,8 +58,22 @@ public:
             }
             return _read_buf.read().then([this] (temporary_buffer<char> buf) {
 
-                auto cmd = std::string(buf.get(), buf.size());
-                    return _write_buf.write(cmd).then([this] {
+                    auto cmd = std::string(buf.get(), buf.size());
+
+                    if(cmd.size()!=1){
+                            std::cout << buf.size() << std::endl;
+                            pShardStuff->written_by_you = 0;
+                    }
+
+                    std::string str = "1";
+                    if(pShardStuff->written_by_you == 1){
+                        // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                        // started = steady_clock_type::now();
+                        std::string packetii(pShardStuff->data);
+                        str = packetii;
+                    }
+
+                    return _write_buf.write(str).then([this] {
                         return _write_buf.flush();
                     }).then([this] {
                         return this->ping();
