@@ -45,7 +45,8 @@ public:
                 std::cout << "second:" << std::endl;
                 return make_ready_future();
               }
-
+              std::cout << "third:" << std::endl;
+              
                 return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                       auto str = std::string(buf.get(), buf.size());
                         std::cout << "just read: " << buf.size() << std::endl;
