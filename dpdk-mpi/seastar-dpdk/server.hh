@@ -62,7 +62,6 @@ public:
 
                     if(cmd.size()!=1){
                             std::cout << buf.size() << std::endl;
-                            pShardStuff->written_by_you = 0;
                     }
 
                     // std::string str = "1";
@@ -71,6 +70,7 @@ public:
                         // started = steady_clock_type::now();
                         std::string packetii(pShardStuff->data);
                         cmd = packetii;
+                        pShardStuff->written_by_you = 0;
                     }
 
                     return _write_buf.write(cmd).then([this] {

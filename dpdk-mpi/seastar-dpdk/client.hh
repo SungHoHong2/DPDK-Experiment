@@ -36,6 +36,7 @@ public:
                 started = steady_clock_type::now();
                 std::string packetii(pShardStuff->data);
                 str = packetii;
+                pShardStuff->written_by_you = 0;
             }
 
             return _write_buf.write(str).then([this] {
@@ -49,7 +50,6 @@ public:
                             // auto usecs = (elapsed).count();
                             // std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                             std::cout << buf.size() << std::endl;
-                            pShardStuff->written_by_you = 0;
                     }
                     return ping();
 
