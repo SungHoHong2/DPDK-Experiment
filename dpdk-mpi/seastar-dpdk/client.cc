@@ -112,14 +112,25 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                (this->*ping_test)(conn).then_wrapped([conn] (auto&& f) {
-                    delete conn;
-                    try {
-                        f.get();
-                    } catch (std::exception& ex) {
-                        fprint(std::cerr, "request error: %s\n", ex.what());
-                    }
-                });
+
+                 conn->ping().then_wrapped([conn] (auto&& f) {
+                     delete conn;
+                     try {
+                         f.get();
+                     } catch (std::exception& ex) {
+                         fprint(std::cerr, "request error: %s\n", ex.what());
+                     }
+                 });
+
+                //
+                // (this->*tests.at("ping"))(conn).then_wrapped([conn] (auto&& f) {
+                //     delete conn;
+                //     try {
+                //         f.get();
+                //     } catch (std::exception& ex) {
+                //         fprint(std::cerr, "request error: %s\n", ex.what());
+                //     }
+                // });
             });
         }
         return make_ready_future();
