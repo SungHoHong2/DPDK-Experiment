@@ -1,4 +1,3 @@
-static shared_use_st *pShardStuff;
 static steady_clock_type::time_point started;
 static steady_clock_type::time_point ended;
 // static transport protocol = transport::TCP;
