@@ -21,7 +21,7 @@ int shmId, shmId2;
 char buffer[TEXT_SIZE];
 
 
-void* rx_func(void *){
+void* rx_func(){
          printf("thread %d\n", pthread_self());
 
          while(running){
