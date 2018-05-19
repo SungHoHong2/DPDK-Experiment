@@ -12,6 +12,9 @@ using namespace net;
 using namespace std::chrono_literals;
 namespace bpo = boost::program_options;
 
+distributed<client> clients;
+transport protocol = transport::TCP;
+
 
 int main(int ac, char ** av) {
 

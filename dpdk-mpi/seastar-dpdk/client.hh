@@ -2,11 +2,6 @@ static shared_use_st *pShardStuff;
 static steady_clock_type::time_point started;
 static steady_clock_type::time_point ended;
 
-
-class client;
-distributed<client> clients;
-transport protocol = transport::TCP;
-
 class client {
 private:
     static constexpr unsigned _pings_per_connection = 10000;
