@@ -54,7 +54,7 @@ int main(int ac, char** av) {
 
 
     pShardStuff2 = (struct shared_use_st *) pShardMemory2;
-    pShardStuff->written_by_you = 0;
+    pShardStuff2->written_by_you = 0;
     std::cout << "[shared memory]shmat success. flag:" << pShardStuff2->written_by_you << std::endl;;
 
 
