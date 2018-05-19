@@ -112,7 +112,7 @@ public:
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
             engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
-                (this->*tests.at("ping"))(conn).then_wrapped([conn] (auto&& f) {
+                (this->*ping_test)(conn).then_wrapped([conn] (auto&& f) {
                     delete conn;
                     try {
                         f.get();
@@ -171,7 +171,6 @@ int main(int ac, char ** av) {
         auto server = config["server"].as<std::string>();
         auto ncon = config["conn"].as<unsigned>();
         protocol = transport::TCP;
-
 
 
         clients.start().then([server, ncon] () {
