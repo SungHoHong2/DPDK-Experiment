@@ -5,12 +5,12 @@
 #include "core/future-util.hh"
 #include "core/distributed.hh"
 #include "testIpcShardMemory.h"
-#include "client.hh"
 
 using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 namespace bpo = boost::program_options;
+#include "client.hh"
 
 distributed<client> clients;
 transport protocol = transport::TCP;
