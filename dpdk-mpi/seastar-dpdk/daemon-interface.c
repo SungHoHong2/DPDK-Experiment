@@ -56,7 +56,7 @@ int main() {
     pShardMemory2 = shmat(shmId2, (void*)0, 0);
 
     if((pShardMemory == (void*)-1) && (pShardMemory2 == (void*)-1)){
-        cout << "[Daemon-interface][Error]shmat fail."<< endl;;
+        printf("[Daemon-interface][Error]shmat fail.\n");
         exit(EXIT_FAILURE);
     }
     else{
