@@ -28,7 +28,7 @@ public:
 
         future<> reading() {
             std::cout << "howdy howdy" << std::endl;
-            return make_ready_future();
+            return reading();
         }
 
 
