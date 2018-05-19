@@ -30,10 +30,9 @@ public:
         future<> ping() {
 
             std::string str = "1";
-
             if(TxShardStuff->written_by_you == 1){
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                started = steady_clock_type::now();
+
                 std::string packetii(TxShardStuff->data);
                 // str = pShardStuff->host;
                 // str.append("::");
@@ -53,6 +52,8 @@ public:
                             // auto usecs = (elapsed).count();
                             // std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                             std::cout << buf.size() << std::endl;
+                            strcpy(RxShardInstance->data, cmd.c_str());
+                            RxShardInstance->written_by_you = 1;
                     }
                     return ping();
 
