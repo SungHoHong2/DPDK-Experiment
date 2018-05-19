@@ -45,7 +45,7 @@ public:
 
         future<> ping() {
 
-            std::string str = "";
+            std::string str = "1";
             // if(pShardStuff->written_by_you == 0){
             //       return ping();
             // }
