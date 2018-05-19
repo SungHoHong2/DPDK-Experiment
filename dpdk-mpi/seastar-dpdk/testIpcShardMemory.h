@@ -14,7 +14,6 @@
 #define KEY_ID 2016
 
 struct shared_use_st {
-    char host[6];
     int written_by_you;
     char data[TEXT_SIZE];
 };

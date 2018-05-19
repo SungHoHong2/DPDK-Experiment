@@ -13,6 +13,8 @@
 using namespace seastar;
 namespace bpo = boost::program_options;
 static shared_use_st *pShardStuff;
+static shared_use_st *pShardStuff2;
+
 #include "server.hh"
 
 
@@ -20,10 +22,11 @@ int main(int ac, char** av) {
 
     int running = 1;
     void *pShardMemory = (void*)0;
-    int shmId;
+    int shmId, shmId2;
 
     srand((unsigned int)getpid());
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+    shmId2 = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
     if(shmId == -1){
         std::cout << "[shared memory][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
@@ -36,13 +39,21 @@ int main(int ac, char** av) {
         exit(EXIT_FAILURE);
     }
 
-    // you will have to put this as a argument
+    pShardMemory = shmat(shmId2, (void*)0, 0);
+    if(pShardMemory == (void*)-1){
+        std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
+        exit(EXIT_FAILURE);
+    }
+
+
     pShardStuff = (struct shared_use_st *) pShardMemory;
     pShardStuff->written_by_you = 0;
-    std::string host = "c3n24";
-    strcpy(pShardStuff->host , host.c_str());
-
     std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
+
+
+    pShardStuff2 = (struct shared_use_st *) pShardMemory;
+    std::cout << "[shared memory]shmat success. flag:" << pShardStuff2->written_by_you << std::endl;;
+
 
 
     app_template app;
