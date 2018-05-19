@@ -35,7 +35,7 @@ public:
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                 started = steady_clock_type::now();
                 std::string packetii(pShardStuff->data);
-                str = packetii;
+                str = pShardStuff->host+"::"+packetii;
                 pShardStuff->written_by_you = 0;
             }
 

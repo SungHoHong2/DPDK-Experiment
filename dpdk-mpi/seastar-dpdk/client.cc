@@ -40,6 +40,7 @@ int main(int ac, char ** av) {
     // you will have to put this as a argument
     pShardStuff = (struct shared_use_st *) pShardMemory;
     pShardStuff->written_by_you = 0;
+    pShardStuff->host = "c3n25";
     std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
 
