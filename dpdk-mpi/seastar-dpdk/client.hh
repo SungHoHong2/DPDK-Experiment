@@ -31,15 +31,15 @@ public:
 
             std::string str = "1";
 
-            if(pShardStuff->written_by_you == 1){
+            if(TxShardStuff->written_by_you == 1){
                 // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                 started = steady_clock_type::now();
-                std::string packetii(pShardStuff->data);
+                std::string packetii(TxShardStuff->data);
                 // str = pShardStuff->host;
                 // str.append("::");
                 // str.append(packetii);
                 str = packetii;
-                pShardStuff->written_by_you = 0;
+                TxShardStuff->written_by_you = 0;
             }
 
             return _write_buf.write(str).then([this] {

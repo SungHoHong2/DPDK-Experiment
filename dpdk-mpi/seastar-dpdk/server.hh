@@ -62,21 +62,21 @@ public:
 
                     if(cmd.size()!=1){
                             std::cout << buf.size() << std::endl;
-                            strcpy(pShardStuff2->data, cmd.c_str());
-                            pShardStuff2->written_by_you = 1;
+                            strcpy(RxShardInstance->data, cmd.c_str());
+                            RxShardInstance->written_by_you = 1;
                     }
 
                     // std::string str = "1";
-                    if(pShardStuff->written_by_you == 1){
+                    if(TxShardInstance->written_by_you == 1){
                         // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                         // started = steady_clock_type::now();
-                        std::string packetii(pShardStuff->data);
+                        std::string packetii(TxShardInstance->data);
                         cmd = packetii;
                         // cmd = pShardStuff->host;
                         // cmd.append("::");
                         // cmd.append(packetii);
 
-                        pShardStuff->written_by_you = 0;
+                        TxShardInstance->written_by_you = 0;
                     }
 
                     return _write_buf.write(cmd).then([this] {
