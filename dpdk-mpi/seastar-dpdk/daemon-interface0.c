@@ -34,7 +34,7 @@ int main() {
     pShardMemory = shmat(shmId, (void*)0, 0);
     pShardMemory2 = shmat(shmId2, (void*)0, 0);
 
-
+    //  gcc daemon-interface0.c -o daemon-interface0
     if(pShardMemory == (void*)-1){
         // cout << "[Client][Error]shmat fail."<< endl;;
         exit(EXIT_FAILURE);
@@ -62,6 +62,7 @@ int main() {
             exit(EXIT_FAILURE);
         }
     }
+  }
 
     exit(EXIT_SUCCESS);
 	//return 0;
