@@ -12,11 +12,7 @@
 
 using namespace seastar;
 namespace bpo = boost::program_options;
-using namespace net;
-using namespace std::chrono_literals;
-static shared_use_st *pShardStuff;
 #include "server.hh"
-#include "client.hh"
 
 
 int main(int ac, char** av) {
@@ -30,23 +26,15 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>(); // assign the port value from the app_template
         auto server = new distributed<tcp_server>; // run distributed object
-        auto con_server = config["server"].as<std::string>();
-        distributed<client> clients;
 
         server->start().then([server = std::move(server), port] () mutable {
             engine().at_exit([server] {
                 return server->stop();
             });
             server->invoke_on_all(&tcp_server::listen, ipv4_addr{port});
-            std::cout << "server activated\n";
+            // Invoke a method on all Service instances in parallel.
+        }).then([port] {
+            std::cout << "Seastar TCP server listening on port " << port << " ...\n";
         });
-
-        sleep(10s).then([con_server, ncon] {
-          clients.start().then([con_server, ncon] () {
-              clients.invoke_on_all(&client::start, ipv4_addr{con_server}, ncon);
-              std::cout << "client activated\n";
-          });
-        });
-
     });
 }
