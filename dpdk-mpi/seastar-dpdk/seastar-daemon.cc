@@ -25,7 +25,7 @@ int main(int ac, char** av) {
     app_template app;
     app.add_options()
         ("port", bpo::value<uint16_t>()->default_value(1234), "TCP server port")
-        ("server", bpo::value<std::string>()->default_value("192.168.56.101:1234"), "Server address")
+        ("server", bpo::value<std::string>()->default_value("10.107.30.41:1234"), "Server address")
         ("conn", bpo::value<unsigned>()->default_value(1), "nr connections per cpu");
 
     return app.run_deprecated(ac, av, [&] {
