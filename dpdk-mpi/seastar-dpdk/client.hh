@@ -27,7 +27,7 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> reading() {
-            std::cout << "howdy howdy" << std::endl;
+            // std::cout << "howdy howdy" << std::endl;
             return reading();
         }
 
