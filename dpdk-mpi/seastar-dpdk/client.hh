@@ -36,22 +36,12 @@ public:
                 started = steady_clock_type::now();
                 std::string packetii(pShardStuff->data);
                 str = packetii;
-                pShardStuff->written_by_you = 0;
             } else {
 
-               std::cout << "first:" << std::endl;
-
-              if (_read_buf.eof()) {
-                std::cout << "second:" << std::endl;
-                // return make_ready_future();
-                return ping();
-              }
-              std::cout << "third:" << std::endl;
-
+                std::cout << "first:" << std::endl;
                 return _read_buf.read().then([this] (temporary_buffer<char> buf) {
                       auto str = std::string(buf.get(), buf.size());
                         std::cout << "just read: " << buf.size() << std::endl;
-
 
               //       // if(buf.size()!=1){
               //       //         ended = steady_clock_type::now();
@@ -75,6 +65,7 @@ public:
                             auto elapsed = ended-started;
                             auto usecs = (elapsed).count();
                             std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
+                            pShardStuff->written_by_you = 0;
                     }
                     return ping();
 
