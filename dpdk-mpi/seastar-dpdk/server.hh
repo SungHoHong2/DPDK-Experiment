@@ -1,3 +1,6 @@
+static steady_clock_type::time_point started;
+static steady_clock_type::time_point ended;
+
 class tcp_server {
     std::vector<server_socket> _tcp_listeners;
     std::vector<server_socket> _sctp_listeners;
