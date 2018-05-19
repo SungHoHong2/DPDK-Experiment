@@ -77,6 +77,14 @@ public:
                     return make_ready_future();
                 }
                 auto cmd = std::string(buf.get(), buf.size());
+
+                    // if(pShardStuff->written_by_you == 1){
+                    //     // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
+                    //     std::string packetii(pShardStuff->data);
+                    //     str = packetii;
+                    //     pShardStuff->written_by_you = 0;
+                    // }
+
                     return _write_buf.write(cmd).then([this] {
                         return _write_buf.flush();
                     }).then([this] {
