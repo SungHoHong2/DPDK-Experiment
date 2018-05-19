@@ -52,7 +52,7 @@ public:
                             // auto usecs = (elapsed).count();
                             // std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                             std::cout << buf.size() << std::endl;
-                            strcpy(RxShardStuff->data, buf.c_str());
+                            strcpy(RxShardStuff->data, str.c_str());
                             RxShardStuff->written_by_you = 1;
                     }
                     return ping();
