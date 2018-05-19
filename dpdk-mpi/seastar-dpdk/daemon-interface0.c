@@ -26,21 +26,21 @@ int main() {
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
     shmId2 = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
-    if(shmId == -1){
+    if(shmId2 == -1){
         printf("[Client][Error]shmget fail. id: %d\n", shmId);
         exit(EXIT_FAILURE);
     }
 
-    pShardMemory = shmat(shmId, (void*)0, 0);
+    // pShardMemory = shmat(shmId, (void*)0, 0);
     pShardMemory2 = shmat(shmId2, (void*)0, 0);
 
     //  gcc daemon-interface0.c -o daemon-interface0
-    if(pShardMemory == (void*)-1){
+    if(pShardMemory2 == (void*)-1){
         // cout << "[Client][Error]shmat fail."<< endl;;
         exit(EXIT_FAILURE);
     }
     else{
-        pShardStuff = (struct shared_use_st *) pShardMemory;
+        pShardStuff2 = (struct shared_use_st *) pShardMemory;
         while(running){
             while(pShardStuff2->written_by_you == 0){
                 sleep(1);
