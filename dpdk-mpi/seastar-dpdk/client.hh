@@ -84,7 +84,7 @@ public:
                 auto conn = new connection(std::move(fd));
 
                  conn->ping().then_wrapped([conn] (auto&& f) {
-                      cout << "did it come to this?" << endl;
+                      std::cout << "did it come to this?" << std::endl;
                      conn->reading();
                      delete conn;
                      try {
