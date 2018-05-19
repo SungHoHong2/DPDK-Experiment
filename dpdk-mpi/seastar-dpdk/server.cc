@@ -27,7 +27,7 @@ int main(int ac, char** av) {
     int shmId, shmId2;
 
     srand((unsigned int)getpid());
-    shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+    shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
     shmId2 = shmget((key_t)2017, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
     if(shmId == -1){
