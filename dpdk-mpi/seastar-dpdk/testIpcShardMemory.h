@@ -10,7 +10,7 @@
 
 
 
-#define TEXT_SIZE 1024
+#define TEXT_SIZE 1024  // total size is 2048 over that is ignored
 #define KEY_ID 2016
 
 struct shared_use_st {
