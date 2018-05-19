@@ -52,9 +52,9 @@ public:
                     //         std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                     // }
                     return ping();
+                  }
+
             }
-
-
 
 
             return _write_buf.write(str).then([this] {
