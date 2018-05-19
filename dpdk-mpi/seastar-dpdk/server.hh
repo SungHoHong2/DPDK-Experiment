@@ -23,7 +23,7 @@ public:
         int which = listeners.size() - 1;
         listeners[which].accept().then([this, &listeners] (connected_socket fd, socket_address addr) mutable {
             auto conn = new connection(*this, std::move(fd), addr);
-            conn->wrtie();
+            conn->write();
             conn->read().then_wrapped([conn] (auto&& f) {
                 delete conn;
                 try {
