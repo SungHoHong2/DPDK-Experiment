@@ -9,6 +9,8 @@
 
 #include "testIpcShardMemory.h"
 
+// gcc daemon-interface_0.c -o daemon-interface_0
+
 int main() {
 
     int running = 1;

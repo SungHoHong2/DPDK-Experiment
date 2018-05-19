@@ -22,21 +22,44 @@ char buffer[TEXT_SIZE];
 
 
 void* rx_func(){
-         printf("thread %ld\n", pthread_self());
-
          while(running){
              while(pShardStuff2->written_by_you == 0){
                  sleep(1);
              }
-
              printf("%s\n", pShardStuff2->data);
              pShardStuff2->written_by_you = 0;
          }
-
          pthread_exit(0);
 }
 
 
+void* tx_func(){
+         printf("thread %ld\n", pthread_self());
+         while(running){
+
+             while(pShardStuff->written_by_you == 1){
+                 sleep(1);
+             }
+
+             printf("[Client]Enter text :\n");
+             fgets(buffer, TEXT_SIZE, stdin);
+
+             // printf("starting with %d", test_case[s]);
+             // int i=0;
+             // for(i=0; i<test_case[s]; i++){
+             //   buffer[i]='*';
+             // }
+             // buffer[i]='\0';
+
+             strncpy(pShardStuff->data, buffer, TEXT_SIZE);
+             // s++;
+             pShardStuff->written_by_you = 1;
+             // if(s==sizeof(test_case)){
+             //   break;
+             // }
+         }
+         pthread_exit(0);
+}
 
 
 
