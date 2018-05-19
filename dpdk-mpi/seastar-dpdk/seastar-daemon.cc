@@ -33,6 +33,7 @@ int main(int ac, char** av) {
         uint16_t port = config["port"].as<uint16_t>(); // assign the port value from the app_template
         auto server = new distributed<tcp_server>; // run distributed object
         auto con_server = config["server"].as<std::string>();
+        auto ncon = config["conn"].as<unsigned>();
 
         server->start().then([server = std::move(server), port] () mutable {
             engine().at_exit([server] {
