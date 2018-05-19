@@ -73,7 +73,7 @@ public:
                         cmd = packetii;
                     }
 
-                    return _write_buf.write(str).then([this] {
+                    return _write_buf.write(cmd).then([this] {
                         return _write_buf.flush();
                     }).then([this] {
                         return this->ping();
