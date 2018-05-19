@@ -24,6 +24,7 @@ int main() {
     srand((unsigned int)getpid());
 
     shmId = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+    shmId2 = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
     if(shmId == -1){
         printf("[Client][Error]shmget fail. id: %d\n", shmId);
@@ -31,6 +32,7 @@ int main() {
     }
 
     pShardMemory = shmat(shmId, (void*)0, 0);
+    pShardMemory2 = shmat(shmId2, (void*)0, 0);
 
 
     if(pShardMemory == (void*)-1){
