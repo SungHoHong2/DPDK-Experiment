@@ -76,7 +76,7 @@ public:
                               std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
                               pShardStuff->written_by_you = 0;
                       }
-                      return ping();
+                      return write();
 
                   });
               });
