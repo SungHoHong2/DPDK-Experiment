@@ -55,10 +55,6 @@ public:
                 pShardStuff->written_by_you = 0;
             }
 
-            if(str.size()==1){
-                    return make_ready_future();
-            }
-
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
             }).then([this] {
