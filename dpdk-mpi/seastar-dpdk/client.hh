@@ -39,20 +39,20 @@ public:
                 pShardStuff->written_by_you = 0;
             } else {
 
-              if (!_read_buf.eof()) {
-                return make_ready_future();
-              }
-
-                return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-                    auto str = std::string(buf.get(), buf.size());
-                    // if(buf.size()!=1){
-                    //         ended = steady_clock_type::now();
-                    //         auto elapsed = ended-started;
-                    //         auto usecs = (elapsed).count();
-                    //         std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
-                    // }
-                    return ping();
-                  }
+              // if (!_read_buf.eof()) {
+              //   return make_ready_future();
+              // }
+              //
+              //   return _read_buf.read().then([this] (temporary_buffer<char> buf) {
+              //       auto str = std::string(buf.get(), buf.size());
+              //       // if(buf.size()!=1){
+              //       //         ended = steady_clock_type::now();
+              //       //         auto elapsed = ended-started;
+              //       //         auto usecs = (elapsed).count();
+              //       //         std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
+              //       // }
+              //       return ping();
+              //     }
 
             }
 
