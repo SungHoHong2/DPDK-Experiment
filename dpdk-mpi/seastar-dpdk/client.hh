@@ -92,16 +92,7 @@ public:
                      }
                  });
 
-
-                 conn->reading().then_wrapped([conn] (auto&& f) {
-                     delete conn;
-                     try {
-                         f.get();
-                     } catch (std::exception& ex) {
-                         fprint(std::cerr, "request error: %s\n", ex.what());
-                     }
-                 });
-
+                 conn->reading();
 
 
             });
