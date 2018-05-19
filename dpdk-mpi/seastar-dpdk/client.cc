@@ -21,7 +21,9 @@ int main(int ac, char ** av) {
 
     int running = 1;
     void *pShardMemory = (void*)0;
-    int shmId;
+    void *pShardMemory2 = (void*)0;
+
+    int shmId, shmId2;
 
     srand((unsigned int)getpid());
     shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
