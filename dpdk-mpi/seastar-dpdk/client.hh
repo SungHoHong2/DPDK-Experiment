@@ -1,7 +1,7 @@
 static shared_use_st *pShardStuff;
 static steady_clock_type::time_point started;
 static steady_clock_type::time_point ended;
-transport protocol = transport::TCP;
+// static transport protocol = transport::TCP;
 
 class client {
 private:
@@ -66,7 +66,7 @@ public:
 
         for (unsigned i = 0; i < ncon; i++) {
             socket_address local = socket_address(::sockaddr_in{AF_INET, INADDR_ANY, {0}});
-            engine().net().connect(make_ipv4_address(server_addr), local, protocol).then([this] (connected_socket fd) {
+            engine().net().connect(make_ipv4_address(server_addr), local, transport::TCP).then([this] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
 
                  conn->ping().then_wrapped([conn] (auto&& f) {
