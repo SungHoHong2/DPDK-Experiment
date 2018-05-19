@@ -39,7 +39,10 @@ public:
                 pShardStuff->written_by_you = 0;
             } else {
 
+               std::cout << "first:" << std::endl;
+
               if (_read_buf.eof()) {
+                std::cout << "second:" << std::endl;
                 return make_ready_future();
               }
 
