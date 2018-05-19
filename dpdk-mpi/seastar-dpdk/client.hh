@@ -35,9 +35,9 @@ public:
                 }
                 auto cmd = std::string(buf.get(), buf.size());
                 std::cout << "howdy howdy" << std::endl;
+                return reading();
             });
 
-            return reading();
         }
 
 
