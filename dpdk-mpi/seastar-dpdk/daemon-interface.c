@@ -22,7 +22,7 @@ char buffer[TEXT_SIZE];
 
 
 void* rx_func(){
-         printf("thread %d\n", pthread_self());
+         printf("thread %ld\n", pthread_self());
 
          while(running){
              while(pShardStuff2->written_by_you == 0){
