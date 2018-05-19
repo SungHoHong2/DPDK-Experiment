@@ -84,16 +84,6 @@ public:
                     });
             });
         }
-        future<> do_write(int end) {
-            if (end == 0) {
-                return make_ready_future<>();
-            }
-            return _write_buf.write(str_txbuf).then([this] {
-                return _write_buf.flush();
-            }).then([this, end] {
-                return do_write(end - 1);
-            });
-        }
 
     };
 };
