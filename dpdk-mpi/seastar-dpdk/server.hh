@@ -65,7 +65,7 @@ public:
                             pShardStuff->written_by_you = 0;
                     }
 
-                    std::string str = "1";
+                    // std::string str = "1";
                     if(pShardStuff->written_by_you == 1){
                         // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                         // started = steady_clock_type::now();
