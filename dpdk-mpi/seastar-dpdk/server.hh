@@ -70,7 +70,10 @@ public:
                         // started = steady_clock_type::now();
                         std::string packetii(pShardStuff->data);
                         // cmd = packetii;
-                        cmd = pShardStuff->host+"::"+packetii;
+                        str = pShardStuff->host;
+                        str.append("::");
+                        str.append(packetii);
+
                         pShardStuff->written_by_you = 0;
                     }
 
