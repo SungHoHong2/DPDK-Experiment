@@ -26,6 +26,11 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
+        future<> reading() {
+            std::cout << "howdy howdy" << std::endl;
+            return make_ready_future();
+        }
+
 
         future<> ping() {
 
@@ -36,22 +41,6 @@ public:
                 started = steady_clock_type::now();
                 std::string packetii(pShardStuff->data);
                 str = packetii;
-            } else {
-
-                std::cout << "first:" << std::endl;
-                return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-                      auto str = std::string(buf.get(), buf.size());
-                        std::cout << "just read: " << buf.size() << std::endl;
-
-              //       // if(buf.size()!=1){
-              //       //         ended = steady_clock_type::now();
-              //       //         auto elapsed = ended-started;
-              //       //         auto usecs = (elapsed).count();
-              //       //         std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
-              //       // }
-                    return ping();
-                  });
-
             }
 
 
@@ -93,6 +82,19 @@ public:
                          fprint(std::cerr, "request error: %s\n", ex.what());
                      }
                  });
+
+
+                 conn->reading().then_wrapped([conn] (auto&& f) {
+                     delete conn;
+                     try {
+                         f.get();
+                     } catch (std::exception& ex) {
+                         fprint(std::cerr, "request error: %s\n", ex.what());
+                     }
+                 });
+
+
+
             });
         }
         return make_ready_future();
