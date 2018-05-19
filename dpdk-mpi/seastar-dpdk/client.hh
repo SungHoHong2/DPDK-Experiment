@@ -27,9 +27,8 @@ public:
             , _write_buf(_fd.output()) {}
 
         future<> reading() {
-            // std::cout << "howdy howdy" << std::endl;
+            std::cout << "_read_buf.read().then([this] (temporary_buffer<char> buf) {" << std::endl;
             return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-
                 if (buf.size() == 0) {
                     return make_ready_future();
                 }
