@@ -11,6 +11,7 @@ using namespace net;
 using namespace std::chrono_literals;
 namespace bpo = boost::program_options;
 #include "client.hh"
+static shared_use_st *pShardStuff;
 
 
 distributed<client> clients;
