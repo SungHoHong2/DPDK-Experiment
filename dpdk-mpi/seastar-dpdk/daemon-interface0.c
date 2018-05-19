@@ -71,7 +71,7 @@ int main() {
     shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
     shmId2 = shmget((key_t)2019, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
-    if((shmId ==-1)){
+    if((shmId2 ==-1)){
         printf("[Daemon-interface][Error]shmget fail. id: %d\n", shmId2);
         exit(EXIT_FAILURE);
     }
