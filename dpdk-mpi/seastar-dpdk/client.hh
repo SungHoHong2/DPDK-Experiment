@@ -83,8 +83,9 @@ public:
             engine().net().connect(make_ipv4_address(server_addr), local, transport::TCP).then([this] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
 
-                 std::cout << "initialize ping" << std::endl;
+                 std::cout << "initialize read" << std::endl;
                  conn->reading();
+                 std::cout << "initialize ping" << std::endl;
                  conn->ping().then_wrapped([conn] (auto&& f) {
                       std::cout << "run after wrapper" << std::endl;
                      delete conn;
