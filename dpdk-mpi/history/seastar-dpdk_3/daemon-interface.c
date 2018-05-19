@@ -11,23 +11,23 @@
 #include "testIpcShardMemory.h"
 
 int running = 1;
-void *TxShareMemory = (void*)0;
-void *RxShareMemory = (void*)0;
+void *pShardMemory = (void*)0;
+void *pShardMemory2 = (void*)0;
 
-struct shared_use_st *TxShardInstance;
-struct shared_use_st *RxShardInstance;
+struct shared_use_st *pShardStuff;
+struct shared_use_st *pShardStuff2;
 
-int shmTX, shmRX;
+int shmId, shmId2;
 char buffer[TEXT_SIZE];
 
 
 void* rx_func(){
          while(running){
-             while(RxShardInstance->written_by_you == 0){
+             while(pShardStuff2->written_by_you == 0){
                  sleep(1);
              }
-             printf("%s\n", RxShardInstance->data);
-             RxShardInstance->written_by_you = 0;
+             printf("%s\n", pShardStuff2->data);
+             pShardStuff2->written_by_you = 0;
          }
          pthread_exit(0);
 }
@@ -37,7 +37,7 @@ void* tx_func(){
          printf("thread %ld\n", pthread_self());
          while(running){
 
-             while(TxShardInstance->written_by_you == 1){
+             while(pShardStuff->written_by_you == 1){
                  sleep(1);
              }
 
@@ -51,9 +51,9 @@ void* tx_func(){
              // }
              // buffer[i]='\0';
 
-             strncpy(TxShardInstance->data, buffer, TEXT_SIZE);
+             strncpy(pShardStuff->data, buffer, TEXT_SIZE);
              // s++;
-             TxShardInstance->written_by_you = 1;
+             pShardStuff->written_by_you = 1;
              // if(s==sizeof(test_case)){
              //   break;
              // }
@@ -67,24 +67,24 @@ int main() {
 
     srand((unsigned int)getpid());
 
-    shmTX = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
-    shmRX = shmget((key_t)2017, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
+    shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+    shmId2 = shmget((key_t)2017, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
-    if((shmTX ==-1) || (shmRX == -1)){
-        printf("[Daemon-interface][Error]shmget fail. id: %d\n", shmRX);
+    if((shmId ==-1) || (shmId2 == -1)){
+        printf("[Daemon-interface][Error]shmget fail. id: %d\n", shmId2);
         exit(EXIT_FAILURE);
     }
 
-    TxShareMemory = shmat(shmTX, (void*)0, 0);
-    RxShareMemory = shmat(shmRX, (void*)0, 0);
+    pShardMemory = shmat(shmId, (void*)0, 0);
+    pShardMemory2 = shmat(shmId2, (void*)0, 0);
 
-    if((TxShareMemory == (void*)-1) && (RxShareMemory == (void*)-1)){
+    if((pShardMemory == (void*)-1) && (pShardMemory2 == (void*)-1)){
         printf("[Daemon-interface][Error]shmat fail.\n");
         exit(EXIT_FAILURE);
     }
     else{
-        TxShardInstance = (struct shared_use_st *) TxShareMemory;
-        RxShardInstance = (struct shared_use_st *) RxShareMemory;
+        pShardStuff = (struct shared_use_st *) pShardMemory;
+        pShardStuff2 = (struct shared_use_st *) pShardMemory2;
 
         pthread_t tx_thread, rx_thread;
         pthread_create(&rx_thread,NULL, rx_func, NULL);

@@ -10,8 +10,8 @@ using namespace seastar;
 using namespace net;
 using namespace std::chrono_literals;
 namespace bpo = boost::program_options;
-static shared_use_st *TxShardStuff;
-static shared_use_st *RxShardStuff;
+static shared_use_st *pShardStuff;
+static shared_use_st *pShardStuff2;
 #include "client.hh"
 
 
@@ -21,41 +21,41 @@ distributed<client> clients;
 int main(int ac, char ** av) {
 
   int running = 1;
-  void *TxShareMemory = (void*)0;
-  void *RxShareMemory = (void*)0;
+  void *pShardMemory = (void*)0;
+  void *pShardMemory2 = (void*)0;
 
-  int shmTX, shmRX;
+  int shmId, shmId2;
 
   srand((unsigned int)getpid());
-  shmTX = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
-  shmRX = shmget((key_t)2017, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
+  shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
+  shmId2 = shmget((key_t)2017, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
-  if(shmTX == -1){
-      std::cout << "[shared memory][Error]shmget fail. id:" << shmTX << running << TxShardStuff << TxShareMemory << std::endl;;
+  if(shmId == -1){
+      std::cout << "[shared memory][Error]shmget fail. id:" << shmId << running << pShardStuff << pShardMemory << std::endl;;
       exit(EXIT_FAILURE);
   }
 
-  TxShareMemory = shmat(shmTX, (void*)0, 0);
-  if(TxShareMemory == (void*)-1){
+  pShardMemory = shmat(shmId, (void*)0, 0);
+  if(pShardMemory == (void*)-1){
       std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
       exit(EXIT_FAILURE);
   }
 
-  RxShareMemory = shmat(shmRX, (void*)0, 0);
-  if(RxShareMemory == (void*)-1){
+  pShardMemory2 = shmat(shmId2, (void*)0, 0);
+  if(pShardMemory == (void*)-1){
       std::cout << "[shared memory][Error]shmat fail."<< std::endl;;
       exit(EXIT_FAILURE);
   }
 
 
-  TxShardStuff = (struct shared_use_st *) TxShareMemory;
-  TxShardStuff->written_by_you = 0;
-  std::cout << "[shared memory]shmat success. flag:" << TxShardStuff->written_by_you << std::endl;;
+  pShardStuff = (struct shared_use_st *) pShardMemory;
+  pShardStuff->written_by_you = 0;
+  std::cout << "[shared memory]shmat success. flag:" << pShardStuff->written_by_you << std::endl;;
 
 
-  RxShardStuff = (struct shared_use_st *) RxShareMemory;
-  RxShardStuff->written_by_you = 0;
-  std::cout << "[shared memory]shmat success. flag:" << RxShardStuff->written_by_you << std::endl;;
+  pShardStuff2 = (struct shared_use_st *) pShardMemory2;
+  pShardStuff2->written_by_you = 0;
+  std::cout << "[shared memory]shmat success. flag:" << pShardStuff2->written_by_you << std::endl;;
 
 
     app_template app;
