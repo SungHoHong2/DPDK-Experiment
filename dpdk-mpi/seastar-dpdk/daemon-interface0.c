@@ -48,10 +48,10 @@ int main() {
 
         printf("%s\n", pShardStuff2->data);
         pShardStuff2->written_by_you = 0;
-        if(shmdt(pShardMemory) == -1){
-            printf("[Client][Error] shmdt fail.\n");
-            exit(EXIT_FAILURE);
-        }
+        // if(shmdt(pShardMemory) == -1){
+        //     printf("[Client][Error] shmdt fail.\n");
+        //     exit(EXIT_FAILURE);
+        // }
     }
   }
 
