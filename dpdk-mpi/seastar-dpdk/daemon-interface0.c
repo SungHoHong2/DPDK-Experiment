@@ -33,6 +33,7 @@ void* rx_func(){
 }
 
 
+// gcc -g -pthread daemon-interface.c -o daemon-interface0
 void* tx_func(){
          printf("thread %ld\n", pthread_self());
          while(running){
@@ -70,10 +71,15 @@ int main() {
     shmId = shmget((key_t)2016, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
     shmId2 = shmget((key_t)2019, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
-    if((shmId ==-1) || (shmId2 == -1)){
+    if((shmId ==-1)){
         printf("[Daemon-interface][Error]shmget fail. id: %d\n", shmId2);
         exit(EXIT_FAILURE);
     }
+
+    // if((shmId ==-1) || (shmId2 == -1)){
+    //     printf("[Daemon-interface][Error]shmget fail. id: %d\n", shmId2);
+    //     exit(EXIT_FAILURE);
+    // }
 
     pShardMemory = shmat(shmId, (void*)0, 0);
     pShardMemory2 = shmat(shmId2, (void*)0, 0);
@@ -88,7 +94,7 @@ int main() {
 
         pthread_t tx_thread, rx_thread;
         pthread_create(&rx_thread,NULL, rx_func, NULL);
-        pthread_create(&rx_thread,NULL, tx_func, NULL);
+        pthread_create(&tx_thread,NULL, tx_func, NULL);
         pthread_join(rx_thread,NULL);
         pthread_join(tx_thread,NULL);
   }

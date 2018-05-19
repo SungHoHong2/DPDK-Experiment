@@ -88,7 +88,7 @@ int main() {
 
         pthread_t tx_thread, rx_thread;
         pthread_create(&rx_thread,NULL, rx_func, NULL);
-        pthread_create(&rx_thread,NULL, tx_func, NULL);
+        pthread_create(&tx_thread,NULL, tx_func, NULL);
         pthread_join(rx_thread,NULL);
         pthread_join(tx_thread,NULL);
   }
