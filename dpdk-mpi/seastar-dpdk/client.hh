@@ -39,12 +39,15 @@ public:
                 pShardStuff->written_by_you = 0;
             } else {
 
-              if (!_read_buf.eof()) {
+              if (_read_buf.eof()) {
                 return make_ready_future();
               }
 
                 return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-              //       auto str = std::string(buf.get(), buf.size());
+                      auto str = std::string(buf.get(), buf.size());
+                        std::cout << "just read: " << buf.size() << std::endl;
+
+
               //       // if(buf.size()!=1){
               //       //         ended = steady_clock_type::now();
               //       //         auto elapsed = ended-started;
