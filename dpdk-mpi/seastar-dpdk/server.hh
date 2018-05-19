@@ -62,6 +62,8 @@ public:
 
                     if(cmd.size()!=1){
                             std::cout << buf.size() << std::endl;
+                            pShardStuff2->data = cmd;
+                            pShardStuff2->written_by_you = 1;
                     }
 
                     // std::string str = "1";

@@ -50,27 +50,12 @@ int main() {
         int s =0;
         while(running){
 
-            while(pShardStuff->written_by_you == 1){
+            while(pShardStuff2->written_by_you == 1){
                 sleep(1);
             }
 
-            // printf("[Client]Enter text :\n");
-            // fgets(buffer, TEXT_SIZE, stdin);
+            printf("%s\n", pShardStuff2->data);
 
-            printf("starting with %d", test_case[s]);
-            int i=0;
-            for(i=0; i<test_case[s]; i++){
-              buffer[i]='*';
-            }
-            buffer[i]='\0';
-
-            strncpy(pShardStuff->data, buffer, TEXT_SIZE);
-            s++;
-            pShardStuff->written_by_you = 1;
-            if(s==sizeof(test_case)){
-              break;
-            }
-        }
 
         if(shmdt(pShardMemory) == -1){
             printf("[Client][Error] shmdt fail.\n");
