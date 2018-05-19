@@ -70,7 +70,7 @@ public:
                         // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
                         // started = steady_clock_type::now();
                         std::string packetii(pShardStuff->data);
-                        str = packetii;
+                        cmd = packetii;
                     }
 
                     return _write_buf.write(str).then([this] {
