@@ -27,7 +27,7 @@ int main() {
     shmId2 = shmget((key_t)KEY_ID, sizeof(struct shared_use_st), 0667 | IPC_CREAT);
 
     if(shmId2 == -1){
-        printf("[Client][Error]shmget fail. id: %d\n", shmId);
+        printf("[Client][Error]shmget fail. id: %d\n", shmId2);
         exit(EXIT_FAILURE);
     }
 
