@@ -26,19 +26,6 @@ public:
             , _read_buf(_fd.input())
             , _write_buf(_fd.output()) {}
 
-        future<> reading() {
-            std::cout << "_read_buf.read().then([this] (temporary_buffer<char> buf) {" << std::endl;
-            return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                }
-                auto cmd = std::string(buf.get(), buf.size());
-                std::cout << "howdy howdy" << std::endl;
-                return reading();
-            });
-
-        }
-
 
         future<> ping() {
 
@@ -50,7 +37,6 @@ public:
                 std::string packetii(pShardStuff->data);
                 str = packetii;
             }
-
 
             return _write_buf.write(str).then([this] {
                 return _write_buf.flush();
@@ -82,8 +68,6 @@ public:
             engine().net().connect(make_ipv4_address(server_addr), local, transport::TCP).then([this] (connected_socket fd) {
                 auto conn = new connection(std::move(fd));
 
-                 std::cout << "initialize read" << std::endl;
-                 conn->reading();
                  std::cout << "initialize ping" << std::endl;
                  conn->ping().then_wrapped([conn] (auto&& f) {
                       std::cout << "run after wrapper" << std::endl;

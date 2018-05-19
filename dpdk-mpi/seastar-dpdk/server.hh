@@ -14,7 +14,6 @@ public:
         return make_ready_future<>();
     }
 
-    // FIXME: We should properly tear down the service here.
     future<> stop() {
         return make_ready_future<>();
     }
@@ -23,8 +22,7 @@ public:
         int which = listeners.size() - 1;
         listeners[which].accept().then([this, &listeners] (connected_socket fd, socket_address addr) mutable {
             auto conn = new connection(*this, std::move(fd), addr);
-            conn->write();
-            conn->read().then_wrapped([conn] (auto&& f) {
+            conn->ping().then_wrapped([conn] (auto&& f) {
                 delete conn;
                 try {
                     f.get();
@@ -54,55 +52,17 @@ public:
             , _write_buf(_fd.output()) {}
 
 
-        future<> write() {
-
-              std::string str = "1";
-              if(pShardStuff->written_by_you == 1){
-                  // std::cout << "[Servier]echo data:" << pShardStuff->data << std::endl;
-                  started = steady_clock_type::now();
-                  std::string packetii(pShardStuff->data);
-                  str = packetii;
-              }
-
-              return _write_buf.write(str).then([this] {
-                  return _write_buf.flush();
-              }).then([this] {
-                  return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-                      auto str = std::string(buf.get(), buf.size());
-                      if(buf.size()!=1){
-                              ended = steady_clock_type::now();
-                              auto elapsed = ended-started;
-                              auto usecs = (elapsed).count();
-                              std::cout << "message size: " << buf.size() <<  "\t latency(usec): " << usecs << std::endl;
-                              pShardStuff->written_by_you = 0;
-                      }
-                      return write();
-
-                  });
-              });
-
-
-        }
-
-
-
-        future<> read() {
+        future<> ping() {
             if (_read_buf.eof()) {
                 return make_ready_future();
             }
-            // Expect 4 bytes cmd from client
-
             return _read_buf.read().then([this] (temporary_buffer<char> buf) {
-
-                if (buf.size() == 0) {
-                    return make_ready_future();
-                }
 
                 auto cmd = std::string(buf.get(), buf.size());
                     return _write_buf.write(cmd).then([this] {
                         return _write_buf.flush();
                     }).then([this] {
-                        return this->read();
+                        return this->ping();
                     });
             });
         }
