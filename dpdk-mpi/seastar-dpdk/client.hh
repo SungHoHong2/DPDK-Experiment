@@ -39,9 +39,9 @@ public:
                 pShardStuff->written_by_you = 0;
             } else {
 
-              // if (!_read_buf.eof()) {
-              //   return make_ready_future();
-              // }
+              if (!_read_buf.eof()) {
+                return make_ready_future();
+              }
               //
               //   return _read_buf.read().then([this] (temporary_buffer<char> buf) {
               //       auto str = std::string(buf.get(), buf.size());
