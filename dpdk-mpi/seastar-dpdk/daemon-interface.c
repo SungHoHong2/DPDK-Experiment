@@ -64,7 +64,7 @@ int main() {
         pShardStuff2 = (struct shared_use_st *) pShardMemory2;
 
         pthread_t tx_thread, rx_thread;
-        pthread_create(&rx_thread,NULL, func, NULL);
+        pthread_create(&rx_thread,NULL, rx_func, NULL);
         // pthread_create(&rx_thread,NULL, func, NULL);
         pthread_join(rx_thread,NULL);
 
