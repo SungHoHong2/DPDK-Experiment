@@ -28,6 +28,15 @@ public:
 
         future<> reading() {
             // std::cout << "howdy howdy" << std::endl;
+            return _read_buf.read().then([this] (temporary_buffer<char> buf) {
+
+                if (buf.size() == 0) {
+                    return make_ready_future();
+                }
+                auto cmd = std::string(buf.get(), buf.size());
+                std::cout << "howdy howdy" << std::endl;
+            });
+
             return reading();
         }
 
