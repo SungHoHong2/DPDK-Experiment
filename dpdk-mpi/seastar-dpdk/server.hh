@@ -62,7 +62,7 @@ public:
 
                     if(cmd.size()!=1){
                             std::cout << buf.size() << std::endl;
-                            pShardStuff2->data = cmd;
+                            strcpy(pShardStuff2->data, cmd.c_str());
                             pShardStuff2->written_by_you = 1;
                     }
 
