@@ -9,6 +9,8 @@ sudo apt-get purge mpi openmpi-common
 export MPICC=/home/sungho/mpich
 export PATH=/home/sungho/mpich/bin:$PATH
 
+
+
 mpicc -o hellow hellow.c
 mpirun -n 4 -hostfile hosts_file ./hellow
 mpirun -n 4 ./hellow
