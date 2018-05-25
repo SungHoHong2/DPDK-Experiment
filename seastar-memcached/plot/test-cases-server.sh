@@ -1,5 +1,5 @@
 
-echo "howdy"
+echo "howdy" $2 $3 
 
 # if [ "$2" = "traditional" ]
 # then
