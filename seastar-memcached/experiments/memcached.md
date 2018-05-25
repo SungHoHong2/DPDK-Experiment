@@ -1,19 +1,17 @@
 ### memcached architecture
-Memcached is a RAM based key-value store
-mostly used as a cache infront of a slow, disk based, backend database
-A client queries the front end cache and if the query key is not found there, it is retrieved from the database.
-This usually leads to a key-value pair getting evicted from memcached.
+- Memcached is a RAM based key-value store
+- mostly used as a cache infront of a slow, disk based, backend database
+- A client queries the front end cache and if the query key is not found there, it is retrieved from the database.
+- This usually leads to a key-value pair getting evicted from memcached.
 
-The values corresponding to keys could be of different sizes (a few bytes for Facebook status messages, to a few kilobytes for cover photos),
-so memcached uses slab based allocation
-The RAM is divided into 1 MB sized pages and each page is divided into fixed size chunks (a chunk stores a value)
-The key-value store is organized as a hash table, using chaining for collision resolution.
-The eviction policy for the cache is LRU. The LRU policy is implemented by using a doubly linked list maintaining the LRU order.
+- The values corresponding to keys could be of different sizes (a few bytes for Facebook status messages, to a few kilobytes for cover photos),
+- so memcached uses slab based allocation
+- The RAM is divided into 1 MB sized pages and each page is divided into fixed size chunks (a chunk stores a value)
+- The key-value store is organized as a hash table, using chaining for collision resolution.
+- The eviction policy for the cache is LRU. The LRU policy is implemented by using a doubly linked list maintaining the LRU order.
 
-Stock memcached scales poorly to multicore processors because it was written for single core systems.
-A multi threaded version exists, but it uses global locks (every read or write must grab a mutex lock on the hash table as well and the LRU list).
-
-https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf
+- Stock memcached scales poorly to multicore processors because it was written for single core systems.
+- A multi threaded version exists, but it uses global locks (every read or write must grab a mutex lock on the hash table as well and the LRU list).
 
 
 **What is memcached?**
