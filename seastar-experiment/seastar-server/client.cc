@@ -28,6 +28,7 @@
 #include "core/semaphore.hh"
 #include "core/future-util.hh"
 #include <chrono>
+#include <time.h>
 
 using namespace seastar;
 
