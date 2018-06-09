@@ -1,4 +1,5 @@
 # DPDK Experiment
+Collections of DPDK experiments focused on proper implementation and performance evaluations.
 
 
 ### Prerequisites
