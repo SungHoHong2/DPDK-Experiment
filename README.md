@@ -26,7 +26,7 @@ Collections of DPDK experiments focused on proper implementation and performance
 ### Performance Test
 - [Implemented pingpong for DPDK](pingpong-experiment)
 - [Implemented pingpong for TCP](tcp-experiment)
-- [Implemented pingpong for PKTGEN](pktgen-experiment)
+- [Implemented pingpong for PKTGEN](common/pktgen-experiment)
 - [Comparing Official Performance Tests by Intel](Official_Performance_Test)
 - [F-Stack Performance Test](lf-stack-experiment)
     - testing fstack with wrk benchmark
