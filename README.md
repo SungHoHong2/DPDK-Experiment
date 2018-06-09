@@ -7,7 +7,6 @@ Collections of DPDK experiments focused on proper implementation and performance
 - [DPDK Dictionary](https://docs.google.com/document/d/1sOiMM1qw4DNYUfDTZYZ2L_ZUbv6R7lVD48AmClV51Mo/edit?usp=sharing)
 - [Related Papers](papers)
 
-<br>
 
 ### Common Features
 - [`helloworld` - allocating the pthreads for each logical cores](common/helloworld)
@@ -23,8 +22,6 @@ Collections of DPDK experiments focused on proper implementation and performance
   - finding out the reason why f-stack has trouble with distributing the packets
 - [Official DPDK Performance results](common/performance/README.md)
 
-
-<br>
 
 ### Performance Test
 - [Implemented pingpong for DPDK](pingpong-experiment)
