@@ -1292,9 +1292,7 @@ public:
                 return conn->_proto.handle(conn->_in, conn->_out).then([this, conn]() mutable {
                     return conn->_out.flush().then([this, conn] {
                         return conn->respond(_chan).then([conn] {
-
                             if(debugger == 1) std::cout << "udp" << "::" << "respond" << std::endl;
-
                         });
                     });
                 });
@@ -1341,7 +1339,7 @@ public:
     {}
 
     void start() {
-        if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::start" << std::endl;
+        if(debugger == 1) std::cout << __FUNCTION__ << "tcp_server::start" << std::endl;
         listen_options lo;
         lo.reuse_address = true;
         _listener = engine().listen(make_ipv4_address({_port}), lo);
@@ -1350,13 +1348,14 @@ public:
         if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::keep_doing" << std::endl;
         keep_doing([this] {
 
-            if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::accept" << std::endl;
+            if(debugger == 1) std::cout << "tcp_server" << "::" << "_listener.accept" << std::endl;
             return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
                 auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                 do_until([conn] { return conn->_in.eof(); }, [conn] {
                     return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
+                        if(debugger == 1) std::cout << "conn->out.flush()" << std::endl;
                         return conn->_out.flush();
                     });
                 }).finally([conn] {
