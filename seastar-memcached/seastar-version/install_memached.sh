@@ -2,10 +2,7 @@
 
 HOST_NAME=$(cat /etc/hostname)
 
-echo $HOST_NAME
-
-
-
+echo "compiling memcached in" $HOST_NAME
 
 #
 # if [ "$1" = "traditional" ]
