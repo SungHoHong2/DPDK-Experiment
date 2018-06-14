@@ -1,3 +1,4 @@
+#  sudocmd memcached_server traditional 1
 
 if [ "$1" = "traditional" ]
 then
