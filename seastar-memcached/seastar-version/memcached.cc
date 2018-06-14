@@ -31,6 +31,14 @@
 using namespace seastar;
 using namespace net;
 
+
+
+int debugger = 1;
+static void seastar_debugger(string args){
+    if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
+}
+
+
 namespace memcache {
 
 namespace bi = boost::intrusive;
@@ -40,11 +48,6 @@ static constexpr uint64_t default_slab_page_size = 1UL*MB;
 static constexpr uint64_t default_per_cpu_slab_size = 0UL; // zero means reclaimer is enabled.
 static __thread slab_allocator<item>* slab;
 
-
-int debugger = 1;
-static void seastar_debugger(string args){
-    if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
-}
 
 
 template<typename T>
