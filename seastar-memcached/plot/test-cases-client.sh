@@ -1,8 +1,8 @@
+cd /data1/sungho/libmemcached-1.0.18/clients
+
 # example
 # sudocmd memcached_client traditional 1 avg
 # sudocmd memcached_client traditional 1
-
-cd /data1/sungho/libmemcached-1.0.18/clients
 
 if [ "$1" = "traditional" ]
 then
