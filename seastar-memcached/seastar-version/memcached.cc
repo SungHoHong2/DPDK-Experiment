@@ -1394,7 +1394,7 @@ int main(int ac, char** av) {
     distributed<memcache::system_stats> system_stats;
     distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
-    memcache::stats_printer stats(cache);
+    // memcache::stats_printer stats(cache);
 
     namespace bpo = boost::program_options;
     app_template app;
@@ -1416,7 +1416,7 @@ int main(int ac, char** av) {
         engine().at_exit([&] { return tcp_server.stop(); });
         engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
-        engine().at_exit([&] { return system_stats.stop(); });
+        // engine().at_exit([&] { return system_stats.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
@@ -1441,7 +1441,8 @@ int main(int ac, char** av) {
         if(debugger == 1)
             std::cout << __TIME__ << "::" << "cache_peers START" << std::endl;
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
-            return system_stats.start(memcache::clock_type::now());
+            // return system_stats.start(memcache::clock_type::now());
+            return make_ready_future<>();
         }).then([&] {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();

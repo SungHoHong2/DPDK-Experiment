@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="1337" column="8" selection-start-line="1337" selection-start-column="8" selection-end-line="1337" selection-end-column="8" />
+            <state relative-caret-position="670">
+              <caret line="1444" column="21" selection-start-line="1444" selection-start-column="21" selection-end-line="1444" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -45,9 +45,10 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>cache_peers</find>
-      <find>distributed</find>
       <find>cache</find>
+      <find>distributed</find>
       <find>start</find>
+      <find>stats_printer</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -121,12 +122,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
-      <workItem from="1528964370449" duration="3310000" />
+      <workItem from="1528964370449" duration="3539000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3310000" />
+    <option name="totallyTimeSpent" value="3539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -176,8 +177,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="1337" column="8" selection-start-line="1337" selection-start-column="8" selection-end-line="1337" selection-end-column="8" />
+        <state relative-caret-position="670">
+          <caret line="1444" column="21" selection-start-line="1444" selection-start-column="21" selection-end-line="1444" selection-end-column="21" />
         </state>
       </provider>
     </entry>
