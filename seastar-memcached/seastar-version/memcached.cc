@@ -49,6 +49,20 @@ namespace memcache {
 
     using clock_type = lowres_clock;
 
+//
+// "Expiration" is a uint32_t value.
+// The minimal value of _time is when "expiration" is set to (seconds_in_a_month
+// + 1).
+// In this case _time will have a value of
+//
+// (seconds_in_a_month + 1 - Wall_Clock_Time_Since_Epoch)
+//
+// because lowres_clock now() initialized to zero when the application starts.
+//
+// We will use a timepoint at LLONG_MIN to represent a "never expire" value
+// since it will not collide with the minimum _time value mentioned above for
+// about 290 thousand years to come.
+//
     static constexpr clock_type::time_point never_expire_timepoint = clock_type::time_point(clock_type::duration::min());
 
     struct expiration {
@@ -62,8 +76,6 @@ namespace memcache {
 
         expiration(clock_type::duration wc_to_clock_type_delta, uint32_t s) {
             using namespace std::chrono;
-
-            if(debugger == 1) std::cout << "expiration" << "::" << "BEGIN" << std::endl;
 
             static_assert(sizeof(clock_type::duration::rep) >= 8, "clock_type::duration::rep must be at least 8 bytes wide");
 
@@ -128,8 +140,6 @@ namespace memcache {
                 , _key_size(key.key().size())
                 , _ascii_prefix_size(ascii_prefix.size())
         {
-
-            if(debugger == 1) std::cout << "item" << "::" << "BEGIN" << std::endl;
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
@@ -483,9 +493,6 @@ namespace memcache {
         {
             using namespace std::chrono;
 
-            if(debugger == 1) std::cout << "cache" << "::" << "BEGIN" << std::endl;
-
-
             _wc_to_clock_type_delta =
                     duration_cast<clock_type::duration>(clock_type::now().time_since_epoch() - system_clock::now().time_since_epoch());
 
@@ -711,9 +718,7 @@ namespace memcache {
             return std::hash<item_key>()(key) % smp::count;
         }
     public:
-        sharded_cache(distributed<cache>& peers) : _peers(peers) {
-            if(debugger == 1) std::cout << "sharded_cache" << "::" << "BEGIN" << std::endl;
-        }
+        sharded_cache(distributed<cache>& peers) : _peers(peers) {}
 
         future<> flush_all() {
             return _peers.invoke_on_all(&cache::flush_all);
@@ -807,14 +812,39 @@ namespace memcache {
         }
     };
 
-
-
-
+    struct system_stats {
+        uint32_t _curr_connections {};
+        uint32_t _total_connections {};
+        uint64_t _cmd_get {};
+        uint64_t _cmd_set {};
+        uint64_t _cmd_flush {};
+        clock_type::time_point _start_time;
+    public:
+        system_stats() {
+            _start_time = clock_type::time_point::max();
+        }
+        system_stats(clock_type::time_point start_time)
+                : _start_time(start_time) {
+        }
+        system_stats self() {
+            return *this;
+        }
+        void operator+=(const system_stats& other) {
+            _curr_connections += other._curr_connections;
+            _total_connections += other._total_connections;
+            _cmd_get += other._cmd_get;
+            _cmd_set += other._cmd_set;
+            _cmd_flush += other._cmd_flush;
+            _start_time = std::min(_start_time, other._start_time);
+        }
+        future<> stop() { return make_ready_future<>(); }
+    };
 
     class ascii_protocol {
     private:
         using this_type = ascii_protocol;
         sharded_cache& _cache;
+        distributed<system_stats>& _system_stats;
         memcache_ascii_parser _parser;
         item_key _item_key;
         item_insertion_data _insertion;
@@ -858,6 +888,7 @@ namespace memcache {
 
         template <bool WithVersion>
         future<> handle_get(output_stream<char>& out) {
+            _system_stats.local()._cmd_get++;
             if (_parser._keys.size() == 1) {
                 return _cache.get(_parser._keys[0]).then([&out] (auto item) -> future<> {
                     scattered_message<char> msg;
@@ -891,12 +922,93 @@ namespace memcache {
                     .then([&out] { return out.write(msg_crlf); });
         }
 
-    public:
-        ascii_protocol(sharded_cache& cache)
-                : _cache(cache)
-        {
-            if(debugger == 1) std::cout << "ascii_protocol" << "::" << "BEGIN" << std::endl;
+        future<> print_stats(output_stream<char>& out) {
+            return _cache.stats().then([this, &out] (auto stats) {
+                return _system_stats.map_reduce(adder<system_stats>(), &system_stats::self)
+                        .then([&out, all_cache_stats = std::move(stats)] (auto all_system_stats) -> future<> {
+                            auto now = clock_type::now();
+                            auto total_items = all_cache_stats._set_replaces + all_cache_stats._set_adds
+                                               + all_cache_stats._cas_hits;
+                            return print_stat(out, "pid", getpid())
+                                    .then([&out, uptime = now - all_system_stats._start_time] {
+                                        return print_stat(out, "uptime",
+                                                          std::chrono::duration_cast<std::chrono::seconds>(uptime).count());
+                                    }).then([now, &out] {
+                                return print_stat(out, "time",
+                                                  std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count());
+                            }).then([&out] {
+                                return print_stat(out, "version", VERSION_STRING);
+                            }).then([&out] {
+                                return print_stat(out, "pointer_size", sizeof(void*)*8);
+                            }).then([&out, v = all_system_stats._curr_connections] {
+                                return print_stat(out, "curr_connections", v);
+                            }).then([&out, v = all_system_stats._total_connections] {
+                                return print_stat(out, "total_connections", v);
+                            }).then([&out, v = all_system_stats._curr_connections] {
+                                return print_stat(out, "connection_structures", v);
+                            }).then([&out, v = all_system_stats._cmd_get] {
+                                return print_stat(out, "cmd_get", v);
+                            }).then([&out, v = all_system_stats._cmd_set] {
+                                return print_stat(out, "cmd_set", v);
+                            }).then([&out, v = all_system_stats._cmd_flush] {
+                                return print_stat(out, "cmd_flush", v);
+                            }).then([&out] {
+                                return print_stat(out, "cmd_touch", 0);
+                            }).then([&out, v = all_cache_stats._get_hits] {
+                                return print_stat(out, "get_hits", v);
+                            }).then([&out, v = all_cache_stats._get_misses] {
+                                return print_stat(out, "get_misses", v);
+                            }).then([&out, v = all_cache_stats._delete_misses] {
+                                return print_stat(out, "delete_misses", v);
+                            }).then([&out, v = all_cache_stats._delete_hits] {
+                                return print_stat(out, "delete_hits", v);
+                            }).then([&out, v = all_cache_stats._incr_misses] {
+                                return print_stat(out, "incr_misses", v);
+                            }).then([&out, v = all_cache_stats._incr_hits] {
+                                return print_stat(out, "incr_hits", v);
+                            }).then([&out, v = all_cache_stats._decr_misses] {
+                                return print_stat(out, "decr_misses", v);
+                            }).then([&out, v = all_cache_stats._decr_hits] {
+                                return print_stat(out, "decr_hits", v);
+                            }).then([&out, v = all_cache_stats._cas_misses] {
+                                return print_stat(out, "cas_misses", v);
+                            }).then([&out, v = all_cache_stats._cas_hits] {
+                                return print_stat(out, "cas_hits", v);
+                            }).then([&out, v = all_cache_stats._cas_badval] {
+                                return print_stat(out, "cas_badval", v);
+                            }).then([&out] {
+                                return print_stat(out, "touch_hits", 0);
+                            }).then([&out] {
+                                return print_stat(out, "touch_misses", 0);
+                            }).then([&out] {
+                                return print_stat(out, "auth_cmds", 0);
+                            }).then([&out] {
+                                return print_stat(out, "auth_errors", 0);
+                            }).then([&out] {
+                                return print_stat(out, "threads", smp::count);
+                            }).then([&out, v = all_cache_stats._size] {
+                                return print_stat(out, "curr_items", v);
+                            }).then([&out, v = total_items] {
+                                return print_stat(out, "total_items", v);
+                            }).then([&out, v = all_cache_stats._expired] {
+                                return print_stat(out, "seastar.expired", v);
+                            }).then([&out, v = all_cache_stats._resize_failure] {
+                                return print_stat(out, "seastar.resize_failure", v);
+                            }).then([&out, v = all_cache_stats._evicted] {
+                                return print_stat(out, "evictions", v);
+                            }).then([&out, v = all_cache_stats._bytes] {
+                                return print_stat(out, "bytes", v);
+                            }).then([&out] {
+                                return out.write(msg_end);
+                            });
+                        });
+            });
         }
+    public:
+        ascii_protocol(sharded_cache& cache, distributed<system_stats>& system_stats)
+                : _cache(cache)
+                , _system_stats(system_stats)
+        {}
 
         void prepare_insertion() {
             _insertion = item_insertion_data{
@@ -919,6 +1031,7 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_set:
                     {
+                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.set(_insertion);
                         if (_parser._noreply) {
@@ -931,6 +1044,7 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_cas:
                     {
+                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.cas(_insertion, _parser._version);
                         if (_parser._noreply) {
@@ -952,6 +1066,7 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_add:
                     {
+                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.add(_insertion);
                         if (_parser._noreply) {
@@ -964,6 +1079,7 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_replace:
                     {
+                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.replace(_insertion);
                         if (_parser._noreply) {
@@ -993,6 +1109,7 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_flush_all:
                     {
+                        _system_stats.local()._cmd_flush++;
                         if (_parser._expiration) {
                             auto f = _cache.flush_at(_parser._expiration);
                             if (_parser._noreply) {
@@ -1015,6 +1132,11 @@ namespace memcache {
                     case memcache_ascii_parser::state::cmd_version:
                         return out.write(msg_version);
 
+                    case memcache_ascii_parser::state::cmd_stats:
+                        return print_stats(out);
+
+                    case memcache_ascii_parser::state::cmd_stats_hash:
+                        return _cache.print_hash_stats(out);
 
                     case memcache_ascii_parser::state::cmd_incr:
                     {
@@ -1075,11 +1197,117 @@ namespace memcache {
         };
     };
 
+    class udp_server {
+    public:
+        static const size_t default_max_datagram_size = 1400;
+    private:
+        sharded_cache& _cache;
+        distributed<system_stats>& _system_stats;
+        udp_channel _chan;
+        uint16_t _port;
+        size_t _max_datagram_size = default_max_datagram_size;
+
+        struct header {
+            packed<uint16_t> _request_id;
+            packed<uint16_t> _sequence_number;
+            packed<uint16_t> _n;
+            packed<uint16_t> _reserved;
+
+            template<typename Adjuster>
+            auto adjust_endianness(Adjuster a) {
+                return a(_request_id, _sequence_number, _n);
+            }
+        } __attribute__((packed));
+
+        struct connection {
+            ipv4_addr _src;
+            uint16_t _request_id;
+            input_stream<char> _in;
+            output_stream<char> _out;
+            std::vector<packet> _out_bufs;
+            ascii_protocol _proto;
+
+            connection(ipv4_addr src, uint16_t request_id, input_stream<char>&& in, size_t out_size,
+                       sharded_cache& c, distributed<system_stats>& system_stats)
+                    : _src(src)
+                    , _request_id(request_id)
+                    , _in(std::move(in))
+                    , _out(output_stream<char>(data_sink(std::make_unique<vector_data_sink>(_out_bufs)), out_size, true))
+                    , _proto(c, system_stats)
+            {}
+
+            future<> respond(udp_channel& chan) {
+                int i = 0;
+                return do_for_each(_out_bufs.begin(), _out_bufs.end(), [this, i, &chan] (packet& p) mutable {
+                    header* out_hdr = p.prepend_header<header>(0);
+                    out_hdr->_request_id = _request_id;
+                    out_hdr->_sequence_number = i++;
+                    out_hdr->_n = _out_bufs.size();
+                    *out_hdr = hton(*out_hdr);
+                    return chan.send(_src, std::move(p));
+                });
+            }
+        };
+
+    public:
+        udp_server(sharded_cache& c, distributed<system_stats>& system_stats, uint16_t port = 11211)
+                : _cache(c)
+                , _system_stats(system_stats)
+                , _port(port)
+        {}
+
+        void set_max_datagram_size(size_t max_datagram_size) {
+            _max_datagram_size = max_datagram_size;
+        }
+
+        void start() {
+            _chan = engine().net().make_udp_channel({_port});
+            keep_doing([this] {
+                return _chan.receive().then([this](udp_datagram dgram) {
+
+                    if(debugger == 1) std::cout << "udp" << "::" << "receive" << std::endl;
+
+                    packet& p = dgram.get_data();
+                    if (p.len() < sizeof(header)) {
+                        // dropping invalid packet
+                        return make_ready_future<>();
+                    }
+
+                    header hdr = ntoh(*p.get_header<header>());
+                    p.trim_front(sizeof(hdr));
+
+                    auto request_id = hdr._request_id;
+                    auto in = as_input_stream(std::move(p));
+                    auto conn = make_lw_shared<connection>(dgram.get_src(), request_id, std::move(in),
+                                                           _max_datagram_size - sizeof(header), _cache, _system_stats);
+
+                    if (hdr._n != 1 || hdr._sequence_number != 0) {
+                        return conn->_out.write("CLIENT_ERROR only single-datagram requests supported\r\n").then([this, conn] {
+                            return conn->_out.flush().then([this, conn] {
+                                return conn->respond(_chan).then([conn] {});
+                            });
+                        });
+                    }
+
+                    return conn->_proto.handle(conn->_in, conn->_out).then([this, conn]() mutable {
+                        return conn->_out.flush().then([this, conn] {
+                            return conn->respond(_chan).then([conn] {
+                                if(debugger == 1) std::cout << "udp" << "::" << "respond" << std::endl;
+                            });
+                        });
+                    });
+                });
+            }).or_terminate();
+        };
+
+        future<> stop() { return make_ready_future<>(); }
+    };
 
     class tcp_server {
     private:
         lw_shared_ptr<server_socket> _listener;
         sharded_cache& _cache;
+        distributed<system_stats>& _system_stats;
         uint16_t _port;
         struct connection {
             connected_socket _socket;
@@ -1087,39 +1315,47 @@ namespace memcache {
             input_stream<char> _in;
             output_stream<char> _out;
             ascii_protocol _proto;
-            connection(connected_socket&& socket, socket_address addr, sharded_cache& c)
+            distributed<system_stats>& _system_stats;
+            connection(connected_socket&& socket, socket_address addr, sharded_cache& c, distributed<system_stats>& system_stats)
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
                     , _out(_socket.output())
+                    , _proto(c, system_stats)
+                    , _system_stats(system_stats)
             {
+                _system_stats.local()._curr_connections++;
+                _system_stats.local()._total_connections++;
             }
             ~connection() {
+                _system_stats.local()._curr_connections--;
             }
         };
     public:
-        tcp_server(sharded_cache& cache, uint16_t port = 11211)
+        tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
                 : _cache(cache)
+                , _system_stats(system_stats)
                 , _port(port)
-        {
-            if(debugger == 1) std::cout << "tcp_server" << "::" << "BEGIN" << std::endl;
-        }
+        {}
 
         void start() {
+            if(debugger == 1) std::cout << __FUNCTION__ << "tcp_server::start" << std::endl;
             listen_options lo;
             lo.reuse_address = true;
             _listener = engine().listen(make_ipv4_address({_port}), lo);
 
 
+            if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::keep_doing" << std::endl;
             keep_doing([this] {
 
+                if(debugger == 1) std::cout << "tcp_server" << "::" << "_listener.accept" << std::endl;
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
-                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache);
+                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
-                        sleep(1);
                         return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
+                            if(debugger == 1) std::cout << "conn->out.flush()" << std::endl;
                             return conn->_out.flush();
                         });
                     }).finally([conn] {
@@ -1132,40 +1368,84 @@ namespace memcache {
         future<> stop() { return make_ready_future<>(); }
     };
 
+    class stats_printer {
+    private:
+        timer<> _timer;
+        sharded_cache& _cache;
+    public:
+        stats_printer(sharded_cache& cache)
+                : _cache(cache) {}
+
+        void start() {
+            _timer.set_callback([this] {
+                _cache.stats().then([] (auto stats) {
+                    auto gets_total = stats._get_hits + stats._get_misses;
+                    auto get_hit_rate = gets_total ? ((double)stats._get_hits * 100 / gets_total) : 0;
+                    auto sets_total = stats._set_adds + stats._set_replaces;
+                    auto set_replace_rate = sets_total ? ((double)stats._set_replaces * 100/ sets_total) : 0;
+                    std::cout << "items: " << stats._size << " "
+                              << std::setprecision(2) << std::fixed
+                              << "get: " << stats._get_hits << "/" << gets_total << " (" << get_hit_rate << "%) "
+                              << "set: " << stats._set_replaces << "/" << sets_total << " (" <<  set_replace_rate << "%)";
+                    std::cout << std::endl;
+                });
+            });
+            _timer.arm_periodic(std::chrono::seconds(1));
+        }
+
+        future<> stop() { return make_ready_future<>(); }
+    };
+
 } /* namespace memcache */
-
-
-
 
 int main(int ac, char** av) {
 
-    if(debugger == 1) std::cout << "main" << "::" << "START" << std::endl;
-
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
+    distributed<memcache::system_stats> system_stats;
+    distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
 
     namespace bpo = boost::program_options;
     app_template app;
     app.add_options()
+            ("max-datagram-size", bpo::value<int>()->default_value(memcache::udp_server::default_max_datagram_size),
+             "Maximum size of UDP datagram")
             ("max-slab-size", bpo::value<uint64_t>()->default_value(memcache::default_per_cpu_slab_size/MB),
              "Maximum memory to be used for items (value in megabytes) (reclaimer is disabled if set)")
             ("slab-page-size", bpo::value<uint64_t>()->default_value(memcache::default_slab_page_size/MB),
              "Size of slab page (value in megabytes)")
-            ("stats",
-             "Print basic statistics periodically (every second)")
             ("port", bpo::value<uint16_t>()->default_value(11211),
              "Specify UDP and TCP ports for memcached server to listen on");
 
 
     return app.run_deprecated(ac, av, [&] {
         engine().at_exit([&] { return tcp_server.stop(); });
+        engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
+
+        if(debugger == 1)
+            std::cout << "main" << "::" << "port:" << port << std::endl;
+
+
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
+
+        if(debugger == 1)
+            std::cout << "main" << "::" << "per_cpu_slab_size:" << per_cpu_slab_size << std::endl;
+
+
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
+
+
+        if(debugger == 1)
+            std::cout << "main" << "::" << "slab_page_size:" << slab_page_size << std::endl;
+
+
+        if(debugger == 1)
+            std::cout << "main" << "::" << "cache_peers START" << std::endl;
 
 
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([] {
@@ -1174,14 +1454,26 @@ int main(int ac, char** av) {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
         }).then([&, port] {
-            return tcp_server.start(std::ref(cache), port);
+            if(debugger == 1) std::cout << "main" << "::" << "tcp_server START" << std::endl;
+            return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
+            if(debugger == 1) std::cout << "main" << "::" << "tcp_server.invoke_on_all START" << std::endl;
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
+        }).then([&, port] {
+            if (engine().net().has_per_core_namespace()) {
+                if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
+                return udp_server.start(std::ref(cache), std::ref(system_stats), port);
+            } else {
+                if(debugger == 1) std::cout << "main" << "::" << "udp_server::start_single START" << std::endl;
+                return udp_server.start_single(std::ref(cache), std::ref(system_stats), port);
+            }
+        }).then([&] {
+            if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
+            return udp_server.invoke_on_all(&memcache::udp_server::set_max_datagram_size,
+                                            (size_t)config["max-datagram-size"].as<int>());
+        }).then([&] {
+            if(debugger == 1)  std::cout << "main" << "::" << "udp_server.invoke_on_all START" << std::endl;
+            return udp_server.invoke_on_all(&memcache::udp_server::start);
         });
-
-
     });
-
-    if(debugger == 1) std::cout << "main" << "::" << "END" << std::endl;
-
 }
