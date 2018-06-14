@@ -1334,15 +1334,20 @@ public:
     {}
 
     void start() {
-
-
-
+        if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::start" << std::endl;
         listen_options lo;
         lo.reuse_address = true;
         _listener = engine().listen(make_ipv4_address({_port}), lo);
+
+
+        if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::keep_doing" << std::endl;
         keep_doing([this] {
+
+            if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::accept" << std::endl;
             return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
+
                 auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
+
                 do_until([conn] { return conn->_in.eof(); }, [conn] {
                     return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
                         return conn->_out.flush();
@@ -1416,7 +1421,7 @@ int main(int ac, char** av) {
         engine().at_exit([&] { return tcp_server.stop(); });
         engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
-        // engine().at_exit([&] { return system_stats.stop(); });
+        engine().at_exit([&] { return system_stats.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
@@ -1441,12 +1446,12 @@ int main(int ac, char** av) {
         if(debugger == 1)
             std::cout << __TIME__ << "::" << "cache_peers START" << std::endl;
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
-            // return system_stats.start(memcache::clock_type::now());
-            return make_ready_future<>();
+            return system_stats.start(memcache::clock_type::now());
         }).then([&] {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
         }).then([&, port] {
+            std::cout << __TIME__ << "::" << "tcp_server START" << std::endl;
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
