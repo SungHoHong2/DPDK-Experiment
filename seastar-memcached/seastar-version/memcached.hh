@@ -57,10 +57,5 @@ struct hash<memcache::item_key> {
 } /* namespace std */
 
 
-int debugger = 1;
-static void seastar_debugger(string args){
-    if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
-}
-
 
 #endif
