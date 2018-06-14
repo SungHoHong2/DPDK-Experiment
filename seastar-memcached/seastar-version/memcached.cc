@@ -1422,8 +1422,10 @@ int main(int ac, char** av) {
         uint16_t port = config["port"].as<uint16_t>();
 
 
-        std::string dargs="port: " + port;
-        seastar_debugger("howdy");
+
+        std::ostringstream s;
+        s << "port: " << port;
+        seastar_debugger(s.str);
 
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
