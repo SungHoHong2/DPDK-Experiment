@@ -1,5 +1,5 @@
 #  sudocmd seastar_memcached_exp
-
+cd /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version
 HOST_NAME=$(cat /etc/hostname)
 TARGET=memcached.cc
 
