@@ -1091,7 +1091,7 @@ namespace memcache {
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
-                    , _out(_socket.output()))
+                    , _out(_socket.output())
             {
             }
             ~connection() {
