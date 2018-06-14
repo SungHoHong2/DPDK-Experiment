@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="890">
-              <caret line="1265" lean-forward="true" selection-start-line="1265" selection-end-line="1265" />
+            <state relative-caret-position="687">
+              <caret line="936" column="50" lean-forward="true" selection-start-line="936" selection-start-column="50" selection-end-line="936" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -31,7 +31,7 @@
       <file leaf-file-name="0_memcached.cc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="-174">
               <caret line="814" selection-start-line="814" selection-end-line="840" selection-end-column="6" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
@@ -158,12 +158,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="1274000" />
+      <workItem from="1528989613942" duration="1518000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13176000" />
+    <option name="totallyTimeSpent" value="13420000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -227,7 +227,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
+        <state relative-caret-position="-174">
           <caret line="814" selection-start-line="814" selection-end-line="840" selection-end-column="6" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
@@ -254,8 +254,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
-          <caret line="1265" lean-forward="true" selection-start-line="1265" selection-end-line="1265" />
+        <state relative-caret-position="687">
+          <caret line="936" column="50" lean-forward="true" selection-start-line="936" selection-start-column="50" selection-end-line="936" selection-end-column="50" />
         </state>
       </provider>
     </entry>
