@@ -1016,10 +1016,6 @@ namespace memcache {
                         return out.write(msg_version);
 
 
-
-                    case memcache_ascii_parser::state::cmd_stats_hash:
-                        return _cache.print_hash_stats(out);
-
                     case memcache_ascii_parser::state::cmd_incr:
                     {
                         auto f = _cache.incr(_parser._key, _parser._u64);
@@ -1095,7 +1091,7 @@ namespace memcache {
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
-                    , _out(_socket.output())
+                    , _out(_socket.output()))
             {
             }
             ~connection() {

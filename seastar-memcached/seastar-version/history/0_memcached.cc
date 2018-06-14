@@ -1132,6 +1132,11 @@ namespace memcache {
                     case memcache_ascii_parser::state::cmd_version:
                         return out.write(msg_version);
 
+                    case memcache_ascii_parser::state::cmd_stats:
+                        return print_stats(out);
+
+                    case memcache_ascii_parser::state::cmd_stats_hash:
+                        return _cache.print_hash_stats(out);
 
                     case memcache_ascii_parser::state::cmd_incr:
                     {
@@ -1223,11 +1228,12 @@ namespace memcache {
             ascii_protocol _proto;
 
             connection(ipv4_addr src, uint16_t request_id, input_stream<char>&& in, size_t out_size,
-                       sharded_cache& c)
+                       sharded_cache& c, distributed<system_stats>& system_stats)
                     : _src(src)
                     , _request_id(request_id)
                     , _in(std::move(in))
-                    , _out(output_stream<char>(data_sink(std::make_unique<vector_data_sink>(_out_bufs)), out_size, true)))
+                    , _out(output_stream<char>(data_sink(std::make_unique<vector_data_sink>(_out_bufs)), out_size, true))
+                    , _proto(c, system_stats)
             {}
 
             future<> respond(udp_channel& chan) {
