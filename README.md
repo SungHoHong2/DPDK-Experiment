@@ -19,7 +19,6 @@ Collections of DPDK experiments focused on proper implementation and performance
 - [`MTU experiment`](common/MTU-experiment)
 - [Factors influencing network performance](factor-performance)
 - [Experiment on `RSS`](common/RSS)
-  - finding out the reason why f-stack has trouble with distributing the packets
 - [Official DPDK Performance results](common/performance/README.md)
 
 
@@ -27,11 +26,7 @@ Collections of DPDK experiments focused on proper implementation and performance
 - [Implemented pingpong for DPDK](pingpong-experiment)
 - [Implemented pingpong for TCP](tcp-experiment)
 - [Implemented pingpong for PKTGEN](common/pktgen-experiment)
-- [Comparing Official Performance Tests by Intel](Official_Performance_Test)
-- [F-Stack Performance Test](lf-stack-experiment)
-    - testing fstack with wrk benchmark
-    - testing tcp epolling with wrk benchmark
-    - in depth interpretation on how epolling works
+- [F-Stack Performance Test](f-stack-experiment)
 - [Seastar Experiment](seastar-experiment)
-- [DPDK-ANS Performance Test](dpdk_ans_experiment)
-- [Seastar-memcached Performance Test](seastar-memcached)
+- [DPDK-ANS Experiments](dpdk_ans_experiment)
+- [Seastar-memcached Experiments](seastar-memcached)
