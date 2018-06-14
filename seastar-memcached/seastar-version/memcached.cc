@@ -31,6 +31,8 @@
 using namespace seastar;
 using namespace net;
 
+static int debugger = 1;
+
 namespace memcache {
 
     namespace bi = boost::intrusive;
@@ -1393,6 +1395,8 @@ namespace memcache {
 
 int main(int ac, char** av) {
 
+    if(debugger == 1) std::cout << "main" << "::" << "START" << std::endl;
+
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
     distributed<memcache::system_stats> system_stats;
@@ -1442,21 +1446,11 @@ int main(int ac, char** av) {
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
-        }).then([&, port] {
-            if (engine().net().has_per_core_namespace()) {
-                return udp_server.start(std::ref(cache), std::ref(system_stats), port);
-            } else {
-                return udp_server.start_single(std::ref(cache), std::ref(system_stats), port);
-            }
-        }).then([&] {
-            return udp_server.invoke_on_all(&memcache::udp_server::set_max_datagram_size,
-                                            (size_t)config["max-datagram-size"].as<int>());
-        }).then([&] {
-            return udp_server.invoke_on_all(&memcache::udp_server::start);
-        }).then([&stats, start_stats = config.count("stats")] {
-            if (start_stats) {
-                stats.start();
-            }
         });
+        
+
     });
+
+    if(debugger == 1) std::cout << "main" << "::" << "END" << std::endl;
+
 }
