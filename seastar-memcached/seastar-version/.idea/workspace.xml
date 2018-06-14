@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="1199" column="1" selection-start-line="1199" selection-start-column="1" selection-end-line="1199" selection-end-column="1" />
+            <state relative-caret-position="536">
+              <caret line="1159" column="21" lean-forward="true" selection-start-line="1159" selection-start-column="21" selection-end-line="1159" selection-end-column="21" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
                 <element signature="e#10557#10569#0" expanded="true" />
@@ -156,12 +156,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="2792000" />
+      <workItem from="1528989613942" duration="2811000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14694000" />
+    <option name="totallyTimeSpent" value="14713000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -282,8 +282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="1199" column="1" selection-start-line="1199" selection-start-column="1" selection-end-line="1199" selection-end-column="1" />
+        <state relative-caret-position="536">
+          <caret line="1159" column="21" lean-forward="true" selection-start-line="1159" selection-start-column="21" selection-end-line="1159" selection-end-column="21" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
