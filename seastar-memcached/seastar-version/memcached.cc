@@ -32,6 +32,11 @@ using namespace seastar;
 using namespace net;
 
 
+static int debugger = 1;
+static void seastar_debugger(std::string args){
+    if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
+}
+
 
 namespace memcache {
 
