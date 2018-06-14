@@ -1211,13 +1211,13 @@ namespace memcache {
             output_stream<char> _out;
             ascii_protocol _proto;
             distributed<system_stats>& _system_stats;
+
             connection(connected_socket&& socket, socket_address addr, sharded_cache& c, distributed<system_stats>& system_stats)
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
                     , _out(_socket.output())
                     , _proto(c, system_stats)
-                    , _system_stats(system_stats)
             {
                 _system_stats.local()._curr_connections++;
                 _system_stats.local()._total_connections++;
@@ -1229,24 +1229,22 @@ namespace memcache {
     public:
         tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
                 : _cache(cache)
-                , _system_stats(system_stats)
+                // , _system_stats(system_stats)
                 , _port(port)
         {}
 
         void start() {
-            if(debugger == 1) std::cout << __FUNCTION__ << "tcp_server::start" << std::endl;
             listen_options lo;
             lo.reuse_address = true;
             _listener = engine().listen(make_ipv4_address({_port}), lo);
 
 
-            if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::keep_doing" << std::endl;
             keep_doing([this] {
 
-                if(debugger == 1) std::cout << "tcp_server" << "::" << "_listener.accept" << std::endl;
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
-                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
+                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache);
+                    // auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
                         return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
