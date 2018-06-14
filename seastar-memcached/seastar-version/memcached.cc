@@ -1235,7 +1235,33 @@ namespace memcache {
 } /* namespace memcache */
 
 
-
+struct system_stats {
+    uint32_t _curr_connections {};
+    uint32_t _total_connections {};
+    uint64_t _cmd_get {};
+    uint64_t _cmd_set {};
+    uint64_t _cmd_flush {};
+    clock_type::time_point _start_time;
+public:
+    system_stats() {
+        _start_time = clock_type::time_point::max();
+    }
+    system_stats(clock_type::time_point start_time)
+            : _start_time(start_time) {
+    }
+    system_stats self() {
+        return *this;
+    }
+    void operator+=(const system_stats& other) {
+        _curr_connections += other._curr_connections;
+        _total_connections += other._total_connections;
+        _cmd_get += other._cmd_get;
+        _cmd_set += other._cmd_set;
+        _cmd_flush += other._cmd_flush;
+        _start_time = std::min(_start_time, other._start_time);
+    }
+    future<> stop() { return make_ready_future<>(); }
+};
 
 
 int main(int ac, char** av) {
