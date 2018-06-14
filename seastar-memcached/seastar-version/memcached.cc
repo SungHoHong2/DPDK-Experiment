@@ -1197,111 +1197,6 @@ namespace memcache {
         };
     };
 
-    class udp_server {
-    public:
-        static const size_t default_max_datagram_size = 1400;
-    private:
-        sharded_cache& _cache;
-        distributed<system_stats>& _system_stats;
-        udp_channel _chan;
-        uint16_t _port;
-        size_t _max_datagram_size = default_max_datagram_size;
-
-        struct header {
-            packed<uint16_t> _request_id;
-            packed<uint16_t> _sequence_number;
-            packed<uint16_t> _n;
-            packed<uint16_t> _reserved;
-
-            template<typename Adjuster>
-            auto adjust_endianness(Adjuster a) {
-                return a(_request_id, _sequence_number, _n);
-            }
-        } __attribute__((packed));
-
-        struct connection {
-            ipv4_addr _src;
-            uint16_t _request_id;
-            input_stream<char> _in;
-            output_stream<char> _out;
-            std::vector<packet> _out_bufs;
-            ascii_protocol _proto;
-
-            connection(ipv4_addr src, uint16_t request_id, input_stream<char>&& in, size_t out_size,
-                       sharded_cache& c, distributed<system_stats>& system_stats)
-                    : _src(src)
-                    , _request_id(request_id)
-                    , _in(std::move(in))
-                    , _out(output_stream<char>(data_sink(std::make_unique<vector_data_sink>(_out_bufs)), out_size, true))
-                    , _proto(c, system_stats)
-            {}
-
-            future<> respond(udp_channel& chan) {
-                int i = 0;
-                return do_for_each(_out_bufs.begin(), _out_bufs.end(), [this, i, &chan] (packet& p) mutable {
-                    header* out_hdr = p.prepend_header<header>(0);
-                    out_hdr->_request_id = _request_id;
-                    out_hdr->_sequence_number = i++;
-                    out_hdr->_n = _out_bufs.size();
-                    *out_hdr = hton(*out_hdr);
-                    return chan.send(_src, std::move(p));
-                });
-            }
-        };
-
-    public:
-        udp_server(sharded_cache& c, distributed<system_stats>& system_stats, uint16_t port = 11211)
-                : _cache(c)
-                , _system_stats(system_stats)
-                , _port(port)
-        {}
-
-        void set_max_datagram_size(size_t max_datagram_size) {
-            _max_datagram_size = max_datagram_size;
-        }
-
-        void start() {
-            _chan = engine().net().make_udp_channel({_port});
-            keep_doing([this] {
-                return _chan.receive().then([this](udp_datagram dgram) {
-
-                    if(debugger == 1) std::cout << "udp" << "::" << "receive" << std::endl;
-
-                    packet& p = dgram.get_data();
-                    if (p.len() < sizeof(header)) {
-                        // dropping invalid packet
-                        return make_ready_future<>();
-                    }
-
-                    header hdr = ntoh(*p.get_header<header>());
-                    p.trim_front(sizeof(hdr));
-
-                    auto request_id = hdr._request_id;
-                    auto in = as_input_stream(std::move(p));
-                    auto conn = make_lw_shared<connection>(dgram.get_src(), request_id, std::move(in),
-                                                           _max_datagram_size - sizeof(header), _cache, _system_stats);
-
-                    if (hdr._n != 1 || hdr._sequence_number != 0) {
-                        return conn->_out.write("CLIENT_ERROR only single-datagram requests supported\r\n").then([this, conn] {
-                            return conn->_out.flush().then([this, conn] {
-                                return conn->respond(_chan).then([conn] {});
-                            });
-                        });
-                    }
-
-                    return conn->_proto.handle(conn->_in, conn->_out).then([this, conn]() mutable {
-                        return conn->_out.flush().then([this, conn] {
-                            return conn->respond(_chan).then([conn] {
-                                if(debugger == 1) std::cout << "udp" << "::" << "respond" << std::endl;
-                            });
-                        });
-                    });
-                });
-            }).or_terminate();
-        };
-
-        future<> stop() { return make_ready_future<>(); }
-    };
 
     class tcp_server {
     private:
@@ -1403,14 +1298,11 @@ int main(int ac, char** av) {
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
     distributed<memcache::system_stats> system_stats;
-    distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
 
     namespace bpo = boost::program_options;
     app_template app;
     app.add_options()
-            ("max-datagram-size", bpo::value<int>()->default_value(memcache::udp_server::default_max_datagram_size),
-             "Maximum size of UDP datagram")
             ("max-slab-size", bpo::value<uint64_t>()->default_value(memcache::default_per_cpu_slab_size/MB),
              "Maximum memory to be used for items (value in megabytes) (reclaimer is disabled if set)")
             ("slab-page-size", bpo::value<uint64_t>()->default_value(memcache::default_slab_page_size/MB),
@@ -1421,32 +1313,12 @@ int main(int ac, char** av) {
 
     return app.run_deprecated(ac, av, [&] {
         engine().at_exit([&] { return tcp_server.stop(); });
-        engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "port:" << port << std::endl;
-
-
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "per_cpu_slab_size:" << per_cpu_slab_size << std::endl;
-
-
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
-
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "slab_page_size:" << slab_page_size << std::endl;
-
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "cache_peers START" << std::endl;
-
 
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([] {
             return make_ready_future<>();
@@ -1454,26 +1326,9 @@ int main(int ac, char** av) {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
         }).then([&, port] {
-            if(debugger == 1) std::cout << "main" << "::" << "tcp_server START" << std::endl;
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
-            if(debugger == 1) std::cout << "main" << "::" << "tcp_server.invoke_on_all START" << std::endl;
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
-        }).then([&, port] {
-            if (engine().net().has_per_core_namespace()) {
-                if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
-                return udp_server.start(std::ref(cache), std::ref(system_stats), port);
-            } else {
-                if(debugger == 1) std::cout << "main" << "::" << "udp_server::start_single START" << std::endl;
-                return udp_server.start_single(std::ref(cache), std::ref(system_stats), port);
-            }
-        }).then([&] {
-            if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
-            return udp_server.invoke_on_all(&memcache::udp_server::set_max_datagram_size,
-                                            (size_t)config["max-datagram-size"].as<int>());
-        }).then([&] {
-            if(debugger == 1)  std::cout << "main" << "::" << "udp_server.invoke_on_all START" << std::endl;
-            return udp_server.invoke_on_all(&memcache::udp_server::start);
         });
     });
 }
