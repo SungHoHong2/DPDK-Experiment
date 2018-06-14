@@ -1015,8 +1015,7 @@ namespace memcache {
                     case memcache_ascii_parser::state::cmd_version:
                         return out.write(msg_version);
 
-                    case memcache_ascii_parser::state::cmd_stats:
-                        return print_stats(out);
+
 
                     case memcache_ascii_parser::state::cmd_stats_hash:
                         return _cache.print_hash_stats(out);
@@ -1092,19 +1091,18 @@ namespace memcache {
             input_stream<char> _in;
             output_stream<char> _out;
             ascii_protocol _proto;
-            connection(connected_socket&& socket, socket_address addr, sharded_cache& c, distributed<system_stats>& system_stats)
+            connection(connected_socket&& socket, socket_address addr, sharded_cache& c)
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
                     , _out(_socket.output())
-                    , _proto(c, system_stats)
             {
             }
             ~connection() {
             }
         };
     public:
-        tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
+        tcp_server(sharded_cache& cache, uint16_t port = 11211)
                 : _cache(cache)
                 , _port(port)
         {
@@ -1149,7 +1147,6 @@ int main(int ac, char** av) {
 
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
-    distributed<memcache::system_stats> system_stats;
     distributed<memcache::tcp_server> tcp_server;
 
     namespace bpo = boost::program_options;
@@ -1168,7 +1165,6 @@ int main(int ac, char** av) {
     return app.run_deprecated(ac, av, [&] {
         engine().at_exit([&] { return tcp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
-        engine().at_exit([&] { return system_stats.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
@@ -1176,13 +1172,13 @@ int main(int ac, char** av) {
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
 
 
-        return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
-            return system_stats.start(memcache::clock_type::now());
+        return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([] {
+            return make_ready_future<>();
         }).then([&] {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
         }).then([&, port] {
-            return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
+            return tcp_server.start(std::ref(cache), port);
         }).then([&tcp_server] {
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
         });
