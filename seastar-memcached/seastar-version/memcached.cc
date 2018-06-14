@@ -32,9 +32,6 @@ using namespace seastar;
 using namespace net;
 
 static int debugger = 1;
-static void seastar_debugger(std::string args){
-    if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
-}
 
 namespace memcache {
 
@@ -1337,6 +1334,9 @@ public:
     {}
 
     void start() {
+
+
+
         listen_options lo;
         lo.reuse_address = true;
         _listener = engine().listen(make_ipv4_address({_port}), lo);
@@ -1421,19 +1421,25 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
 
-
-
-        std::ostringstream s;
-        s << "port: " << port;
-        seastar_debugger(s.str);
+        if(debugger == 1)
+            std::cout << __TIME__ << "::" << "port:" << port << std::endl;
 
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
+
+        if(debugger == 1)
+            std::cout << __TIME__ << "::" << "per_cpu_slab_size:" << per_cpu_slab_size << std::endl;
 
 
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
 
 
+        if(debugger == 1)
+            std::cout << __TIME__ << "::" << "slab_page_size:" << slab_page_size << std::endl;
+
+
+        if(debugger == 1)
+            std::cout << __TIME__ << "::" << "cache_peers START" << std::endl;
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
             return system_stats.start(memcache::clock_type::now());
         }).then([&] {

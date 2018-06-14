@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="1428" lean-forward="true" selection-start-line="1428" selection-end-line="1428" />
+            <state relative-caret-position="388">
+              <caret line="1337" column="8" selection-start-line="1337" selection-start-column="8" selection-end-line="1337" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -31,7 +31,7 @@
       <file leaf-file-name="memcached.hh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memcached.hh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
+            <state relative-caret-position="869">
               <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
               <folding>
                 <element signature="e#909#911#0" expanded="true" />
@@ -41,6 +41,14 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>cache_peers</find>
+      <find>distributed</find>
+      <find>cache</find>
+      <find>start</find>
+    </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -113,12 +121,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
-      <workItem from="1528964370449" duration="2096000" />
+      <workItem from="1528964370449" duration="3310000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2096000" />
+    <option name="totallyTimeSpent" value="3310000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -127,13 +135,13 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -158,7 +166,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
+        <state relative-caret-position="869">
           <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
           <folding>
             <element signature="e#909#911#0" expanded="true" />
@@ -168,8 +176,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="1428" lean-forward="true" selection-start-line="1428" selection-end-line="1428" />
+        <state relative-caret-position="388">
+          <caret line="1337" column="8" selection-start-line="1337" selection-start-column="8" selection-end-line="1337" selection-end-column="8" />
         </state>
       </provider>
     </entry>
