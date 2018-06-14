@@ -1265,7 +1265,6 @@ public:
         keep_doing([this] {
             return _chan.receive().then([this](udp_datagram dgram) {
 
-                if(debugger == 1) std::cout << "udp" << "::" << "receive" << std::endl;
 
                 packet& p = dgram.get_data();
                 if (p.len() < sizeof(header)) {
@@ -1292,7 +1291,6 @@ public:
                 return conn->_proto.handle(conn->_in, conn->_out).then([this, conn]() mutable {
                     return conn->_out.flush().then([this, conn] {
                         return conn->respond(_chan).then([conn] {
-                            if(debugger == 1) std::cout << "udp" << "::" << "respond" << std::endl;
                         });
                     });
                 });
@@ -1339,26 +1337,20 @@ public:
     {}
 
     void start() {
-        if(debugger == 1) std::cout << __FUNCTION__ << "tcp_server::start" << std::endl;
         listen_options lo;
         lo.reuse_address = true;
         _listener = engine().listen(make_ipv4_address({_port}), lo);
 
 
-        if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::keep_doing" << std::endl;
         keep_doing([this] {
 
-            if(debugger == 1) std::cout << "tcp_server" << "::" << "_listener.accept" << std::endl;
             return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
-                if(debugger == 1) std::cout << "conn = make_lw_shared" << std::endl;
                 auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                 do_until([conn] { return conn->_in.eof(); }, [conn] {
                         sleep(1);
-                    if(debugger == 1) std::cout << "do_until()" << std::endl;
                     return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
-                        if(debugger == 1) std::cout << "conn->out.flush()" << std::endl;
                         return conn->_out.flush();
                     });
                 }).finally([conn] {
@@ -1434,26 +1426,9 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
 
-        if(debugger == 1)
-            std::cout << "main" << "::" << "port:" << port << std::endl;
-
-
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
 
-        if(debugger == 1)
-            std::cout << "main" << "::" << "per_cpu_slab_size:" << per_cpu_slab_size << std::endl;
-
-
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
-
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "slab_page_size:" << slab_page_size << std::endl;
-
-
-        if(debugger == 1)
-            std::cout << "main" << "::" << "cache_peers START" << std::endl;
-
 
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
             return system_stats.start(memcache::clock_type::now());
@@ -1461,25 +1436,19 @@ int main(int ac, char** av) {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
         }).then([&, port] {
-            if(debugger == 1) std::cout << "main" << "::" << "tcp_server START" << std::endl;
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
-            if(debugger == 1) std::cout << "main" << "::" << "tcp_server.invoke_on_all START" << std::endl;
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
         }).then([&, port] {
             if (engine().net().has_per_core_namespace()) {
-                if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
                 return udp_server.start(std::ref(cache), std::ref(system_stats), port);
             } else {
-                if(debugger == 1) std::cout << "main" << "::" << "udp_server::start_single START" << std::endl;
                 return udp_server.start_single(std::ref(cache), std::ref(system_stats), port);
             }
         }).then([&] {
-            if(debugger == 1) std::cout << "main" << "::" << "udp_server START" << std::endl;
             return udp_server.invoke_on_all(&memcache::udp_server::set_max_datagram_size,
                     (size_t)config["max-datagram-size"].as<int>());
         }).then([&] {
-            if(debugger == 1)  std::cout << "main" << "::" << "udp_server.invoke_on_all START" << std::endl;
             return udp_server.invoke_on_all(&memcache::udp_server::start);
         }).then([&stats, start_stats = config.count("stats")] {
             if (start_stats) {
