@@ -1354,6 +1354,8 @@ public:
                 auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                 do_until([conn] { return conn->_in.eof(); }, [conn] {
+                        sleep(1);
+                    if(debugger == 1) std::cout << "do_until()" << std::endl;
                     return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
                         if(debugger == 1) std::cout << "conn->out.flush()" << std::endl;
                         return conn->_out.flush();
