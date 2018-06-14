@@ -1,25 +1,3 @@
-/*
- * This file is open source software, licensed to you under the terms
- * of the Apache License, Version 2.0 (the "License").  See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership.  You may not use this file except in compliance with the License.
- *
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-/*
- * Copyright 2014-2015 Cloudius Systems
- */
-
-
 #include <boost/intrusive/unordered_set.hpp>
 #include <boost/intrusive/list.hpp>
 #include <boost/intrusive_ptr.hpp>
@@ -48,6 +26,8 @@
 #define PLATFORM "seastar"
 #define VERSION "v1.0"
 #define VERSION_STRING PLATFORM " " VERSION
+
+static int debugging;
 
 using namespace seastar;
 using namespace net;
@@ -1402,6 +1382,9 @@ public:
 } /* namespace memcache */
 
 int main(int ac, char** av) {
+    debugging=1;
+    if(debugging == 1) std::cout << __TIME__ << __FUNCTION__ << "BEGIN" << std::endl;
+
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
     distributed<memcache::system_stats> system_stats;
@@ -1424,6 +1407,7 @@ int main(int ac, char** av) {
              "Specify UDP and TCP ports for memcached server to listen on")
         ;
 
+
     return app.run_deprecated(ac, av, [&] {
         engine().at_exit([&] { return tcp_server.stop(); });
         engine().at_exit([&] { return udp_server.stop(); });
@@ -1432,8 +1416,18 @@ int main(int ac, char** av) {
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
+
+        if(debugging == 1) std::cout << "port" << port << std::endl;
+
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
+
+        if(debugging == 1) std::cout << "per_cpu_slab_size" << per_cpu_slab_size << std::endl;
+
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
+
+        if(debugging == 1) std::cout << "slab_page_size" << slab_page_size << std::endl;
+
+
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
             return system_stats.start(memcache::clock_type::now());
         }).then([&] {
