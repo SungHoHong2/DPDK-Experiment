@@ -1334,16 +1334,16 @@ public:
     {}
 
     void start() {
-        if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::start" << std::endl;
+        if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::start" << std::endl;
         listen_options lo;
         lo.reuse_address = true;
         _listener = engine().listen(make_ipv4_address({_port}), lo);
 
 
-        if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::keep_doing" << std::endl;
+        if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::keep_doing" << std::endl;
         keep_doing([this] {
 
-            if(debugger == 1) std::cout << __TIME__ << "::" << "tcp_server::accept" << std::endl;
+            if(debugger == 1) std::cout << __FUNCTION__ << "::" << "tcp_server::accept" << std::endl;
             return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
                 auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
