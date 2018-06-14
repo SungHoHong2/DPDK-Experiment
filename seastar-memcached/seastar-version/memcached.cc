@@ -27,7 +27,6 @@
 #define VERSION "v1.0"
 #define VERSION_STRING PLATFORM " " VERSION
 
-static int debugging;
 
 using namespace seastar;
 using namespace net;
@@ -1382,8 +1381,6 @@ public:
 } /* namespace memcache */
 
 int main(int ac, char** av) {
-    debugging=1;
-    if(debugging == 1) std::cout << __TIME__ << __FUNCTION__ << "BEGIN" << std::endl;
 
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
