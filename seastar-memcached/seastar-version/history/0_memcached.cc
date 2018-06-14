@@ -1132,9 +1132,6 @@ namespace memcache {
                     case memcache_ascii_parser::state::cmd_version:
                         return out.write(msg_version);
 
-                    case memcache_ascii_parser::state::cmd_stats:
-                        return print_stats(out);
-
                     case memcache_ascii_parser::state::cmd_stats_hash:
                         return _cache.print_hash_stats(out);
 
