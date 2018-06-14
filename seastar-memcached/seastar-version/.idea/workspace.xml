@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="1199" column="1" selection-start-line="1199" selection-start-column="1" selection-end-line="1199" selection-end-column="1" />
+            <state relative-caret-position="361">
+              <caret line="925" column="68" selection-start-line="925" selection-start-column="68" selection-end-line="925" selection-end-column="68" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
                 <element signature="e#10557#10569#0" expanded="true" />
@@ -77,6 +77,7 @@
       <find>udp</find>
       <find>system_stats</find>
       <find>_system_stats</find>
+      <find>print_stats</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -157,12 +158,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="3216000" />
+      <workItem from="1528989613942" duration="3348000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15118000" />
+    <option name="totallyTimeSpent" value="15250000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -197,7 +198,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/memcached.cc</url>
-          <line>1319</line>
+          <line>1315</line>
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="1" />
@@ -283,8 +284,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="1199" column="1" selection-start-line="1199" selection-start-column="1" selection-end-line="1199" selection-end-column="1" />
+        <state relative-caret-position="361">
+          <caret line="925" column="68" selection-start-line="925" selection-start-column="68" selection-end-line="925" selection-end-column="68" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
