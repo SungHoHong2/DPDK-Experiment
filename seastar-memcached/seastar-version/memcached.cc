@@ -952,7 +952,6 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_add:
                     {
-                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.add(_insertion);
                         if (_parser._noreply) {
@@ -965,7 +964,6 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_replace:
                     {
-                        _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.replace(_insertion);
                         if (_parser._noreply) {
@@ -995,7 +993,6 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_flush_all:
                     {
-                        _system_stats.local()._cmd_flush++;
                         if (_parser._expiration) {
                             auto f = _cache.flush_at(_parser._expiration);
                             if (_parser._noreply) {
@@ -1088,7 +1085,6 @@ namespace memcache {
     private:
         lw_shared_ptr<server_socket> _listener;
         sharded_cache& _cache;
-        distributed<system_stats>& _system_stats;
         uint16_t _port;
         struct connection {
             connected_socket _socket;
@@ -1096,26 +1092,20 @@ namespace memcache {
             input_stream<char> _in;
             output_stream<char> _out;
             ascii_protocol _proto;
-            distributed<system_stats>& _system_stats;
             connection(connected_socket&& socket, socket_address addr, sharded_cache& c, distributed<system_stats>& system_stats)
                     : _socket(std::move(socket))
                     , _addr(addr)
                     , _in(_socket.input())
                     , _out(_socket.output())
                     , _proto(c, system_stats)
-                    , _system_stats(system_stats)
             {
-                _system_stats.local()._curr_connections++;
-                _system_stats.local()._total_connections++;
             }
             ~connection() {
-                _system_stats.local()._curr_connections--;
             }
         };
     public:
         tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
                 : _cache(cache)
-                , _system_stats(system_stats)
                 , _port(port)
         {
             if(debugger == 1) std::cout << "tcp_server" << "::" << "BEGIN" << std::endl;
@@ -1131,7 +1121,7 @@ namespace memcache {
 
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
-                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
+                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache);
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
                         sleep(1);
