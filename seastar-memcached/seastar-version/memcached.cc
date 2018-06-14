@@ -34,7 +34,7 @@ using namespace net;
 
 
 int debugger = 1;
-static void seastar_debugger(string args){
+static void seastar_debugger(std::string args){
     if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
 }
 
