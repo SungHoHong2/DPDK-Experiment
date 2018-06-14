@@ -31,12 +31,10 @@
 using namespace seastar;
 using namespace net;
 
-
 static int debugger = 1;
 static void seastar_debugger(std::string args){
     if(debugger == 1) std::cout << __TIME__ << "::" << __FUNCTION__  << "::" << args << std::endl;
 }
-
 
 namespace memcache {
 
@@ -1425,7 +1423,7 @@ int main(int ac, char** av) {
 
 
         std::string dargs="port: " + port;
-        seastar_debugger(dargs);
+        seastar_debugger("howdy");
 
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
