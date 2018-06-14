@@ -1414,7 +1414,9 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
 
-        seastar_debugger("port: " + port);
+
+        string dargs="port: " + port;
+        seastar_debugger(dargs);
 
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
