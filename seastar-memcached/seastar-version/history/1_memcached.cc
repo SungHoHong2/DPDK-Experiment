@@ -1408,6 +1408,7 @@ int main(int ac, char** av) {
     distributed<memcache::system_stats> system_stats;
     distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
+    memcache::stats_printer stats(cache);
 
     namespace bpo = boost::program_options;
     app_template app;
@@ -1428,6 +1429,7 @@ int main(int ac, char** av) {
         engine().at_exit([&] { return tcp_server.stop(); });
         engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
+        engine().at_exit([&] { return system_stats.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
