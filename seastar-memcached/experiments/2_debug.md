@@ -1,11 +1,30 @@
 ### Where the data transmission start
 - TCP_SERVER class starts the connection and then send the data
 - when server class is running it brings up the `sharded_cache struct` which is the logic for memcached
--
 
 
 
 ```c++
+
+struct expiration {
+
+};
+
+
+class item : public slab_item_base {
+};
+
+class cache {
+};
+
+
+class sharded_cache {
+};
+
+class ascii_protocol {
+};
+
+
 class tcp_server {
   lw_shared_ptr<server_socket> _listener;
   sharded_cache& _cache;
@@ -29,7 +48,7 @@ class tcp_server {
       ~connection() {
         _system_stats.local()._curr_connections--;
       }
-  }
+  };
 
   tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
   : _cache(cache)
@@ -48,9 +67,9 @@ class tcp_server {
                         }
                 }
         }
-  }
+  };
 
-} // end of tcp_server class
+};  // end of tcp_server class
 
 class sharded_cache {
     future<bool> set(item_insertion_data& insertion) {
@@ -59,8 +78,7 @@ class sharded_cache {
 
 
 
-
-}
+};
 
 
 ```

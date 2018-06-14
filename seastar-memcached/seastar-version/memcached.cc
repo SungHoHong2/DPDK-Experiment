@@ -49,20 +49,6 @@ namespace memcache {
 
     using clock_type = lowres_clock;
 
-//
-// "Expiration" is a uint32_t value.
-// The minimal value of _time is when "expiration" is set to (seconds_in_a_month
-// + 1).
-// In this case _time will have a value of
-//
-// (seconds_in_a_month + 1 - Wall_Clock_Time_Since_Epoch)
-//
-// because lowres_clock now() initialized to zero when the application starts.
-//
-// We will use a timepoint at LLONG_MIN to represent a "never expire" value
-// since it will not collide with the minimum _time value mentioned above for
-// about 290 thousand years to come.
-//
     static constexpr clock_type::time_point never_expire_timepoint = clock_type::time_point(clock_type::duration::min());
 
     struct expiration {
@@ -1260,35 +1246,11 @@ namespace memcache {
         future<> stop() { return make_ready_future<>(); }
     };
 
-    class stats_printer {
-    private:
-        timer<> _timer;
-        sharded_cache& _cache;
-    public:
-        stats_printer(sharded_cache& cache)
-                : _cache(cache) {}
-
-        void start() {
-            _timer.set_callback([this] {
-                _cache.stats().then([] (auto stats) {
-                    auto gets_total = stats._get_hits + stats._get_misses;
-                    auto get_hit_rate = gets_total ? ((double)stats._get_hits * 100 / gets_total) : 0;
-                    auto sets_total = stats._set_adds + stats._set_replaces;
-                    auto set_replace_rate = sets_total ? ((double)stats._set_replaces * 100/ sets_total) : 0;
-                    std::cout << "items: " << stats._size << " "
-                              << std::setprecision(2) << std::fixed
-                              << "get: " << stats._get_hits << "/" << gets_total << " (" << get_hit_rate << "%) "
-                              << "set: " << stats._set_replaces << "/" << sets_total << " (" <<  set_replace_rate << "%)";
-                    std::cout << std::endl;
-                });
-            });
-            _timer.arm_periodic(std::chrono::seconds(1));
-        }
-
-        future<> stop() { return make_ready_future<>(); }
-    };
-
 } /* namespace memcache */
+
+
+
+
 
 int main(int ac, char** av) {
 
@@ -1298,7 +1260,6 @@ int main(int ac, char** av) {
     memcache::sharded_cache cache(cache_peers);
     distributed<memcache::system_stats> system_stats;
     distributed<memcache::tcp_server> tcp_server;
-    memcache::stats_printer stats(cache);
 
     namespace bpo = boost::program_options;
     app_template app;
