@@ -1419,7 +1419,7 @@ int main(int ac, char** av) {
         uint16_t port = config["port"].as<uint16_t>();
 
 
-        string dargs="port: " + port;
+        std::string dargs="port: " + port;
         seastar_debugger(dargs);
 
 
