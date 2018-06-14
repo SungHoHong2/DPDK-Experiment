@@ -936,9 +936,75 @@ namespace memcache {
                                     }).then([now, &out] {
                                 return print_stat(out, "time",
                                                   std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count());
+                            }).then([&out] {
+                                return print_stat(out, "version", VERSION_STRING);
+                            }).then([&out] {
+                                return print_stat(out, "pointer_size", sizeof(void*)*8);
+                            }).then([&out, v = all_system_stats._curr_connections] {
+                                return print_stat(out, "curr_connections", v);
+                            }).then([&out, v = all_system_stats._total_connections] {
+                                return print_stat(out, "total_connections", v);
+                            }).then([&out, v = all_system_stats._curr_connections] {
+                                return print_stat(out, "connection_structures", v);
+                            }).then([&out, v = all_system_stats._cmd_get] {
+                                return print_stat(out, "cmd_get", v);
+                            }).then([&out, v = all_system_stats._cmd_set] {
+                                return print_stat(out, "cmd_set", v);
+                            }).then([&out, v = all_system_stats._cmd_flush] {
+                                return print_stat(out, "cmd_flush", v);
+                            }).then([&out] {
+                                return print_stat(out, "cmd_touch", 0);
+                            }).then([&out, v = all_cache_stats._get_hits] {
+                                return print_stat(out, "get_hits", v);
+                            }).then([&out, v = all_cache_stats._get_misses] {
+                                return print_stat(out, "get_misses", v);
+                            }).then([&out, v = all_cache_stats._delete_misses] {
+                                return print_stat(out, "delete_misses", v);
+                            }).then([&out, v = all_cache_stats._delete_hits] {
+                                return print_stat(out, "delete_hits", v);
+                            }).then([&out, v = all_cache_stats._incr_misses] {
+                                return print_stat(out, "incr_misses", v);
+                            }).then([&out, v = all_cache_stats._incr_hits] {
+                                return print_stat(out, "incr_hits", v);
+                            }).then([&out, v = all_cache_stats._decr_misses] {
+                                return print_stat(out, "decr_misses", v);
+                            }).then([&out, v = all_cache_stats._decr_hits] {
+                                return print_stat(out, "decr_hits", v);
+                            }).then([&out, v = all_cache_stats._cas_misses] {
+                                return print_stat(out, "cas_misses", v);
+                            }).then([&out, v = all_cache_stats._cas_hits] {
+                                return print_stat(out, "cas_hits", v);
+                            }).then([&out, v = all_cache_stats._cas_badval] {
+                                return print_stat(out, "cas_badval", v);
+                            }).then([&out] {
+                                return print_stat(out, "touch_hits", 0);
+                            }).then([&out] {
+                                return print_stat(out, "touch_misses", 0);
+                            }).then([&out] {
+                                return print_stat(out, "auth_cmds", 0);
+                            }).then([&out] {
+                                return print_stat(out, "auth_errors", 0);
+                            }).then([&out] {
+                                return print_stat(out, "threads", smp::count);
+                            }).then([&out, v = all_cache_stats._size] {
+                                return print_stat(out, "curr_items", v);
+                            }).then([&out, v = total_items] {
+                                return print_stat(out, "total_items", v);
+                            }).then([&out, v = all_cache_stats._expired] {
+                                return print_stat(out, "seastar.expired", v);
+                            }).then([&out, v = all_cache_stats._resize_failure] {
+                                return print_stat(out, "seastar.resize_failure", v);
+                            }).then([&out, v = all_cache_stats._evicted] {
+                                return print_stat(out, "evictions", v);
+                            }).then([&out, v = all_cache_stats._bytes] {
+                                return print_stat(out, "bytes", v);
+                            }).then([&out] {
+                                return out.write(msg_end);
                             });
+                        });
             });
         }
+
     public:
         ascii_protocol(sharded_cache& cache, distributed<system_stats>& system_stats)
                 : _cache(cache)
