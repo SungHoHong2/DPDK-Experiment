@@ -3,6 +3,10 @@ cd /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version
 HOST_NAME=$(cat /etc/hostname)
 TARGET=memcached
 
+echo "github update check"
+git pull origin master
+
+
 echo "compiling memcached in" $HOST_NAME
 
 if [ "$HOST_NAME" = "c3n24" ]
