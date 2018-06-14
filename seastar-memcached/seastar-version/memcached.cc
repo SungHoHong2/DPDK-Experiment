@@ -1414,16 +1414,12 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
 
-        if(debugging == 1) std::cout << "port" << port << std::endl;
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
 
-        if(debugging == 1) std::cout << "per_cpu_slab_size" << per_cpu_slab_size << std::endl;
 
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
-
-        if(debugging == 1) std::cout << "slab_page_size" << slab_page_size << std::endl;
-
+        
 
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
             return system_stats.start(memcache::clock_type::now());
