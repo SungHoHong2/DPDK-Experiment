@@ -19,5 +19,5 @@ rm -f *.o
 elif [ "$HOST_NAME" = "c3n25" ]
 then
 cd /data1/sungho/libmemcached-1.0.18/clients
-/data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 10s
+/data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
 fi
