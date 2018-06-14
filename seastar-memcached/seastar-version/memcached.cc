@@ -1243,8 +1243,7 @@ namespace memcache {
 
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
-                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache);
-                    // auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
+                    auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
                         return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
