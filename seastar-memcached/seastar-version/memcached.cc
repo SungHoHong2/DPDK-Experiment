@@ -1414,12 +1414,14 @@ int main(int ac, char** av) {
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
 
+        seastar_debugger("port: " + port);
+
 
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
 
 
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
-        
+
 
         return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
             return system_stats.start(memcache::clock_type::now());
