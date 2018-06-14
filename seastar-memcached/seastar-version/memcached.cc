@@ -63,6 +63,8 @@ namespace memcache {
         expiration(clock_type::duration wc_to_clock_type_delta, uint32_t s) {
             using namespace std::chrono;
 
+            if(debugger == 1) std::cout << "expiration" << "::" << "BEGIN" << std::endl;
+
             static_assert(sizeof(clock_type::duration::rep) >= 8, "clock_type::duration::rep must be at least 8 bytes wide");
 
             if (s == 0U) {
@@ -126,6 +128,8 @@ namespace memcache {
                 , _key_size(key.key().size())
                 , _ascii_prefix_size(ascii_prefix.size())
         {
+
+            if(debugger == 1) std::cout << "item" << "::" << "BEGIN" << std::endl;
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
@@ -479,6 +483,9 @@ namespace memcache {
         {
             using namespace std::chrono;
 
+            if(debugger == 1) std::cout << "cache" << "::" << "BEGIN" << std::endl;
+
+
             _wc_to_clock_type_delta =
                     duration_cast<clock_type::duration>(clock_type::now().time_since_epoch() - system_clock::now().time_since_epoch());
 
@@ -704,7 +711,9 @@ namespace memcache {
             return std::hash<item_key>()(key) % smp::count;
         }
     public:
-        sharded_cache(distributed<cache>& peers) : _peers(peers) {}
+        sharded_cache(distributed<cache>& peers) : _peers(peers) {
+            if(debugger == 1) std::cout << "sharded_cache" << "::" << "BEGIN" << std::endl;
+        }
 
         future<> flush_all() {
             return _peers.invoke_on_all(&cache::flush_all);
@@ -798,33 +807,6 @@ namespace memcache {
         }
     };
 
-    struct system_stats {
-        uint32_t _curr_connections {};
-        uint32_t _total_connections {};
-        uint64_t _cmd_get {};
-        uint64_t _cmd_set {};
-        uint64_t _cmd_flush {};
-        clock_type::time_point _start_time;
-    public:
-        system_stats() {
-            _start_time = clock_type::time_point::max();
-        }
-        system_stats(clock_type::time_point start_time)
-                : _start_time(start_time) {
-        }
-        system_stats self() {
-            return *this;
-        }
-        void operator+=(const system_stats& other) {
-            _curr_connections += other._curr_connections;
-            _total_connections += other._total_connections;
-            _cmd_get += other._cmd_get;
-            _cmd_set += other._cmd_set;
-            _cmd_flush += other._cmd_flush;
-            _start_time = std::min(_start_time, other._start_time);
-        }
-        future<> stop() { return make_ready_future<>(); }
-    };
 
     class ascii_protocol {
     private:
@@ -994,7 +976,9 @@ namespace memcache {
         ascii_protocol(sharded_cache& cache, distributed<system_stats>& system_stats)
                 : _cache(cache)
                 , _system_stats(system_stats)
-        {}
+        {
+            if(debugger == 1) std::cout << "ascii_protocol" << "::" << "BEGIN" << std::endl;
+        }
 
         void prepare_insertion() {
             _insertion = item_insertion_data{
@@ -1217,7 +1201,9 @@ namespace memcache {
                 : _cache(cache)
                 , _system_stats(system_stats)
                 , _port(port)
-        {}
+        {
+            if(debugger == 1) std::cout << "tcp_server" << "::" << "BEGIN" << std::endl;
+        }
 
         void start() {
             listen_options lo;

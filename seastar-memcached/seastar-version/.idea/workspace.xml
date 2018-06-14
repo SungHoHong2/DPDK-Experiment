@@ -18,12 +18,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="1270" column="21" lean-forward="true" selection-start-line="1270" selection-start-column="21" selection-end-line="1270" selection-end-column="21" />
+            <state relative-caret-position="428">
+              <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -68,8 +68,8 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="756" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="721" />
     <option name="y" value="-1080" />
     <option name="width" value="1920" />
     <option name="height" value="1080" />
@@ -79,6 +79,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -95,7 +96,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -127,33 +127,34 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
-      <workItem from="1528964370449" duration="11261000" />
+      <workItem from="1528964370449" duration="11902000" />
+      <workItem from="1528989613942" duration="1185000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11261000" />
+    <option name="totallyTimeSpent" value="13087000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
+    <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1703125" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,6 +164,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/memcached.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23142">
+          <caret line="1218" column="29" lean-forward="true" selection-start-line="1218" selection-start-column="29" selection-end-line="1218" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/install_memached.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -182,8 +190,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="1450" column="8" lean-forward="true" selection-start-line="1450" selection-start-column="8" selection-end-line="1450" selection-end-column="25" />
+        <state relative-caret-position="324">
+          <caret line="1449" lean-forward="true" selection-start-line="1449" selection-end-line="1451" selection-end-column="76" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
@@ -209,8 +217,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="604">
-          <caret line="1270" column="21" lean-forward="true" selection-start-line="1270" selection-start-column="21" selection-end-line="1270" selection-end-column="21" />
+        <state relative-caret-position="428">
+          <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
         </state>
       </provider>
     </entry>

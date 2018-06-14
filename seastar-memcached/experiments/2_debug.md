@@ -3,7 +3,6 @@
 - when server class is running it brings up the `sharded_cache struct` which is the logic for memcached
 
 
-
 ```c++
 
 struct expiration {
