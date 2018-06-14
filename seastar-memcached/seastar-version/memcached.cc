@@ -1399,7 +1399,7 @@ int main(int ac, char** av) {
     distributed<memcache::system_stats> system_stats;
     distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
-    // memcache::stats_printer stats(cache);
+    memcache::stats_printer stats(cache);
 
     namespace bpo = boost::program_options;
     app_template app;
