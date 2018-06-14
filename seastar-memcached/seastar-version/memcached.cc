@@ -1479,10 +1479,6 @@ int main(int ac, char** av) {
         }).then([&] {
             if(debugger == 1)  std::cout << "main" << "::" << "udp_server.invoke_on_all START" << std::endl;
             return udp_server.invoke_on_all(&memcache::udp_server::start);
-        }).then([&stats, start_stats = config.count("stats")] {
-            if (start_stats) {
-                stats.start();
-            }
         });
     });
 }
