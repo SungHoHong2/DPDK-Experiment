@@ -13,7 +13,6 @@ then
     ./memaslap -s 10.107.30.33:11211 -T $2 -S 1s -t 10s
     fi
 
-
 elif [ "$1" = "seastar" ]
 then
     if [ "$3" = "avg" ]

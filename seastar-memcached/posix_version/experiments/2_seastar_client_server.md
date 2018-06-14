@@ -1,7 +1,0 @@
-### Seastar Client and Server
-
-```
-
-
-
-```

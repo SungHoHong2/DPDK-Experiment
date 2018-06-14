@@ -1,4 +1,5 @@
 #  sudocmd memcached_server traditional 1
+#  sudocmd memcached_server seastar 1
 
 if [ "$1" = "traditional" ]
 then
