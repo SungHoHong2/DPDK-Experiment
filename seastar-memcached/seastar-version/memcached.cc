@@ -1151,13 +1151,16 @@ namespace memcache {
             return in.consume(_parser).then([this, &out] () -> future<> {
                 switch (_parser._state) {
                     case memcache_ascii_parser::state::eof:
+                        std::cout << "ascii_protocol::state::eof" << std::endl;
                         return make_ready_future<>();
 
                     case memcache_ascii_parser::state::error:
+                        std::cout << "ascii_protocol::state::error" << std::endl;
                         return out.write(msg_error);
 
                     case memcache_ascii_parser::state::cmd_set:
                     {
+                        std::cout << "ascii_protocol::state::cmd_set" << std::endl;
                         _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.set(_insertion);
@@ -1171,6 +1174,8 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_cas:
                     {
+                        std::cout << "ascii_protocol::state::cmd_cas" << std::endl;
+
                         _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.cas(_insertion, _parser._version);
@@ -1193,6 +1198,9 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_add:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_add" << std::endl;
+
                         _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.add(_insertion);
@@ -1206,6 +1214,9 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_replace:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_replace" << std::endl;
+
                         _system_stats.local()._cmd_set++;
                         prepare_insertion();
                         auto f = _cache.replace(_insertion);
@@ -1218,13 +1229,21 @@ namespace memcache {
                     }
 
                     case memcache_ascii_parser::state::cmd_get:
+
+                        std::cout << "ascii_protocol::state::cmd_get" << std::endl;
+
                         return handle_get<false>(out);
 
                     case memcache_ascii_parser::state::cmd_gets:
+                        std::cout << "ascii_protocol::state::cmd_gets" << std::endl;
+
                         return handle_get<true>(out);
 
                     case memcache_ascii_parser::state::cmd_delete:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_delete" << std::endl;
+
                         auto f = _cache.remove(_parser._key);
                         if (_parser._noreply) {
                             return std::move(f).discard_result();
@@ -1236,6 +1255,9 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_flush_all:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_flush_all" << std::endl;
+
                         _system_stats.local()._cmd_flush++;
                         if (_parser._expiration) {
                             auto f = _cache.flush_at(_parser._expiration);
@@ -1257,16 +1279,24 @@ namespace memcache {
                     }
 
                     case memcache_ascii_parser::state::cmd_version:
+                        std::cout << "ascii_protocol::state::cmd_version" << std::endl;
+
                         return out.write(msg_version);
 
                     case memcache_ascii_parser::state::cmd_stats:
+                        std::cout << "ascii_protocol::state::cmd_stats" << std::endl;
                         return print_stats(out);
 
                     case memcache_ascii_parser::state::cmd_stats_hash:
+                        std::cout << "ascii_protocol::state::cmd_stats_hash" << std::endl;
+
                         return _cache.print_hash_stats(out);
 
                     case memcache_ascii_parser::state::cmd_incr:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_incr" << std::endl;
+
                         auto f = _cache.incr(_parser._key, _parser._u64);
                         if (_parser._noreply) {
                             return std::move(f).discard_result();
@@ -1288,6 +1318,9 @@ namespace memcache {
 
                     case memcache_ascii_parser::state::cmd_decr:
                     {
+
+                        std::cout << "ascii_protocol::state::cmd_decr" << std::endl;
+
                         auto f = _cache.decr(_parser._key, _parser._u64);
                         if (_parser._noreply) {
                             return std::move(f).discard_result();
@@ -1365,19 +1398,25 @@ namespace memcache {
             lo.reuse_address = true;
             _listener = engine().listen(make_ipv4_address({_port}), lo);
 
-
+            std::cout << "tcp_server::start" << std::endl;
+            
             keep_doing([this] {
 
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
 
+                    std::cout << "tcp_server::accept" << std::endl;
                     auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
+                    std::cout << "tcp_server::make_lw_shared" << std::endl;
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
                         sleep(1);
+                        std::cout << "tcp_server::conn->_proto.handle" << std::endl;
                         return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
+                            std::cout << "tcp_server::conn->_out.flush" << std::endl;
                             return conn->_out.flush();
                         });
                     }).finally([conn] {
+                        std::cout << "tcp_server::_out.close()" << std::endl;
                         return conn->_out.close().finally([conn]{});
                     });
                 });
