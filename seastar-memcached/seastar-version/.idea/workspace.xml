@@ -22,14 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="365" column="11" selection-start-line="365" selection-start-column="11" selection-end-line="365" selection-end-column="11" />
-              <folding>
-                <element signature="e#11379#11894#0" expanded="true" />
-                <element signature="e#11943#12014#0" expanded="true" />
-                <element signature="e#16191#16353#0" expanded="true" />
-                <element signature="e#30501#30517#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="80">
+              <caret line="363" column="8" selection-start-line="363" selection-start-column="8" selection-end-line="363" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -37,8 +31,8 @@
       <file leaf-file-name="0_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="1286" column="26" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
+            <state relative-caret-position="-2600">
+              <caret line="1305" column="22" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
                 <element signature="e#10557#10569#0" expanded="true" />
@@ -186,12 +180,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="13858000" />
+      <workItem from="1528989613942" duration="14117000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25760000" />
+    <option name="totallyTimeSpent" value="26019000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -231,12 +225,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23142">
           <caret line="1218" column="29" lean-forward="true" selection-start-line="1218" selection-start-column="29" selection-end-line="1218" selection-end-column="29" />
-          <folding>
-            <element signature="e#11379#11894#0" expanded="true" />
-            <element signature="e#11943#12014#0" expanded="true" />
-            <element signature="e#16191#16353#0" expanded="true" />
-            <element signature="e#30501#30517#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -263,21 +251,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="365" column="11" selection-start-line="365" selection-start-column="11" selection-end-line="365" selection-end-column="11" />
-          <folding>
-            <element signature="e#11379#11894#0" expanded="true" />
-            <element signature="e#11943#12014#0" expanded="true" />
-            <element signature="e#16191#16353#0" expanded="true" />
-            <element signature="e#30501#30517#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="80">
+          <caret line="363" column="8" selection-start-line="363" selection-start-column="8" selection-end-line="363" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="1286" column="26" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
+        <state relative-caret-position="-2600">
+          <caret line="1305" column="22" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />

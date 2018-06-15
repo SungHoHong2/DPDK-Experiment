@@ -1,4 +1,4 @@
-FILENAME=2_memcached
+FILENAME=1_memaslap
 
 if [ "$1" = "memcached_update" ]
 then
@@ -10,10 +10,13 @@ cp history/$FILENAME.cc memcached.cc
 
 elif [ "$1" = "memaslap_update" ]
 then
-# cp memaslap/io.cc /data1/sungho/libmemcached-1.0.18/libmemcached/io.cc
-# cp memaslap/memaslap.c /data1/sungho/libmemcached-1.0.18/clients/memaslap.c
+mkdir history/$FILENAME
+cp memaslap/io.cc history/$FILENAME/io.cc
+cp memaslap/memaslap.c history/$FILENAME/memaslap.c
 
-
-
+elif [ "$1" = "memaslap_recover" ]
+then
+cp history/$FILENAME/io.cc io.cc
+cp history/$FILENAME/memaslap.c memaslap.c
 
 fi
