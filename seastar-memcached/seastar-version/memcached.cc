@@ -1298,8 +1298,6 @@ int main(int ac, char** av) {
     namespace bpo = boost::program_options;
     app_template app;
     app.add_options()
-            ("max-datagram-size", bpo::value<int>()->default_value(memcache::udp_server::default_max_datagram_size),
-             "Maximum size of UDP datagram")
             ("max-slab-size", bpo::value<uint64_t>()->default_value(memcache::default_per_cpu_slab_size/MB),
              "Maximum memory to be used for items (value in megabytes) (reclaimer is disabled if set)")
             ("slab-page-size", bpo::value<uint64_t>()->default_value(memcache::default_slab_page_size/MB),
