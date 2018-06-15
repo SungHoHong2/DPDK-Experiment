@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="142" column="50" lean-forward="true" selection-start-line="142" selection-start-column="50" selection-end-line="142" selection-end-column="50" />
+            <state relative-caret-position="27">
+              <caret line="264" column="52" selection-start-line="264" selection-start-column="52" selection-end-line="264" selection-end-column="52" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
                 <element signature="e#10557#10569#0" expanded="true" />
@@ -60,7 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>accept</find>
       <find>invoke_on_all</find>
       <find>__TIME</find>
       <find>start</find>
@@ -90,6 +89,7 @@
       <find>cout &lt;&lt;</find>
       <find>debugger</find>
       <find>ITEM initialize</find>
+      <find>local_is_initialized</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -170,12 +170,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="4540000" />
+      <workItem from="1528989613942" duration="4662000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16442000" />
+    <option name="totallyTimeSpent" value="16564000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -210,7 +210,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/memcached.cc</url>
-          <line>1334</line>
+          <line>1320</line>
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="1" />
@@ -293,8 +293,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="142" column="50" lean-forward="true" selection-start-line="142" selection-start-column="50" selection-end-line="142" selection-end-column="50" />
+        <state relative-caret-position="27">
+          <caret line="264" column="52" selection-start-line="264" selection-start-column="52" selection-end-line="264" selection-end-column="52" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
