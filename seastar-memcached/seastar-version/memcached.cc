@@ -140,7 +140,7 @@ namespace memcache {
                 , _ascii_prefix_size(ascii_prefix.size())
         {
 
-            cout << "ITEM initialize" << endl;
+            std::cout << "ITEM initialize" << std::endl;
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
