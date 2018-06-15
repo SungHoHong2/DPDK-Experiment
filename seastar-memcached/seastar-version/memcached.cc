@@ -157,49 +157,51 @@ namespace memcache {
         item(item&&) = delete;
 
         clock_type::time_point get_timeout() {
-            debugging.debug("item::get_timeout");
+            std::cout << "item::get_timeout" << std::endl;
             return _expiry.to_time_point();
         }
 
         version_type version() {
-            debugging.debug("item::version");
+            std::cout << "item::version" << std::endl;
             return _version;
         }
 
         const std::experimental::string_view key() const {
-            debugging.debug("item::key");
+            std::cout << "item::key" << std::endl;
             return std::experimental::string_view(_data, _key_size);
         }
 
         const std::experimental::string_view ascii_prefix() const {
-            debugging.debug("item::ascii_prefix");
+            std::cout << "item::ascii_prefix" << std::endl;
             const char *p = _data + align_up(_key_size, field_alignment);
             return std::experimental::string_view(p, _ascii_prefix_size);
         }
 
         const std::experimental::string_view value() const {
-            debugging.debug("item::value");
+            std::cout << "item::value" << std::endl;
             const char *p = _data + align_up(_key_size, field_alignment) +
                             align_up(_ascii_prefix_size, field_alignment);
             return std::experimental::string_view(p, _value_size);
         }
 
         size_t key_size() const {
-            debugging.debug("item::key_size");
+            std::cout << "item::key_size" << std::endl;
             return _key_size;
         }
 
         size_t ascii_prefix_size() const {
-            debugging.debug("item::ascii_prefix_size");
+            std::cout << "item::ascii_prefix_size" << std::endl;
             return _ascii_prefix_size;
         }
 
         size_t value_size() const {
-            debugging.debug("item::value_size");
+            std::cout << "item::value_size" << std::endl;
             return _value_size;
         }
 
         optional<uint64_t> data_as_integral() {
+            std::cout << "item::data_as_integral" << std::endl;
+
             auto str = value().data();
             if (str[0] == '-') {
                 return {};
@@ -221,14 +223,18 @@ namespace memcache {
 
         // needed by timer_set
         bool cancel() {
+            std::cout << "item::cancel" << std::endl;
             return false;
         }
 
         // Methods required by slab allocator.
         uint32_t get_slab_page_index() const {
+            std::cout << "item::get_slab_page_index" << std::endl;
             return _slab_page_index;
         }
         bool is_unlocked() const {
+            std::cout << "item::is_unlocked" << std::endl;
+
             return _ref_count == 1;
         }
 
@@ -251,6 +257,7 @@ namespace memcache {
         }
 
         friend inline void intrusive_ptr_release(item* it) {
+            std::cout << "item::intrusive_ptr_release" << std::endl;
             --it->_ref_count;
             if (it->_ref_count == 1) {
                 slab->unlock_item(it);
@@ -267,6 +274,7 @@ namespace memcache {
     {
     private:
         bool compare(const item_key& key, const item& it) const {
+            std::cout << "item::compare" << std::endl;
             return (it._key_hash == key.hash()) &&
                    (it._key_size == key.key().size()) &&
                    (memcmp(it._data, key.key().c_str(), it._key_size) == 0);
@@ -403,6 +411,10 @@ namespace memcache {
 
         template <bool IsInCache = true, bool IsInTimerList = true, bool Release = true>
         void erase(item& item_ref) {
+
+
+            std::cout << "cache::erase" << std::endl;
+
             if (IsInCache) {
                 _cache.erase(_cache.iterator_to(item_ref));
             }
@@ -419,6 +431,8 @@ namespace memcache {
         }
 
         void expire() {
+            std::cout << "cache::expire" << std::endl;
+
             using namespace std::chrono;
 
             //
@@ -440,12 +454,16 @@ namespace memcache {
 
         inline
         cache_iterator find(const item_key& key) {
+            std::cout << "cache::find" << std::endl;
             return _cache.find(key, std::hash<item_key>(), item_key_cmp());
         }
 
         template <typename Origin>
         inline
         cache_iterator add_overriding(cache_iterator i, item_insertion_data& insertion) {
+            std::cout << "cache::add_overriding" << std::endl;
+
+
             auto& old_item = *i;
             uint64_t old_item_version = old_item._version;
 
@@ -468,6 +486,8 @@ namespace memcache {
         template <typename Origin>
         inline
         void add_new(item_insertion_data& insertion) {
+            std::cout << "cache::add_new" << std::endl;
+
             size_t size = item_size(insertion);
             auto new_item = slab->create(size, Origin::move_if_local(insertion.key), Origin::move_if_local(insertion.ascii_prefix),
                                          Origin::move_if_local(insertion.data), insertion.expiry);
@@ -482,6 +502,9 @@ namespace memcache {
         }
 
         void maybe_rehash() {
+
+            std::cout << "cache::maybe_rehash" << std::endl;
+
             if (_cache.size() >= _resize_up_threshold) {
                 auto new_size = _cache.bucket_count() * 2;
                 auto old_buckets = _buckets;
@@ -501,6 +524,9 @@ namespace memcache {
                 : _buckets(new cache_type::bucket_type[initial_bucket_count])
                 , _cache(cache_type::bucket_traits(_buckets, initial_bucket_count))
         {
+
+            std::cout << "cache::cache" << std::endl;
+
             using namespace std::chrono;
 
             _wc_to_clock_type_delta =
@@ -526,6 +552,8 @@ namespace memcache {
         }
 
         void flush_all() {
+            std::cout << "cache::flush_all" << std::endl;
+
             _flush_timer.cancel();
             _cache.erase_and_dispose(_cache.begin(), _cache.end(), [this] (item* it) {
                 erase<false, true>(*it);
@@ -533,12 +561,17 @@ namespace memcache {
         }
 
         void flush_at(uint32_t time) {
+            std::cout << "cache::flush_at" << std::endl;
+
             auto expiry = expiration(get_wc_to_clock_type_delta(), time);
             _flush_timer.rearm(expiry.to_time_point());
         }
 
         template <typename Origin = local_origin_tag>
         bool set(item_insertion_data& insertion) {
+
+            std::cout << "cache::set" << std::endl;
+
             auto i = find(insertion.key);
             if (i != _cache.end()) {
                 add_overriding<Origin>(i, insertion);
@@ -553,6 +586,10 @@ namespace memcache {
 
         template <typename Origin = local_origin_tag>
         bool add(item_insertion_data& insertion) {
+
+            std::cout << "cache::add" << std::endl;
+
+
             auto i = find(insertion.key);
             if (i != _cache.end()) {
                 return false;
@@ -565,6 +602,9 @@ namespace memcache {
 
         template <typename Origin = local_origin_tag>
         bool replace(item_insertion_data& insertion) {
+
+            std::cout << "cache::replace" << std::endl;
+
             auto i = find(insertion.key);
             if (i == _cache.end()) {
                 return false;
@@ -576,6 +616,9 @@ namespace memcache {
         }
 
         bool remove(const item_key& key) {
+
+            std::cout << "cache::remove" << std::endl;
+
             auto i = find(key);
             if (i == _cache.end()) {
                 _stats._delete_misses++;
@@ -588,6 +631,10 @@ namespace memcache {
         }
 
         item_ptr get(const item_key& key) {
+
+            std::cout << "cache::get" << std::endl;
+
+
             auto i = find(key);
             if (i == _cache.end()) {
                 _stats._get_misses++;
@@ -600,6 +647,9 @@ namespace memcache {
 
         template <typename Origin = local_origin_tag>
         cas_result cas(item_insertion_data& insertion, item::version_type version) {
+
+            std::cout << "cache::cas" << std::endl;
+
             auto i = find(insertion.key);
             if (i == _cache.end()) {
                 _stats._cas_misses++;
@@ -616,20 +666,30 @@ namespace memcache {
         }
 
         size_t size() {
+
+            std::cout << "cache::size" << std::endl;
+
             return _cache.size();
         }
 
         size_t bucket_count() {
+            std::cout << "cache::bucket_count" << std::endl;
+
             return _cache.bucket_count();
         }
 
         cache_stats stats() {
+            std::cout << "cache::stats" << std::endl;
+
             _stats._size = size();
             return _stats;
         }
 
         template <typename Origin = local_origin_tag>
         std::pair<item_ptr, bool> incr(item_key& key, uint64_t delta) {
+
+            std::cout << "cache::incr" << std::endl;
+
             auto i = find(key);
             if (i == _cache.end()) {
                 _stats._incr_misses++;
@@ -653,6 +713,10 @@ namespace memcache {
 
         template <typename Origin = local_origin_tag>
         std::pair<item_ptr, bool> decr(item_key& key, uint64_t delta) {
+
+            std::cout << "cache::pair" << std::endl;
+
+
             auto i = find(key);
             if (i == _cache.end()) {
                 _stats._decr_misses++;
@@ -725,16 +789,24 @@ namespace memcache {
 
         inline
         unsigned get_cpu(const item_key& key) {
+            std::cout << "sharded_cache::get_cpu" << std::endl;
+
             return std::hash<item_key>()(key) % smp::count;
         }
     public:
         sharded_cache(distributed<cache>& peers) : _peers(peers) {}
 
         future<> flush_all() {
+
+            std::cout << "sharded_cache::flush_all" << std::endl;
+
             return _peers.invoke_on_all(&cache::flush_all);
         }
 
         future<> flush_at(uint32_t time) {
+
+            std::cout << "sharded_cache::flush_at" << std::endl;
+
             return _peers.invoke_on_all(&cache::flush_at, time);
         }
 
