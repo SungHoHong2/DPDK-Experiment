@@ -781,6 +781,9 @@ static int ms_network_connect(ms_conn_t *c,
                               const bool is_udp,
                               int *ret_sfd)
 {
+
+  printf("ms_network_connect BEGIN\n");
+
   int sfd;
   struct linger ling=
   {
@@ -887,6 +890,9 @@ static int ms_network_connect(ms_conn_t *c,
   freeaddrinfo(ai);
 
   /* Return zero if we detected no errors in starting up connections */
+
+  printf("ms_network_connect END\n");
+
   return success == 0;
 } /* ms_network_connect */
 
