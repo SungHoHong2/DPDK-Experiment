@@ -22,12 +22,13 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="400" column="35" lean-forward="true" selection-start-line="400" selection-start-column="35" selection-end-line="400" selection-end-column="35" />
+            <state relative-caret-position="-157">
+              <caret line="277" lean-forward="true" selection-start-line="277" selection-end-line="277" />
               <folding>
                 <element signature="e#1215#1227#0" expanded="true" />
                 <element signature="e#10557#10569#0" expanded="true" />
                 <element signature="e#10715#10727#0" expanded="true" />
+                <element signature="e#12587#13102#0" expanded="true" />
                 <element signature="e#13163#13234#0" expanded="true" />
                 <element signature="e#14682#14699#0" expanded="true" />
                 <element signature="e#15627#15644#0" expanded="true" />
@@ -59,7 +60,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cache</find>
       <find>distributed</find>
       <find>keep_doing</find>
       <find>accept</find>
@@ -89,6 +89,7 @@
       <find>print_stats</find>
       <find>print_stat</find>
       <find>item</find>
+      <find>cout &lt;&lt;</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -169,12 +170,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="4324000" />
+      <workItem from="1528989613942" duration="4451000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16226000" />
+    <option name="totallyTimeSpent" value="16353000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -224,6 +225,7 @@
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
             <element signature="e#10715#10727#0" expanded="true" />
+            <element signature="e#12587#13102#0" expanded="true" />
             <element signature="e#13163#13234#0" expanded="true" />
             <element signature="e#14682#14699#0" expanded="true" />
             <element signature="e#15627#15644#0" expanded="true" />
@@ -291,12 +293,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="400" column="35" lean-forward="true" selection-start-line="400" selection-start-column="35" selection-end-line="400" selection-end-column="35" />
+        <state relative-caret-position="-157">
+          <caret line="277" lean-forward="true" selection-start-line="277" selection-end-line="277" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
             <element signature="e#10715#10727#0" expanded="true" />
+            <element signature="e#12587#13102#0" expanded="true" />
             <element signature="e#13163#13234#0" expanded="true" />
             <element signature="e#14682#14699#0" expanded="true" />
             <element signature="e#15627#15644#0" expanded="true" />
