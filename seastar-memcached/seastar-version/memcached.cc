@@ -1032,101 +1032,13 @@ namespace memcache {
 
         template <typename Value>
         static future<> print_stat(output_stream<char>& out, const char* key, Value value) {
-
             std::cout << "ascii_protocol::print_stat" << std::endl;
-
-//            return out.write(msg_stat)
-//                    .then([&out, key] { return out.write(key); })
-//                    .then([&out] { return out.write(" "); })
-//                    .then([&out, value] { return out.write(to_sstring(value)); })
-//                    .then([&out] { return out.write(msg_crlf); });
-
             return make_ready_future<>();
 
         }
 
         future<> print_stats(output_stream<char>& out) {
             return make_ready_future<>();
-//            return _cache.stats().then([this, &out] (auto stats) {
-//                return _system_stats.map_reduce(adder<system_stats>(), &system_stats::self)
-//                        .then([&out, all_cache_stats = std::move(stats)] (auto all_system_stats) -> future<> {
-//                            auto now = clock_type::now();
-//                            auto total_items = all_cache_stats._set_replaces + all_cache_stats._set_adds
-//                                               + all_cache_stats._cas_hits;
-//                            return print_stat(out, "pid", getpid())
-//                                    .then([&out, uptime = now - all_system_stats._start_time] {
-//                                        return print_stat(out, "uptime",
-//                                                          std::chrono::duration_cast<std::chrono::seconds>(uptime).count());
-//                                    }).then([now, &out] {
-//                                return print_stat(out, "time",
-//                                                  std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count());
-//                            }).then([&out] {
-//                                return print_stat(out, "version", VERSION_STRING);
-//                            }).then([&out] {
-//                                return print_stat(out, "pointer_size", sizeof(void*)*8);
-//                            }).then([&out, v = all_system_stats._curr_connections] {
-//                                return print_stat(out, "curr_connections", v);
-//                            }).then([&out, v = all_system_stats._total_connections] {
-//                                return print_stat(out, "total_connections", v);
-//                            }).then([&out, v = all_system_stats._curr_connections] {
-//                                return print_stat(out, "connection_structures", v);
-//                            }).then([&out, v = all_system_stats._cmd_get] {
-//                                return print_stat(out, "cmd_get", v);
-//                            }).then([&out, v = all_system_stats._cmd_set] {
-//                                return print_stat(out, "cmd_set", v);
-//                            }).then([&out, v = all_system_stats._cmd_flush] {
-//                                return print_stat(out, "cmd_flush", v);
-//                            }).then([&out] {
-//                                return print_stat(out, "cmd_touch", 0);
-//                            }).then([&out, v = all_cache_stats._get_hits] {
-//                                return print_stat(out, "get_hits", v);
-//                            }).then([&out, v = all_cache_stats._get_misses] {
-//                                return print_stat(out, "get_misses", v);
-//                            }).then([&out, v = all_cache_stats._delete_misses] {
-//                                return print_stat(out, "delete_misses", v);
-//                            }).then([&out, v = all_cache_stats._delete_hits] {
-//                                return print_stat(out, "delete_hits", v);
-//                            }).then([&out, v = all_cache_stats._incr_misses] {
-//                                return print_stat(out, "incr_misses", v);
-//                            }).then([&out, v = all_cache_stats._incr_hits] {
-//                                return print_stat(out, "incr_hits", v);
-//                            }).then([&out, v = all_cache_stats._decr_misses] {
-//                                return print_stat(out, "decr_misses", v);
-//                            }).then([&out, v = all_cache_stats._decr_hits] {
-//                                return print_stat(out, "decr_hits", v);
-//                            }).then([&out, v = all_cache_stats._cas_misses] {
-//                                return print_stat(out, "cas_misses", v);
-//                            }).then([&out, v = all_cache_stats._cas_hits] {
-//                                return print_stat(out, "cas_hits", v);
-//                            }).then([&out, v = all_cache_stats._cas_badval] {
-//                                return print_stat(out, "cas_badval", v);
-//                            }).then([&out] {
-//                                return print_stat(out, "touch_hits", 0);
-//                            }).then([&out] {
-//                                return print_stat(out, "touch_misses", 0);
-//                            }).then([&out] {
-//                                return print_stat(out, "auth_cmds", 0);
-//                            }).then([&out] {
-//                                return print_stat(out, "auth_errors", 0);
-//                            }).then([&out] {
-//                                return print_stat(out, "threads", smp::count);
-//                            }).then([&out, v = all_cache_stats._size] {
-//                                return print_stat(out, "curr_items", v);
-//                            }).then([&out, v = total_items] {
-//                                return print_stat(out, "total_items", v);
-//                            }).then([&out, v = all_cache_stats._expired] {
-//                                return print_stat(out, "seastar.expired", v);
-//                            }).then([&out, v = all_cache_stats._resize_failure] {
-//                                return print_stat(out, "seastar.resize_failure", v);
-//                            }).then([&out, v = all_cache_stats._evicted] {
-//                                return print_stat(out, "evictions", v);
-//                            }).then([&out, v = all_cache_stats._bytes] {
-//                                return print_stat(out, "bytes", v);
-//                            }).then([&out] {
-//                                return out.write(msg_end);
-//                            });
-//                        });
-//            });
         }
     public:
         ascii_protocol(sharded_cache& cache, distributed<system_stats>& system_stats)
@@ -1290,6 +1202,7 @@ namespace memcache {
                     case memcache_ascii_parser::state::cmd_stats:
                         std::cout << "ascii_protocol::state::cmd_stats" << std::endl;
                         return print_stats(out);
+
 
                     case memcache_ascii_parser::state::cmd_stats_hash:
                         std::cout << "ascii_protocol::state::cmd_stats_hash" << std::endl;
@@ -1497,8 +1410,6 @@ int main(int ac, char** av) {
             return make_ready_future<>();
         }).then([&, port] {
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
-        }).then([&tcp_server] {
-            return tcp_server.invoke_on_all(&memcache::tcp_server::start);
         });
 
     });

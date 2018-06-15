@@ -1,8 +1,10 @@
 ### Where the data transmission start
 - TCP_SERVER class starts the connection and then send the data
 - when server class is running it brings up the `sharded_cache struct` which is the logic for memcached
+- it seems the cache and sharded cache is the only classes that are outside of Seastar
+- The rest of the implementation is in the distritbution class of Seastar
 
-
+**Basic Logic**
 ```
 cache::cache
 seastar memcached v1.0
@@ -36,86 +38,45 @@ cache::maybe_rehash
 tcp_server::conn->_out.flush
 
 
+tcp_server::conn->_proto.handle
+ascii_protocol::handle
+ascii_protocol::state::cmd_get
+ascii_protocol::handle_get
+sharded_cache::get
+sharded_cache::get_cpu
+cache::get
+cache::find
+item::compare
+item::get_slab_page_index
+ascii_protocol::append_item
+item::key
+item::ascii_prefix
+item::value
+tcp_server::conn->_out.flush
 
-
+distributed<memcache::cache> cache_peers;
+memcache::sharded_cache cache(cache_peers);
+distributed<memcache::system_stats> system_stats;
+distributed<memcache::tcp_server> tcp_server;
 ```
 
 
+### Finding the source of the distribution class
+- shareded header serves as a interface
+- the actual implementation is in the `memcached.cc` in the name of `cache`
 
-```c++
+**class sharded**
+- Support for exploiting multiple cores on a server
+- Seastar supports multicore servers by using \i sharding.
+- Each logical core (lcore) runs a separate event loop with its own memory allocator TCP/IP stack, and other services
+- Shards communicate by explicit message passing rather than using locks and condition variables as with traditional
+- sharded template manages a sharded service, by creating a copy of the service on each logical core
+- providing mechanisms to communicate  with each shard's copy
+- Service a class to be instantiated on each core.
 
-struct expiration {
-
-};
-
-
-class item : public slab_item_base {
-};
-
-class cache {
-};
-
-class sharded_cache {
-};
-
-class ascii_protocol {
-};
+**start**
+Starts \c Service by constructing an instance on every logical core
 
 
-class tcp_server {
-  lw_shared_ptr<server_socket> _listener;
-  sharded_cache& _cache;
-  distributed<system_stats>& _system_stats;
-  uint16_t _port;
-
-  struct connection {
-      connected_socket _socket;
-      socket_address _addr;
-      input_stream<char> _in;
-      output_stream<char> _out;
-      ascii_protocol _proto;
-      distributed<system_stats>& _system_stats;
-
-      connection(connected_socket&& socket, socket_address addr, sharded_cache& c, distributed<system_stats>& system_stats)
-      {
-        _system_stats.local()._curr_connections++;
-        _system_stats.local()._total_connections++;
-      }
-
-      ~connection() {
-        _system_stats.local()._curr_connections--;
-      }
-  };
-
-  tcp_server(sharded_cache& cache, distributed<system_stats>& system_stats, uint16_t port = 11211)
-  : _cache(cache)
-  , _system_stats(system_stats)
-  , _port(port)
-  {}
-
-  void start() {
-    _listener = engine().listen(make_ipv4_address({_port}), lo);
-        keep_doing([this] {
-                return _listener->accept().then([this] (connected_socket fd, socket_address addr){
-                        do_until([conn] { return conn->_in.eof(); }, [conn] {
-                              return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
-                                    return conn->_out.flush();
-                              }
-                        }
-                }
-        }
-  };
-
-};  // end of tcp_server class
-
-class sharded_cache {
-    future<bool> set(item_insertion_data& insertion) {
-
-    }
-
-
-
-};
-
-
-```
+**invoke_on_all**
+Invoke a method on all \c Service instances in parallel.

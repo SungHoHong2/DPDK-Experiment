@@ -22,40 +22,13 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="1048" column="41" lean-forward="true" selection-start-line="1048" selection-start-column="41" selection-end-line="1048" selection-end-column="41" />
+            <state relative-caret-position="756">
+              <caret line="1412" column="11" lean-forward="true" selection-start-line="1412" selection-start-column="11" selection-end-line="1412" selection-end-column="11" />
               <folding>
                 <element signature="e#11379#11894#0" expanded="true" />
+                <element signature="e#11943#12014#0" expanded="true" />
                 <element signature="e#16191#16353#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="0_memcached.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="1283" column="47" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
-              <folding>
-                <element signature="e#1215#1227#0" expanded="true" />
-                <element signature="e#10557#10569#0" expanded="true" />
-                <element signature="e#10715#10727#0" expanded="true" />
-                <element signature="e#12587#13102#0" expanded="true" />
-                <element signature="e#13163#13234#0" expanded="true" />
-                <element signature="e#14682#14699#0" expanded="true" />
-                <element signature="e#15627#15644#0" expanded="true" />
-                <element signature="e#17893#18055#0" expanded="true" />
-                <element signature="e#18543#18579#0" expanded="true" />
-                <element signature="e#19006#19042#0" expanded="true" />
-                <element signature="e#19343#19379#0" expanded="true" />
-                <element signature="e#20341#20377#0" expanded="true" />
-                <element signature="e#21227#21263#0" expanded="true" />
-                <element signature="e#22209#22245#0" expanded="true" />
-                <element signature="e#31819#31837#0" expanded="true" />
-                <element signature="e#32475#32493#0" expanded="true" />
-                <element signature="e#33698#33714#0" expanded="true" />
-                <element signature="e#49206#49225#0" expanded="true" />
+                <element signature="e#30501#30517#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,10 +47,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sharded_cache</find>
-      <find>tcp_server</find>
-      <find>&amp;stats, start_stats = config.count(&quot;stats&quot;)</find>
-      <find>if(debugger == 1)</find>
       <find>debugge</find>
       <find>cache_peers</find>
       <find>class</find>
@@ -90,8 +59,6 @@
       <find>ascii_protocol</find>
       <find>stats_printer</find>
       <find>udp</find>
-      <find>system_stats</find>
-      <find>memcache_ascii_parser</find>
       <find>cmd_stats</find>
       <find>item</find>
       <find>cout &lt;&lt;</find>
@@ -100,10 +67,16 @@
       <find>local_is_initialized</find>
       <find>prepare_insertion</find>
       <find>ascii_protocol::handle</find>
-      <find>_system_stats</find>
       <find>CHARA</find>
       <find>print_stat</find>
       <find>print_stats</find>
+      <find>memcache_ascii_parser</find>
+      <find>state</find>
+      <find>cache</find>
+      <find>tcp_server</find>
+      <find>start</find>
+      <find>system_stats</find>
+      <find>_system_stats</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -125,7 +98,7 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="721" />
+    <option name="x" value="756" />
     <option name="y" value="-1080" />
     <option name="width" value="1920" />
     <option name="height" value="1080" />
@@ -184,12 +157,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="8609000" />
+      <workItem from="1528989613942" duration="11133000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20511000" />
+    <option name="totallyTimeSpent" value="23035000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -198,6 +171,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1703125" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -210,7 +184,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,7 +204,9 @@
           <caret line="1218" column="29" lean-forward="true" selection-start-line="1218" selection-start-column="29" selection-end-line="1218" selection-end-column="29" />
           <folding>
             <element signature="e#11379#11894#0" expanded="true" />
+            <element signature="e#11943#12014#0" expanded="true" />
             <element signature="e#16191#16353#0" expanded="true" />
+            <element signature="e#30501#30517#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -260,7 +235,7 @@
     <entry file="file://$PROJECT_DIR$/history/0_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
-          <caret line="1283" column="47" lean-forward="true" selection-end-line="1486" selection-end-column="1" />
+          <caret line="1283" column="47" selection-end-line="1486" selection-end-column="1" />
           <folding>
             <element signature="e#1215#1227#0" expanded="true" />
             <element signature="e#10557#10569#0" expanded="true" />
@@ -286,11 +261,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="1048" column="41" lean-forward="true" selection-start-line="1048" selection-start-column="41" selection-end-line="1048" selection-end-column="41" />
+        <state relative-caret-position="756">
+          <caret line="1412" column="11" lean-forward="true" selection-start-line="1412" selection-start-column="11" selection-end-line="1412" selection-end-column="11" />
           <folding>
             <element signature="e#11379#11894#0" expanded="true" />
+            <element signature="e#11943#12014#0" expanded="true" />
             <element signature="e#16191#16353#0" expanded="true" />
+            <element signature="e#30501#30517#0" expanded="true" />
           </folding>
         </state>
       </provider>
