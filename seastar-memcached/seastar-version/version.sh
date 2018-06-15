@@ -1,4 +1,4 @@
-FILENAME=3_memaslap
+FILENAME=4_memaslap
 
 if [ "$1" = "memcached_update" ]
 then
@@ -22,6 +22,10 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/libmemcached/io.cc m
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.c memaslap/ms_task.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memcapable.cc  memaslap/memcapable.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.c  memaslap/ms_conn.c
+
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/include.am memaslap/include.am
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/configure memaslap/configure
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/Makefile.in memaslap/Makefile.in
 
 
 cp -a memaslap history/$FILENAME

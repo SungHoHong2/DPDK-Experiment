@@ -32,7 +32,9 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/io.c
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_task.c /data1/sungho/libmemcached-1.0.18/clients/ms_task.c
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/memcapable.cc /data1/sungho/libmemcached-1.0.18/clients/memcapable.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_conn.c /data1/sungho/libmemcached-1.0.18/clients/ms_conn.c
-
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/include.am /data1/sungho/libmemcached-1.0.18/clients/include.am
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/configure /data1/sungho/libmemcached-1.0.18/configure
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/Makefile.in /data1/sungho/libmemcached-1.0.18/Makefile.in
 
 
 
