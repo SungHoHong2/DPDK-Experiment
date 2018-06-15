@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-160">
-              <caret line="1379" column="16" selection-start-line="1379" selection-start-column="16" selection-end-line="1379" selection-end-column="16" />
+            <state relative-caret-position="582">
+              <caret line="1037" selection-start-line="1037" selection-end-line="1037" />
               <folding>
                 <element signature="e#11379#11894#0" expanded="true" />
                 <element signature="e#16191#16353#0" expanded="true" />
@@ -74,7 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>start</find>
       <find>sharded_cache</find>
       <find>tcp_server</find>
       <find>&amp;stats, start_stats = config.count(&quot;stats&quot;)</find>
@@ -92,18 +91,19 @@
       <find>stats_printer</find>
       <find>udp</find>
       <find>system_stats</find>
-      <find>_system_stats</find>
       <find>memcache_ascii_parser</find>
       <find>cmd_stats</find>
       <find>print_stats</find>
-      <find>print_stat</find>
       <find>item</find>
       <find>cout &lt;&lt;</find>
       <find>debugger</find>
       <find>ITEM initialize</find>
       <find>local_is_initialized</find>
-      <find>ascii_protocol::handle</find>
       <find>prepare_insertion</find>
+      <find>ascii_protocol::handle</find>
+      <find>_system_stats</find>
+      <find>print_stat</find>
+      <find>CHARA</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -184,12 +184,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="7904000" />
+      <workItem from="1528989613942" duration="8443000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19806000" />
+    <option name="totallyTimeSpent" value="20345000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -286,8 +286,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-160">
-          <caret line="1379" column="16" selection-start-line="1379" selection-start-column="16" selection-end-line="1379" selection-end-column="16" />
+        <state relative-caret-position="582">
+          <caret line="1037" selection-start-line="1037" selection-end-line="1037" />
           <folding>
             <element signature="e#11379#11894#0" expanded="true" />
             <element signature="e#16191#16353#0" expanded="true" />

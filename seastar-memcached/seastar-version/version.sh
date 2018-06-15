@@ -1,4 +1,4 @@
-FILENAME=1_memcached
+FILENAME=2_memcached
 
 if [ "$1" = "update" ]
 then

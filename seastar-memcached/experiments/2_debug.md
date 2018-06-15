@@ -3,6 +3,45 @@
 - when server class is running it brings up the `sharded_cache struct` which is the logic for memcached
 
 
+```
+cache::cache
+seastar memcached v1.0
+tcp_server::start
+tcp_server::accept
+tcp_server::make_lw_shared
+tcp_server::conn->_proto.handle
+ascii_protocol::handle
+
+tcp_server::accept
+tcp_server::make_lw_shared
+tcp_server::conn->_proto.handle
+ascii_protocol::handle
+
+tcp_server::accept
+tcp_server::make_lw_shared
+tcp_server::conn->_proto.handle
+ascii_protocol::handle
+
+
+tcp_server::conn->_proto.handle
+ascii_protocol::handle
+ascii_protocol::state::cmd_set
+ascii_protocol::prepare_insertion
+sharded_cache::set
+sharded_cache::get_cpu
+cache::set
+cache::find
+cache::add_new
+cache::maybe_rehash
+tcp_server::conn->_out.flush
+
+
+
+
+```
+
+
+
 ```c++
 
 struct expiration {
