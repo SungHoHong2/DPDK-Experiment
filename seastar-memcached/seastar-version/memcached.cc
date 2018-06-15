@@ -31,8 +31,6 @@
 using namespace seastar;
 using namespace net;
 
-static int debugger = 1;
-
 namespace memcache {
 
     namespace bi = boost::intrusive;

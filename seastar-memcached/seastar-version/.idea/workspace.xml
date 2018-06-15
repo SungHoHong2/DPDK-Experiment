@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="1396" lean-forward="true" selection-start-line="1396" selection-end-line="1396" />
+            <state relative-caret-position="318">
+              <caret line="1394" lean-forward="true" selection-start-line="1394" selection-end-line="1394" />
             </state>
           </provider>
         </entry>
@@ -180,12 +180,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="4810000" />
+      <workItem from="1528989613942" duration="4885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16712000" />
+    <option name="totallyTimeSpent" value="16787000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -278,8 +278,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="1396" lean-forward="true" selection-start-line="1396" selection-end-line="1396" />
+        <state relative-caret-position="318">
+          <caret line="1394" lean-forward="true" selection-start-line="1394" selection-end-line="1394" />
         </state>
       </provider>
     </entry>
