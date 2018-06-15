@@ -110,9 +110,6 @@ static void ms_options_parse(int argc, char *argv[]);
 static int ms_check_para(void);
 static void ms_statistic_init(void);
 static void ms_stats_init(void);
-static void ms_print_statistics(int in_time);
-static void ms_print_memslap_stats(struct timeval *start_time,
-                                   struct timeval *end_time);
 static void ms_monitor_slap_mode(void);
 
 /**
@@ -693,19 +690,6 @@ static void ms_stats_init()
 } /* ms_stats_init */
 
 
-/* use to output the statistic */
-static void ms_print_statistics(int in_time)
-{
-  int obj_size= (int)(ms_setting.avg_key_size + ms_setting.avg_val_size);
-
-  printf("\033[1;1H\033[2J\n");
-  ms_dump_format_stats(&ms_statistic.get_stat, in_time,
-                       ms_setting.stat_freq, obj_size);
-  ms_dump_format_stats(&ms_statistic.set_stat, in_time,
-                       ms_setting.stat_freq, obj_size);
-  ms_dump_format_stats(&ms_statistic.total_stat, in_time,
-                       ms_setting.stat_freq, obj_size);
-} /* ms_print_statistics */
 
 
 
@@ -750,7 +734,7 @@ static void ms_monitor_slap_mode()
           && (ms_stats.active_conns >= ms_setting.nconns)
           && (ms_stats.active_conns <= INT_MAX))
       {
-        ms_print_statistics(second);
+       //  ms_print_statistics(second);
       }
 
       if (ms_setting.run_time <= second)
