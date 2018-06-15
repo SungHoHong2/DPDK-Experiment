@@ -1399,7 +1399,7 @@ namespace memcache {
             _listener = engine().listen(make_ipv4_address({_port}), lo);
 
             std::cout << "tcp_server::start" << std::endl;
-            
+
             keep_doing([this] {
 
                 return _listener->accept().then([this] (connected_socket fd, socket_address addr) mutable {
