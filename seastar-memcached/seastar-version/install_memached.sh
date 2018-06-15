@@ -30,7 +30,7 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/mema
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_thread.c /data1/sungho/libmemcached-1.0.18/clients/ms_thread.c
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/io.cc /data1/sungho/libmemcached-1.0.18/libmemcached/io.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_task.c /data1/sungho/libmemcached-1.0.18/clients/ms_task.c
-
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/memcapable.cc /data1/sungho/libmemcached-1.0.18/clients/memcapable.cc
 
 
 

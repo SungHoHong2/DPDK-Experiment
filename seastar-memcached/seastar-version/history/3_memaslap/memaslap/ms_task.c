@@ -556,7 +556,7 @@ static void ms_send_signal(ms_sync_lock_t *sync_lock)
 static void ms_warmup_server(ms_conn_t *c)
 {
 
-  printf("ms_warmup_server BEGIN");
+  printf("ms_warmup_server BEGIN\n");
   ms_task_t *task;
   ms_task_item_t *item;
 
@@ -601,7 +601,7 @@ static void ms_warmup_server(ms_conn_t *c)
     c->remain_warmup_num--;       /* never run the if branch */
   }
 
-  printf("ms_warmup_server END");
+  printf("ms_warmup_server END\n");
 } /* ms_warmup_server */
 
 

@@ -20,6 +20,8 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.c m
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c memaslap/ms_thread.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/libmemcached/io.cc memaslap/io.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.c memaslap/ms_task.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memcapable.cc  memaslap/memcapable.cc
+
 
 cp -a memaslap history/$FILENAME
 
