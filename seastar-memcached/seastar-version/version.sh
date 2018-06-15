@@ -1,4 +1,4 @@
-FILENAME=4_memaslap_convert_cc
+FILENAME=5_memaslap
 
 if [ "$1" = "memcached_update" ]
 then
