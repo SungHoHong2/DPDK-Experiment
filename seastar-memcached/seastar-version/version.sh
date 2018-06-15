@@ -27,6 +27,14 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/include.am  
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/configure               memaslap/configure
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/Makefile.in             memaslap/Makefile.in
 
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.cc     memaslap/memaslap.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.cc      memaslap/ms_conn.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_setting.cc   memaslap/ms_setting.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_sigsegv.cc   memaslap/ms_sigsegv.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_stats.cc     memaslap/ms_stats.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.cc      memaslap/ms_task.cc
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.cc    memaslap/ms_thread.cc
+
 cp -a memaslap history/$FILENAME
 git add .
 git commit -m 'memaslap experiments'
