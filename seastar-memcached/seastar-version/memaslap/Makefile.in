@@ -1797,8 +1797,8 @@ am__clients_memaslap_SOURCES_DIST = clients/memaslap.cc \
 	clients/ms_stats.cc clients/ms_task.cc clients/ms_thread.cc \
 	clients/generator.cc clients/execute.cc
 @BUILD_WIN32_FALSE@am_clients_memaslap_OBJECTS =  \
-@BUILD_WIN32_FALSE@	clients/memaslap.$(OBJEXT) \
-@BUILD_WIN32_FALSE@	clients/ms_conn.$(OBJEXT) \
+@BUILD_WIN32_FALSE@	clients/memaslap.cc \
+@BUILD_WIN32_FALSE@	clients/ms_conn.cc \
 @BUILD_WIN32_FALSE@	clients/ms_setting.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/ms_sigsegv.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/ms_stats.$(OBJEXT) \
