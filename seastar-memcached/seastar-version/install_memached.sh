@@ -20,12 +20,16 @@ rm -f *.o
 /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memcached --dpdk-pmd --dpdk-port-index 1 --network-stack native --dhcp 0 --host-ipv4-addr 10.107.30.40 --netmask-ipv4-addr 255.255.254.0 --gw-ipv4-addr 10.107.30.1 --collectd 0 --smp 1
 
 
+# cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ /data1/sungho/libmemcached-1.0.18/
 elif [ "$HOST_NAME" = "c3n25" ]
 then
   if [ "$1" = "make" ]
   then
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/io.cc /data1/sungho/libmemcached-1.0.18/libmemcached/io.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/memaslap.c /data1/sungho/libmemcached-1.0.18/clients/memaslap.c
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_thread.c /data1/sungho/libmemcached-1.0.18/clients/ms_thread.c
+
+
 cd /data1/sungho/libmemcached-1.0.18/
 # /data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
 make -j 16 && sudo make install -j 16

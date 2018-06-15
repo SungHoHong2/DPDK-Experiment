@@ -17,10 +17,14 @@ elif [ "$1" = "memaslap_import" ]
 then
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/libmemcached/io.cc memaslap/io.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.c memaslap/memaslap.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c memaslap/ms_thread.c
+
 
 mkdir history/$FILENAME
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/libmemcached/io.cc history/$FILENAME/io.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.c history/$FILENAME/memaslap.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c history/$FILENAME/ms_thread.c
+
 
 git add .
 git commit -m 'memaslap experiments'
