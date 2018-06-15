@@ -22,8 +22,8 @@
       <file leaf-file-name="memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="1412" column="11" lean-forward="true" selection-start-line="1412" selection-start-column="11" selection-end-line="1412" selection-end-column="11" />
+            <state relative-caret-position="308">
+              <caret line="375" column="25" selection-start-line="375" selection-start-column="19" selection-end-line="375" selection-end-column="25" />
               <folding>
                 <element signature="e#11379#11894#0" expanded="true" />
                 <element signature="e#11943#12014#0" expanded="true" />
@@ -38,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/memcached.hh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-70">
-              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+              <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -47,20 +47,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>debugge</find>
-      <find>cache_peers</find>
-      <find>class</find>
-      <find>return make_ready_future&lt;&gt;();</find>
-      <find>print_hash_stats</find>
-      <find>switch (_parser._state) {</find>
       <find>memcache::ascii_protocol::ascii_protocol()</find>
       <find>connection</find>
       <find>_out(_socket.output()))</find>
-      <find>ascii_protocol</find>
       <find>stats_printer</find>
       <find>udp</find>
       <find>cmd_stats</find>
-      <find>item</find>
       <find>cout &lt;&lt;</find>
       <find>debugger</find>
       <find>ITEM initialize</find>
@@ -73,10 +65,18 @@
       <find>memcache_ascii_parser</find>
       <find>state</find>
       <find>cache</find>
-      <find>tcp_server</find>
       <find>start</find>
       <find>system_stats</find>
       <find>_system_stats</find>
+      <find>tcp_server</find>
+      <find>ascii_protocol</find>
+      <find>sharded_cache</find>
+      <find>item</find>
+      <find>Item</find>
+      <find>System_Stats</find>
+      <find>hash</find>
+      <find>insert</find>
+      <find>power_2_buckets</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -157,12 +157,12 @@
       <option name="presentableId" value="Default" />
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
-      <workItem from="1528989613942" duration="11133000" />
+      <workItem from="1528989613942" duration="13842000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23035000" />
+    <option name="totallyTimeSpent" value="25744000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -221,7 +221,7 @@
     <entry file="file://$PROJECT_DIR$/memcached.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-70">
-          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -261,8 +261,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="1412" column="11" lean-forward="true" selection-start-line="1412" selection-start-column="11" selection-end-line="1412" selection-end-column="11" />
+        <state relative-caret-position="308">
+          <caret line="375" column="25" selection-start-line="375" selection-start-column="19" selection-end-line="375" selection-end-column="25" />
           <folding>
             <element signature="e#11379#11894#0" expanded="true" />
             <element signature="e#11943#12014#0" expanded="true" />
