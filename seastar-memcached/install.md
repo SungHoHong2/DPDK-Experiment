@@ -35,7 +35,7 @@ make && sudo make install
 
 6) Now go inside clients directory present inside libmemcached and give following command
 cd /data1/sungho/libmemcached-1.0.18/clients
-./memslap -s localhost
+./memslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
 ```
 
 
