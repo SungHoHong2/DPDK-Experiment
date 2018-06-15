@@ -30,7 +30,7 @@ cd /data1/sungho/libmemcached-1.0.18/
 /data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
 make && sudo make install
   fi
-
+  else
 cd /data1/sungho/libmemcached-1.0.18/clients
 /data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
 
