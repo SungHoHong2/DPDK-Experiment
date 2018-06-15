@@ -778,7 +778,7 @@ static void ms_monitor_slap_mode()
 int main(int argc, char *argv[])
 {
 
-  printf("Simplified Memcached\n");
+  printf("Simplified Memcached BEGIN\n");
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
@@ -802,5 +802,6 @@ int main(int argc, char *argv[])
   ms_global_struct_destroy();
   ms_setting_cleanup();
 
+  printf("Simplified Memcached END\n");
   return EXIT_SUCCESS;
 } /* main */
