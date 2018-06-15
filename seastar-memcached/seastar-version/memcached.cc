@@ -140,6 +140,8 @@ namespace memcache {
                 , _key_size(key.key().size())
                 , _ascii_prefix_size(ascii_prefix.size())
         {
+
+            cout << "ITEM initialize" << endl;
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
@@ -155,18 +157,22 @@ namespace memcache {
         item(item&&) = delete;
 
         clock_type::time_point get_timeout() {
+            cout << "ITEM::get_timeout" << endl;
             return _expiry.to_time_point();
         }
 
         version_type version() {
+            cout << "ITEM::version" << endl;
             return _version;
         }
 
         const std::experimental::string_view key() const {
+            cout << "ITEM::key" << endl;
             return std::experimental::string_view(_data, _key_size);
         }
 
         const std::experimental::string_view ascii_prefix() const {
+            cout << "ITEM::ascii_prefix" << endl;
             const char *p = _data + align_up(_key_size, field_alignment);
             return std::experimental::string_view(p, _ascii_prefix_size);
         }
@@ -174,22 +180,27 @@ namespace memcache {
         const std::experimental::string_view value() const {
             const char *p = _data + align_up(_key_size, field_alignment) +
                             align_up(_ascii_prefix_size, field_alignment);
+            cout << "ITEM::value" << endl;
             return std::experimental::string_view(p, _value_size);
         }
 
         size_t key_size() const {
+            cout << "ITEM::key_size" << endl;
             return _key_size;
         }
 
         size_t ascii_prefix_size() const {
+            cout << "ITEM::ascii_prefix_size" << endl;
             return _ascii_prefix_size;
         }
 
         size_t value_size() const {
+            cout << "ITEM::value_size" << endl;
             return _value_size;
         }
 
         optional<uint64_t> data_as_integral() {
+
             auto str = value().data();
             if (str[0] == '-') {
                 return {};
@@ -216,9 +227,12 @@ namespace memcache {
 
         // Methods required by slab allocator.
         uint32_t get_slab_page_index() const {
+            cout << "ITEM::get_slab_page_index" << endl;
             return _slab_page_index;
         }
+
         bool is_unlocked() const {
+            cout << "ITEM::is_unlocked" << endl;
             return _ref_count == 1;
         }
 
@@ -229,10 +243,12 @@ namespace memcache {
         }
 
         friend std::size_t hash_value(const item &i) {
+            cout << "ITEM::hash_value" << endl;
             return i._key_hash;
         }
 
         friend inline void intrusive_ptr_add_ref(item* it) {
+            cout << "ITEM::intrusive_ptr_add_ref" << endl;
             assert(it->_ref_count >= 0);
             ++it->_ref_count;
             if (it->_ref_count == 2) {
@@ -241,6 +257,7 @@ namespace memcache {
         }
 
         friend inline void intrusive_ptr_release(item* it) {
+            cout << "ITEM::intrusive_ptr_release" << endl;
             --it->_ref_count;
             if (it->_ref_count == 1) {
                 slab->unlock_item(it);
@@ -257,6 +274,8 @@ namespace memcache {
     {
     private:
         bool compare(const item_key& key, const item& it) const {
+            cout << "item_key_cmp::compare" << endl;
+
             return (it._key_hash == key.hash()) &&
                    (it._key_size == key.key().size()) &&
                    (memcmp(it._data, key.key().c_str(), it._key_size) == 0);

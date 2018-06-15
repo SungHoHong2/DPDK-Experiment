@@ -16,7 +16,6 @@ class item : public slab_item_base {
 class cache {
 };
 
-
 class sharded_cache {
 };
 
