@@ -814,6 +814,9 @@ namespace memcache {
 
         // The caller must keep @insertion live until the resulting future resolves.
         future<bool> set(item_insertion_data& insertion) {
+
+            std::cout << "sharded_cache::set" << std::endl;
+
             auto cpu = get_cpu(insertion.key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<bool>(_peers.local().set(insertion));
@@ -823,6 +826,9 @@ namespace memcache {
 
         // The caller must keep @insertion live until the resulting future resolves.
         future<bool> add(item_insertion_data& insertion) {
+
+            std::cout << "sharded_cache::add" << std::endl;
+
             auto cpu = get_cpu(insertion.key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<bool>(_peers.local().add(insertion));
@@ -832,6 +838,9 @@ namespace memcache {
 
         // The caller must keep @insertion live until the resulting future resolves.
         future<bool> replace(item_insertion_data& insertion) {
+
+            std::cout << "sharded_cache::replace" << std::endl;
+
             auto cpu = get_cpu(insertion.key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<bool>(_peers.local().replace(insertion));
@@ -841,18 +850,27 @@ namespace memcache {
 
         // The caller must keep @key live until the resulting future resolves.
         future<bool> remove(const item_key& key) {
+
+            std::cout << "sharded_cache::remove" << std::endl;
+
             auto cpu = get_cpu(key);
             return _peers.invoke_on(cpu, &cache::remove, std::ref(key));
         }
 
         // The caller must keep @key live until the resulting future resolves.
         future<item_ptr> get(const item_key& key) {
+
+            std::cout << "sharded_cache::get" << std::endl;
+
             auto cpu = get_cpu(key);
             return _peers.invoke_on(cpu, &cache::get, std::ref(key));
         }
 
         // The caller must keep @insertion live until the resulting future resolves.
         future<cas_result> cas(item_insertion_data& insertion, item::version_type version) {
+
+            std::cout << "sharded_cache::cas" << std::endl;
+
             auto cpu = get_cpu(insertion.key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<cas_result>(_peers.local().cas(insertion, version));
@@ -861,11 +879,16 @@ namespace memcache {
         }
 
         future<cache_stats> stats() {
+
+            std::cout << "sharded_cache::stats" << std::endl;
+
             return _peers.map_reduce(adder<cache_stats>(), &cache::stats);
         }
 
         // The caller must keep @key live until the resulting future resolves.
         future<std::pair<item_ptr, bool>> incr(item_key& key, uint64_t delta) {
+            std::cout << "sharded_cache::incr" << std::endl;
+
             auto cpu = get_cpu(key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<std::pair<item_ptr, bool>>(
@@ -876,6 +899,9 @@ namespace memcache {
 
         // The caller must keep @key live until the resulting future resolves.
         future<std::pair<item_ptr, bool>> decr(item_key& key, uint64_t delta) {
+
+            std::cout << "sharded_cache::decr" << std::endl;
+
             auto cpu = get_cpu(key);
             if (engine().cpu_id() == cpu) {
                 return make_ready_future<std::pair<item_ptr, bool>>(
@@ -949,6 +975,10 @@ namespace memcache {
     private:
         template <bool WithVersion>
         static void append_item(scattered_message<char>& msg, item_ptr item) {
+
+            std::cout << "ascii_protocol::append_item" << std::endl;
+
+
             if (!item) {
                 return;
             }
@@ -970,6 +1000,11 @@ namespace memcache {
 
         template <bool WithVersion>
         future<> handle_get(output_stream<char>& out) {
+
+
+            std::cout << "ascii_protocol::handle_get" << std::endl;
+
+
             _system_stats.local()._cmd_get++;
             if (_parser._keys.size() == 1) {
                 return _cache.get(_parser._keys[0]).then([&out] (auto item) -> future<> {
@@ -997,6 +1032,9 @@ namespace memcache {
 
         template <typename Value>
         static future<> print_stat(output_stream<char>& out, const char* key, Value value) {
+
+            std::cout << "ascii_protocol::print_stat" << std::endl;
+
             return out.write(msg_stat)
                     .then([&out, key] { return out.write(key); })
                     .then([&out] { return out.write(" "); })
@@ -1093,6 +1131,9 @@ namespace memcache {
         {}
 
         void prepare_insertion() {
+
+            std::cout << "ascii_protocol::prepare_insertion" << std::endl;
+
             _insertion = item_insertion_data{
                     .key = std::move(_parser._key),
                     .ascii_prefix = make_sstring(" ", _parser._flags_str, " ", _parser._size_str),
@@ -1102,6 +1143,10 @@ namespace memcache {
         }
 
         future<> handle(input_stream<char>& in, output_stream<char>& out) {
+
+
+            std::cout << "ascii_protocol::handle" << std::endl;
+
             _parser.init();
             return in.consume(_parser).then([this, &out] () -> future<> {
                 switch (_parser._state) {
