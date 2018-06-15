@@ -138,6 +138,8 @@ namespace memcache {
                 , _key_size(key.key().size())
                 , _ascii_prefix_size(ascii_prefix.size())
         {
+            std::cout << "item initialize" << std::endl;
+
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
@@ -153,37 +155,45 @@ namespace memcache {
         item(item&&) = delete;
 
         clock_type::time_point get_timeout() {
+            std::cout << "item::get_timeout" << std::endl;
             return _expiry.to_time_point();
         }
 
         version_type version() {
+            std::cout << "item::version" << std::endl;
             return _version;
         }
 
         const std::experimental::string_view key() const {
+            std::cout << "item::key" << std::endl;
             return std::experimental::string_view(_data, _key_size);
         }
 
         const std::experimental::string_view ascii_prefix() const {
+            std::cout << "item::ascii_prefix" << std::endl;
             const char *p = _data + align_up(_key_size, field_alignment);
             return std::experimental::string_view(p, _ascii_prefix_size);
         }
 
         const std::experimental::string_view value() const {
+            std::cout << "item::value" << std::endl;
             const char *p = _data + align_up(_key_size, field_alignment) +
                             align_up(_ascii_prefix_size, field_alignment);
             return std::experimental::string_view(p, _value_size);
         }
 
         size_t key_size() const {
+            std::cout << "item::key_size" << std::endl;
             return _key_size;
         }
 
         size_t ascii_prefix_size() const {
+            std::cout << "item::ascii_prefix_size" << std::endl;
             return _ascii_prefix_size;
         }
 
         size_t value_size() const {
+            std::cout << "item::value_size" << std::endl;
             return _value_size;
         }
 
