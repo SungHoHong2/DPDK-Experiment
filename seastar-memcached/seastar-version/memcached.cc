@@ -31,6 +31,7 @@
 using namespace seastar;
 using namespace net;
 
+static int debugger = 1;
 
 namespace memcache {
 
@@ -139,8 +140,6 @@ namespace memcache {
                 , _key_size(key.key().size())
                 , _ascii_prefix_size(ascii_prefix.size())
         {
-
-            std::cout << "ITEM initialize" << std::endl;
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
             // storing key
@@ -191,7 +190,6 @@ namespace memcache {
         }
 
         optional<uint64_t> data_as_integral() {
-
             auto str = value().data();
             if (str[0] == '-') {
                 return {};
@@ -220,7 +218,6 @@ namespace memcache {
         uint32_t get_slab_page_index() const {
             return _slab_page_index;
         }
-
         bool is_unlocked() const {
             return _ref_count == 1;
         }
@@ -260,7 +257,6 @@ namespace memcache {
     {
     private:
         bool compare(const item_key& key, const item& it) const {
-
             return (it._key_hash == key.hash()) &&
                    (it._key_size == key.key().size()) &&
                    (memcmp(it._data, key.key().c_str(), it._key_size) == 0);
@@ -1008,7 +1004,6 @@ namespace memcache {
                         });
             });
         }
-
     public:
         ascii_protocol(sharded_cache& cache, distributed<system_stats>& system_stats)
                 : _cache(cache)
@@ -1202,6 +1197,109 @@ namespace memcache {
         };
     };
 
+    class udp_server {
+    public:
+        static const size_t default_max_datagram_size = 1400;
+    private:
+        sharded_cache& _cache;
+        distributed<system_stats>& _system_stats;
+        udp_channel _chan;
+        uint16_t _port;
+        size_t _max_datagram_size = default_max_datagram_size;
+
+        struct header {
+            packed<uint16_t> _request_id;
+            packed<uint16_t> _sequence_number;
+            packed<uint16_t> _n;
+            packed<uint16_t> _reserved;
+
+            template<typename Adjuster>
+            auto adjust_endianness(Adjuster a) {
+                return a(_request_id, _sequence_number, _n);
+            }
+        } __attribute__((packed));
+
+        struct connection {
+            ipv4_addr _src;
+            uint16_t _request_id;
+            input_stream<char> _in;
+            output_stream<char> _out;
+            std::vector<packet> _out_bufs;
+            ascii_protocol _proto;
+
+            connection(ipv4_addr src, uint16_t request_id, input_stream<char>&& in, size_t out_size,
+                       sharded_cache& c, distributed<system_stats>& system_stats)
+                    : _src(src)
+                    , _request_id(request_id)
+                    , _in(std::move(in))
+                    , _out(output_stream<char>(data_sink(std::make_unique<vector_data_sink>(_out_bufs)), out_size, true))
+                    , _proto(c, system_stats)
+            {}
+
+            future<> respond(udp_channel& chan) {
+                int i = 0;
+                return do_for_each(_out_bufs.begin(), _out_bufs.end(), [this, i, &chan] (packet& p) mutable {
+                    header* out_hdr = p.prepend_header<header>(0);
+                    out_hdr->_request_id = _request_id;
+                    out_hdr->_sequence_number = i++;
+                    out_hdr->_n = _out_bufs.size();
+                    *out_hdr = hton(*out_hdr);
+                    return chan.send(_src, std::move(p));
+                });
+            }
+        };
+
+    public:
+        udp_server(sharded_cache& c, distributed<system_stats>& system_stats, uint16_t port = 11211)
+                : _cache(c)
+                , _system_stats(system_stats)
+                , _port(port)
+        {}
+
+        void set_max_datagram_size(size_t max_datagram_size) {
+            _max_datagram_size = max_datagram_size;
+        }
+
+        void start() {
+            _chan = engine().net().make_udp_channel({_port});
+            keep_doing([this] {
+                return _chan.receive().then([this](udp_datagram dgram) {
+
+
+                    packet& p = dgram.get_data();
+                    if (p.len() < sizeof(header)) {
+                        // dropping invalid packet
+                        return make_ready_future<>();
+                    }
+
+                    header hdr = ntoh(*p.get_header<header>());
+                    p.trim_front(sizeof(hdr));
+
+                    auto request_id = hdr._request_id;
+                    auto in = as_input_stream(std::move(p));
+                    auto conn = make_lw_shared<connection>(dgram.get_src(), request_id, std::move(in),
+                                                           _max_datagram_size - sizeof(header), _cache, _system_stats);
+
+                    if (hdr._n != 1 || hdr._sequence_number != 0) {
+                        return conn->_out.write("CLIENT_ERROR only single-datagram requests supported\r\n").then([this, conn] {
+                            return conn->_out.flush().then([this, conn] {
+                                return conn->respond(_chan).then([conn] {});
+                            });
+                        });
+                    }
+
+                    return conn->_proto.handle(conn->_in, conn->_out).then([this, conn]() mutable {
+                        return conn->_out.flush().then([this, conn] {
+                            return conn->respond(_chan).then([conn] {
+                            });
+                        });
+                    });
+                });
+            }).or_terminate();
+        };
+
+        future<> stop() { return make_ready_future<>(); }
+    };
 
     class tcp_server {
     private:
@@ -1251,6 +1349,7 @@ namespace memcache {
                     auto conn = make_lw_shared<connection>(std::move(fd), addr, _cache, _system_stats);
 
                     do_until([conn] { return conn->_in.eof(); }, [conn] {
+                        sleep(1);
                         return conn->_proto.handle(conn->_in, conn->_out).then([conn] {
                             return conn->_out.flush();
                         });
@@ -1299,30 +1398,40 @@ int main(int ac, char** av) {
     distributed<memcache::cache> cache_peers;
     memcache::sharded_cache cache(cache_peers);
     distributed<memcache::system_stats> system_stats;
+    distributed<memcache::udp_server> udp_server;
     distributed<memcache::tcp_server> tcp_server;
+    memcache::stats_printer stats(cache);
 
     namespace bpo = boost::program_options;
     app_template app;
     app.add_options()
+            ("max-datagram-size", bpo::value<int>()->default_value(memcache::udp_server::default_max_datagram_size),
+             "Maximum size of UDP datagram")
             ("max-slab-size", bpo::value<uint64_t>()->default_value(memcache::default_per_cpu_slab_size/MB),
              "Maximum memory to be used for items (value in megabytes) (reclaimer is disabled if set)")
             ("slab-page-size", bpo::value<uint64_t>()->default_value(memcache::default_slab_page_size/MB),
              "Size of slab page (value in megabytes)")
+            ("stats",
+             "Print basic statistics periodically (every second)")
             ("port", bpo::value<uint16_t>()->default_value(11211),
              "Specify UDP and TCP ports for memcached server to listen on");
 
 
     return app.run_deprecated(ac, av, [&] {
         engine().at_exit([&] { return tcp_server.stop(); });
+        engine().at_exit([&] { return udp_server.stop(); });
         engine().at_exit([&] { return cache_peers.stop(); });
+        engine().at_exit([&] { return system_stats.stop(); });
 
         auto&& config = app.configuration();
         uint16_t port = config["port"].as<uint16_t>();
+
         uint64_t per_cpu_slab_size = config["max-slab-size"].as<uint64_t>() * MB;
+
         uint64_t slab_page_size = config["slab-page-size"].as<uint64_t>() * MB;
 
-        return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([] {
-            return make_ready_future<>();
+        return cache_peers.start(std::move(per_cpu_slab_size), std::move(slab_page_size)).then([&system_stats] {
+            return system_stats.start(memcache::clock_type::now());
         }).then([&] {
             std::cout << PLATFORM << " memcached " << VERSION << "\n";
             return make_ready_future<>();
@@ -1330,6 +1439,21 @@ int main(int ac, char** av) {
             return tcp_server.start(std::ref(cache), std::ref(system_stats), port);
         }).then([&tcp_server] {
             return tcp_server.invoke_on_all(&memcache::tcp_server::start);
+        }).then([&, port] {
+            if (engine().net().has_per_core_namespace()) {
+                return udp_server.start(std::ref(cache), std::ref(system_stats), port);
+            } else {
+                return udp_server.start_single(std::ref(cache), std::ref(system_stats), port);
+            }
+        }).then([&] {
+            return udp_server.invoke_on_all(&memcache::udp_server::set_max_datagram_size,
+                                            (size_t)config["max-datagram-size"].as<int>());
+        }).then([&] {
+            return udp_server.invoke_on_all(&memcache::udp_server::start);
+        }).then([&stats, start_stats = config.count("stats")] {
+            if (start_stats) {
+                stats.start();
+            }
         });
     });
 }
