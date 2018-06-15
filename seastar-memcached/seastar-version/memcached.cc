@@ -31,6 +31,8 @@
 using namespace seastar;
 using namespace net;
 
+static seastar::logger debugging("memcache");
+
 namespace memcache {
 
     namespace bi = boost::intrusive;
@@ -139,6 +141,8 @@ namespace memcache {
                 , _ascii_prefix_size(ascii_prefix.size())
         {
             std::cout << "item initialize" << std::endl;
+            debugging.debug("item initialize");
+
 
             assert(_key_size <= std::numeric_limits<uint8_t>::max());
             assert(_ascii_prefix_size <= std::numeric_limits<uint8_t>::max());
