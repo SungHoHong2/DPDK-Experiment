@@ -1711,6 +1711,7 @@ static int ms_try_read_network(ms_conn_t *c)
     }
     else
     {
+      printf("socket::READ\n");
       res= (int)read(c->sfd, c->rcurr + c->rbytes, (size_t)avail);
     }
 
@@ -2277,6 +2278,7 @@ static int ms_transmit(ms_conn_t *c)
     ssize_t res;
     struct msghdr *m= &c->msglist[c->msgcurr];
 
+    printf("socket::SENDMSG\n");
     res= sendmsg(c->sfd, m, 0);
     if (res > 0)
     {
