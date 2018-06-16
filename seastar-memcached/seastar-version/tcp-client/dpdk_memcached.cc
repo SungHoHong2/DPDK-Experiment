@@ -21,7 +21,7 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const uint64_t cas,
                                                 memcached_storage_action_t verb)
 {
-    Memcached* ptr= memcached2Memcached(shell);
+ //   Memcached* ptr= memcached2Memcached(shell);
     memcached_return_t rc;
 //    if (memcached_failed(rc= initialize_query(ptr, true)))
 //    {
