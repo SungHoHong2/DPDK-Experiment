@@ -15,6 +15,6 @@ memcached_return_t memcached_set(memcached_st *ptr, const char *key, size_t key_
 //    LIBMEMCACHED_MEMCACHED_SET_END();
 
     std::cout << "dpdk_memcached_set END" << std::endl;
-    return rc;
+    return 0;
 }
 
