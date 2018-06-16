@@ -1,8 +1,4 @@
 #include <libmemcached/memcached.hpp>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
 #include "dpdk_memcached.hh"
 
 
