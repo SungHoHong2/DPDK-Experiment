@@ -8,8 +8,8 @@ int main(){
     memcached_server_st *servers = NULL;
     memcached_st *memc;
     memcached_return rc;
-    char *key = "keystring";
-    char *value = "keyvalue";
+    const char *key = "keystring";
+    const char *value = "keyvalue";
 
     char *retrieved_value;
     size_t value_length;
