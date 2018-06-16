@@ -1,1 +1,1 @@
-gcc client.cc -o client
+g++ client.cc -o client
