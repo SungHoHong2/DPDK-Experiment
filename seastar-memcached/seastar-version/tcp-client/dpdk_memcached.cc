@@ -3,6 +3,8 @@
 #define	LIBMEMCACHED_MEMCACHED_SET_END()
 #define memcached2Memcached(__obj) (__obj)
 
+typedef struct memcached_st Memcached;
+
 enum memcached_storage_action_t {
     SET_OP,
     REPLACE_OP,
@@ -21,7 +23,7 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const uint64_t cas,
                                                 memcached_storage_action_t verb)
 {
- //   Memcached* ptr= memcached2Memcached(shell);
+    Memcached* ptr= memcached2Memcached(shell);
     memcached_return_t rc;
 //    if (memcached_failed(rc= initialize_query(ptr, true)))
 //    {
