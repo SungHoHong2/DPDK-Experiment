@@ -1,4 +1,4 @@
-#include <libmemcached/memcached.h>
+#include <libmemcached/memcached.hpp>
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
