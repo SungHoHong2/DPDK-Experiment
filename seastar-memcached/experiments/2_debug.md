@@ -60,6 +60,9 @@ distributed<memcache::system_stats> system_stats;
 distributed<memcache::tcp_server> tcp_server;
 ```
 
+Hello Professor
+Do you have time for the Weekly Report for today?
+
 
 ### Finding the source of the distribution class
 - shareded header serves as a interface
