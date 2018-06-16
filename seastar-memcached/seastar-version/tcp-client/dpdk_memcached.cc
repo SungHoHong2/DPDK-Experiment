@@ -2,6 +2,14 @@
 #define	LIBMEMCACHED_MEMCACHED_SET_START()
 #define	LIBMEMCACHED_MEMCACHED_SET_END()
 
+enum memcached_storage_action_t {
+    SET_OP,
+    REPLACE_OP,
+    ADD_OP,
+    PREPEND_OP,
+    APPEND_OP,
+    CAS_OP
+};
 
 
 static inline memcached_return_t memcached_send(memcached_st *shell,
