@@ -1,4 +1,3 @@
-#include <libmemcached/memcached.hpp>
 #include "dpdk_memcached.hh"
 
 
