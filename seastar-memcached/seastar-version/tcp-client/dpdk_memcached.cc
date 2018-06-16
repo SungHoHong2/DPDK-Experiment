@@ -14,6 +14,36 @@ enum memcached_storage_action_t {
     CAS_OP
 };
 
+memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
+{
+    if (self == NULL)
+    {
+        return MEMCACHED_INVALID_ARGUMENTS;
+    }
+
+    if (increment_query_id)
+    {
+        self->query_id++;
+    }
+
+    if (self->state.is_time_for_rebuild)
+    {
+        memcached_reset(self);
+    }
+
+    if (memcached_server_count(self) == 0)
+    {
+        return memcached_set_error(*self, MEMCACHED_NO_SERVERS, MEMCACHED_AT);
+    }
+
+    memcached_error_free(*self);
+    memcached_result_reset(&self->result);
+
+    return MEMCACHED_SUCCESS;
+}
+
+
+
 static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const char *group_key, size_t group_key_length,
                                                 const char *key, size_t key_length,
@@ -25,10 +55,10 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
 {
     Memcached* ptr= memcached2Memcached(shell);
     memcached_return_t rc;
-//    if (memcached_failed(rc= initialize_query(ptr, true)))
-//    {
-//        return rc;
-//    }
+    if (memcached_failed(rc= initialize_query(ptr, true)))
+    {
+        return rc;
+    }
 //
 //    if (memcached_failed(memcached_key_test(*ptr, (const char **)&key, &key_length, 1)))
 //    {
