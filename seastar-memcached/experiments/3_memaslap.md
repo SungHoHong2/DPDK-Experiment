@@ -230,9 +230,8 @@ rc = memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uin
 
 ### Reconstruct the send data
 
-
-
 ```c++
+
 
 
 ```
