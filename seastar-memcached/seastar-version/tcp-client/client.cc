@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-
+#include "dpdk_memcached.hh"
 
 
 int main(){
@@ -28,6 +28,9 @@ int main(){
       fprintf(stderr, "Added server successfully\n");
     else
       fprintf(stderr, "Couldn't add server: %s\n", memcached_strerror(memc, rc));
+
+
+    dpdk_memcached_set();
 
 
     rc = memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
