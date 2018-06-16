@@ -12,10 +12,8 @@
 
 
 ```
-
 ms_warmup_server BEGIN
 ms_warmup_server END
-
 
 ms_add_msghdr BEGIN
 ms_add_msghdr END
@@ -25,7 +23,4 @@ socket::SENDMSG
 ms_try_read_network BEGIN
 socket::READ
 ms_try_read_network END
-
-
-
 ```
