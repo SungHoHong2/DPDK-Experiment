@@ -7,5 +7,4 @@
 
 int dpdk_memcached_set();
 
-
-#endif //SEASTAR_VERSION_RECONSTRUCTED_MEMCACHED_H
+#endif
