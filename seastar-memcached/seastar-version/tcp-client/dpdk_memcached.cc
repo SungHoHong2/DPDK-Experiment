@@ -1,6 +1,7 @@
 #include "dpdk_memcached.hh"
 #define	LIBMEMCACHED_MEMCACHED_SET_START()
 #define	LIBMEMCACHED_MEMCACHED_SET_END()
+#define memcached2Memcached(__obj) (__obj)
 
 enum memcached_storage_action_t {
     SET_OP,
@@ -11,7 +12,6 @@ enum memcached_storage_action_t {
     CAS_OP
 };
 
-
 static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const char *group_key, size_t group_key_length,
                                                 const char *key, size_t key_length,
@@ -21,7 +21,7 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const uint64_t cas,
                                                 memcached_storage_action_t verb)
 {
-//    Memcached* ptr= memcached2Memcached(shell);
+    Memcached* ptr= memcached2Memcached(shell);
     memcached_return_t rc;
 //    if (memcached_failed(rc= initialize_query(ptr, true)))
 //    {
