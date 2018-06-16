@@ -7,7 +7,7 @@ memcached_return_t memcached_set(memcached_st *ptr, const char *key, size_t key_
                                  uint32_t flags)
 {
     std::cout << "dpdk_memcached_set BEGIN" << std::endl;
-//    memcached_return_t rc;
+    memcached_return_t rc;
 //    LIBMEMCACHED_MEMCACHED_SET_START();
 //    rc= memcached_send(ptr, key, key_length,
 //                       key, key_length, value, value_length,
@@ -15,6 +15,6 @@ memcached_return_t memcached_set(memcached_st *ptr, const char *key, size_t key_
 //    LIBMEMCACHED_MEMCACHED_SET_END();
 
     std::cout << "dpdk_memcached_set END" << std::endl;
-    return 0;
+    return rc;
 }
 
