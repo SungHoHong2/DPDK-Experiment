@@ -1,6 +1,7 @@
-#include <libmemcached/memcached.h>
 #include <stdio.h>
 #include <string.h>
+#include <libmemcached/memcached.h>
+
 
 int main(int argc, char **argv) {
   //memcached_servers_parse (char *server_strings);
