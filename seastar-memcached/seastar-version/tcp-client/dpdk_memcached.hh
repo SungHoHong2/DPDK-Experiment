@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 
-int dpdk_memcached_set();
-
+memcached_return_t memcached_set(memcached_st *ptr, const char *key, size_t key_length,
+                                 const char *value, size_t value_length,
+                                 time_t expiration,
+                                 uint32_t flags);
 #endif
