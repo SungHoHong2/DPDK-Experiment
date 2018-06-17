@@ -12,6 +12,25 @@
 #define memcached_literal_param_size util_literal_param_size
 
 
+struct hashkit_st
+{
+    struct hashkit_function_st {
+        hashkit_hash_fn function;
+        void *context;
+    } base_hash, distribution_hash;
+
+    struct {
+        bool is_base_same_distributed:1;
+    } flags;
+
+    struct {
+        bool is_allocated:1;
+    } options;
+
+    void *_key;
+};
+
+
 struct memcached_instance_st {
     in_port_t port() const
     {
