@@ -101,7 +101,7 @@ static bool io_flush(memcached_instance_st* instance,
         }
 
         ssize_t sent_length= ::send(instance->fd, local_write_ptr, write_length, flags);
-        // int local_errno= get_socket_errno(); // We cache in case memcached_quit_server() modifies errno
+         int local_errno= get_socket_errno(); // We cache in case memcached_quit_server() modifies errno
 
         if (sent_length == SOCKET_ERROR)
         {
