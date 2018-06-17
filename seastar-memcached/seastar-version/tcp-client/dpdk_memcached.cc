@@ -144,6 +144,12 @@ struct memcached_continuum_item_st
     uint32_t value;
 };
 
+struct bucket_t {
+    uint32_t master;
+    uint32_t forward;
+};
+
+
 struct memcached_virtual_bucket_t {
     bool has_forward;
     uint32_t size;
