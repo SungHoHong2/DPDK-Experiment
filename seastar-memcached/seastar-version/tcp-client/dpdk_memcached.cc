@@ -29,8 +29,6 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 
 static inline uint32_t _generate_hash_wrapper(const Memcached *ptr, const char *key, size_t key_length)
 {
-    WATCHPOINT_ASSERT(memcached_server_count(ptr));
-
     if (memcached_server_count(ptr) == 1)
         return 0;
 
