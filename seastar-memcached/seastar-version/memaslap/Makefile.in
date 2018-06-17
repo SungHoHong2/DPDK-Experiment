@@ -512,6 +512,36 @@ DIST_COMMON = $(srcdir)/libhashkit-1.0/include.am \
 @BUILD_WIN32_FALSE@	libmemcached/csl/scanner.cc \
 @BUILD_WIN32_FALSE@	libmemcached/csl/scanner.h
 @BUILD_WIN32_FALSE@am__append_27 = libtest/client.hpp \
+@BUILD_WIN32_FALSE@	libtest/formatter.hpp libtest/timer.hpp \
+@BUILD_WIN32_FALSE@	libtest/alarm.h libtest/binaries.h \
+@BUILD_WIN32_FALSE@	libtest/cpu.hpp libtest/blobslap_worker.h \
+@BUILD_WIN32_FALSE@	libtest/callbacks.h libtest/dns.hpp \
+@BUILD_WIN32_FALSE@	libtest/cmdline.h libtest/collection.h \
+@BUILD_WIN32_FALSE@	libtest/common.h libtest/comparison.hpp \
+@BUILD_WIN32_FALSE@	libtest/core.h libtest/dream.h \
+@BUILD_WIN32_FALSE@	libtest/error.h libtest/exception.hpp \
+@BUILD_WIN32_FALSE@	libtest/exception/disconnected.hpp \
+@BUILD_WIN32_FALSE@	libtest/exception/fatal.hpp \
+@BUILD_WIN32_FALSE@	libtest/framework.h libtest/gearmand.h \
+@BUILD_WIN32_FALSE@	libtest/drizzled.h libtest/get.h \
+@BUILD_WIN32_FALSE@	libtest/has.hpp libtest/http.hpp \
+@BUILD_WIN32_FALSE@	libtest/is_pid.hpp libtest/is_local.hpp \
+@BUILD_WIN32_FALSE@	libtest/killpid.h libtest/libtool.hpp \
+@BUILD_WIN32_FALSE@	libtest/memcached.h libtest/memcached.hpp \
+@BUILD_WIN32_FALSE@	libtest/poll_error.hpp libtest/port.h \
+@BUILD_WIN32_FALSE@	libtest/result.hpp libtest/result/base.hpp \
+@BUILD_WIN32_FALSE@	libtest/result/fail.hpp \
+@BUILD_WIN32_FALSE@	libtest/result/skip.hpp \
+@BUILD_WIN32_FALSE@	libtest/result/success.hpp libtest/runner.h \
+@BUILD_WIN32_FALSE@	libtest/server.h libtest/server_container.h \
+@BUILD_WIN32_FALSE@	libtest/signal.h libtest/socket.hpp \
+@BUILD_WIN32_FALSE@	libtest/stream.h libtest/strerror.h \
+@BUILD_WIN32_FALSE@	libtest/string.hpp libtest/test.h \
+@BUILD_WIN32_FALSE@	libtest/test.hpp libtest/thread.hpp \
+@BUILD_WIN32_FALSE@	libtest/tmpfile.hpp libtest/lite.h \
+@BUILD_WIN32_FALSE@	libtest/valgrind.h libtest/vchar.hpp \
+@BUILD_WIN32_FALSE@	libtest/version.h libtest/visibility.h \
+@BUILD_WIN32_FALSE@	libtest/wait.h libtest/yatl.h \
 @BUILD_WIN32_FALSE@	clients/client_options.h clients/execute.h \
 @BUILD_WIN32_FALSE@	clients/generator.h clients/ms_atomic.h \
 @BUILD_WIN32_FALSE@	clients/ms_conn.h clients/ms_memslap.h \
@@ -1442,6 +1472,8 @@ am__libmemcachedinternal_libmemcachedinternal_la_SOURCES_DIST =  \
 	libmemcached/libmemcached_probes.d
 @BUILD_WIN32_FALSE@@INCLUDE_HSIEH_SRC_TRUE@am__objects_16 = libhashkit/libmemcachedinternal_libmemcachedinternal_la-hsieh.lo
 @BUILD_WIN32_FALSE@@INCLUDE_HSIEH_SRC_FALSE@am__objects_17 = libhashkit/libmemcachedinternal_libmemcachedinternal_la-nohsieh.lo
+@BUILD_WIN32_TRUE@@INCLUDE_HSIEH_SRC_TRUE@am__objects_18 = libhashkit/libmemcachedinternal_libmemcachedinternal_la-hsieh.lo
+@BUILD_WIN32_TRUE@@INCLUDE_HSIEH_SRC_FALSE@am__objects_19 = libhashkit/libmemcachedinternal_libmemcachedinternal_la-nohsieh.lo
 @BUILD_WIN32_FALSE@am__objects_20 = libhashkit/libmemcachedinternal_libmemcachedinternal_la-aes.lo \
 @BUILD_WIN32_FALSE@	libhashkit/libmemcachedinternal_libmemcachedinternal_la-algorithm.lo \
 @BUILD_WIN32_FALSE@	libhashkit/libmemcachedinternal_libmemcachedinternal_la-behavior.lo \
@@ -1608,6 +1640,13 @@ am__libmemcachedinternal_libmemcachedutilinternal_la_SOURCES_DIST =  \
 	libmemcached/backtrace.cc libmemcachedutil/flush.cc \
 	libmemcachedutil/pid.cc libmemcachedutil/ping.cc \
 	libmemcachedutil/pool.cc libmemcachedutil/version.cc
+
+libtest_libtest_la_OBJECTS = $(am_libtest_libtest_la_OBJECTS)
+libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(libtest_libtest_la_CXXFLAGS) $(CXXFLAGS) \
+	$(libtest_libtest_la_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_WIN32_FALSE@am_libtest_libtest_la_rpath =
 @BUILD_WIN32_FALSE@am__EXEEXT_1 = clients/memcapable$(EXEEXT) \
 @BUILD_WIN32_FALSE@	clients/memcat$(EXEEXT) \
 @BUILD_WIN32_FALSE@	clients/memcp$(EXEEXT) \
