@@ -1640,11 +1640,18 @@ am__libmemcachedinternal_libmemcachedutilinternal_la_SOURCES_DIST =  \
 	libmemcached/backtrace.cc libmemcachedutil/flush.cc \
 	libmemcachedutil/pid.cc libmemcachedutil/ping.cc \
 	libmemcachedutil/pool.cc libmemcachedutil/version.cc
+
+
+$(info CLIENT COMPILE BEGIN)
+
 libtest_libtest_la_OBJECTS = $(am_libtest_libtest_la_OBJECTS)
 libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libtest_libtest_la_CXXFLAGS) $(CXXFLAGS) \
 	$(libtest_libtest_la_LDFLAGS) $(LDFLAGS) -o $@
+
+$(info CLIENT [${EXEEXT}])
+
 @BUILD_WIN32_FALSE@am_libtest_libtest_la_rpath =
 @BUILD_WIN32_FALSE@am__EXEEXT_1 = clients/memcapable$(EXEEXT) \
 @BUILD_WIN32_FALSE@	clients/memcat$(EXEEXT) \
