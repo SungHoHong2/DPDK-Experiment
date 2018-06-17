@@ -236,68 +236,6 @@ static uint32_t ketama_server_hash(const char *key, size_t key_length, uint32_t 
            | (results[0 + alignment * 4] & 0xFF);
 }
 
-
-
-static void MD5Init (MD5_CTX *context)      /* context */
-{
-    context->count[0] = context->count[1] = 0;
-    /* Load magic initialization constants.
-  */
-    context->state[0] = 0x67452301;
-    context->state[1] = 0xefcdab89;
-    context->state[2] = 0x98badcfe;
-    context->state[3] = 0x10325476;
-}
-
-static void MD5Update (
-        MD5_CTX *context,                                        /* context */
-        const unsigned char *input,                              /* input block */
-        unsigned int inputLen)                     /* length of input block */
-{
-    unsigned int i, idx, partLen;
-
-    /* Compute number of bytes mod 64 */
-    idx = (unsigned int)((context->count[0] >> 3) & 0x3F);
-
-
-    /* Update number of bits */
-    if ((context->count[0] += ((UINT4)inputLen << 3))
-        < ((UINT4)inputLen << 3))
-        context->count[1]++;
-    context->count[1] += ((UINT4)inputLen >> 29);
-
-    partLen = 64 - idx;
-
-    /* Transform as many times as possible.
-  */
-    if (inputLen >= partLen) {
-        memcpy((POINTER)&context->buffer[idx], (CONST_POINTER)input, partLen);
-        MD5Transform(context->state, context->buffer);
-
-        for (i = partLen; i + 63 < inputLen; i += 64)
-            MD5Transform (context->state, (CONST_POINTER)&input[i]);
-
-        idx = 0;
-    }
-    else
-        i = 0;
-
-    /* Buffer remaining input */
-    memcpy((POINTER)&context->buffer[idx], (CONST_POINTER)&input[i],
-           inputLen-i);
-}
-
-
-void md5_signature(const unsigned char *key, unsigned int length, unsigned char *result)
-{
-    MD5_CTX my_md5;
-
-    MD5Init(&my_md5);
-    (void)MD5Update(&my_md5, key, length);
-    MD5Final(result, &my_md5);
-}
-
-
 void libhashkit_md5_signature(const unsigned char *key, size_t length, unsigned char *result)
 {
     md5_signature(key, (uint32_t)length, result);
