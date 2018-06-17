@@ -68,6 +68,15 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 
 
 
+#include <sys/socket.h>
+#include <poll.h>
+#define POLLIN 0x0001
+
+
+
+
+
+
 
 memcached_return_t memcached_vdo(memcached_instance_st* instance,
                                  libmemcached_io_vector_st vector[],
