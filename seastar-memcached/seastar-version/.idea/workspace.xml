@@ -19,107 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="generator.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/generator.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ms_atomic.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_atomic.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="execute.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/execute.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="memaslap.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/memaslap.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="6" lean-forward="true" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-              <folding>
-                <element signature="e#90#112#0" expanded="true" />
-                <element signature="e#146#164#0" expanded="true" />
-                <element signature="e#174#197#0" expanded="true" />
-                <element signature="e#398#537#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ms_thread.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_thread.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="32" column="18" lean-forward="true" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-              <folding>
-                <element signature="e#1057#1069#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="protocol_binary.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/protocol_binary.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="64" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ms_conn.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_conn.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-              <folding>
-                <element signature="e#411#423#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vbucket.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/vbucket.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
-              <folding>
-                <element signature="e#1693#1705#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ms_stats.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_stats.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ms_conn.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_conn.c">
+        <entry file="file://$PROJECT_DIR$/memaslap/ms_conn.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            <state relative-caret-position="1009">
+              <caret line="439" column="29" selection-start-line="439" selection-start-column="19" selection-end-line="439" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="client.cc" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tcp-client/client.cc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="17" column="29" lean-forward="true" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -128,10 +41,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
-      <find>assert_msg</find>
-      <find>hashkit_st</find>
-      <find>libhashkit_md5_signature</find>
       <find>MD5Transform</find>
       <find>MD5_CTX</find>
       <find>MD5Init</find>
@@ -158,6 +67,10 @@
       <find>send</find>
       <find>mem_config.h</find>
       <find>#include &quot;cli</find>
+      <find>atomic_add_32_nv</find>
+      <find>pthread_key_t</find>
+      <find>ms_options_t</find>
+      <find>ms_lookup_help</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/memaslap</dir>
@@ -188,7 +101,6 @@
         <option value="$PROJECT_DIR$/tcp-client/aes.hh" />
         <option value="$PROJECT_DIR$/tcp-client/dpdk_io.hh" />
         <option value="$PROJECT_DIR$/tcp-client/dpdk_memcached.cc" />
-        <option value="$PROJECT_DIR$/tcp-client/client.cc" />
         <option value="$PROJECT_DIR$/memaslap_c/memaslap.c" />
         <option value="$PROJECT_DIR$/memaslap_c/ms_sigsegv.c" />
         <option value="$PROJECT_DIR$/memaslap_c/protocol_binary.h" />
@@ -198,6 +110,7 @@
         <option value="$PROJECT_DIR$/memaslap_c/ms_stats.c" />
         <option value="$PROJECT_DIR$/memaslap_c/ms_conn.c" />
         <option value="$PROJECT_DIR$/memaslap_c/execute.h" />
+        <option value="$PROJECT_DIR$/tcp-client/client.cc" />
       </list>
     </option>
   </component>
@@ -231,7 +144,7 @@
             <path>
               <item name="seastar-version" type="b2602c69:ProjectViewProjectNode" />
               <item name="seastar-version" type="462c0819:PsiDirectoryNode" />
-              <item name="memaslap_c" type="462c0819:PsiDirectoryNode" />
+              <item name="memaslap" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -276,12 +189,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="27449000" />
+      <workItem from="1529142659565" duration="29500000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54106000" />
+    <option name="totallyTimeSpent" value="56157000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -489,13 +402,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tcp-client/client.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_memslap.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
@@ -544,9 +450,6 @@
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_task.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/memaslap_c/ms_thread.c">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_stats.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -561,19 +464,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/memaslap_c/memaslap.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="6" lean-forward="true" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-          <folding>
-            <element signature="e#90#112#0" expanded="true" />
-            <element signature="e#146#164#0" expanded="true" />
-            <element signature="e#174#197#0" expanded="true" />
-            <element signature="e#398#537#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -644,8 +534,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/execute.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        <state relative-caret-position="456">
+          <caret line="24" column="14" lean-forward="true" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/ms_thread.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#226#248#0" expanded="true" />
+            <element signature="e#282#300#0" expanded="true" />
+            <element signature="e#309#331#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/memaslap.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3595">
+          <caret line="726" column="7" lean-forward="true" selection-start-line="726" selection-start-column="7" selection-end-line="726" selection-end-column="7" />
+          <folding>
+            <element signature="e#90#112#0" expanded="true" />
+            <element signature="e#146#164#0" expanded="true" />
+            <element signature="e#174#197#0" expanded="true" />
+            <element signature="e#398#537#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap/ms_conn.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1009">
+          <caret line="439" column="29" selection-start-line="439" selection-start-column="19" selection-end-line="439" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tcp-client/client.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="29" lean-forward="true" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
         </state>
       </provider>
     </entry>

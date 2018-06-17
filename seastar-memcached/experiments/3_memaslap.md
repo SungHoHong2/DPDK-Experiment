@@ -18,5 +18,5 @@
 - you have to choose whether the data has to be sent via binary or ascii
 - the key has to by encryped with AES and ecrypted with AES
 - I have converted the send data but doing this one by one will take too much time
-- `memaslap implemented it's own transfer file, and it does not seem to use memcached library that much`
-- we will try to convert memaslap into C++ and then Seastar
+- `memaslap implemented it's own transfer method, and it does not seem to use memcached library that much`
+- we nneed to convert this into C++

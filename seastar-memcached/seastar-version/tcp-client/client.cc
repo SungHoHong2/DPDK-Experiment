@@ -30,6 +30,9 @@ int main(){
     rc = memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
 
 
+
+
+
     if (rc == MEMCACHED_SUCCESS)
       fprintf(stderr, "Key stored successfully\n");
     else
