@@ -2,6 +2,7 @@
 #include "dpdk_basic.hh"
 #include "dpdk_error.hh"
 
+#define memcached_is_auto_eject_hosts(__object) ((__object)->flags.auto_eject_hosts)
 
 memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 {
@@ -51,6 +52,65 @@ const char *memcached_array_string(memcached_array_st *array)
     }
 
     return NULL;
+}
+
+static inline void _regen_for_auto_eject(Memcached *ptr)
+{
+    if (_is_auto_eject_host(ptr) && ptr->ketama.next_distribution_rebuild)
+    {
+        struct timeval now;
+
+        if (gettimeofday(&now, NULL) == 0 and
+            now.tv_sec > ptr->ketama.next_distribution_rebuild)
+        {
+            run_distribution(ptr);
+        }
+    }
+}
+
+
+static uint32_t dispatch_host(const Memcached *ptr, uint32_t hash)
+{
+    switch (ptr->distribution)
+    {
+        case MEMCACHED_DISTRIBUTION_CONSISTENT:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_WEIGHTED:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA_SPY:
+        {
+            uint32_t num= ptr->ketama.continuum_points_counter;
+            WATCHPOINT_ASSERT(ptr->ketama.continuum);
+
+            memcached_continuum_item_st *begin, *end, *left, *right, *middle;
+            begin= left= ptr->ketama.continuum;
+            end= right= ptr->ketama.continuum + num;
+
+            while (left < right)
+            {
+                middle= left + (right - left) / 2;
+                if (middle->value < hash)
+                    left= middle + 1;
+                else
+                    right= middle;
+            }
+            if (right == end)
+                right= begin;
+            return right->index;
+        }
+        case MEMCACHED_DISTRIBUTION_MODULA:
+            return hash % memcached_server_count(ptr);
+        case MEMCACHED_DISTRIBUTION_RANDOM:
+            return (uint32_t) random() % memcached_server_count(ptr);
+        case MEMCACHED_DISTRIBUTION_VIRTUAL_BUCKET:
+        {
+            return memcached_virtual_bucket_get(ptr, hash);
+        }
+        default:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_MAX:
+            WATCHPOINT_ASSERT(0); /* We have added a distribution without extending the logic */
+            return hash % memcached_server_count(ptr);
+    }
+    /* NOTREACHED */
 }
 
 
