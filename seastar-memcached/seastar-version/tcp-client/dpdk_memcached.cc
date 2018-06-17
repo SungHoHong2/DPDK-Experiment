@@ -12,6 +12,11 @@
 #define memcached_literal_param_size util_literal_param_size
 
 
+bool _is_auto_eject_host(const memcached_st *ptr)
+{
+    return ptr->flags.auto_eject_hosts;
+}
+
 struct hashkit_st
 {
     struct hashkit_function_st {
@@ -466,7 +471,7 @@ memcached_return_t run_distribution(Memcached *ptr)
 
         case MEMCACHED_DISTRIBUTION_CONSISTENT_MAX:
         default:
-            assert_msg(0, "Invalid distribution type passed to run_distribution()");
+//            assert_msg(0, "Invalid distribution type passed to run_distribution()");
     }
 
     return MEMCACHED_SUCCESS;
