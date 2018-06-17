@@ -1806,6 +1806,28 @@ am__clients_memaslap_SOURCES_DIST = clients/memaslap.cc \
 @BUILD_WIN32_FALSE@	clients/ms_thread.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/generator.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/execute.$(OBJEXT)
+
+
+
+
+$(info CLIENT [${EXEEXT}] this part causes the makefile not to create a memaslap BEGIN)
+
+# @BUILD_WIN32_FALSE@am_clients_memaslap_OBJECTS =  \
+# @BUILD_WIN32_FALSE@	clients/memaslap.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_conn.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_setting.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_sigsegv.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_stats.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_task.cc \
+# @BUILD_WIN32_FALSE@	clients/ms_thread.cc \
+# @BUILD_WIN32_FALSE@	clients/generator.cc \
+# @BUILD_WIN32_FALSE@	clients/execute.cc
+
+$(info CLIENT [${EXEEXT}] this part causes the makefile not to create a memaslap END)
+
+
+
+
 clients_memaslap_OBJECTS = $(am_clients_memaslap_OBJECTS)
 @BUILD_WIN32_FALSE@clients_memaslap_DEPENDENCIES = $(CLIENTS_LDADDS)
 am__clients_memcapable_SOURCES_DIST = clients/memcapable.cc \
