@@ -45,7 +45,7 @@ static bool repack_input_buffer(memcached_instance_st* instance)
             {
                 if (nr == 0)
                 {
-                    memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT);
+                    // memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT);
                 }
                 else
                 {
@@ -64,7 +64,8 @@ static bool repack_input_buffer(memcached_instance_st* instance)
                             break; // No IO is fine, we can just move on
 
                         default:
-                            memcached_set_errno(*instance, get_socket_errno(), MEMCACHED_AT);
+                            std::cout << "howdy" << std::endl;
+                            // memcached_set_errno(*instance, get_socket_errno(), MEMCACHED_AT);
                     }
                 }
 
@@ -168,10 +169,6 @@ static memcached_return_t io_wait(memcached_instance_st* instance,
         instance->io_wait_count.read++;
     }
 
-    if (instance->root->poll_timeout == 0) // Mimic 0 causes timeout behavior (not all platforms do this)
-    {
-        return memcached_set_error(*instance, MEMCACHED_TIMEOUT, MEMCACHED_AT, memcached_literal_param("poll_timeout() was set to zero"));
-    }
 
     size_t loop_max= 5;
     while (--loop_max) // While loop is for ERESTART or EINTR
@@ -186,11 +183,6 @@ static memcached_return_t io_wait(memcached_instance_st* instance,
                 return MEMCACHED_SUCCESS;
             }
 
-            if (fds.revents & POLLHUP)
-            {
-                return memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT,
-                                           memcached_literal_param("poll() detected hang up"));
-            }
 
             if (fds.revents & POLLERR)
             {
@@ -206,16 +198,13 @@ static memcached_return_t io_wait(memcached_instance_st* instance,
                     local_errno= err;
                 }
                 memcached_quit_server(instance, true);
-                return memcached_set_errno(*instance, local_errno, MEMCACHED_AT,
-                                           memcached_literal_param("poll() returned POLLHUP"));
+
             }
 
-            return memcached_set_error(*instance, MEMCACHED_FAILURE, MEMCACHED_AT, memcached_literal_param("poll() returned a value that was not dealt with"));
         }
 
         if (active_fd == 0)
         {
-            return memcached_set_error(*instance, MEMCACHED_TIMEOUT, MEMCACHED_AT, memcached_literal_param("No active_fd were found"));
         }
 
         // Only an error should result in this code being called.
@@ -231,13 +220,9 @@ static memcached_return_t io_wait(memcached_instance_st* instance,
 
             case EFAULT:
             case ENOMEM:
-                memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT);
-
             case EINVAL:
-                memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT, memcached_literal_param("RLIMIT_NOFILE exceeded, or if OSX the timeout value was invalid"));
-
             default:
-                memcached_set_errno(*instance, local_errno, MEMCACHED_AT, memcached_literal_param("poll"));
+                  std::cout << "howdy" << std::endl;
         }
 
         break;
