@@ -17,24 +17,6 @@ bool _is_auto_eject_host(const memcached_st *ptr)
     return ptr->flags.auto_eject_hosts;
 }
 
-struct hashkit_st
-{
-    struct hashkit_function_st {
-        hashkit_hash_fn function;
-        void *context;
-    } base_hash, distribution_hash;
-
-    struct {
-        bool is_base_same_distributed:1;
-    } flags;
-
-    struct {
-        bool is_allocated:1;
-    } options;
-
-    void *_key;
-};
-
 
 struct memcached_instance_st {
     in_port_t port() const

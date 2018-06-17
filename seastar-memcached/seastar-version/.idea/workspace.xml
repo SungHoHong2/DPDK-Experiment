@@ -40,8 +40,8 @@
       <file leaf-file-name="dpdk_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+            <state relative-caret-position="316">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -98,9 +98,9 @@
       <find>uint32_t memcached_server_count</find>
       <find>compare_</find>
       <find>update_continuum</find>
-      <find>hashkit_st</find>
       <find>update</find>
       <find>assert_msg</find>
+      <find>hashkit_st</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -192,12 +192,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="12734000" />
+      <workItem from="1529142659565" duration="12819000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39391000" />
+    <option name="totallyTimeSpent" value="39476000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -339,8 +339,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        <state relative-caret-position="316">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
