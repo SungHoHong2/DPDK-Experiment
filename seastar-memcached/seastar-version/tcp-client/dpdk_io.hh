@@ -1,6 +1,5 @@
-#ifdef HAVE_SYS_SOCKET_H
-# include <sys/socket.h>
-#endif
+#include <sys/socket.h>
+#include <poll.h>
 
 #define POLLIN 0x0001
 
