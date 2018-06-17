@@ -15,6 +15,15 @@ enum memcached_storage_action_t {
 };
 
 
+void _libmemcached_free(const memcached_st*, void *mem, void*)
+{
+    if (mem)
+    {
+        std::free(mem);
+    }
+}
+
+
 static void _error_free(memcached_error_t *error)
 {
     if (error)
