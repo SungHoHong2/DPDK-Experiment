@@ -8,6 +8,7 @@
 
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
 #define memcached_is_encrypted(__object) ((__object)->hashkit._key)
+#define memcached_is_replying(__object) ((__object)->flags.reply)
 
 
 memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
