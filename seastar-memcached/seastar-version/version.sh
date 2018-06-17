@@ -1,4 +1,4 @@
-FILENAME=5_memaslap
+FILENAME=6_memaslap
 
 if [ "$1" = "memcached_update" ]
 then
