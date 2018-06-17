@@ -1,8 +1,10 @@
 #include "dpdk_memcached.hh"
 #include "dpdk_basic.hh"
 #include "dpdk_error.hh"
+#include <sys/time.h>
 
 #define memcached_is_auto_eject_hosts(__object) ((__object)->flags.auto_eject_hosts)
+
 
 /* string value */
 struct memcached_continuum_item_st
@@ -10,6 +12,45 @@ struct memcached_continuum_item_st
     uint32_t index;
     uint32_t value;
 };
+
+struct memcached_virtual_bucket_t {
+    bool has_forward;
+    uint32_t size;
+    uint32_t replicas;
+    struct bucket_t buckets[];
+};
+
+memcached_return_t run_distribution(Memcached *ptr)
+{
+    if (ptr->flags.use_sort_hosts)
+    {
+        sort_hosts(ptr);
+    }
+
+    switch (ptr->distribution)
+    {
+        case MEMCACHED_DISTRIBUTION_CONSISTENT:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA_SPY:
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_WEIGHTED:
+            return update_continuum(ptr);
+
+        case MEMCACHED_DISTRIBUTION_VIRTUAL_BUCKET:
+        case MEMCACHED_DISTRIBUTION_MODULA:
+            break;
+
+        case MEMCACHED_DISTRIBUTION_RANDOM:
+            srandom((uint32_t) time(NULL));
+            break;
+
+        case MEMCACHED_DISTRIBUTION_CONSISTENT_MAX:
+        default:
+            assert_msg(0, "Invalid distribution type passed to run_distribution()");
+    }
+
+    return MEMCACHED_SUCCESS;
+}
+
 
 uint32_t memcached_virtual_bucket_get(const memcached_st *self, uint32_t digest)
 {
