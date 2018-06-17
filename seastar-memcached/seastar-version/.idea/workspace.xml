@@ -22,8 +22,8 @@
       <file leaf-file-name="dpdk_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="154" column="35" lean-forward="true" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
+            <state relative-caret-position="474">
+              <caret line="200" column="54" lean-forward="true" selection-start-line="200" selection-start-column="54" selection-end-line="200" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -116,11 +116,11 @@
       <find>MEMCACHED_AT</find>
       <find>POLLIN</find>
       <find>POLLIN\</find>
-      <find>memcached_quit_server</find>
       <find>_io_write</find>
       <find>memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key) {   if (ptr == NULL)   {     return NULL;   }    return &amp;ptr-&gt;servers[server_key]; }</find>
       <find># define SOCKET_ERROR -1</find>
       <find>SOCKET_ERROR</find>
+      <find>memcached_quit_server</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -221,12 +221,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="23261000" />
+      <workItem from="1529142659565" duration="23496000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49918000" />
+    <option name="totallyTimeSpent" value="50153000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -258,7 +258,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -426,8 +426,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="154" column="35" lean-forward="true" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
+        <state relative-caret-position="474">
+          <caret line="200" column="54" lean-forward="true" selection-start-line="200" selection-start-column="54" selection-end-line="200" selection-end-column="54" />
         </state>
       </provider>
     </entry>
