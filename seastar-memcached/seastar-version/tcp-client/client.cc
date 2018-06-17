@@ -25,10 +25,9 @@ int main(){
       fprintf(stderr, "Couldn't add server: %s\n", memcached_strerror(memc, rc));
 
 
-    dpdk_memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
+    rc = dpdk_memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
 
-
-    rc = memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
+    // rc = memcached_set(memc, key, strlen(key), value, strlen(value), (time_t)0, (uint32_t)0);
 
 
     if (rc == MEMCACHED_SUCCESS)
