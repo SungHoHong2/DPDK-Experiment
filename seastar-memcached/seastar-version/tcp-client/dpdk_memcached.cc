@@ -209,18 +209,13 @@ static int compare_servers(const void *p1, const void *p2)
 static memcached_return_t update_continuum(Memcached *ptr)
 {
     uint32_t continuum_index= 0;
-//    uint32_t pointer_counter= 0;
-//    uint32_t pointer_per_server= MEMCACHED_POINTS_PER_SERVER;
-//    uint32_t pointer_per_hash= 1;
-//    uint32_t live_servers= 0;
-//    struct timeval now;
-//
-//    if (gettimeofday(&now, NULL))
-//    {
-//        return memcached_set_errno(*ptr, errno, MEMCACHED_AT);
-//    }
-//
-//    memcached_instance_st* list= memcached_instance_list(ptr);
+    uint32_t pointer_counter= 0;
+    uint32_t pointer_per_server= MEMCACHED_POINTS_PER_SERVER;
+    uint32_t pointer_per_hash= 1;
+    uint32_t live_servers= 0;
+    struct timeval now;
+
+    memcached_instance_st* list= memcached_instance_list(ptr);
 //
 //    /* count live servers (those without a retry delay set) */
 //    bool is_auto_ejecting= _is_auto_eject_host(ptr);
