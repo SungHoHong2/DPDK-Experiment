@@ -230,13 +230,15 @@ static memcached_return_t io_wait(memcached_instance_st* instance,
 
     memcached_quit_server(instance, true);
 
-    if (memcached_has_error(instance))
-    {
-        return memcached_instance_error_return(instance);
-    }
+//    if (memcached_has_error(instance))
+//    {
+//        return memcached_instance_error_return(instance);
+//    }
 
-    return memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT,
-                               memcached_literal_param("number of attempts to call io_wait() failed"));
+//    return memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT,
+//                               memcached_literal_param("number of attempts to call io_wait() failed"));
+    memcached_return_t rt;
+    return rt;
 }
 
 static bool io_flush(memcached_instance_st* instance,
@@ -261,19 +263,13 @@ static bool io_flush(memcached_instance_st* instance,
 
     error= MEMCACHED_SUCCESS;
 
-    WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+    // WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
 
-    /* Looking for memory overflows */
-#if defined(DEBUG)
-    if (write_length == MEMCACHED_MAX_BUFFER)
-    WATCHPOINT_ASSERT(instance->write_buffer == local_write_ptr);
-  WATCHPOINT_ASSERT((instance->write_buffer + MEMCACHED_MAX_BUFFER) >= (local_write_ptr + write_length));
-#endif
 
     while (write_length)
     {
-        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
-        WATCHPOINT_ASSERT(write_length > 0);
+//        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+//        WATCHPOINT_ASSERT(write_length > 0);
 
         int flags;
         if (with_flush)
@@ -326,15 +322,12 @@ static bool io_flush(memcached_instance_st* instance,
                     }
 
                     memcached_quit_server(instance, true);
-                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
                     return false;
                 }
                 case ENOTCONN:
                 case EPIPE:
                 default:
                     memcached_quit_server(instance, true);
-                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
-                    WATCHPOINT_ASSERT(instance->fd == INVALID_SOCKET);
                     return false;
             }
         }
@@ -345,7 +338,6 @@ static bool io_flush(memcached_instance_st* instance,
         write_length-= uint32_t(sent_length);
     }
 
-    WATCHPOINT_ASSERT(write_length == 0);
     instance->write_buffer_offset= 0;
 
     return true;
@@ -408,7 +400,6 @@ static memcached_return_t _io_fill(memcached_instance_st* instance)
                 case ECONNREFUSED:
                 default:
                     memcached_quit_server(instance, true);
-                    memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
                     break;
             }
 
@@ -426,8 +417,7 @@ static memcached_return_t _io_fill(memcached_instance_st* instance)
               it will return EGAIN if data is not immediatly available.
             */
             memcached_quit_server(instance, true);
-            return memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT,
-                                       memcached_literal_param("::rec() returned zero, server has disconnected"));
+
         }
         instance->io_wait_count._bytes_read+= data_read;
     } while (data_read <= 0);
@@ -754,7 +744,6 @@ memcached_instance_st* memcached_io_get_readable_server(Memcached *memc, memcach
     switch (error)
     {
         case -1:
-            memcached_set_errno(*memc, get_socket_errno(), MEMCACHED_AT);
             /* FALLTHROUGH */
         case 0:
             break;
@@ -839,7 +828,6 @@ memcached_return_t memcached_io_readline(memcached_instance_st* instance,
             if (memcached_failed(rc) and rc == MEMCACHED_IN_PROGRESS)
             {
                 memcached_quit_server(instance, true);
-                return memcached_set_error(*instance, rc, MEMCACHED_AT);
             }
             else if (memcached_failed(rc))
             {
