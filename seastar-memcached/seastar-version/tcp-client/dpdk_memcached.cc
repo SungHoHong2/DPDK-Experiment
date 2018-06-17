@@ -235,7 +235,11 @@ static uint32_t ketama_server_hash(const char *key, size_t key_length, uint32_t 
            | (results[0 + alignment * 4] & 0xFF);
 }
 
-
+typedef struct {
+    UINT4 state[4];                                   /* state (ABCD) */
+    UINT4 count[2];        /* number of bits, modulo 2^64 (lsb first) */
+    unsigned char buffer[64];                         /* input buffer */
+} MD5_CTX;
 
 
 static void MD5Init (MD5_CTX *context)      /* context */
