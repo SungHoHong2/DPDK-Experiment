@@ -269,10 +269,10 @@ static bool io_flush(memcached_instance_st* instance,
 //                    {
 //                        continue;
 //                    }
-                    else if (rc == MEMCACHED_TIMEOUT)
-                    {
-                        return false;
-                    }
+//                    else if (rc == MEMCACHED_TIMEOUT)
+//                    {
+//                        return false;
+//                    }
 
                     memcached_quit_server(instance, true);
                     return false;
