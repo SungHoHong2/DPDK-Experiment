@@ -14,6 +14,26 @@ enum memcached_storage_action_t {
     CAS_OP
 };
 
+
+static void _error_free(memcached_error_t *error)
+{
+    if (error)
+    {
+        _error_free(error->next);
+
+        libmemcached_free(error->root, error);
+    }
+}
+
+
+void memcached_error_free(Memcached& self)
+{
+    _error_free(self.error_messages);
+    self.error_messages= NULL;
+}
+
+
+
 memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 {
     if (self == NULL)
