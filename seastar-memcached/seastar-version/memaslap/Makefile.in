@@ -1901,8 +1901,6 @@ clients_memslap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(clients_memslap_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 
-$(info CLIENT: ${clients_memslap_LINK})
-@echo $(clients_memslap_LINK)
 
 # $(info CLIENT [$(CLIENTS_LDADDS)] [$(LIBTOOL)] [$(AM_V_lt)]  [$(AM_LIBTOOLFLAGS)] [$(LIBTOOLFLAGS)] [$(CXXLD)] [$(clients_memslap_CXXFLAGS)])
 
