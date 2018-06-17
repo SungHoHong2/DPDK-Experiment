@@ -66,6 +66,178 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
+
+static bool io_flush(memcached_instance_st* instance,
+                     const bool with_flush,
+                     memcached_return_t& error)
+{
+    /*
+     ** We might want to purge the input buffer if we haven't consumed
+     ** any output yet... The test for the limits is the purge is inline
+     ** in the purge function to avoid duplicating the logic..
+   */
+//    {
+//        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+//
+//        if (memcached_purge(instance) == false)
+//        {
+//            return false;
+//        }
+//    }
+//    char *local_write_ptr= instance->write_buffer;
+//    size_t write_length= instance->write_buffer_offset;
+//
+//    error= MEMCACHED_SUCCESS;
+//
+//    WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+//
+//    /* Looking for memory overflows */
+//#if defined(DEBUG)
+//    if (write_length == MEMCACHED_MAX_BUFFER)
+//    WATCHPOINT_ASSERT(instance->write_buffer == local_write_ptr);
+//  WATCHPOINT_ASSERT((instance->write_buffer + MEMCACHED_MAX_BUFFER) >= (local_write_ptr + write_length));
+//#endif
+//
+//    while (write_length)
+//    {
+//        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+//        WATCHPOINT_ASSERT(write_length > 0);
+//
+//        int flags;
+//        if (with_flush)
+//        {
+//            flags= MSG_NOSIGNAL;
+//        }
+//        else
+//        {
+//            flags= MSG_NOSIGNAL|MSG_MORE;
+//        }
+//
+//        ssize_t sent_length= ::send(instance->fd, local_write_ptr, write_length, flags);
+//        int local_errno= get_socket_errno(); // We cache in case memcached_quit_server() modifies errno
+//
+//        if (sent_length == SOCKET_ERROR)
+//        {
+//#if 0 // @todo I should look at why we hit this bit of code hard frequently
+//            WATCHPOINT_ERRNO(get_socket_errno());
+//      WATCHPOINT_NUMBER(get_socket_errno());
+//#endif
+//            switch (get_socket_errno())
+//            {
+//                case ENOBUFS:
+//                    continue;
+//
+//#if EWOULDBLOCK != EAGAIN
+//                    case EWOULDBLOCK:
+//#endif
+//                case EAGAIN:
+//                {
+//                    /*
+//                     * We may be blocked on write because the input buffer
+//                     * is full. Let's check if we have room in our input
+//                     * buffer for more data and retry the write before
+//                     * waiting..
+//                   */
+//                    if (repack_input_buffer(instance) or process_input_buffer(instance))
+//                    {
+//                        continue;
+//                    }
+//
+//                    memcached_return_t rc= io_wait(instance, POLLOUT);
+//                    if (memcached_success(rc))
+//                    {
+//                        continue;
+//                    }
+//                    else if (rc == MEMCACHED_TIMEOUT)
+//                    {
+//                        return false;
+//                    }
+//
+//                    memcached_quit_server(instance, true);
+//                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
+//                    return false;
+//                }
+//                case ENOTCONN:
+//                case EPIPE:
+//                default:
+//                    memcached_quit_server(instance, true);
+//                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
+//                    WATCHPOINT_ASSERT(instance->fd == INVALID_SOCKET);
+//                    return false;
+//            }
+//        }
+//
+//        instance->io_bytes_sent+= uint32_t(sent_length);
+//
+//        local_write_ptr+= sent_length;
+//        write_length-= uint32_t(sent_length);
+//    }
+//
+//    WATCHPOINT_ASSERT(write_length == 0);
+//    instance->write_buffer_offset= 0;
+
+    return true;
+}
+
+
+
+static bool _io_write(memcached_instance_st* instance,
+                      const void *buffer, size_t length, bool with_flush,
+                      size_t& written)
+{
+
+    printf("_io_write BEGIN\n");
+
+    assert(instance->fd != INVALID_SOCKET);
+    assert(memcached_is_udp(instance->root) == false);
+
+    const char *buffer_ptr= static_cast<const char *>(buffer);
+
+    const size_t original_length= length;
+
+    while (length)
+    {
+        char *write_ptr;
+        size_t buffer_end= MEMCACHED_MAX_BUFFER;
+        size_t should_write= buffer_end -instance->write_buffer_offset;
+        should_write= (should_write < length) ? should_write : length;
+
+        write_ptr= instance->write_buffer + instance->write_buffer_offset;
+        memcpy(write_ptr, buffer_ptr, should_write);
+        instance->write_buffer_offset+= should_write;
+        buffer_ptr+= should_write;
+        length-= should_write;
+
+        if (instance->write_buffer_offset == buffer_end)
+        {
+            WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+
+            memcached_return_t rc;
+            if (io_flush(instance, with_flush, rc) == false)
+            {
+                written= original_length -length;
+                return false;
+            }
+        }
+    }
+
+    if (with_flush)
+    {
+        memcached_return_t rc;
+        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
+        if (io_flush(instance, with_flush, rc) == false)
+        {
+            written= original_length -length;
+            return false;
+        }
+    }
+
+    written= original_length -length;
+
+    return true;
+}
+
+
 bool memcached_io_writev(memcached_instance_st* instance,
                          libmemcached_io_vector_st vector[],
                          const size_t number_of, const bool with_flush)
