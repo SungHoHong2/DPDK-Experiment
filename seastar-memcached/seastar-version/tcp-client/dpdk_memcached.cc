@@ -183,6 +183,23 @@ memcached_instance_st* memcached_instance_list(const memcached_st *shell)
     return NULL;
 }
 
+
+static int compare_servers(const void *p1, const void *p2)
+{
+    const memcached_instance_st * a= (const memcached_instance_st *)p1;
+    const memcached_instance_st * b= (const memcached_instance_st *)p2;
+
+    int return_value= strcmp(a->_hostname, b->_hostname);
+
+    if (return_value == 0)
+    {
+        return_value= int(a->port() - b->port());
+    }
+
+    return return_value;
+}
+
+
 static void sort_hosts(Memcached *ptr)
 {
     if (memcached_server_count(ptr))
