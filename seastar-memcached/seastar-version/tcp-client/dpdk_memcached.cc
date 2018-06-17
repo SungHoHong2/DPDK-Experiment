@@ -229,6 +229,13 @@ static bool _io_write(memcached_instance_st* instance,
 }
 
 
+bool memcached_io_write(memcached_instance_st* instance)
+{
+    size_t written;
+    return _io_write(instance, NULL, 0, true, written);
+}
+
+
 bool memcached_io_writev(memcached_instance_st* instance,
                          libmemcached_io_vector_st vector[],
                          const size_t number_of, const bool with_flush)
@@ -249,14 +256,14 @@ bool memcached_io_writev(memcached_instance_st* instance,
             total+= written;
         }
     }
-//
-//    if (with_flush)
-//    {
-//        if (memcached_io_write(instance) == false)
-//        {
-//            return false;
-//        }
-//    }
+
+    if (with_flush)
+    {
+        if (memcached_io_write(instance) == false)
+        {
+            return false;
+        }
+    }
 
     return (complete_total == total);
 }
