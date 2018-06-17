@@ -35,10 +35,6 @@
  */
 
 
-#include "libhashkit/common.h"
-
-#include "libhashkit/rijndael.hpp"
-
 #include <cstring>
 
 #define AES_KEY_LENGTH 256               /* 128, 192, 256 */
