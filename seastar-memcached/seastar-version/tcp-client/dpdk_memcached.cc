@@ -242,14 +242,14 @@ static memcached_return_t update_continuum(Memcached *ptr)
     {
         live_servers= memcached_server_count(ptr);
     }
-//
-//    uint32_t points_per_server= (uint32_t) (memcached_is_weighted_ketama(ptr) ? MEMCACHED_POINTS_PER_SERVER_KETAMA : MEMCACHED_POINTS_PER_SERVER);
-//
-//    if (live_servers == 0)
-//    {
-//        return MEMCACHED_SUCCESS;
-//    }
-//
+
+    uint32_t points_per_server= (uint32_t) (memcached_is_weighted_ketama(ptr) ? MEMCACHED_POINTS_PER_SERVER_KETAMA : MEMCACHED_POINTS_PER_SERVER);
+
+    if (live_servers == 0)
+    {
+        return MEMCACHED_SUCCESS;
+    }
+
 //    if (live_servers > ptr->ketama.continuum_count)
 //    {
 //        memcached_continuum_item_st *new_ptr;
