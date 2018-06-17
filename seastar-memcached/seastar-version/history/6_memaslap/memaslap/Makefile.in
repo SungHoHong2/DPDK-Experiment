@@ -215,7 +215,7 @@
 # All paths should be given relative to the root
 
 
-$(info DEBUGGING MAKEFILE)
+
 
 VPATH = @srcdir@
 am__is_gnu_make = test -n '$(MAKEFILE_LIST)' && test -n '$(MAKELEVEL)'
@@ -1019,7 +1019,7 @@ clients_libutilities_la_OBJECTS =  \
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 @BUILD_WIN32_FALSE@am_clients_libutilities_la_rpath =
 libhashkit_libhashkit_la_DEPENDENCIES =
 am__libhashkit_libhashkit_la_SOURCES_DIST = libhashkit/aes.cc \
@@ -1640,18 +1640,79 @@ am__libmemcachedinternal_libmemcachedutilinternal_la_SOURCES_DIST =  \
 	libmemcached/backtrace.cc libmemcachedutil/flush.cc \
 	libmemcachedutil/pid.cc libmemcachedutil/ping.cc \
 	libmemcachedutil/pool.cc libmemcachedutil/version.cc
-
-
-$(info CLIENT COMPILE BEGIN)
-
+@BUILD_WIN32_FALSE@am__objects_22 = libmemcached/libmemcachedinternal_libmemcachedutilinternal_la-backtrace.lo \
+@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-flush.lo \
+@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-pid.lo \
+@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-ping.lo \
+@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-pool.lo \
+@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-version.lo
+@BUILD_WIN32_FALSE@am_libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS =  \
+@BUILD_WIN32_FALSE@	$(am__objects_22)
+libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS = $(am_libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS)
+libmemcachedinternal_libmemcachedutilinternal_la_LINK = $(LIBTOOL) \
+	$(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CXXLD) \
+	$(libmemcachedinternal_libmemcachedutilinternal_la_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_WIN32_FALSE@am_libmemcachedinternal_libmemcachedutilinternal_la_rpath =
+@BUILD_WIN32_FALSE@libtest_libtest_la_DEPENDENCIES =  \
+@BUILD_WIN32_FALSE@	$(am__DEPENDENCIES_1)
+am__libtest_libtest_la_SOURCES_DIST = libtest/alarm.cc \
+	libtest/binaries.cc libtest/cmdline.cc libtest/collection.cc \
+	libtest/comparison.cc libtest/core.cc libtest/cpu.cc \
+	libtest/dns.cc libtest/dream.cc libtest/drizzled.cc \
+	libtest/exception.cc libtest/exception/fatal.cc \
+	libtest/formatter.cc libtest/client.cc libtest/framework.cc \
+	libtest/has.cc libtest/http.cc libtest/is_local.cc \
+	libtest/killpid.cc libtest/libtool.cc libtest/main.cc \
+	libtest/port.cc libtest/result.cc libtest/runner.cc \
+	libtest/server.cc libtest/server_container.cc \
+	libtest/signal.cc libtest/socket.cc libtest/strerror.cc \
+	libtest/timer.cc libtest/tmpfile.cc libtest/vchar.cc \
+	libtest/memcached.cc libtest/gearmand.cc \
+	libtest/blobslap_worker.cc
+@BUILDING_GEARMAN_TRUE@@BUILD_WIN32_FALSE@am__objects_23 = libtest/libtest_libtest_la-blobslap_worker.lo
+@BUILD_WIN32_FALSE@am_libtest_libtest_la_OBJECTS =  \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-alarm.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-binaries.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-cmdline.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-collection.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-comparison.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-core.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-cpu.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-dns.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-dream.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-drizzled.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-exception.lo \
+@BUILD_WIN32_FALSE@	libtest/exception/libtest_libtest_la-fatal.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-formatter.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-client.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-framework.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-has.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-http.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-is_local.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-killpid.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-libtool.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-main.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-port.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-result.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-runner.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-server.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-server_container.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-signal.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-socket.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-strerror.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-timer.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-tmpfile.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-vchar.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-memcached.lo \
+@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-gearmand.lo \
+@BUILD_WIN32_FALSE@	$(am__objects_23)
 libtest_libtest_la_OBJECTS = $(am_libtest_libtest_la_OBJECTS)
 libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libtest_libtest_la_CXXFLAGS) $(CXXFLAGS) \
 	$(libtest_libtest_la_LDFLAGS) $(LDFLAGS) -o $@
-
-$(info CLIENT [${EXEEXT}]) # proven to be nothing
-
 @BUILD_WIN32_FALSE@am_libtest_libtest_la_rpath =
 @BUILD_WIN32_FALSE@am__EXEEXT_1 = clients/memcapable$(EXEEXT) \
 @BUILD_WIN32_FALSE@	clients/memcat$(EXEEXT) \
@@ -1675,30 +1736,66 @@ $(info CLIENT [${EXEEXT}]) # proven to be nothing
 @BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@am__EXEEXT_6 = libmemcached-1.0/t/c_test$(EXEEXT) \
 @BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@	libmemcached-1.0/t/c_sasl_test$(EXEEXT)
 @BUILD_WIN32_FALSE@am__EXEEXT_7 = libmemcached-1.0/t/cc_test$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/cycle$(EXEEXT)
+@BUILD_WIN32_FALSE@@HAVE_DTRACE_FALSE@am__EXEEXT_8 = tests/libmemcached-1.0/internals$(EXEEXT)
+@BUILD_WIN32_FALSE@am__EXEEXT_9 =  \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testapp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testsocket$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/sasl$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testudp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testplus$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/parser$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/failure$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testhashkit$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/hash_plus$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memcapable$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memstat$(EXEEXT) tests/memcp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memflush$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memrm$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memexist$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memtouch$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memcat$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memping$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memerror$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memslap$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memdump$(EXEEXT)
+@BUILD_WIN32_FALSE@am__EXEEXT_10 = libtest/unittest$(EXEEXT) \
+@BUILD_WIN32_FALSE@	libtest/skiptest$(EXEEXT) \
+@BUILD_WIN32_FALSE@	libtest/wait$(EXEEXT) \
+@BUILD_WIN32_FALSE@	libtest/core-count$(EXEEXT) \
+@BUILD_WIN32_FALSE@	libtest/abort$(EXEEXT) \
+@BUILD_WIN32_FALSE@	libtest/backtrace$(EXEEXT)
+@BUILD_WIN32_FALSE@am__EXEEXT_11 =  \
+@BUILD_WIN32_FALSE@	libmemcached-1.0/t/cc_test$(EXEEXT)
+@BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@@HAVE_LIBEVENT_TRUE@am__EXEEXT_12 = example/memcached_light$(EXEEXT)
+@BUILD_WIN32_FALSE@am__EXEEXT_13 = tests/cycle$(EXEEXT)
+@BUILD_WIN32_FALSE@am__EXEEXT_14 =  \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testapp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testsocket$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/sasl$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/atomsmasher$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testudp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testplus$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/parser$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/failure$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/testhashkit$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/hash_plus$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memcapable$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memstat$(EXEEXT) tests/memcp$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memflush$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memrm$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memexist$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memtouch$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memcat$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memping$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memerror$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memslap$(EXEEXT) \
+@BUILD_WIN32_FALSE@	tests/memdump$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__clients_memaslap_SOURCES_DIST = clients/memaslap.cc \
 	clients/ms_conn.cc clients/ms_setting.cc clients/ms_sigsegv.cc \
 	clients/ms_stats.cc clients/ms_task.cc clients/ms_thread.cc \
 	clients/generator.cc clients/execute.cc
-
-
-$(info CLIENT [${EXEEXT}] this part also has no effect)
-
-# @BUILD_WIN32_FALSE@am_clients_memaslap_OBJECTS =  \
-# @BUILD_WIN32_FALSE@	clients/memaslap.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_conn.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_setting.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_sigsegv.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_stats.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_task.cc \
-# @BUILD_WIN32_FALSE@	clients/ms_thread.cc \
-# @BUILD_WIN32_FALSE@	clients/generator.cc \
-# @BUILD_WIN32_FALSE@	clients/execute.cc
-
-$(info CLIENT [${EXEEXT}] this part also has no effect)
-
-
-
 @BUILD_WIN32_FALSE@am_clients_memaslap_OBJECTS =  \
 @BUILD_WIN32_FALSE@	clients/memaslap.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/ms_conn.$(OBJEXT) \
@@ -1709,7 +1806,6 @@ $(info CLIENT [${EXEEXT}] this part also has no effect)
 @BUILD_WIN32_FALSE@	clients/ms_thread.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/generator.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/execute.$(OBJEXT)
-
 clients_memaslap_OBJECTS = $(am_clients_memaslap_OBJECTS)
 @BUILD_WIN32_FALSE@clients_memaslap_DEPENDENCIES = $(CLIENTS_LDADDS)
 am__clients_memcapable_SOURCES_DIST = clients/memcapable.cc \
@@ -2287,11 +2383,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -2305,7 +2401,7 @@ LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CC = $(am__v_CC_@AM_V@)
 am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -2313,7 +2409,7 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -2323,7 +2419,7 @@ LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXX = $(am__v_CXX_@AM_V@)
 am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
 am__v_CXX_0 = @echo "  CXX     " $@;
-am__v_CXX_1 = 
+am__v_CXX_1 =
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -2331,7 +2427,7 @@ CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
-am__v_CXXLD_1 = 
+am__v_CXXLD_1 =
 SOURCES = $(clients_libutilities_la_SOURCES) \
 	$(libhashkit_libhashkit_la_SOURCES) \
 	$(libhashkit_libhashkitinc_la_SOURCES) \
@@ -2969,20 +3065,20 @@ AM_YFLAGS = -d
 
 # includes append to these:
 SUFFIXES = $(am__append_19) $(am__append_61)
-.PHONY = 
+.PHONY =
 CLEANFILES = $(am__append_15) $(am__append_57)
 DISTCLEANFILES = aminclude.am $(am__append_9) $(am__append_51) \
 	config/top.h
 noinst_HEADERS = $(am__append_5) $(am__append_27) $(am__append_46) \
 	$(am__append_48) $(am__append_63) $(am__append_64)
 lib_LTLIBRARIES = $(am__append_4) $(am__append_47) $(am__append_62)
-man_MANS = 
+man_MANS =
 noinst_LTLIBRARIES = $(am__append_8) $(am__append_43)
-include_HEADERS = 
+include_HEADERS =
 nobase_include_HEADERS = $(am__append_3) $(am__append_34) \
 	$(am__append_39) $(am__append_40)
 check_LTLIBRARIES = $(am__append_28)
-EXTRA_HEADERS = 
+EXTRA_HEADERS =
 BUILT_SOURCES = $(am__append_2) $(am__append_14) $(am__append_20) \
 	$(am__append_26) $(am__append_56)
 EXTRA_DIST = README.FIRST README.win32 $(am__append_1) \
@@ -2991,8 +3087,8 @@ dist_man_MANS = $(am__append_44)
 MAINTAINERCLEANFILES = $(am__append_10) $(am__append_52)
 aclocaldir = $(datadir)/aclocal
 dist_aclocal_DATA = $(am__append_74)
-@BUILD_WIN32_FALSE@libhashkit_libhashkit_la_LIBADD = 
-@BUILD_WIN32_TRUE@libhashkit_libhashkit_la_LIBADD = 
+@BUILD_WIN32_FALSE@libhashkit_libhashkit_la_LIBADD =
+@BUILD_WIN32_TRUE@libhashkit_libhashkit_la_LIBADD =
 @BUILD_WIN32_FALSE@libhashkit_libhashkit_la_SOURCES =  \
 @BUILD_WIN32_FALSE@	libhashkit/aes.cc libhashkit/algorithm.cc \
 @BUILD_WIN32_FALSE@	libhashkit/behavior.cc libhashkit/crc32.cc \
@@ -3229,7 +3325,7 @@ dist_aclocal_DATA = $(am__append_74)
 @BUILD_WIN32_FALSE@	$(am__append_31)
 
 # Declare unittest so that we can append to it
-@BUILD_WIN32_FALSE@libtest_unittest_CXXFLAGS = 
+@BUILD_WIN32_FALSE@libtest_unittest_CXXFLAGS =
 @BUILD_WIN32_FALSE@libtest_unittest_LDADD = libtest/libtest.la
 @BUILD_WIN32_FALSE@libtest_libtest_la_LDFLAGS = $(am__append_29)
 @BUILD_WIN32_FALSE@TMP_DIR := tmp_chroot/etc tmp_chroot/var/log tmp_chroot/var/tmp tmp_chroot/var/run tmp_chroot/var/drizzle
@@ -3275,10 +3371,10 @@ dist_aclocal_DATA = $(am__append_74)
 @BUILD_WIN32_FALSE@clients_memslap_CXXFLAGS = @PTHREAD_CFLAGS@
 @BUILD_WIN32_FALSE@clients_memslap_LDADD = $(CLIENTS_LDADDS) \
 @BUILD_WIN32_FALSE@	@PTHREAD_LIBS@ $(am__empty)
-@BUILD_WIN32_FALSE@clients_memaslap_SOURCES = clients/memaslap.cc \
-@BUILD_WIN32_FALSE@	clients/ms_conn.cc clients/ms_setting.cc \
-@BUILD_WIN32_FALSE@	clients/ms_sigsegv.cc clients/ms_stats.cc \
-@BUILD_WIN32_FALSE@	clients/ms_task.cc clients/ms_thread.cc \
+@BUILD_WIN32_FALSE@clients_memaslap_SOURCES = clients/memaslap.c \
+@BUILD_WIN32_FALSE@	clients/ms_conn.c clients/ms_setting.c \
+@BUILD_WIN32_FALSE@	clients/ms_sigsegv.c clients/ms_stats.c \
+@BUILD_WIN32_FALSE@	clients/ms_task.c clients/ms_thread.c \
 @BUILD_WIN32_FALSE@	clients/generator.cc clients/execute.cc
 @BUILD_WIN32_FALSE@clients_memaslap_LDADD = @LIBEVENT_LIB@ \
 @BUILD_WIN32_FALSE@	$(CLIENTS_LDADDS)
@@ -3288,7 +3384,7 @@ dist_aclocal_DATA = $(am__append_74)
 @BUILD_WIN32_FALSE@clients_memcapable_LDADD = $(CLIENTS_LDADDS) \
 @BUILD_WIN32_FALSE@	@PTHREAD_LIBS@ $(am__empty)
 @BUILD_WIN32_FALSE@SPHINXOPTS = ${SPHINX_WARNINGS} -q
-@BUILD_WIN32_FALSE@PAPER = 
+@BUILD_WIN32_FALSE@PAPER =
 @BUILD_WIN32_FALSE@SPHINX_BUILDDIR = ${abs_top_builddir}/docs
 
 # Internal variables.
@@ -3305,7 +3401,7 @@ dist_aclocal_DATA = $(am__append_74)
 @BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@example_memcached_light_LDADD = libmemcached/libmemcachedprotocol.la \
 @BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@	@LIBEVENT_LIB@ \
 @BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@	$(am__empty)
-@BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@example_memcached_light_LDFLAGS = 
+@BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@example_memcached_light_LDFLAGS =
 @BUILD_WIN32_FALSE@libmemcached_libmemcachedutil_la_SOURCES = \
 @BUILD_WIN32_FALSE@					  libmemcached/backtrace.cc \
 @BUILD_WIN32_FALSE@					  libmemcachedutil/flush.cc \
@@ -3648,7 +3744,7 @@ mem_config.h: stamp-h1
 stamp-h1: $(srcdir)/mem_config.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status mem_config.h
-$(srcdir)/mem_config.in:  $(am__configure_deps) 
+$(srcdir)/mem_config.in:  $(am__configure_deps)
 	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
 	rm -f stamp-h1
 	touch $@
@@ -10475,7 +10571,7 @@ uninstall-man: uninstall-man1 uninstall-man3
 @BUILD_WIN32_FALSE@helgrind-hashplus: tests/hash_plus
 @BUILD_WIN32_FALSE@	@$(HELGRIND_COMMAND) tests/hash_plus
 
-@BUILD_WIN32_FALSE@drd-mem: tests/libmemcached-1.0/testapp 
+@BUILD_WIN32_FALSE@drd-mem: tests/libmemcached-1.0/testapp
 @BUILD_WIN32_FALSE@	@$(DRD_COMMAND) tests/libmemcached-1.0/testapp
 
 @BUILD_WIN32_FALSE@drd-cycle: tests/cycle
