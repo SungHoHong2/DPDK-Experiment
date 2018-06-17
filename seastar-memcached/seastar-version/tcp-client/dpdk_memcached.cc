@@ -8,6 +8,8 @@
 #define util_literal_param(X) (X), (static_cast<size_t>((sizeof(X) - 1)))
 #define memcached_literal_param util_literal_param
 
+#define util_literal_param_size(X) static_cast<size_t>(sizeof(X) - 1)
+#define memcached_literal_param_size util_literal_param_size
 
 
 struct memcached_instance_st {
