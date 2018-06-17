@@ -47,6 +47,7 @@ static memcached_return_t memcached_send_ascii(Memcached *ptr,
                                                const bool reply,
                                                const memcached_storage_action_t verb)
 {
+    memcached_return_t rc = null;
 //    char flags_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
 //    int flags_buffer_length= snprintf(flags_buffer, sizeof(flags_buffer), " %u", flags);
 //    if (size_t(flags_buffer_length) >= sizeof(flags_buffer) or flags_buffer_length < 0)
