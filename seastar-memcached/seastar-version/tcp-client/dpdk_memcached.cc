@@ -68,6 +68,72 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 
 #define get_socket_errno() errno
 
+
+static bool repack_input_buffer(memcached_instance_st* instance)
+{
+    if (instance->read_ptr != instance->read_buffer)
+    {
+        /* Move all of the data to the beginning of the buffer so
+         ** that we can fit more data into the buffer...
+       */
+        memmove(instance->read_buffer, instance->read_ptr, instance->read_buffer_length);
+        instance->read_ptr= instance->read_buffer;
+        instance->read_data_length= instance->read_buffer_length;
+    }
+
+    /* There is room in the buffer, try to fill it! */
+    if (instance->read_buffer_length != MEMCACHED_MAX_BUFFER)
+    {
+        do {
+            /* Just try a single read to grab what's available */
+            ssize_t nr;
+            if ((nr= ::recv(instance->fd,
+                            instance->read_ptr + instance->read_data_length,
+                            MEMCACHED_MAX_BUFFER - instance->read_data_length,
+                            MSG_NOSIGNAL)) <= 0)
+            {
+                if (nr == 0)
+                {
+                    memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT);
+                }
+                else
+                {
+                    switch (get_socket_errno())
+                    {
+                        case EINTR:
+                            continue;
+
+#if EWOULDBLOCK != EAGAIN
+                            case EWOULDBLOCK:
+#endif
+                        case EAGAIN:
+#ifdef __linux
+                            case ERESTART:
+#endif
+                            break; // No IO is fine, we can just move on
+
+                        default:
+                            memcached_set_errno(*instance, get_socket_errno(), MEMCACHED_AT);
+                    }
+                }
+
+                break;
+            }
+            else // We read data, append to our read buffer
+            {
+                instance->read_data_length+= size_t(nr);
+                instance->read_buffer_length+= size_t(nr);
+
+                return true;
+            }
+        } while (false);
+    }
+
+    return false;
+}
+
+
+
 static bool io_flush(memcached_instance_st* instance,
                      const bool with_flush,
                      memcached_return_t& error)
@@ -106,46 +172,43 @@ static bool io_flush(memcached_instance_st* instance,
 
         if (sent_length == SOCKET_ERROR)
         {
-//            switch (get_socket_errno())
-//            {
-//                case ENOBUFS:
-//                    continue;
-//
-//                case EAGAIN:
-//                {
-//                    /*
-//                     * We may be blocked on write because the input buffer
-//                     * is full. Let's check if we have room in our input
-//                     * buffer for more data and retry the write before
-//                     * waiting..
-//                   */
-//                    if (repack_input_buffer(instance) or process_input_buffer(instance))
-//                    {
-//                        continue;
-//                    }
-//
-//                    memcached_return_t rc= io_wait(instance, POLLOUT);
-//                    if (memcached_success(rc))
-//                    {
-//                        continue;
-//                    }
-//                    else if (rc == MEMCACHED_TIMEOUT)
-//                    {
-//                        return false;
-//                    }
-//
-//                    memcached_quit_server(instance, true);
-//                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
-//                    return false;
-//                }
-//                case ENOTCONN:
-//                case EPIPE:
-//                default:
-//                    memcached_quit_server(instance, true);
-//                    error= memcached_set_errno(*instance, local_errno, MEMCACHED_AT);
-//                    WATCHPOINT_ASSERT(instance->fd == INVALID_SOCKET);
-//                    return false;
-//            }
+            switch (get_socket_errno())
+            {
+                case ENOBUFS:
+                    continue;
+
+                case EAGAIN:
+                {
+                    /*
+                     * We may be blocked on write because the input buffer
+                     * is full. Let's check if we have room in our input
+                     * buffer for more data and retry the write before
+                     * waiting..
+                   */
+                    if (repack_input_buffer(instance) or process_input_buffer(instance))
+                    {
+                        continue;
+                    }
+
+                    memcached_return_t rc= io_wait(instance, POLLOUT);
+                    if (memcached_success(rc))
+                    {
+                        continue;
+                    }
+                    else if (rc == MEMCACHED_TIMEOUT)
+                    {
+                        return false;
+                    }
+
+                    memcached_quit_server(instance, true);
+                    return false;
+                }
+                case ENOTCONN:
+                case EPIPE:
+                default:
+                    memcached_quit_server(instance, true);
+                    return false;
+            }
         }
 
         instance->io_bytes_sent+= uint32_t(sent_length);
