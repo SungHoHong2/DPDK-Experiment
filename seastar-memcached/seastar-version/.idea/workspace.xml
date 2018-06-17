@@ -28,20 +28,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ms_atomic.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ms_atomic.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memaslap_c/ms_atomic.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="51" column="28" lean-forward="true" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+            <state relative-caret-position="513">
+              <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="execute.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="execute.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/memaslap_c/execute.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+            <state relative-caret-position="266">
+              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -128,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update_continuum</find>
       <find>update</find>
       <find>assert_msg</find>
       <find>hashkit_st</find>
@@ -158,6 +157,7 @@
       <find>memcached_quit_server</find>
       <find>send</find>
       <find>mem_config.h</find>
+      <find>#include &quot;cli</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/memaslap</dir>
@@ -197,6 +197,7 @@
         <option value="$PROJECT_DIR$/memaslap_c/execute.cc" />
         <option value="$PROJECT_DIR$/memaslap_c/ms_stats.c" />
         <option value="$PROJECT_DIR$/memaslap_c/ms_conn.c" />
+        <option value="$PROJECT_DIR$/memaslap_c/execute.h" />
       </list>
     </option>
   </component>
@@ -275,12 +276,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="27375000" />
+      <workItem from="1529142659565" duration="27449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54032000" />
+    <option name="totallyTimeSpent" value="54106000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -563,13 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/memaslap_c/execute.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/memaslap.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -643,8 +637,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_atomic.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="51" column="28" lean-forward="true" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+        <state relative-caret-position="513">
+          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/execute.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>

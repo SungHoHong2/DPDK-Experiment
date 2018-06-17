@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 #include <libmemcached-1.0/memcached.h>
-#include "clients/generator.h"
+#include "generator.h"
 
 #ifdef __cplusplus
 extern "C" {

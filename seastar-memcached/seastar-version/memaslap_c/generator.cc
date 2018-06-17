@@ -18,7 +18,7 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "clients/generator.h"
+#include "generator.h"
 
 #define KEY_BYTES 20
 
