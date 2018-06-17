@@ -34,6 +34,112 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
+static memcached_return_t memcached_send_ascii(Memcached *ptr,
+                                               memcached_instance_st* instance,
+                                               const char *key,
+                                               const size_t key_length,
+                                               const char *value,
+                                               const size_t value_length,
+                                               const time_t expiration,
+                                               const uint32_t flags,
+                                               const uint64_t cas,
+                                               const bool flush,
+                                               const bool reply,
+                                               const memcached_storage_action_t verb)
+{
+//    char flags_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
+//    int flags_buffer_length= snprintf(flags_buffer, sizeof(flags_buffer), " %u", flags);
+//    if (size_t(flags_buffer_length) >= sizeof(flags_buffer) or flags_buffer_length < 0)
+//    {
+//        return memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                   memcached_literal_param("snprintf(MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH)"));
+//    }
+//
+//    char expiration_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
+//    int expiration_buffer_length= snprintf(expiration_buffer, sizeof(expiration_buffer), " %llu", (unsigned long long)expiration);
+//    if (size_t(expiration_buffer_length) >= sizeof(expiration_buffer) or expiration_buffer_length < 0)
+//    {
+//        return memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                   memcached_literal_param("snprintf(MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH)"));
+//    }
+//
+//    char value_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
+//    int value_buffer_length= snprintf(value_buffer, sizeof(value_buffer), " %llu", (unsigned long long)value_length);
+//    if (size_t(value_buffer_length) >= sizeof(value_buffer) or value_buffer_length < 0)
+//    {
+//        return memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                   memcached_literal_param("snprintf(MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH)"));
+//    }
+//
+//    char cas_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
+//    int cas_buffer_length= 0;
+//    if (cas)
+//    {
+//        cas_buffer_length= snprintf(cas_buffer, sizeof(cas_buffer), " %llu", (unsigned long long)cas);
+//        if (size_t(cas_buffer_length) >= sizeof(cas_buffer) or cas_buffer_length < 0)
+//        {
+//            return memcached_set_error(*instance, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                       memcached_literal_param("snprintf(MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH)"));
+//        }
+//    }
+//
+//    libmemcached_io_vector_st vector[]=
+//            {
+//                    { NULL, 0 },
+//                    { storage_op_string(verb), strlen(storage_op_string(verb))},
+//                    { memcached_array_string(ptr->_namespace), memcached_array_size(ptr->_namespace) },
+//                    { key, key_length },
+//                    { flags_buffer, size_t(flags_buffer_length) },
+//                    { expiration_buffer, size_t(expiration_buffer_length) },
+//                    { value_buffer, size_t(value_buffer_length) },
+//                    { cas_buffer, size_t(cas_buffer_length) },
+//                    { " noreply", reply ? 0 : memcached_literal_param_size(" noreply") },
+//                    { memcached_literal_param("\r\n") },
+//                    { value, value_length },
+//                    { memcached_literal_param("\r\n") }
+//            };
+//
+//    /* Send command header */
+//    memcached_return_t rc=  memcached_vdo(instance, vector, 12, flush);
+//
+//    // If we should not reply, return with MEMCACHED_SUCCESS, unless error
+//    if (reply == false)
+//    {
+//        return memcached_success(rc) ? MEMCACHED_SUCCESS : rc;
+//    }
+//
+//    if (flush == false)
+//    {
+//        return memcached_success(rc) ? MEMCACHED_BUFFERED : rc;
+//    }
+//
+//    if (rc == MEMCACHED_SUCCESS)
+//    {
+//        char buffer[MEMCACHED_DEFAULT_COMMAND_SIZE];
+//        rc= memcached_response(instance, buffer, sizeof(buffer), NULL);
+//
+//        if (rc == MEMCACHED_STORED)
+//        {
+//            return MEMCACHED_SUCCESS;
+//        }
+//    }
+//
+//    if (rc == MEMCACHED_WRITE_FAILURE)
+//    {
+//        memcached_io_reset(instance);
+//    }
+//
+//    assert(memcached_failed(rc));
+//#if 0
+//    if (memcached_has_error(ptr) == false)
+//  {
+//    return memcached_set_error(*ptr, rc, MEMCACHED_AT);
+//  }
+//#endif
+
+    return rc;
+}
+
 
 
 static inline memcached_return_t memcached_send(memcached_st *shell,
