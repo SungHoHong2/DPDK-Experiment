@@ -1,3 +1,4 @@
+#include "md5.hh"
 #include "dpdk_memcached.hh"
 #include "dpdk_basic.hh"
 #include "dpdk_error.hh"
@@ -11,18 +12,6 @@
 #define util_literal_param_size(X) static_cast<size_t>(sizeof(X) - 1)
 #define memcached_literal_param_size util_literal_param_size
 #define memcached_is_weighted_ketama(__object) ((__object)->ketama.weighted_)
-
-/* POINTER defines a generic pointer type */
-typedef unsigned char *POINTER;
-typedef const unsigned char *CONST_POINTER;
-/* UINT4 defines a four byte word */
-typedef unsigned int UINT4;
-
-typedef struct {
-    UINT4 state[4];                                   /* state (ABCD) */
-    UINT4 count[2];        /* number of bits, modulo 2^64 (lsb first) */
-    unsigned char buffer[64];                         /* input buffer */
-} MD5_CTX;
 
 
 static inline void *libmemcached_realloc(const memcached_st *self, void *mem, size_t nmemb,  const size_t size)
