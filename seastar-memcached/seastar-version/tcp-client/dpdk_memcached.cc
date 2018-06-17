@@ -4,7 +4,7 @@
 #include "md5.hh"
 #include <sys/time.h>
 #include "dpdk_hash.hh"
-
+#include "aes.hh"
 
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
 #define memcached_is_encrypted(__object) ((__object)->hashkit._key)
@@ -22,39 +22,6 @@ memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_
 }
 
 
-hashkit_string_st* aes_encrypt(aes_key_t *_aes_key,
-                               const char* source, size_t source_length)
-{
-    if (_aes_key == NULL)
-    {
-        return NULL;
-    }
-
-    size_t num_blocks= source_length/AES_BLOCK_SIZE;
-
-    hashkit_string_st* destination= hashkit_string_create(source_length);
-    if (destination)
-    {
-        char *dest= hashkit_string_c_str_mutable(destination);
-
-        for (size_t x= num_blocks; x > 0; x--)   /* Encode complete blocks */
-        {
-            rijndaelEncrypt(_aes_key->encode_key.rk, _aes_key->encode_key.nr, (const uint8_t*)(source),
-                            (uint8_t*) (dest));
-            source+= AES_BLOCK_SIZE;
-            dest+= AES_BLOCK_SIZE;
-        }
-
-        uint8_t block[AES_BLOCK_SIZE];
-        char pad_len= AES_BLOCK_SIZE - (source_length - AES_BLOCK_SIZE*num_blocks);
-        memcpy(block, source, 16 -pad_len);
-        memset(block + AES_BLOCK_SIZE -pad_len, pad_len, pad_len);
-        rijndaelEncrypt(_aes_key->encode_key.rk, _aes_key->encode_key.nr, block, (uint8_t*) (dest));
-        hashkit_string_set_length(destination, AES_BLOCK_SIZE*(num_blocks + 1));
-    }
-
-    return destination;
-}
 
 
 hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
