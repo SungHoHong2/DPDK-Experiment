@@ -246,9 +246,7 @@ static int continuum_item_cmp(const void *t1, const void *t2)
 {
     memcached_continuum_item_st *ct1= (memcached_continuum_item_st *)t1;
     memcached_continuum_item_st *ct2= (memcached_continuum_item_st *)t2;
-
-    /* Why 153? Hmmm... */
-    WATCHPOINT_ASSERT(ct1->value != 153);
+    
     if (ct1->value == ct2->value)
     {
         return 0;
