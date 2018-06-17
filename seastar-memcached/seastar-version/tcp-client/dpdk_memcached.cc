@@ -12,6 +12,10 @@
 #define memcached_literal_param_size util_literal_param_size
 #define memcached_is_weighted_ketama(__object) ((__object)->ketama.weighted_)
 
+/* POINTER defines a generic pointer type */
+typedef unsigned char *POINTER;
+typedef const unsigned char *CONST_POINTER;
+
 
 static inline void *libmemcached_realloc(const memcached_st *self, void *mem, size_t nmemb,  const size_t size)
 {
