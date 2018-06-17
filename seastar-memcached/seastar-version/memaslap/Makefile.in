@@ -1640,74 +1640,6 @@ am__libmemcachedinternal_libmemcachedutilinternal_la_SOURCES_DIST =  \
 	libmemcached/backtrace.cc libmemcachedutil/flush.cc \
 	libmemcachedutil/pid.cc libmemcachedutil/ping.cc \
 	libmemcachedutil/pool.cc libmemcachedutil/version.cc
-@BUILD_WIN32_FALSE@am__objects_22 = libmemcached/libmemcachedinternal_libmemcachedutilinternal_la-backtrace.lo \
-@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-flush.lo \
-@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-pid.lo \
-@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-ping.lo \
-@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-pool.lo \
-@BUILD_WIN32_FALSE@	libmemcachedutil/libmemcachedinternal_libmemcachedutilinternal_la-version.lo
-@BUILD_WIN32_FALSE@am_libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS =  \
-@BUILD_WIN32_FALSE@	$(am__objects_22)
-libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS = $(am_libmemcachedinternal_libmemcachedutilinternal_la_OBJECTS)
-libmemcachedinternal_libmemcachedutilinternal_la_LINK = $(LIBTOOL) \
-	$(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CXXLD) \
-	$(libmemcachedinternal_libmemcachedutilinternal_la_CXXFLAGS) \
-	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-@BUILD_WIN32_FALSE@am_libmemcachedinternal_libmemcachedutilinternal_la_rpath =
-@BUILD_WIN32_FALSE@libtest_libtest_la_DEPENDENCIES =  \
-@BUILD_WIN32_FALSE@	$(am__DEPENDENCIES_1)
-am__libtest_libtest_la_SOURCES_DIST = libtest/alarm.cc \
-	libtest/binaries.cc libtest/cmdline.cc libtest/collection.cc \
-	libtest/comparison.cc libtest/core.cc libtest/cpu.cc \
-	libtest/dns.cc libtest/dream.cc libtest/drizzled.cc \
-	libtest/exception.cc libtest/exception/fatal.cc \
-	libtest/formatter.cc libtest/client.cc libtest/framework.cc \
-	libtest/has.cc libtest/http.cc libtest/is_local.cc \
-	libtest/killpid.cc libtest/libtool.cc libtest/main.cc \
-	libtest/port.cc libtest/result.cc libtest/runner.cc \
-	libtest/server.cc libtest/server_container.cc \
-	libtest/signal.cc libtest/socket.cc libtest/strerror.cc \
-	libtest/timer.cc libtest/tmpfile.cc libtest/vchar.cc \
-	libtest/memcached.cc libtest/gearmand.cc \
-	libtest/blobslap_worker.cc
-@BUILDING_GEARMAN_TRUE@@BUILD_WIN32_FALSE@am__objects_23 = libtest/libtest_libtest_la-blobslap_worker.lo
-@BUILD_WIN32_FALSE@am_libtest_libtest_la_OBJECTS =  \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-alarm.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-binaries.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-cmdline.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-collection.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-comparison.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-core.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-cpu.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-dns.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-dream.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-drizzled.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-exception.lo \
-@BUILD_WIN32_FALSE@	libtest/exception/libtest_libtest_la-fatal.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-formatter.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-client.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-framework.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-has.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-http.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-is_local.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-killpid.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-libtool.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-main.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-port.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-result.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-runner.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-server.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-server_container.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-signal.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-socket.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-strerror.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-timer.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-tmpfile.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-vchar.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-memcached.lo \
-@BUILD_WIN32_FALSE@	libtest/libtest_libtest_la-gearmand.lo \
-@BUILD_WIN32_FALSE@	$(am__objects_23)
 libtest_libtest_la_OBJECTS = $(am_libtest_libtest_la_OBJECTS)
 libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
@@ -1728,37 +1660,6 @@ libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 @BUILD_WIN32_FALSE@	clients/memslap$(EXEEXT) \
 @BUILD_WIN32_FALSE@	clients/memstat$(EXEEXT)
 @BUILD_MEMASLAP_TRUE@@BUILD_WIN32_FALSE@@BUILD_WIN32_WRAPPERS_FALSE@@HAVE_LIBEVENT_TRUE@am__EXEEXT_2 = clients/memaslap$(EXEEXT)
-@BUILD_WIN32_TRUE@@SHARED_ENABLED_TRUE@am__EXEEXT_3 = libmemcached-1.0/t/c_test$(EXEEXT) \
-@BUILD_WIN32_TRUE@@SHARED_ENABLED_TRUE@	libmemcached-1.0/t/c_sasl_test$(EXEEXT)
-@BUILD_WIN32_TRUE@am__EXEEXT_4 = libmemcached-1.0/t/cc_test$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_5 = libtest/unittest$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/skiptest$(EXEEXT)
-@BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@am__EXEEXT_6 = libmemcached-1.0/t/c_test$(EXEEXT) \
-@BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@	libmemcached-1.0/t/c_sasl_test$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_7 = libmemcached-1.0/t/cc_test$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/cycle$(EXEEXT)
-@BUILD_WIN32_FALSE@@HAVE_DTRACE_FALSE@am__EXEEXT_8 = tests/libmemcached-1.0/internals$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_9 =  \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testapp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testsocket$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/sasl$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testudp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testplus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/parser$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/failure$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testhashkit$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/hash_plus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcapable$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memstat$(EXEEXT) tests/memcp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memflush$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memrm$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memexist$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memtouch$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcat$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memping$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memerror$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memslap$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memdump$(EXEEXT)
 @BUILD_WIN32_FALSE@am__EXEEXT_10 = libtest/unittest$(EXEEXT) \
 @BUILD_WIN32_FALSE@	libtest/skiptest$(EXEEXT) \
 @BUILD_WIN32_FALSE@	libtest/wait$(EXEEXT) \
