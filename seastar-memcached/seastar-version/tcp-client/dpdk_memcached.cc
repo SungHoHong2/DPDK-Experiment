@@ -27,6 +27,42 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 }
 
 
+static inline uint32_t _generate_hash_wrapper(const Memcached *ptr, const char *key, size_t key_length)
+{
+    WATCHPOINT_ASSERT(memcached_server_count(ptr));
+
+    if (memcached_server_count(ptr) == 1)
+        return 0;
+
+    if (ptr->flags.hash_with_namespace)
+    {
+        size_t temp_length= memcached_array_size(ptr->_namespace) + key_length;
+        char temp[MEMCACHED_MAX_KEY];
+
+        if (temp_length > MEMCACHED_MAX_KEY -1)
+            return 0;
+
+        strncpy(temp, memcached_array_string(ptr->_namespace), memcached_array_size(ptr->_namespace));
+        strncpy(temp + memcached_array_size(ptr->_namespace), key, key_length);
+
+        return generate_hash(ptr, temp, temp_length);
+    }
+    else
+    {
+        return generate_hash(ptr, key, key_length);
+    }
+}
+
+uint32_t memcached_generate_hash_with_redistribution(memcached_st *ptr, const char *key, size_t key_length)
+{
+    uint32_t hash= _generate_hash_wrapper(ptr, key, key_length);
+
+    _regen_for_auto_eject(ptr);
+
+    return dispatch_host(ptr, hash);
+}
+
+
 
 static inline memcached_return_t memcached_send(memcached_st *shell,
                                                 const char *group_key, size_t group_key_length,
