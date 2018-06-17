@@ -4,6 +4,22 @@
 #include "md5.hh"
 #include <sys/time.h>
 #include "dpdk_hash.hh"
+
+
+const char *hashkit_string_c_str(const hashkit_string_st* self)
+{
+    assert(self);
+    if (self == NULL)
+    {
+        return NULL;
+    }
+    return self->string;
+}
+
+
+
+
+
 #include "dpdk_string.hh"
 #include "aes.hh"
 
