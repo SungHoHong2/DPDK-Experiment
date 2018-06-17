@@ -4,28 +4,6 @@
 #include "md5.hh"
 #include <sys/time.h>
 #include "dpdk_hash.hh"
-
-
-struct hashkit_string_st {
-    char *end;
-    size_t current_size;
-    char *string;
-};
-
-
-const char *hashkit_string_c_str(const hashkit_string_st* self)
-{
-    if (self == NULL)
-    {
-        return NULL;
-    }
-    return self->string;
-}
-
-
-
-
-
 #include "dpdk_string.hh"
 #include "aes.hh"
 
