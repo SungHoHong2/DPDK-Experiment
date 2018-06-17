@@ -14,6 +14,33 @@
 #define memcached_is_replying(__object) ((__object)->flags.reply)
 
 
+static inline const char *storage_op_string(memcached_storage_action_t verb)
+{
+    switch (verb)
+    {
+        case REPLACE_OP:
+            return "replace ";
+
+        case ADD_OP:
+            return "add ";
+
+        case PREPEND_OP:
+            return "prepend ";
+
+        case APPEND_OP:
+            return "append ";
+
+        case CAS_OP:
+            return "cas ";
+
+        case SET_OP:
+            break;
+    }
+
+    return "set ";
+}
+
+
 memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
 {
     if (ptr == NULL)
