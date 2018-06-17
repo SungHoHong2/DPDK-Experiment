@@ -4,6 +4,29 @@
 
 #define memcached_is_auto_eject_hosts(__object) ((__object)->flags.auto_eject_hosts)
 
+/* string value */
+struct memcached_continuum_item_st
+{
+    uint32_t index;
+    uint32_t value;
+};
+
+uint32_t memcached_virtual_bucket_get(const memcached_st *self, uint32_t digest)
+{
+    if (self)
+    {
+        if (self->virtual_bucket)
+        {
+            uint32_t result= (uint32_t) (digest & (self->virtual_bucket->size -1));
+            return self->virtual_bucket->buckets[result].master;
+        }
+
+        return (uint32_t) (digest & (self->number_of_hosts -1));
+    }
+
+    return 0;
+}
+
 memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 {
     if (self == NULL)
