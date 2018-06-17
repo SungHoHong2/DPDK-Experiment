@@ -12,6 +12,7 @@
 #define memcached_literal_param_size util_literal_param_size
 #define memcached_is_weighted_ketama(__object) ((__object)->ketama.weighted_)
 
+#define libmemcached_xrealloc(__memcachd_st, __mem, __nelem, __type) ((__type *)libmemcached_realloc((__memcachd_st), (__mem), (__nelem), sizeof(__type)))
 
 bool _is_auto_eject_host(const memcached_st *ptr)
 {
