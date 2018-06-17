@@ -12,7 +12,7 @@
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
 #define memcached_is_encrypted(__object) ((__object)->hashkit._key)
 #define memcached_is_replying(__object) ((__object)->flags.reply)
-
+#define SOCKET_ERROR -1
 
 static inline const char *storage_op_string(memcached_storage_action_t verb)
 {
