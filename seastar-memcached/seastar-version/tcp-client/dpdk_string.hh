@@ -1,3 +1,16 @@
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+void hashkit_string_free(hashkit_string_st *ptr);
+size_t hashkit_string_length(const hashkit_string_st *self);
+const char *hashkit_string_c_str(const hashkit_string_st* self);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
+
+
 hashkit_string_st *hashkit_string_create(size_t initial_size);
 
 bool hashkit_string_append_character(hashkit_string_st *string, char character);
