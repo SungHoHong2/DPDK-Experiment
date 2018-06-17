@@ -31,8 +31,8 @@
       <file leaf-file-name="dpdk_io.hh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_io.hh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+            <state relative-caret-position="747">
+              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
               <folding>
                 <element signature="e#1775#1799#0" expanded="true" />
               </folding>
@@ -98,7 +98,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>memcached_set_error</find>
       <find>struct memcached_array_st</find>
       <find>memcached_instance_list</find>
       <find>uint32_t memcached_server_count</find>
@@ -128,6 +127,7 @@
       <find>POLLIN</find>
       <find>POLLIN\</find>
       <find>memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key) {   if (ptr == NULL)   {     return NULL;   }    return &amp;ptr-&gt;servers[server_key]; }</find>
+      <find>memcached_quit_server</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -228,12 +228,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="21672000" />
+      <workItem from="1529142659565" duration="21749000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48329000" />
+    <option name="totallyTimeSpent" value="48406000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -437,8 +437,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_io.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+        <state relative-caret-position="747">
+          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
           <folding>
             <element signature="e#1775#1799#0" expanded="true" />
           </folding>
