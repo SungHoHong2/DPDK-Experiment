@@ -15,7 +15,6 @@ struct hashkit_string_st {
 
 const char *hashkit_string_c_str(const hashkit_string_st* self)
 {
-    assert(self);
     if (self == NULL)
     {
         return NULL;
