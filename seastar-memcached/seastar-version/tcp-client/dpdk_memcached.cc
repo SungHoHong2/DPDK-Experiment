@@ -76,12 +76,12 @@ static bool io_flush(memcached_instance_st* instance,
      ** any output yet... The test for the limits is the purge is inline
      ** in the purge function to avoid duplicating the logic..
    */
-    {
-        if (memcached_purge(instance) == false)
-        {
-            return false;
-        }
-    }
+//    {
+//        if (memcached_purge(instance) == false)
+//        {
+//            return false;
+//        }
+//    }
     char *local_write_ptr= instance->write_buffer;
     size_t write_length= instance->write_buffer_offset;
 
