@@ -37,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="aes.hh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="aes.hh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tcp-client/aes.hh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="300">
+              <caret line="46" column="16" lean-forward="true" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -49,8 +49,8 @@
       <file leaf-file-name="rijndael.cc" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+            <state relative-caret-position="475">
+              <caret line="25" column="39" lean-forward="true" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -58,8 +58,8 @@
       <file leaf-file-name="rijndael.hh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.hh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+            <state relative-caret-position="418">
+              <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -73,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dpdk_string.cc" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dpdk_string.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_string.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="37" column="18" lean-forward="true" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+            <state relative-caret-position="605">
+              <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -86,7 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sharded_cache</find>
       <find>item</find>
       <find>Item</find>
       <find>System_Stats</find>
@@ -116,6 +115,7 @@
       <find>uint32_t hashkit_md</find>
       <find>memcached_continuum_item_st</find>
       <find>hashkit_string_create</find>
+      <find>hashkit_string_length</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -140,8 +140,8 @@
         <option value="$PROJECT_DIR$/tcp-client/rijndael.hh" />
         <option value="$PROJECT_DIR$/tcp-client/rijndae.cc" />
         <option value="$PROJECT_DIR$/tcp-client/dpdk_string.hh" />
-        <option value="$PROJECT_DIR$/tcp-client/dpdk_string.cc" />
         <option value="$PROJECT_DIR$/tcp-client/aes.hh" />
+        <option value="$PROJECT_DIR$/tcp-client/dpdk_string.cc" />
       </list>
     </option>
   </component>
@@ -215,12 +215,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="17593000" />
+      <workItem from="1529142659565" duration="17689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44250000" />
+    <option name="totallyTimeSpent" value="44346000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -387,20 +387,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_string.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="37" column="18" lean-forward="true" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_string.hh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -408,17 +394,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.hh">
+    <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+        <state relative-caret-position="475">
+          <caret line="25" column="39" lean-forward="true" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/aes.hh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="300">
+          <caret line="46" column="16" lean-forward="true" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tcp-client/rijndael.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_string.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="605">
+          <caret line="51" column="1" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
         </state>
       </provider>
     </entry>

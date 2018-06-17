@@ -46,6 +46,11 @@ struct hashkit_string_st {
     char *string;
 };
 
+size_t hashkit_string_length(const hashkit_string_st *self)
+{
+    return size_t(self->end -self->string);
+}
+
 inline static bool _string_check(hashkit_string_st *string, size_t need)
 {
     if (need and need > (size_t)(string->current_size - (size_t)(string->end - string->string)))
