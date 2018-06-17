@@ -8,6 +8,17 @@
 
 
 
+memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
+{
+    if (ptr == NULL)
+    {
+        return NULL;
+    }
+
+    return &ptr->servers[server_key];
+}
+
+
 
 
 static inline memcached_return_t memcached_send(memcached_st *shell,
