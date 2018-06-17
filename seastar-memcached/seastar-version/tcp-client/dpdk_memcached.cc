@@ -12,6 +12,21 @@
 #define memcached_literal_param_size util_literal_param_size
 #define memcached_is_weighted_ketama(__object) ((__object)->ketama.weighted_)
 
+
+static inline void *libmemcached_realloc(const memcached_st *self, void *mem, size_t nmemb,  const size_t size)
+{
+    if (self)
+    {
+        return self->allocators.realloc(self, mem, nmemb * size, self->allocators.context);
+    }
+
+#ifdef __cplusplus
+    return std::realloc(mem, size);
+#else
+    return realloc(mem, size);
+#endif
+}
+
 #define libmemcached_xrealloc(__memcachd_st, __mem, __nelem, __type) ((__type *)libmemcached_realloc((__memcachd_st), (__mem), (__nelem), sizeof(__type)))
 
 bool _is_auto_eject_host(const memcached_st *ptr)
