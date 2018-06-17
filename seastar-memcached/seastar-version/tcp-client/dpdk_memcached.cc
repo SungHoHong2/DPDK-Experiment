@@ -78,7 +78,7 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
         value= hashkit_string_c_str(destination);
         value_length= hashkit_string_length(destination);
     }
-//
+
 //    if (memcached_is_binary(ptr))
 //    {
 //        rc= memcached_send_binary(ptr, instance, server_key,
@@ -88,13 +88,13 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
 //    }
 //    else
 //    {
-//        rc= memcached_send_ascii(ptr, instance,
-//                                 key, key_length,
-//                                 value, value_length, expiration,
-//                                 flags, cas, flush, reply, verb);
+        rc= memcached_send_ascii(ptr, instance,
+                                 key, key_length,
+                                 value, value_length, expiration,
+                                 flags, cas, flush, reply, verb);
 //    }
-//
-//    hashkit_string_free(destination);
+
+    hashkit_string_free(destination);
 
     return rc;
 }
