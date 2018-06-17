@@ -40,8 +40,8 @@
       <file leaf-file-name="dpdk_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="717">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="507">
+              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -74,7 +74,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>debugger</find>
       <find>ITEM initialize</find>
       <find>local_is_initialized</find>
       <find>prepare_insertion</find>
@@ -104,6 +103,7 @@
       <find>memcached_error_t</find>
       <find>_error_free</find>
       <find>memcached_set_error</find>
+      <find>struct memcached_array_st</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -195,12 +195,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="10191000" />
+      <workItem from="1529142659565" duration="10306000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36848000" />
+    <option name="totallyTimeSpent" value="36963000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -209,6 +209,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1703125" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -221,7 +222,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,8 +342,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="717">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="507">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>

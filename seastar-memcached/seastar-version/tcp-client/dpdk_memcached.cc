@@ -26,6 +26,12 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
     return MEMCACHED_SUCCESS;
 }
 
+struct memcached_array_st
+{
+    Memcached *root;
+    size_t size;
+    char c_str[];
+};
 
 size_t memcached_array_size(memcached_array_st *array)
 {
