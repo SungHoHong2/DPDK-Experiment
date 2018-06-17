@@ -136,6 +136,7 @@ struct memcached_instance_st {
 };
 
 
+
 /* string value */
 struct memcached_continuum_item_st
 {
@@ -150,6 +151,26 @@ struct memcached_virtual_bucket_t {
     struct bucket_t buckets[];
 };
 
+
+uint32_t memcached_server_count(const memcached_st *self)
+{
+    WATCHPOINT_ASSERT(self);
+    if (self == NULL)
+        return 0;
+
+    return self->number_of_hosts;
+}
+
+memcached_instance_st* memcached_instance_list(const memcached_st *shell)
+{
+    const Memcached* memc= memcached2Memcached(shell);
+    if (memc)
+    {
+        return (memcached_instance_st*)memc->servers;
+    }
+
+    return NULL;
+}
 
 static void sort_hosts(Memcached *ptr)
 {

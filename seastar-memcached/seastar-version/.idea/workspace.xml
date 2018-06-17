@@ -40,8 +40,8 @@
       <file leaf-file-name="dpdk_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="890">
-              <caret line="135" column="2" selection-start-line="135" selection-start-column="2" selection-end-line="135" selection-end-column="2" />
+            <state relative-caret-position="669">
+              <caret line="172" column="1" lean-forward="true" selection-start-line="172" selection-start-column="1" selection-end-line="172" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -71,8 +71,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ITEM initialize</find>
-      <find>local_is_initialized</find>
       <find>prepare_insertion</find>
       <find>ascii_protocol::handle</find>
       <find>CHARA</find>
@@ -101,6 +99,8 @@
       <find>_error_free</find>
       <find>memcached_set_error</find>
       <find>struct memcached_array_st</find>
+      <find>memcached_instance_list</find>
+      <find>uint32_t memcached_server_count</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -192,12 +192,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="11411000" />
+      <workItem from="1529142659565" duration="11508000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38068000" />
+    <option name="totallyTimeSpent" value="38165000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -339,8 +339,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
-          <caret line="135" column="2" selection-start-line="135" selection-start-column="2" selection-end-line="135" selection-end-column="2" />
+        <state relative-caret-position="669">
+          <caret line="172" column="1" lean-forward="true" selection-start-line="172" selection-start-column="1" selection-end-line="172" selection-end-column="1" />
         </state>
       </provider>
     </entry>
