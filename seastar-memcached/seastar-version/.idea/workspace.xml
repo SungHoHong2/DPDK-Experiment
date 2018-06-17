@@ -19,29 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="generator.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/generator.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="generator.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memaslap_c/generator.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="361">
+              <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="execute.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/memaslap_c/execute.cc">
+      <file leaf-file-name="ms_atomic.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_atomic.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+            <state relative-caret-position="418">
+              <caret line="51" column="28" lean-forward="true" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -115,11 +106,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ms_stats.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ms_stats.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/memaslap_c/ms_stats.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+            <state relative-caret-position="152">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ms_conn.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/memaslap_c/ms_conn.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -196,6 +196,7 @@
         <option value="$PROJECT_DIR$/memaslap_c/generator.cc" />
         <option value="$PROJECT_DIR$/memaslap_c/execute.cc" />
         <option value="$PROJECT_DIR$/memaslap_c/ms_stats.c" />
+        <option value="$PROJECT_DIR$/memaslap_c/ms_conn.c" />
       </list>
     </option>
   </component>
@@ -274,12 +275,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="26909000" />
+      <workItem from="1529142659565" duration="27375000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53566000" />
+    <option name="totallyTimeSpent" value="54032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -545,9 +546,6 @@
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_thread.c">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/memaslap_c/ms_conn.c">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_stats.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -555,13 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/memaslap_c/generator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
@@ -631,8 +622,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/memaslap_c/ms_stats.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        <state relative-caret-position="152">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/ms_conn.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="26" column="18" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/generator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memaslap_c/ms_atomic.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="51" column="28" lean-forward="true" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
         </state>
       </provider>
     </entry>
