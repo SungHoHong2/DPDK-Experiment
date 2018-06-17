@@ -27,6 +27,40 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 }
 
 
+size_t memcached_array_size(memcached_array_st *array)
+{
+    if (array)
+    {
+        return array->size;
+    }
+
+    return 0;
+}
+
+const char *memcached_array_string(memcached_array_st *array)
+{
+    if (array)
+    {
+        return array->c_str;
+    }
+
+    return NULL;
+}
+
+
+uint32_t hashkit_digest(const hashkit_st *self, const char *key, size_t key_length)
+{
+    return self->base_hash.function(key, key_length, self->base_hash.context);
+}
+
+
+static inline uint32_t generate_hash(const Memcached *ptr, const char *key, size_t key_length)
+{
+    return hashkit_digest(&ptr->hashkit, key, key_length);
+}
+
+
+
 static inline uint32_t _generate_hash_wrapper(const Memcached *ptr, const char *key, size_t key_length)
 {
     if (memcached_server_count(ptr) == 1)
