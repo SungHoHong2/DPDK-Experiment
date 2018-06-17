@@ -15,6 +15,14 @@
 /* POINTER defines a generic pointer type */
 typedef unsigned char *POINTER;
 typedef const unsigned char *CONST_POINTER;
+/* UINT4 defines a four byte word */
+typedef unsigned int UINT4;
+
+typedef struct {
+    UINT4 state[4];                                   /* state (ABCD) */
+    UINT4 count[2];        /* number of bits, modulo 2^64 (lsb first) */
+    unsigned char buffer[64];                         /* input buffer */
+} MD5_CTX;
 
 
 static inline void *libmemcached_realloc(const memcached_st *self, void *mem, size_t nmemb,  const size_t size)
@@ -239,11 +247,6 @@ static uint32_t ketama_server_hash(const char *key, size_t key_length, uint32_t 
            | (results[0 + alignment * 4] & 0xFF);
 }
 
-typedef struct {
-    UINT4 state[4];                                   /* state (ABCD) */
-    UINT4 count[2];        /* number of bits, modulo 2^64 (lsb first) */
-    unsigned char buffer[64];                         /* input buffer */
-} MD5_CTX;
 
 
 static void MD5Init (MD5_CTX *context)      /* context */
