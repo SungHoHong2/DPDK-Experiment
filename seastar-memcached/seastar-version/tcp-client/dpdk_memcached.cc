@@ -251,33 +251,33 @@ static memcached_return_t update_continuum(Memcached *ptr)
         return MEMCACHED_SUCCESS;
     }
 
-//    if (live_servers > ptr->ketama.continuum_count)
-//    {
-//        memcached_continuum_item_st *new_ptr;
-//
-//        new_ptr= libmemcached_xrealloc(ptr, ptr->ketama.continuum, (live_servers + MEMCACHED_CONTINUUM_ADDITION) * points_per_server, memcached_continuum_item_st);
-//
-//        if (new_ptr == 0)
-//        {
-//            return MEMCACHED_MEMORY_ALLOCATION_FAILURE;
-//        }
-//
-//        ptr->ketama.continuum= new_ptr;
-//        ptr->ketama.continuum_count= live_servers + MEMCACHED_CONTINUUM_ADDITION;
-//    }
-//    assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
-//
-//    uint64_t total_weight= 0;
-//    if (memcached_is_weighted_ketama(ptr))
-//    {
-//        for (uint32_t host_index = 0; host_index < memcached_server_count(ptr); ++host_index)
-//        {
-//            if (is_auto_ejecting == false or list[host_index].next_retry <= now.tv_sec)
-//            {
-//                total_weight += list[host_index].weight;
-//            }
-//        }
-//    }
+    if (live_servers > ptr->ketama.continuum_count)
+    {
+        memcached_continuum_item_st *new_ptr;
+
+        new_ptr= libmemcached_xrealloc(ptr, ptr->ketama.continuum, (live_servers + MEMCACHED_CONTINUUM_ADDITION) * points_per_server, memcached_continuum_item_st);
+
+        if (new_ptr == 0)
+        {
+            return MEMCACHED_MEMORY_ALLOCATION_FAILURE;
+        }
+
+        ptr->ketama.continuum= new_ptr;
+        ptr->ketama.continuum_count= live_servers + MEMCACHED_CONTINUUM_ADDITION;
+    }
+    assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
+
+    uint64_t total_weight= 0;
+    if (memcached_is_weighted_ketama(ptr))
+    {
+        for (uint32_t host_index = 0; host_index < memcached_server_count(ptr); ++host_index)
+        {
+            if (is_auto_ejecting == false or list[host_index].next_retry <= now.tv_sec)
+            {
+                total_weight += list[host_index].weight;
+            }
+        }
+    }
 //
 //    for (uint32_t host_index= 0; host_index < memcached_server_count(ptr); ++host_index)
 //    {
