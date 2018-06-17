@@ -5,6 +5,17 @@
 #define POLLIN 0x0001
 
 
+memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
+{
+    if (ptr == NULL)
+    {
+        return NULL;
+    }
+
+    return &ptr->servers[server_key];
+}
+
+
 void initialize_binary_request(memcached_instance_st* server, protocol_binary_request_header& header)
 {
     server->request_id++;
