@@ -264,11 +264,11 @@ static bool io_flush(memcached_instance_st* instance,
                         continue;
                     }
 
-                    memcached_return_t rc= io_wait(instance, POLLOUT);
-                    if (memcached_success(rc))
-                    {
-                        continue;
-                    }
+//                    memcached_return_t rc= io_wait(instance, POLLOUT);
+//                    if (memcached_success(rc))
+//                    {
+//                        continue;
+//                    }
                     else if (rc == MEMCACHED_TIMEOUT)
                     {
                         return false;
