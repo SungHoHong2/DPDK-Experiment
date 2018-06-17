@@ -66,17 +66,44 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
+bool memcached_io_writev(memcached_instance_st* instance,
+                         libmemcached_io_vector_st vector[],
+                         const size_t number_of, const bool with_flush)
+{
+    ssize_t complete_total= 0;
+    ssize_t total= 0;
+
+//    for (size_t x= 0; x < number_of; x++, vector++)
+//    {
+//        complete_total+= vector->length;
+//        if (vector->length)
+//        {
+//            size_t written;
+//            if ((_io_write(instance, vector->buffer, vector->length, false, written)) == false)
+//            {
+//                return false;
+//            }
+//            total+= written;
+//        }
+//    }
+//
+//    if (with_flush)
+//    {
+//        if (memcached_io_write(instance) == false)
+//        {
+//            return false;
+//        }
+//    }
+
+    return (complete_total == total);
+}
+
+
+
 
 
 #include <sys/socket.h>
 #include <poll.h>
-#define POLLIN 0x0001
-
-
-
-
-
-
 
 memcached_return_t memcached_vdo(memcached_instance_st* instance,
                                  libmemcached_io_vector_st vector[],
