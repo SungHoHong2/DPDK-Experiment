@@ -15,6 +15,20 @@ enum memcached_storage_action_t {
 };
 
 
+#define MAX_ERROR_LENGTH 2048
+struct memcached_error_t
+{
+    Memcached *root;
+    uint64_t query_id;
+    struct memcached_error_t *next;
+    memcached_return_t rc;
+    int local_errno;
+    size_t size;
+    char message[MAX_ERROR_LENGTH];
+};
+
+
+
 void _libmemcached_free(const memcached_st*, void *mem, void*)
 {
     if (mem)
