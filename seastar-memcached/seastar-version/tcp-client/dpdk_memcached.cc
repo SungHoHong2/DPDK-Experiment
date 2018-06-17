@@ -6,6 +6,13 @@
 #include "dpdk_hash.hh"
 
 
+struct hashkit_string_st {
+    char *end;
+    size_t current_size;
+    char *string;
+};
+
+
 const char *hashkit_string_c_str(const hashkit_string_st* self)
 {
     assert(self);
