@@ -1901,7 +1901,8 @@ clients_memslap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(clients_memslap_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 
-# $(info CLIENT [$(CLIENTS_LDADDS)] [$(LIBTOOL)] [$(AM_V_lt)]  [$(AM_LIBTOOLFLAGS)] [$(LIBTOOLFLAGS)] [$(CXXLD)] [$(clients_memslap_CXXFLAGS)])
+$(info CLIENT [$(CLIENTS_LDADDS)] [$(LIBTOOL)] [$(AM_V_lt)]  [$(AM_LIBTOOLFLAGS)] [$(LIBTOOLFLAGS)] [$(CXXLD)] [$(clients_memslap_CXXFLAGS)])
+
 # $(info CLIENT [$(CXXFLAGS)] [$(AM_LDFLAGS)] [$(LDFLAGS)] [$@] )
 
 $(info CLIENT Actual Compiling location END)
