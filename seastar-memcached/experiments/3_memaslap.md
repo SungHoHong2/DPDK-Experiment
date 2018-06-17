@@ -20,3 +20,11 @@
 - I have converted the send data but doing this one by one will take too much time
 - `memaslap implemented it's own transfer method, and it does not seem to use memcached library that much`
 - we nneed to convert this into C++
+
+
+
+### the main research
+- I have compared both libmemcached library and memaslap benchmark.
+- although memaslpa is built with C files
+- This is more straight forward and less coupled compared to libmemcacheD library.
+- I believe it is better to convert memaslap into C++ object and then use Seastar.
