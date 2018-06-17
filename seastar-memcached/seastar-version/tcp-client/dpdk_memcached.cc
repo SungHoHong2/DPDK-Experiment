@@ -216,32 +216,32 @@ static memcached_return_t update_continuum(Memcached *ptr)
     struct timeval now;
 
     memcached_instance_st* list= memcached_instance_list(ptr);
-//
-//    /* count live servers (those without a retry delay set) */
-//    bool is_auto_ejecting= _is_auto_eject_host(ptr);
-//    if (is_auto_ejecting)
-//    {
-//        live_servers= 0;
-//        ptr->ketama.next_distribution_rebuild= 0;
-//        for (uint32_t host_index= 0; host_index < memcached_server_count(ptr); ++host_index)
-//        {
-//            if (list[host_index].next_retry <= now.tv_sec)
-//            {
-//                live_servers++;
-//            }
-//            else
-//            {
-//                if (ptr->ketama.next_distribution_rebuild == 0 or list[host_index].next_retry < ptr->ketama.next_distribution_rebuild)
-//                {
-//                    ptr->ketama.next_distribution_rebuild= list[host_index].next_retry;
-//                }
-//            }
-//        }
-//    }
-//    else
-//    {
-//        live_servers= memcached_server_count(ptr);
-//    }
+
+    /* count live servers (those without a retry delay set) */
+    bool is_auto_ejecting= _is_auto_eject_host(ptr);
+    if (is_auto_ejecting)
+    {
+        live_servers= 0;
+        ptr->ketama.next_distribution_rebuild= 0;
+        for (uint32_t host_index= 0; host_index < memcached_server_count(ptr); ++host_index)
+        {
+            if (list[host_index].next_retry <= now.tv_sec)
+            {
+                live_servers++;
+            }
+            else
+            {
+                if (ptr->ketama.next_distribution_rebuild == 0 or list[host_index].next_retry < ptr->ketama.next_distribution_rebuild)
+                {
+                    ptr->ketama.next_distribution_rebuild= list[host_index].next_retry;
+                }
+            }
+        }
+    }
+    else
+    {
+        live_servers= memcached_server_count(ptr);
+    }
 //
 //    uint32_t points_per_server= (uint32_t) (memcached_is_weighted_ketama(ptr) ? MEMCACHED_POINTS_PER_SERVER_KETAMA : MEMCACHED_POINTS_PER_SERVER);
 //
