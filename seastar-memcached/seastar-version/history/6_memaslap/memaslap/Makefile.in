@@ -1668,61 +1668,6 @@ libtest_libtest_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 @BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@am__EXEEXT_6 = libmemcached-1.0/t/c_test$(EXEEXT) \
 @BUILD_WIN32_FALSE@@SHARED_ENABLED_TRUE@	libmemcached-1.0/t/c_sasl_test$(EXEEXT)
 @BUILD_WIN32_FALSE@am__EXEEXT_7 = libmemcached-1.0/t/cc_test$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/cycle$(EXEEXT)
-@BUILD_WIN32_FALSE@@HAVE_DTRACE_FALSE@am__EXEEXT_8 = tests/libmemcached-1.0/internals$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_9 =  \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testapp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testsocket$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/sasl$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testudp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testplus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/parser$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/failure$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testhashkit$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/hash_plus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcapable$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memstat$(EXEEXT) tests/memcp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memflush$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memrm$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memexist$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memtouch$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcat$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memping$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memerror$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memslap$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memdump$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_10 = libtest/unittest$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/skiptest$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/wait$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/core-count$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/abort$(EXEEXT) \
-@BUILD_WIN32_FALSE@	libtest/backtrace$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_11 =  \
-@BUILD_WIN32_FALSE@	libmemcached-1.0/t/cc_test$(EXEEXT)
-@BUILD_LIBMEMCACHED_PROTOCOL_TRUE@@BUILD_WIN32_FALSE@@HAVE_LIBEVENT_TRUE@am__EXEEXT_12 = example/memcached_light$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_13 = tests/cycle$(EXEEXT)
-@BUILD_WIN32_FALSE@am__EXEEXT_14 =  \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testapp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/testsocket$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/libmemcached-1.0/sasl$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/atomsmasher$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testudp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testplus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/parser$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/failure$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/testhashkit$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/hash_plus$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcapable$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memstat$(EXEEXT) tests/memcp$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memflush$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memrm$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memexist$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memtouch$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memcat$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memping$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memerror$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memslap$(EXEEXT) \
-@BUILD_WIN32_FALSE@	tests/memdump$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__clients_memaslap_SOURCES_DIST = clients/memaslap.cc \
 	clients/ms_conn.cc clients/ms_setting.cc clients/ms_sigsegv.cc \
