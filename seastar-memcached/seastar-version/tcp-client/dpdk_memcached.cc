@@ -66,6 +66,7 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
+# define get_socket_errno() WSAGetLastError()
 
 static bool io_flush(memcached_instance_st* instance,
                      const bool with_flush,
