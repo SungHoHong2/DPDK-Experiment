@@ -223,6 +223,19 @@ static int compare_servers(const void *p1, const void *p2)
 }
 
 
+static uint32_t ketama_server_hash(const char *key, size_t key_length, uint32_t alignment)
+{
+    unsigned char results[16];
+
+    libhashkit_md5_signature((unsigned char*)key, key_length, results);
+
+    return ((uint32_t) (results[3 + alignment * 4] & 0xFF) << 24)
+           | ((uint32_t) (results[2 + alignment * 4] & 0xFF) << 16)
+           | ((uint32_t) (results[1 + alignment * 4] & 0xFF) << 8)
+           | (results[0 + alignment * 4] & 0xFF);
+}
+
+
 static memcached_return_t update_continuum(Memcached *ptr)
 {
     uint32_t continuum_index= 0;
@@ -328,15 +341,6 @@ static memcached_return_t update_continuum(Memcached *ptr)
                                             list[host_index]._hostname,
                                             (uint32_t) list[host_index].port(),
                                             pointer_index);
-
-                if (size_t(sort_host_length) >= sizeof(sort_host) or sort_host_length < 0) {
-                    return memcached_set_error(*ptr, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
-                                               memcached_literal_param("snprintf(sizeof(sort_host))"));
-                }
-
-                if (DEBUG) {
-                    fprintf(stdout, "update_continuum: key is %s\n", sort_host);
-                }
 
                 if (memcached_is_weighted_ketama(ptr)) {
                     for (uint32_t x = 0; x < pointer_per_hash; x++) {
