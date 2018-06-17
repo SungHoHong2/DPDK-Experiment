@@ -29,11 +29,19 @@ struct memcached_error_t
 
 
 
-void _libmemcached_free(const memcached_st*, void *mem, void*)
+static inline void libmemcached_free(const memcached_st *self, void *mem)
 {
-    if (mem)
+    if (self)
     {
+        self->allocators.free(self, mem, self->allocators.context);
+    }
+    else if (mem)
+    {
+#ifdef __cplusplus
         std::free(mem);
+#else
+        free(mem);
+#endif
     }
 }
 
