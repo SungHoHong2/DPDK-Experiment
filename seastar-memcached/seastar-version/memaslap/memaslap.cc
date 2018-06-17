@@ -774,13 +774,11 @@ static void ms_monitor_slap_mode()
 } /* ms_monitor_slap_mode */
 
 
-
-
 /* the main function */
 int main(int argc, char *argv[])
 {
 
-  printf("Simplified Memcached BEGIN\n");
+  printf("C++ Memaslap BEGIN\n");
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
@@ -804,6 +802,6 @@ int main(int argc, char *argv[])
   ms_global_struct_destroy();
   ms_setting_cleanup();
 
-  printf("Simplified Memcached END\n");
+  printf("C++ Memaslap END\n");
   return EXIT_SUCCESS;
 } /* main */

@@ -215,7 +215,7 @@
 # All paths should be given relative to the root
 
 
-
+$(info DEBUGGING MAKEFILE)
 
 VPATH = @srcdir@
 am__is_gnu_make = test -n '$(MAKEFILE_LIST)' && test -n '$(MAKELEVEL)'
