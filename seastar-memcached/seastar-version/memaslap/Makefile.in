@@ -1893,7 +1893,7 @@ am__clients_memslap_SOURCES_DIST = clients/memslap.cc \
 @BUILD_WIN32_FALSE@	clients/clients_memslap-execute.$(OBJEXT)
 clients_memslap_OBJECTS = $(am_clients_memslap_OBJECTS)
 
-$(info CLIENT [${EXEEXT}] Actual Compiling location BEGIN)
+$(info CLIENT Actual Compiling location BEGIN)
 
 @BUILD_WIN32_FALSE@clients_memslap_DEPENDENCIES = $(CLIENTS_LDADDS)
 clients_memslap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
@@ -1901,8 +1901,10 @@ clients_memslap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(clients_memslap_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 
+$(info CLIENT [$(CLIENTS_LDADDS)] [$(LIBTOOL)] [$(AM_V_lt)]  [$(AM_LIBTOOLFLAGS)] [$(LIBTOOLFLAGS)] [$(CXXLD)] [$(clients_memslap_CXXFLAGS)])
+$(info CLIENT [$(CXXFLAGS)] [$(AM_LDFLAGS)] [$(LDFLAGS)] [$@] )
 
-$(info CLIENT [${EXEEXT}] Actual Compiling location END)
+$(info CLIENT Actual Compiling location END)
 
 
 am__clients_memstat_SOURCES_DIST = clients/memstat.cc
