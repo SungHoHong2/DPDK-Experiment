@@ -38,6 +38,38 @@
 #include <cassert>
 #include <cstring>
 
+#define HASHKIT_BLOCK_SIZE 1024
+
+struct hashkit_string_st {
+    char *end;
+    size_t current_size;
+    char *string;
+};
+
+size_t hashkit_string_length(const hashkit_string_st *self)
+{
+    return size_t(self->end -self->string);
+}
+
+char *hashkit_string_c_str_mutable(hashkit_string_st *self)
+{
+    assert(self);
+    if (self == NULL)
+    {
+        return NULL;
+    }
+    return self->string;
+}
+
+const char *hashkit_string_c_str(const hashkit_string_st* self)
+{
+    assert(self);
+    if (self == NULL)
+    {
+        return NULL;
+    }
+    return self->string;
+}
 
 
 inline static bool _string_check(hashkit_string_st *string, size_t need)
