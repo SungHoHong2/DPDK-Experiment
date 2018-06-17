@@ -5,6 +5,10 @@
 
 #define memcached_is_auto_eject_hosts(__object) ((__object)->flags.auto_eject_hosts)
 
+#define util_literal_param(X) (X), (static_cast<size_t>((sizeof(X) - 1)))
+#define memcached_literal_param util_literal_param
+
+
 
 struct memcached_instance_st {
     in_port_t port() const
