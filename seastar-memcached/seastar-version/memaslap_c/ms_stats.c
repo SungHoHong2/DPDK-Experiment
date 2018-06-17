@@ -9,9 +9,7 @@
  *
  */
 
-#include "mem_config.h"
-
-#include <inttypes.h>
+ #include <inttypes.h>
 #include "ms_stats.h"
 
 #define array_size(x)    (sizeof(x) / sizeof((x)[0]))

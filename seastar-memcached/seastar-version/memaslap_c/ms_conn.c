@@ -9,8 +9,6 @@
  *
  */
 
-#include "mem_config.h"
-
 #include <stdio.h>
 #include <inttypes.h>
 #include <limits.h>
