@@ -152,7 +152,6 @@ static uint32_t dispatch_host(const Memcached *ptr, uint32_t hash)
         case MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA_SPY:
         {
             uint32_t num= ptr->ketama.continuum_points_counter;
-            WATCHPOINT_ASSERT(ptr->ketama.continuum);
 
             memcached_continuum_item_st *begin, *end, *left, *right, *middle;
             begin= left= ptr->ketama.continuum;
@@ -180,7 +179,6 @@ static uint32_t dispatch_host(const Memcached *ptr, uint32_t hash)
         }
         default:
         case MEMCACHED_DISTRIBUTION_CONSISTENT_MAX:
-            WATCHPOINT_ASSERT(0); /* We have added a distribution without extending the logic */
             return hash % memcached_server_count(ptr);
     }
     /* NOTREACHED */
