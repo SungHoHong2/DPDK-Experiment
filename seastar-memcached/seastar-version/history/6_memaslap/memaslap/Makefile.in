@@ -1892,11 +1892,19 @@ am__clients_memslap_SOURCES_DIST = clients/memslap.cc \
 @BUILD_WIN32_FALSE@	clients/clients_memslap-generator.$(OBJEXT) \
 @BUILD_WIN32_FALSE@	clients/clients_memslap-execute.$(OBJEXT)
 clients_memslap_OBJECTS = $(am_clients_memslap_OBJECTS)
+
+$(info CLIENT [${EXEEXT}] Actual Compiling location BEGIN)
+
 @BUILD_WIN32_FALSE@clients_memslap_DEPENDENCIES = $(CLIENTS_LDADDS)
 clients_memslap_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(clients_memslap_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+
+
+$(info CLIENT [${EXEEXT}] Actual Compiling location END)
+
+
 am__clients_memstat_SOURCES_DIST = clients/memstat.cc
 @BUILD_WIN32_FALSE@am_clients_memstat_OBJECTS =  \
 @BUILD_WIN32_FALSE@	clients/memstat.$(OBJEXT)
