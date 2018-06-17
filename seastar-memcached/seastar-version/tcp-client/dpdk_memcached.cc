@@ -13,6 +13,9 @@
 #define memcached_is_encrypted(__object) ((__object)->hashkit._key)
 #define memcached_is_replying(__object) ((__object)->flags.reply)
 #define SOCKET_ERROR -1
+#define get_socket_errno() errno
+#include <sys/socket.h>
+#include <poll.h>
 
 static inline const char *storage_op_string(memcached_storage_action_t verb)
 {
@@ -66,72 +69,113 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
-#define get_socket_errno() errno
 
 
 static bool repack_input_buffer(memcached_instance_st* instance)
 {
-    if (instance->read_ptr != instance->read_buffer)
-    {
-        /* Move all of the data to the beginning of the buffer so
-         ** that we can fit more data into the buffer...
-       */
-        memmove(instance->read_buffer, instance->read_ptr, instance->read_buffer_length);
-        instance->read_ptr= instance->read_buffer;
-        instance->read_data_length= instance->read_buffer_length;
-    }
-
-    /* There is room in the buffer, try to fill it! */
-    if (instance->read_buffer_length != MEMCACHED_MAX_BUFFER)
-    {
-        do {
-            /* Just try a single read to grab what's available */
-            ssize_t nr;
-            if ((nr= ::recv(instance->fd,
-                            instance->read_ptr + instance->read_data_length,
-                            MEMCACHED_MAX_BUFFER - instance->read_data_length,
-                            MSG_NOSIGNAL)) <= 0)
-            {
-                if (nr == 0)
-                {
-                    memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT);
-                }
-                else
-                {
-                    switch (get_socket_errno())
-                    {
-                        case EINTR:
-                            continue;
-
-#if EWOULDBLOCK != EAGAIN
-                            case EWOULDBLOCK:
-#endif
-                        case EAGAIN:
-#ifdef __linux
-                            case ERESTART:
-#endif
-                            break; // No IO is fine, we can just move on
-
-                        default:
-                            memcached_set_errno(*instance, get_socket_errno(), MEMCACHED_AT);
-                    }
-                }
-
-                break;
-            }
-            else // We read data, append to our read buffer
-            {
-                instance->read_data_length+= size_t(nr);
-                instance->read_buffer_length+= size_t(nr);
-
-                return true;
-            }
-        } while (false);
-    }
+//    if (instance->read_ptr != instance->read_buffer)
+//    {
+//        /* Move all of the data to the beginning of the buffer so
+//         ** that we can fit more data into the buffer...
+//       */
+//        memmove(instance->read_buffer, instance->read_ptr, instance->read_buffer_length);
+//        instance->read_ptr= instance->read_buffer;
+//        instance->read_data_length= instance->read_buffer_length;
+//    }
+//
+//    /* There is room in the buffer, try to fill it! */
+//    if (instance->read_buffer_length != MEMCACHED_MAX_BUFFER)
+//    {
+//        do {
+//            /* Just try a single read to grab what's available */
+//            ssize_t nr;
+//            if ((nr= ::recv(instance->fd,
+//                            instance->read_ptr + instance->read_data_length,
+//                            MEMCACHED_MAX_BUFFER - instance->read_data_length,
+//                            MSG_NOSIGNAL)) <= 0)
+//            {
+//                if (nr == 0)
+//                {
+//                    memcached_set_error(*instance, MEMCACHED_CONNECTION_FAILURE, MEMCACHED_AT);
+//                }
+//                else
+//                {
+//                    switch (get_socket_errno())
+//                    {
+//                        case EINTR:
+//                            continue;
+//
+//#if EWOULDBLOCK != EAGAIN
+//                            case EWOULDBLOCK:
+//#endif
+//                        case EAGAIN:
+//#ifdef __linux
+//                            case ERESTART:
+//#endif
+//                            break; // No IO is fine, we can just move on
+//
+//                        default:
+//                            memcached_set_errno(*instance, get_socket_errno(), MEMCACHED_AT);
+//                    }
+//                }
+//
+//                break;
+//            }
+//            else // We read data, append to our read buffer
+//            {
+//                instance->read_data_length+= size_t(nr);
+//                instance->read_buffer_length+= size_t(nr);
+//
+//                return true;
+//            }
+//        } while (false);
+//    }
 
     return false;
 }
 
+
+static bool process_input_buffer(memcached_instance_st* instance)
+{
+    /*
+     ** We might be able to process some of the response messages if we
+     ** have a callback set up
+   */
+//    if (instance->root->callbacks != NULL)
+//    {
+//        /*
+//         * We might have responses... try to read them out and fire
+//         * callbacks
+//       */
+//        memcached_callback_st cb= *instance->root->callbacks;
+//
+//        memcached_set_processing_input((Memcached *)instance->root, true);
+//
+//        char buffer[MEMCACHED_DEFAULT_COMMAND_SIZE];
+//        Memcached *root= (Memcached *)instance->root;
+//        memcached_return_t error= memcached_response(instance, buffer, sizeof(buffer), &root->result);
+//
+//        memcached_set_processing_input(root, false);
+//
+//        if (error == MEMCACHED_SUCCESS)
+//        {
+//            for (unsigned int x= 0; x < cb.number_of_callback; x++)
+//            {
+//                error= (*cb.callback[x])(instance->root, &root->result, cb.context);
+//                if (error != MEMCACHED_SUCCESS)
+//                {
+//                    break;
+//                }
+//            }
+//
+//            /* @todo what should I do with the error message??? */
+//        }
+//        /* @todo what should I do with other error messages?? */
+//        return true;
+//    }
+
+    return false;
+}
 
 
 static bool io_flush(memcached_instance_st* instance,
@@ -311,8 +355,7 @@ bool memcached_io_writev(memcached_instance_st* instance,
 
 
 
-#include <sys/socket.h>
-#include <poll.h>
+
 
 memcached_return_t memcached_vdo(memcached_instance_st* instance,
                                  libmemcached_io_vector_st vector[],
