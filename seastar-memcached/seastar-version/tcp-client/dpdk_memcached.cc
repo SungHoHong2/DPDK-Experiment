@@ -219,134 +219,219 @@ static int compare_servers(const void *p1, const void *p2)
 }
 
 
-int update_continuum(hashkit_st *hashkit)
+static memcached_return_t update_continuum(Memcached *ptr)
 {
-//    uint32_t count;
-//    uint32_t continuum_index= 0;
-//    uint32_t value;
-//    uint32_t points_index;
-//    uint32_t points_count= 0;
-//    uint32_t points_per_server;
-//    uint32_t points_per_hash;
-//    uint64_t total_weight= 0;
-//    uint32_t live_servers;
-//    uint8_t *context;
+    uint32_t continuum_index= 0;
+//    uint32_t pointer_counter= 0;
+//    uint32_t pointer_per_server= MEMCACHED_POINTS_PER_SERVER;
+//    uint32_t pointer_per_hash= 1;
+//    uint32_t live_servers= 0;
+//    struct timeval now;
 //
-//    if (hashkit->active_fn != NULL || hashkit->weight_fn != NULL)
+//    if (gettimeofday(&now, NULL))
 //    {
-//        live_servers= 0;
-//
-//        for (count= 0, context= hashkit->list; count < hashkit->list_size;
-//             count++, context+= hashkit->context_size)
-//        {
-//            if (hashkit->active_fn != NULL)
-//            {
-//                if (hashkit->active_fn(context))
-//                    live_servers++;
-//                else
-//                    continue;
-//            }
-//
-//            if (hashkit->weight_fn != NULL)
-//                total_weight+= hashkit->weight_fn(context);
-//        }
+//        return memcached_set_errno(*ptr, errno, MEMCACHED_AT);
 //    }
 //
-//    if (hashkit->active_fn == NULL)
-//        live_servers= (uint32_t)hashkit->list_size;
+//    memcached_instance_st* list= memcached_instance_list(ptr);
 //
-//    if (live_servers == 0)
-//        return 0;
-//
-//    if (hashkit->weight_fn == NULL)
+//    /* count live servers (those without a retry delay set) */
+//    bool is_auto_ejecting= _is_auto_eject_host(ptr);
+//    if (is_auto_ejecting)
 //    {
-//        points_per_server= HASHKIT_POINTS_PER_NODE;
-//        points_per_hash= 1;
+//        live_servers= 0;
+//        ptr->ketama.next_distribution_rebuild= 0;
+//        for (uint32_t host_index= 0; host_index < memcached_server_count(ptr); ++host_index)
+//        {
+//            if (list[host_index].next_retry <= now.tv_sec)
+//            {
+//                live_servers++;
+//            }
+//            else
+//            {
+//                if (ptr->ketama.next_distribution_rebuild == 0 or list[host_index].next_retry < ptr->ketama.next_distribution_rebuild)
+//                {
+//                    ptr->ketama.next_distribution_rebuild= list[host_index].next_retry;
+//                }
+//            }
+//        }
 //    }
 //    else
 //    {
-//        points_per_server= HASHKIT_POINTS_PER_NODE_WEIGHTED;
-//        points_per_hash= 4;
+//        live_servers= memcached_server_count(ptr);
 //    }
 //
-//    if (live_servers > hashkit->continuum_count)
+//    uint32_t points_per_server= (uint32_t) (memcached_is_weighted_ketama(ptr) ? MEMCACHED_POINTS_PER_SERVER_KETAMA : MEMCACHED_POINTS_PER_SERVER);
+//
+//    if (live_servers == 0)
 //    {
-//        hashkit_continuum_point_st *new_continuum;
-//
-//        new_continuum= realloc(hashkit->continuum,
-//                               sizeof(hashkit_continuum_point_st) *
-//                               (live_servers + HASHKIT_CONTINUUM_ADDITION) *
-//                               points_per_server);
-//
-//        if (new_continuum == NULL)
-//            return ENOMEM;
-//
-//        hashkit->continuum= new_continuum;
-//        hashkit->continuum_count= live_servers + HASHKIT_CONTINUUM_ADDITION;
+//        return MEMCACHED_SUCCESS;
 //    }
 //
-//    for (count= 0, context= hashkit->list; count < hashkit->list_size;
-//         count++, context+= hashkit->context_size)
+//    if (live_servers > ptr->ketama.continuum_count)
 //    {
-//        if (hashkit->active_fn != NULL && hashkit->active_fn(context) == false)
-//            continue;
+//        memcached_continuum_item_st *new_ptr;
 //
-//        if (hashkit->weight_fn != NULL)
+//        new_ptr= libmemcached_xrealloc(ptr, ptr->ketama.continuum, (live_servers + MEMCACHED_CONTINUUM_ADDITION) * points_per_server, memcached_continuum_item_st);
+//
+//        if (new_ptr == 0)
 //        {
-//            float pct = (float)hashkit->weight_fn(context) / (float)total_weight;
-//            points_per_server= (uint32_t) ((floorf((float) (pct * HASHKIT_POINTS_PER_NODE_WEIGHTED / 4 * (float)live_servers + 0.0000000001))) * 4);
+//            return MEMCACHED_MEMORY_ALLOCATION_FAILURE;
 //        }
 //
-//        for (points_index= 0;
-//             points_index < points_per_server / points_per_hash;
-//             points_index++)
+//        ptr->ketama.continuum= new_ptr;
+//        ptr->ketama.continuum_count= live_servers + MEMCACHED_CONTINUUM_ADDITION;
+//    }
+//    assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
+//
+//    uint64_t total_weight= 0;
+//    if (memcached_is_weighted_ketama(ptr))
+//    {
+//        for (uint32_t host_index = 0; host_index < memcached_server_count(ptr); ++host_index)
 //        {
-//            char sort_host[HASHKIT_CONTINUUM_KEY_SIZE]= "";
-//            size_t sort_host_length;
-//
-//            if (hashkit->continuum_key_fn == NULL)
+//            if (is_auto_ejecting == false or list[host_index].next_retry <= now.tv_sec)
 //            {
-//                sort_host_length= (size_t) snprintf(sort_host, HASHKIT_CONTINUUM_KEY_SIZE, "%u",
-//                                                    points_index);
+//                total_weight += list[host_index].weight;
 //            }
-//            else
-//            {
-//                sort_host_length= hashkit->continuum_key_fn(sort_host, HASHKIT_CONTINUUM_KEY_SIZE,
-//                                                            points_index, context);
-//            }
+//        }
+//    }
 //
-//            if (hashkit->weight_fn == NULL)
-//            {
-//                if (hashkit->continuum_hash_fn == NULL)
-//                    value= hashkit_default(sort_host, sort_host_length);
-//                else
-//                    value= hashkit->continuum_hash_fn(sort_host, sort_host_length);
+//    for (uint32_t host_index= 0; host_index < memcached_server_count(ptr); ++host_index)
+//    {
+//        if (is_auto_ejecting and list[host_index].next_retry > now.tv_sec)
+//        {
+//            continue;
+//        }
 //
-//                hashkit->continuum[continuum_index].index= count;
-//                hashkit->continuum[continuum_index++].value= value;
-//            }
-//            else
+//        if (memcached_is_weighted_ketama(ptr))
+//        {
+//            float pct= (float)list[host_index].weight / (float)total_weight;
+//            pointer_per_server= (uint32_t) ((::floor((float) (pct * MEMCACHED_POINTS_PER_SERVER_KETAMA / 4 * (float)live_servers + 0.0000000001))) * 4);
+//            pointer_per_hash= 4;
+//            if (DEBUG)
 //            {
-//                unsigned int i;
-//                for (i = 0; i < points_per_hash; i++)
+//                printf("ketama_weighted:%s|%d|%llu|%u\n",
+//                       list[host_index]._hostname,
+//                       list[host_index].port(),
+//                       (unsigned long long)list[host_index].weight,
+//                       pointer_per_server);
+//            }
+//        }
+//
+//
+//        if (ptr->distribution == MEMCACHED_DISTRIBUTION_CONSISTENT_KETAMA_SPY)
+//        {
+//            for (uint32_t pointer_index= 0;
+//                 pointer_index < pointer_per_server / pointer_per_hash;
+//                 pointer_index++)
+//            {
+//                char sort_host[1 +MEMCACHED_NI_MAXHOST +1 +MEMCACHED_NI_MAXSERV +1 + MEMCACHED_NI_MAXSERV ]= "";
+//                int sort_host_length;
+//
+//                // Spymemcached ketema key format is: hostname/ip:port-index
+//                // If hostname is not available then: /ip:port-index
+//                sort_host_length= snprintf(sort_host, sizeof(sort_host),
+//                                           "/%s:%u-%u",
+//                                           list[host_index]._hostname,
+//                                           (uint32_t)list[host_index].port(),
+//                                           pointer_index);
+//
+//                if (size_t(sort_host_length) >= sizeof(sort_host) or sort_host_length < 0)
 //                {
-//                    value= ketama_server_hash(sort_host, (uint32_t) sort_host_length, (int) i);
-//                    hashkit->continuum[continuum_index].index= count;
-//                    hashkit->continuum[continuum_index++].value= value;
+//                    return memcached_set_error(*ptr, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                               memcached_literal_param("snprintf(sizeof(sort_host))"));
+//                }
+//
+//                if (DEBUG)
+//                {
+//                    fprintf(stdout, "update_continuum: key is %s\n", sort_host);
+//                }
+//
+//                if (memcached_is_weighted_ketama(ptr))
+//                {
+//                    for (uint32_t x= 0; x < pointer_per_hash; x++)
+//                    {
+//                        uint32_t value= ketama_server_hash(sort_host, (size_t)sort_host_length, x);
+//                        ptr->ketama.continuum[continuum_index].index= host_index;
+//                        ptr->ketama.continuum[continuum_index++].value= value;
+//                    }
+//                }
+//                else
+//                {
+//                    uint32_t value= hashkit_digest(&ptr->hashkit, sort_host, (size_t)sort_host_length);
+//                    ptr->ketama.continuum[continuum_index].index= host_index;
+//                    ptr->ketama.continuum[continuum_index++].value= value;
+//                }
+//            }
+//        }
+//        else
+//        {
+//            for (uint32_t pointer_index= 1;
+//                 pointer_index <= pointer_per_server / pointer_per_hash;
+//                 pointer_index++)
+//            {
+//                char sort_host[MEMCACHED_NI_MAXHOST +1 +MEMCACHED_NI_MAXSERV +1 +MEMCACHED_NI_MAXSERV]= "";
+//                int sort_host_length;
+//
+//                if (list[host_index].port() == MEMCACHED_DEFAULT_PORT)
+//                {
+//                    sort_host_length= snprintf(sort_host, sizeof(sort_host),
+//                                               "%s-%u",
+//                                               list[host_index]._hostname,
+//                                               pointer_index - 1);
+//                }
+//                else
+//                {
+//                    sort_host_length= snprintf(sort_host, sizeof(sort_host),
+//                                               "%s:%u-%u",
+//                                               list[host_index]._hostname,
+//                                               (uint32_t)list[host_index].port(),
+//                                               pointer_index - 1);
+//                }
+//
+//                if (size_t(sort_host_length) >= sizeof(sort_host) or sort_host_length < 0)
+//                {
+//                    return memcached_set_error(*ptr, MEMCACHED_MEMORY_ALLOCATION_FAILURE, MEMCACHED_AT,
+//                                               memcached_literal_param("snprintf(sizeof(sort_host)))"));
+//                }
+//
+//                if (memcached_is_weighted_ketama(ptr))
+//                {
+//                    for (uint32_t x = 0; x < pointer_per_hash; x++)
+//                    {
+//                        uint32_t value= ketama_server_hash(sort_host, (size_t)sort_host_length, x);
+//                        ptr->ketama.continuum[continuum_index].index= host_index;
+//                        ptr->ketama.continuum[continuum_index++].value= value;
+//                    }
+//                }
+//                else
+//                {
+//                    uint32_t value= hashkit_digest(&ptr->hashkit, sort_host, (size_t)sort_host_length);
+//                    ptr->ketama.continuum[continuum_index].index= host_index;
+//                    ptr->ketama.continuum[continuum_index++].value= value;
 //                }
 //            }
 //        }
 //
-//        points_count+= points_per_server;
+//        pointer_counter+= pointer_per_server;
 //    }
 //
-//    hashkit->continuum_points_count= points_count;
-//    qsort(hashkit->continuum, hashkit->continuum_points_count, sizeof(hashkit_continuum_point_st),
-//          continuum_points_cmp);
+//    assert_msg(ptr, "Programmer Error, no valid ptr");
+//    assert_msg(ptr->ketama.continuum, "Programmer Error, empty ketama continuum");
+//    assert_msg(memcached_server_count(ptr) * MEMCACHED_POINTS_PER_SERVER <= MEMCACHED_CONTINUUM_SIZE, "invalid size information being given to qsort()");
+//    ptr->ketama.continuum_points_counter= pointer_counter;
+//    qsort(ptr->ketama.continuum, ptr->ketama.continuum_points_counter, sizeof(memcached_continuum_item_st), continuum_item_cmp);
+//
+//    if (DEBUG)
+//    {
+//        for (uint32_t pointer_index= 0; memcached_server_count(ptr) && pointer_index < ((live_servers * MEMCACHED_POINTS_PER_SERVER) - 1); pointer_index++)
+//        {
+//            WATCHPOINT_ASSERT(ptr->ketama.continuum[pointer_index].value <= ptr->ketama.continuum[pointer_index + 1].value);
+//        }
+//    }
 
-    return 0;
+    return MEMCACHED_SUCCESS;
 }
-
 
 static void sort_hosts(Memcached *ptr)
 {
