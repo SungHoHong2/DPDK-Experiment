@@ -154,7 +154,6 @@ struct memcached_virtual_bucket_t {
 
 uint32_t memcached_server_count(const memcached_st *self)
 {
-    WATCHPOINT_ASSERT(self);
     if (self == NULL)
         return 0;
 
