@@ -180,16 +180,10 @@ static bool io_flush(memcached_instance_st* instance,
 }
 
 
-
 static bool _io_write(memcached_instance_st* instance,
                       const void *buffer, size_t length, bool with_flush,
                       size_t& written)
 {
-
-    printf("_io_write BEGIN\n");
-
-    assert(instance->fd != INVALID_SOCKET);
-    assert(memcached_is_udp(instance->root) == false);
 
     const char *buffer_ptr= static_cast<const char *>(buffer);
 
@@ -210,8 +204,6 @@ static bool _io_write(memcached_instance_st* instance,
 
         if (instance->write_buffer_offset == buffer_end)
         {
-            WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
-
             memcached_return_t rc;
             if (io_flush(instance, with_flush, rc) == false)
             {
@@ -224,7 +216,6 @@ static bool _io_write(memcached_instance_st* instance,
     if (with_flush)
     {
         memcached_return_t rc;
-        WATCHPOINT_ASSERT(instance->fd != INVALID_SOCKET);
         if (io_flush(instance, with_flush, rc) == false)
         {
             written= original_length -length;
