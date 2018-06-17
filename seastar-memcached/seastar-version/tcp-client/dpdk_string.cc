@@ -51,6 +51,27 @@ size_t hashkit_string_length(const hashkit_string_st *self)
     return size_t(self->end -self->string);
 }
 
+char *hashkit_string_c_str_mutable(hashkit_string_st *self)
+{
+    assert(self);
+    if (self == NULL)
+    {
+        return NULL;
+    }
+    return self->string;
+}
+
+const char *hashkit_string_c_str(const hashkit_string_st* self)
+{
+    assert(self);
+    if (self == NULL)
+    {
+        return NULL;
+    }
+    return self->string;
+}
+
+
 inline static bool _string_check(hashkit_string_st *string, size_t need)
 {
     if (need and need > (size_t)(string->current_size - (size_t)(string->end - string->string)))
@@ -217,25 +238,7 @@ char *hashkit_string_take(hashkit_string_st *self)
     return value;
 }
 
-char *hashkit_string_c_str_mutable(hashkit_string_st *self)
-{
-    assert(self);
-    if (self == NULL)
-    {
-        return NULL;
-    }
-    return self->string;
-}
 
-const char *hashkit_string_c_str(const hashkit_string_st* self)
-{
-    assert(self);
-    if (self == NULL)
-    {
-        return NULL;
-    }
-    return self->string;
-}
 
 void hashkit_string_set_length(hashkit_string_st *self, size_t length)
 {
