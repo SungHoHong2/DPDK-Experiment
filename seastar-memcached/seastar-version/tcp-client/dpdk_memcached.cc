@@ -6,7 +6,7 @@
 #include "dpdk_hash.hh"
 #include "dpdk_string.hh"
 #include "aes.hh"
-
+#include "dpdk_io.hh"
 
 
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
@@ -67,6 +67,8 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 
 
 
+
+
 memcached_return_t memcached_vdo(memcached_instance_st* instance,
                                  libmemcached_io_vector_st vector[],
                                  const size_t count,
@@ -74,26 +76,13 @@ memcached_return_t memcached_vdo(memcached_instance_st* instance,
 {
     memcached_return_t rc;
 
-//    assert_msg(vector, "Invalid vector passed");
-//
-//    if (memcached_failed(rc= memcached_connect(instance)))
-//    {
-//        WATCHPOINT_ERROR(rc);
-//        assert_msg(instance->error_messages, "memcached_connect() returned an error but the Instance showed none.");
-//        return rc;
-//    }
-//
-//    /*
-//    ** Since non buffering ops in UDP mode dont check to make sure they will fit
-//    ** before they start writing, if there is any data in buffer, clear it out,
-//    ** otherwise we might get a partial write.
-//    **/
+
 //    if (memcached_is_udp(instance->root))
 //    {
 //        return _vdo_udp(instance, vector, count);
 //    }
 //
-//    bool sent_success= memcached_io_writev(instance, vector, count, with_flush);
+    bool sent_success= memcached_io_writev(instance, vector, count, with_flush);
 //    if (sent_success == false)
 //    {
 //        assert(memcached_last_error(instance->root) == MEMCACHED_SUCCESS);
