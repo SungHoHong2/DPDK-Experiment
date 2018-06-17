@@ -20,6 +20,15 @@ struct memcached_virtual_bucket_t {
     struct bucket_t buckets[];
 };
 
+
+static void sort_hosts(Memcached *ptr)
+{
+    if (memcached_server_count(ptr))
+    {
+        qsort(memcached_instance_list(ptr), memcached_server_count(ptr), sizeof(memcached_instance_st), compare_servers);
+    }
+}
+
 memcached_return_t run_distribution(Memcached *ptr)
 {
     if (ptr->flags.use_sort_hosts)
