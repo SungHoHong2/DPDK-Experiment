@@ -34,7 +34,7 @@
  *
  */
 
-
+#include <iostream>
 #include <cassert>
 #include <cstring>
 
