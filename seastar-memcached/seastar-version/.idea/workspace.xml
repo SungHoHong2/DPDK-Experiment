@@ -40,10 +40,22 @@
       <file leaf-file-name="dpdk_memcached.cc" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="85" column="5" lean-forward="true" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+            <state relative-caret-position="318">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
               <folding>
-                <element signature="e#765#780#0" expanded="true" />
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dpdk_error.hh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_error.hh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="874">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+              <folding>
+                <element signature="e#463#478#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,7 +65,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cout &lt;&lt;</find>
       <find>debugger</find>
       <find>ITEM initialize</find>
       <find>local_is_initialized</find>
@@ -83,6 +94,7 @@
       <find>struct memcached_error_t;</find>
       <find>memcached_error_t</find>
       <find>_error_free</find>
+      <find>memcached_set_error</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -98,6 +110,7 @@
         <option value="$PROJECT_DIR$/tcp-client/dpdk_memcached.cpp" />
         <option value="$PROJECT_DIR$/tcp-client/dpdk_memcached.hh" />
         <option value="$PROJECT_DIR$/tcp-client/client.cc" />
+        <option value="$PROJECT_DIR$/tcp-client/dpdk_error.hh" />
         <option value="$PROJECT_DIR$/tcp-client/dpdk_memcached.cc" />
       </list>
     </option>
@@ -172,12 +185,12 @@
       <updated>1528964369024</updated>
       <workItem from="1528964370449" duration="11902000" />
       <workItem from="1528989613942" duration="14755000" />
-      <workItem from="1529142659565" duration="9194000" />
+      <workItem from="1529142659565" duration="9410000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35851000" />
+    <option name="totallyTimeSpent" value="36067000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="721" y="-1080" width="1920" height="1080" extended-state="6" />
@@ -300,12 +313,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_error.hh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="874">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="e#463#478#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tcp-client/dpdk_memcached.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="85" column="5" lean-forward="true" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+        <state relative-caret-position="318">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
           <folding>
-            <element signature="e#765#780#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1,4 +1,5 @@
 #include "dpdk_memcached.hh"
+#include "dpdk_error.hh"
 #define	LIBMEMCACHED_MEMCACHED_SET_START()
 #define	LIBMEMCACHED_MEMCACHED_SET_END()
 #define memcached2Memcached(__obj) (__obj)
@@ -13,56 +14,6 @@ enum memcached_storage_action_t {
     APPEND_OP,
     CAS_OP
 };
-
-
-#define MAX_ERROR_LENGTH 2048
-struct memcached_error_t
-{
-    Memcached *root;
-    uint64_t query_id;
-    struct memcached_error_t *next;
-    memcached_return_t rc;
-    int local_errno;
-    size_t size;
-    char message[MAX_ERROR_LENGTH];
-};
-
-
-
-static inline void libmemcached_free(const memcached_st *self, void *mem)
-{
-    if (self)
-    {
-        self->allocators.free(self, mem, self->allocators.context);
-    }
-    else if (mem)
-    {
-#ifdef __cplusplus
-        std::free(mem);
-#else
-        free(mem);
-#endif
-    }
-}
-
-
-static void _error_free(memcached_error_t *error)
-{
-    if (error)
-    {
-        _error_free(error->next);
-
-        libmemcached_free(error->root, error);
-    }
-}
-
-
-void memcached_error_free(Memcached& self)
-{
-    _error_free(self.error_messages);
-    self.error_messages= NULL;
-}
-
 
 
 memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
@@ -80,11 +31,6 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
     if (self->state.is_time_for_rebuild)
     {
         memcached_reset(self);
-    }
-
-    if (memcached_server_count(self) == 0)
-    {
-        // return memcached_set_error(*self, MEMCACHED_NO_SERVERS, MEMCACHED_AT);
     }
 
     memcached_error_free(*self);
@@ -110,13 +56,8 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
     {
         return rc;
     }
-//
-//    if (memcached_failed(memcached_key_test(*ptr, (const char **)&key, &key_length, 1)))
-//    {
-//        return memcached_last_error(ptr);
-//    }
-//
-//    uint32_t server_key= memcached_generate_hash_with_redistribution(ptr, group_key, group_key_length);
+
+    uint32_t server_key= memcached_generate_hash_with_redistribution(ptr, group_key, group_key_length);
 //    memcached_instance_st* instance= memcached_instance_fetch(ptr, server_key);
 //
 //    WATCHPOINT_SET(instance->io_wait_count.read= 0);
