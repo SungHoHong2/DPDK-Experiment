@@ -2,6 +2,9 @@
 # include <sys/socket.h>
 #endif
 
+#define POLLIN 0x0001
+
+
 void initialize_binary_request(memcached_instance_st* server, protocol_binary_request_header& header)
 {
     server->request_id++;
