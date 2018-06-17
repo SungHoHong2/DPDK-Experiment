@@ -4,7 +4,10 @@
 #include "md5.hh"
 #include <sys/time.h>
 #include "dpdk_hash.hh"
+#include "dpdk_string.hh"
 #include "aes.hh"
+
+
 
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
 #define memcached_is_encrypted(__object) ((__object)->hashkit._key)
