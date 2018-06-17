@@ -1,7 +1,7 @@
-#include "md5.hh"
 #include "dpdk_memcached.hh"
 #include "dpdk_basic.hh"
 #include "dpdk_error.hh"
+#include "md5.hh"
 #include <sys/time.h>
 
 #define memcached_is_auto_eject_hosts(__object) ((__object)->flags.auto_eject_hosts)
