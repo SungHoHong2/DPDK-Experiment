@@ -242,6 +242,28 @@ void libhashkit_md5_signature(const unsigned char *key, size_t length, unsigned 
 }
 
 
+static int continuum_item_cmp(const void *t1, const void *t2)
+{
+    memcached_continuum_item_st *ct1= (memcached_continuum_item_st *)t1;
+    memcached_continuum_item_st *ct2= (memcached_continuum_item_st *)t2;
+
+    /* Why 153? Hmmm... */
+    WATCHPOINT_ASSERT(ct1->value != 153);
+    if (ct1->value == ct2->value)
+    {
+        return 0;
+    }
+    else if (ct1->value > ct2->value)
+    {
+        return 1;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+
 static memcached_return_t update_continuum(Memcached *ptr)
 {
     uint32_t continuum_index= 0;
