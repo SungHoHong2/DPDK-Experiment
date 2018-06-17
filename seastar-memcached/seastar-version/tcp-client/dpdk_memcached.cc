@@ -6,6 +6,7 @@
 #include "dpdk_hash.hh"
 
 
+#define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
 
 
 memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
@@ -39,15 +40,15 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
 
     uint32_t server_key= memcached_generate_hash_with_redistribution(ptr, group_key, group_key_length);
     memcached_instance_st* instance= memcached_instance_fetch(ptr, server_key);
-//
-//    WATCHPOINT_SET(instance->io_wait_count.read= 0);
-//    WATCHPOINT_SET(instance->io_wait_count.write= 0);
-//
-//    bool flush= true;
-//    if (memcached_is_buffering(instance->root) and verb == SET_OP)
-//    {
-//        flush= false;
-//    }
+    instance->io_wait_count.read= 0;
+    instance->io_wait_count.write= 0;
+
+
+    bool flush= true;
+    if (memcached_is_buffering(instance->root) and verb == SET_OP)
+    {
+        flush= false;
+    }
 //
 //    bool reply= memcached_is_replying(ptr);
 //
