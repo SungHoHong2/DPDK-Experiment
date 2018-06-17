@@ -7,6 +7,7 @@
 
 
 #define memcached_is_buffering(__object) ((__object)->flags.buffer_requests)
+#define memcached_is_encrypted(__object) ((__object)->hashkit._key)
 
 
 memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_key)
@@ -18,8 +19,6 @@ memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_
 
     return &ptr->servers[server_key];
 }
-
-
 
 
 static inline memcached_return_t memcached_send(memcached_st *shell,
@@ -49,26 +48,21 @@ static inline memcached_return_t memcached_send(memcached_st *shell,
     {
         flush= false;
     }
-//
-//    bool reply= memcached_is_replying(ptr);
-//
-//    hashkit_string_st* destination= NULL;
-//
-//    if (memcached_is_encrypted(ptr))
-//    {
-//        if (can_by_encrypted(verb) == false)
-//        {
-//            return memcached_set_error(*ptr, MEMCACHED_NOT_SUPPORTED, MEMCACHED_AT,
-//                                       memcached_literal_param("Operation not allowed while encyrption is enabled"));
-//        }
-//
-//        if ((destination= hashkit_encrypt(&ptr->hashkit, value, value_length)) == NULL)
-//        {
-//            return rc;
-//        }
-//        value= hashkit_string_c_str(destination);
-//        value_length= hashkit_string_length(destination);
-//    }
+
+    bool reply= memcached_is_replying(ptr);
+
+    hashkit_string_st* destination= NULL;
+
+    if (memcached_is_encrypted(ptr))
+    {
+
+        if ((destination= hashkit_encrypt(&ptr->hashkit, value, value_length)) == NULL)
+        {
+            return rc;
+        }
+        value= hashkit_string_c_str(destination);
+        value_length= hashkit_string_length(destination);
+    }
 //
 //    if (memcached_is_binary(ptr))
 //    {

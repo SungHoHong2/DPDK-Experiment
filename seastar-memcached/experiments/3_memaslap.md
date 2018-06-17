@@ -14,6 +14,11 @@
 - I am figuring out the contents of the packet that are used in memcacheD
 - the basic functions are `SET` and `GET`
 
+### General features of sending the packet
+- you have to choose whether the data has to be sent via binary or ascii
+- the key has to by encryped with AES and ecrypted with AES
+
+
 ```c++
 // libmemcached/storage.cc
 static memcached_return_t memcached_send_ascii(Memcached *ptr,
