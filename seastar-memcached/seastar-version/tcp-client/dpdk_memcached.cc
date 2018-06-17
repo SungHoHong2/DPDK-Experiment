@@ -66,6 +66,56 @@ hashkit_string_st *hashkit_encrypt(hashkit_st *kit,
 }
 
 
+
+memcached_return_t memcached_vdo(memcached_instance_st* instance,
+                                 libmemcached_io_vector_st vector[],
+                                 const size_t count,
+                                 const bool with_flush)
+{
+    memcached_return_t rc;
+
+//    assert_msg(vector, "Invalid vector passed");
+//
+//    if (memcached_failed(rc= memcached_connect(instance)))
+//    {
+//        WATCHPOINT_ERROR(rc);
+//        assert_msg(instance->error_messages, "memcached_connect() returned an error but the Instance showed none.");
+//        return rc;
+//    }
+//
+//    /*
+//    ** Since non buffering ops in UDP mode dont check to make sure they will fit
+//    ** before they start writing, if there is any data in buffer, clear it out,
+//    ** otherwise we might get a partial write.
+//    **/
+//    if (memcached_is_udp(instance->root))
+//    {
+//        return _vdo_udp(instance, vector, count);
+//    }
+//
+//    bool sent_success= memcached_io_writev(instance, vector, count, with_flush);
+//    if (sent_success == false)
+//    {
+//        assert(memcached_last_error(instance->root) == MEMCACHED_SUCCESS);
+//        if (memcached_last_error(instance->root) == MEMCACHED_SUCCESS)
+//        {
+//            assert(memcached_last_error(instance->root) != MEMCACHED_SUCCESS);
+//            return memcached_set_error(*instance, MEMCACHED_WRITE_FAILURE, MEMCACHED_AT);
+//        }
+//        else
+//        {
+//            rc= memcached_last_error(instance->root);
+//        }
+//    }
+//    else if (memcached_is_replying(instance->root))
+//    {
+//        memcached_server_response_increment(instance);
+//    }
+
+    return rc;
+}
+
+
 static memcached_return_t memcached_send_ascii(Memcached *ptr,
                                                memcached_instance_st* instance,
                                                const char *key,
@@ -79,7 +129,6 @@ static memcached_return_t memcached_send_ascii(Memcached *ptr,
                                                const bool reply,
                                                const memcached_storage_action_t verb)
 {
-    memcached_return_t rc;
     char flags_buffer[MEMCACHED_MAXIMUM_INTEGER_DISPLAY_LENGTH +1];
     int flags_buffer_length= snprintf(flags_buffer, sizeof(flags_buffer), " %u", flags);
 
@@ -113,8 +162,8 @@ static memcached_return_t memcached_send_ascii(Memcached *ptr,
                     { memcached_literal_param("\r\n") }
             };
 
-//    /* Send command header */
-//    memcached_return_t rc=  memcached_vdo(instance, vector, 12, flush);
+    /* Send command header */
+    memcached_return_t rc=  memcached_vdo(instance, vector, 12, flush);
 //
 //    // If we should not reply, return with MEMCACHED_SUCCESS, unless error
 //    if (reply == false)
