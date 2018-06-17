@@ -259,10 +259,10 @@ static bool io_flush(memcached_instance_st* instance,
                      * buffer for more data and retry the write before
                      * waiting..
                    */
-                    if (repack_input_buffer(instance) or process_input_buffer(instance))
-                    {
-                        continue;
-                    }
+//                    if (repack_input_buffer(instance) or process_input_buffer(instance))
+//                    {
+//                        continue;
+//                    }
 
 //                    memcached_return_t rc= io_wait(instance, POLLOUT);
 //                    if (memcached_success(rc))
