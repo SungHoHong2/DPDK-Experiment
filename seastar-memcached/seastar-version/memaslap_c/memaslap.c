@@ -1,20 +1,3 @@
-/*
- *  memslap
- *
- *  (c) Copyright 2009, Schooner Information Technology, Inc.
- *  All rights reserved.
- *  http://www.schoonerinfotech.com/
- *
- *  Use and distribution licensed under the BSD license.  See
- *  the COPYING file for full text.
- *
- *  Authors:
- *      Brian Aker
- *      Mingqiang Zhuang <mingqiangzhuang@hengtiansoft.com>
- *
- */
-#include "mem_config.h"
-
 #include <stdlib.h>
 #include <getopt.h>
 #include <limits.h>
@@ -778,30 +761,30 @@ static void ms_monitor_slap_mode()
 int main(int argc, char *argv[])
 {
 
-  printf("C++ Memaslap BEGIN\n");
-  srandom((unsigned int)time(NULL));
-  ms_global_struct_init();
-
-  /* initialization */
-  ms_setting_init_pre();
-  ms_options_parse(argc, argv);
-  if (ms_check_para())
-  {
-    ms_help_command(PROGRAM_NAME, PROGRAM_DESCRIPTION);
-    exit(1);
-  }
-  ms_setting_init_post();
-  ms_stats_init();
-  ms_thread_init();
-
-  /* waiting work thread complete its task */
-  ms_monitor_slap_mode();
-
-  /* clean up */
-  ms_thread_cleanup();
-  ms_global_struct_destroy();
-  ms_setting_cleanup();
-
-  printf("C++ Memaslap END\n");
+//  printf("Simplified Memcached BEGIN\n");
+//  srandom((unsigned int)time(NULL));
+//  ms_global_struct_init();
+//
+//  /* initialization */
+//  ms_setting_init_pre();
+//  ms_options_parse(argc, argv);
+//  if (ms_check_para())
+//  {
+//    ms_help_command(PROGRAM_NAME, PROGRAM_DESCRIPTION);
+//    exit(1);
+//  }
+//  ms_setting_init_post();
+//  ms_stats_init();
+//  ms_thread_init();
+//
+//  /* waiting work thread complete its task */
+//  ms_monitor_slap_mode();
+//
+//  /* clean up */
+//  ms_thread_cleanup();
+//  ms_global_struct_destroy();
+//  ms_setting_cleanup();
+//
+//  printf("Simplified Memcached END\n");
   return EXIT_SUCCESS;
 } /* main */
