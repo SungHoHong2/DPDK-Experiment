@@ -46,6 +46,10 @@ struct hashkit_string_st {
     char *string;
 };
 
+size_t hashkit_string_length(const hashkit_string_st *self)
+{
+    return size_t(self->end -self->string);
+}
 
 inline static bool _string_check(hashkit_string_st *string, size_t need)
 {
@@ -192,10 +196,7 @@ bool hashkit_string_resize(hashkit_string_st& string, const size_t need)
     return _string_check(&string, need);
 }
 
-size_t hashkit_string_length(const hashkit_string_st *self)
-{
-    return size_t(self->end -self->string);
-}
+
 
 size_t hashkit_string_max_size(const hashkit_string_st *self)
 {
