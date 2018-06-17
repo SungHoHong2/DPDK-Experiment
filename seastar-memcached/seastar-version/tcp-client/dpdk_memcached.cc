@@ -235,14 +235,8 @@ static uint32_t ketama_server_hash(const char *key, size_t key_length, uint32_t 
            | (results[0 + alignment * 4] & 0xFF);
 }
 
-void md5_signature(const unsigned char *key, unsigned int length, unsigned char *result)
-{
-    MD5_CTX my_md5;
 
-    MD5Init(&my_md5);
-    (void)MD5Update(&my_md5, key, length);
-    MD5Final(result, &my_md5);
-}
+
 
 static void MD5Init (MD5_CTX *context)      /* context */
 {
@@ -291,6 +285,16 @@ static void MD5Update (
     /* Buffer remaining input */
     memcpy((POINTER)&context->buffer[idx], (CONST_POINTER)&input[i],
            inputLen-i);
+}
+
+
+void md5_signature(const unsigned char *key, unsigned int length, unsigned char *result)
+{
+    MD5_CTX my_md5;
+
+    MD5Init(&my_md5);
+    (void)MD5Update(&my_md5, key, length);
+    MD5Final(result, &my_md5);
 }
 
 
