@@ -24,6 +24,11 @@ memcached_instance_st* memcached_instance_fetch(Memcached *ptr, uint32_t server_
     return &ptr->servers[server_key];
 }
 
+struct libmemcached_io_vector_st
+{
+    const void *buffer;
+    size_t length;
+};
 
 
 
