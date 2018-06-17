@@ -37,7 +37,7 @@
 
 #include <cstring>
 #include "rijndael.hh"
-#include "dpdk_string.cc"
+#include "dpdk_string.hh"
 
 #define AES_KEY_LENGTH 256               /* 128, 192, 256 */
 #define AES_BLOCK_SIZE 16
