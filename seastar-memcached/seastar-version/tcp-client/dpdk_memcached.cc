@@ -73,19 +73,19 @@ bool memcached_io_writev(memcached_instance_st* instance,
     ssize_t complete_total= 0;
     ssize_t total= 0;
 
-//    for (size_t x= 0; x < number_of; x++, vector++)
-//    {
-//        complete_total+= vector->length;
-//        if (vector->length)
-//        {
-//            size_t written;
-//            if ((_io_write(instance, vector->buffer, vector->length, false, written)) == false)
-//            {
-//                return false;
-//            }
-//            total+= written;
-//        }
-//    }
+    for (size_t x= 0; x < number_of; x++, vector++)
+    {
+        complete_total+= vector->length;
+        if (vector->length)
+        {
+            size_t written;
+            if ((_io_write(instance, vector->buffer, vector->length, false, written)) == false)
+            {
+                return false;
+            }
+            total+= written;
+        }
+    }
 //
 //    if (with_flush)
 //    {
