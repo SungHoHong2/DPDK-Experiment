@@ -10,6 +10,7 @@
 
 #define util_literal_param_size(X) static_cast<size_t>(sizeof(X) - 1)
 #define memcached_literal_param_size util_literal_param_size
+#define memcached_is_weighted_ketama(__object) ((__object)->ketama.weighted_)
 
 
 bool _is_auto_eject_host(const memcached_st *ptr)
