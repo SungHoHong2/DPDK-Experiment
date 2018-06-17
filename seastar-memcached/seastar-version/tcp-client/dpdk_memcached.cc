@@ -84,7 +84,7 @@ memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
 
     if (memcached_server_count(self) == 0)
     {
-        return memcached_set_error(*self, MEMCACHED_NO_SERVERS, MEMCACHED_AT);
+        // return memcached_set_error(*self, MEMCACHED_NO_SERVERS, MEMCACHED_AT);
     }
 
     memcached_error_free(*self);
