@@ -453,7 +453,7 @@ memcached_return_t run_distribution(Memcached *ptr)
 
         case MEMCACHED_DISTRIBUTION_CONSISTENT_MAX:
         default:
-//            assert_msg(0, "Invalid distribution type passed to run_distribution()");
+            std::cout << "howdy" << std::endl;
     }
 
     return MEMCACHED_SUCCESS;
