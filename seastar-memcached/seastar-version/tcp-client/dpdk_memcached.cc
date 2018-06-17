@@ -1,5 +1,4 @@
 #include "dpdk_memcached.hh"
-#include "dpdk_error.hh"
 #define	LIBMEMCACHED_MEMCACHED_SET_START()
 #define	LIBMEMCACHED_MEMCACHED_SET_END()
 #define memcached2Memcached(__obj) (__obj)
@@ -14,6 +13,9 @@ enum memcached_storage_action_t {
     APPEND_OP,
     CAS_OP
 };
+
+
+#include "dpdk_error.hh"
 
 
 memcached_return_t initialize_query(Memcached *self, bool increment_query_id)
