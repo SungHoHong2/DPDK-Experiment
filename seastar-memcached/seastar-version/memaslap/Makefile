@@ -8689,8 +8689,6 @@ tests/libmemcached-1.0/tests_testplus-print.obj: tests/libmemcached-1.0/print.cc
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tests_testplus_CXXFLAGS) $(CXXFLAGS) -c -o tests/libmemcached-1.0/tests_testplus-print.obj `if test -f 'tests/libmemcached-1.0/print.cc'; then $(CYGPATH_W) 'tests/libmemcached-1.0/print.cc'; else $(CYGPATH_W) '$(srcdir)/tests/libmemcached-1.0/print.cc'; fi`
 
-
-
 .cpp.o:
 	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
@@ -9280,6 +9278,7 @@ install-am: all-am
 # this is the place where it is created
 
 
+
 installcheck: installcheck-am
 install-strip:
 	if test -z '$(STRIP)'; then \
@@ -9292,6 +9291,21 @@ install-strip:
 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
 	fi
 
+
+maintainer-clean-generic:
+# 	@echo "This command is intended for maintainers to use"
+# 	@echo "it deletes files that may require special tools to rebuild."
+# 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+# 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+install-html-local:
+html-local:
+clean-local:
+# clean: clean-am
+#
+# clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
+# 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
+# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
+#
 
 
 install-data-am: install-dist_aclocalDATA install-includeHEADERS \
