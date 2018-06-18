@@ -9223,7 +9223,6 @@ check: $(BUILT_SOURCES)
 # chara this is the place where mem_config.h is created
 
 
-
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
 		mem_config.h
 install-binPROGRAMS: install-libLTLIBRARIES
@@ -9244,6 +9243,8 @@ install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
 
+
+
 # this is the place where it is created
 
 
@@ -9260,21 +9261,6 @@ install-strip:
 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
 	fi
 
-
-maintainer-clean-generic:
-# 	@echo "This command is intended for maintainers to use"
-# 	@echo "it deletes files that may require special tools to rebuild."
-# 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-# 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
-install-html-local:
-html-local:
-clean-local:
-# clean: clean-am
-#
-# clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
-# 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
-# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
-#
 
 
 install-data-am: install-dist_aclocalDATA install-includeHEADERS \
