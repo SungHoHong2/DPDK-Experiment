@@ -486,10 +486,8 @@ static void ms_parse_cfg_file(char *cfg_file)
           {
             continue;
           }
-          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_type=
-            cmd_type;
-          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_prop=
-            proportion;
+          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_type= (ms_cmd_type_t)cmd_type;
+          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_prop= proportion;
           ms_setting.cmd_used_count++;
           continue;
         }
