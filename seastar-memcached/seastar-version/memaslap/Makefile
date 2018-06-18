@@ -9680,6 +9680,14 @@ distclean: distclean-am
 # distclean-am: clean-am distclean-compile distclean-generic \
 # 	distclean-hdr distclean-libtool distclean-tags
 
+dvi: dvi-am
+
+dvi-am:
+
+html:
+
+html-am:
+
 
 install-data-am: install-dist_aclocalDATA install-includeHEADERS \
 	install-man install-nobase_includeHEADERS \
@@ -9701,7 +9709,7 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags distcleancheck \
-	distdir distuninstallcheck \
+	distdir distuninstallcheck dvi dvi-am html html-am html-local \
 	install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
 	install-exec install-exec-am
