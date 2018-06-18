@@ -55,6 +55,7 @@ git commit -m 'memaslap experiments'
 git push origin master
 
 
+# ./version.sh memaslap_lite_import
 elif [ "$1" = "memaslap_lite_import" ]
 then
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/make.sh        memaslap_lite/
@@ -65,6 +66,8 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_sigs
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_stats.cc    memaslap_lite/
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_task.cc     memaslap_lite/
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_thread.cc   memaslap_lite/
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_memslap.h   memaslap_lite/
+
 
 cp -a memaslap history/$FILENAME
 git add .

@@ -43,6 +43,17 @@
 #define OPTIONSTRING const char*
 #endif
 
+
+/* global structure */
+ms_global_t ms_global;
+
+/* global stats information structure */
+ms_stats_t ms_stats;
+
+/* global statistic structure */
+ms_statistic_t ms_statistic;
+
+
 /* options */
 static struct option long_options[]=
 {
@@ -94,6 +105,10 @@ static struct option long_options[]=
     OPT_VERSION            },
   { 0, 0, 0, 0 },
 };
+
+
+
+
 
 /* Prototypes */
 static void ms_sync_lock_init(void);
