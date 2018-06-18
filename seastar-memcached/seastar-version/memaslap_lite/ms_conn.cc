@@ -417,7 +417,7 @@ static void ms_warmup_num_init(ms_conn_t *c)
  */
 static int ms_item_win_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   int exp_cnt= 0;
 
   c->win_size= (int)ms_setting.win_size;
@@ -472,7 +472,7 @@ static int ms_item_win_init(ms_conn_t *c)
  */
 static int ms_conn_sock_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t i;
   int ret_sfd;
   uint32_t srv_idx= 0;
@@ -566,7 +566,7 @@ static int ms_conn_sock_init(ms_conn_t *c)
  */
 static int ms_conn_event_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   short event_flags= EV_WRITE | EV_PERSIST;
 
   event_set(&c->event, c->sfd, event_flags, ms_event_handler, (void *)c);
