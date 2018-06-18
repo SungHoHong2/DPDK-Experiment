@@ -804,6 +804,8 @@ int main(int argc, char *argv[])
   ms_global_struct_destroy();
   ms_setting_cleanup();
 
+
+
   printf("Simplified Memcached END\n");
   return EXIT_SUCCESS;
 } /* main */
