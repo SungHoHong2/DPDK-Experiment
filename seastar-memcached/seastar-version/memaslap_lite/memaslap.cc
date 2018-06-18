@@ -27,14 +27,12 @@
 # include <time.h>
 #endif
 
-
+#include "../clients/ms_memslap.h"
 #include "../clients/ms_sigsegv.h"
 #include "../clients/ms_setting.h"
 #include "../clients/ms_thread.h"
 
-#define PROGRAM_NAME    "memslap"
-#define PROGRAM_DESCRIPTION \
-                        "Generates workload against memcached servers."
+
 
 #ifdef __sun
   /* For some odd reason the option struct on solaris defines the argument

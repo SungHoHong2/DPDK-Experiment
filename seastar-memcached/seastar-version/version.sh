@@ -66,7 +66,6 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_stat
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_task.cc     memaslap_lite/
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_thread.cc   memaslap_lite/
 
-
 cp -a memaslap history/$FILENAME
 git add .
 git commit -m 'memaslap_lite experiments'

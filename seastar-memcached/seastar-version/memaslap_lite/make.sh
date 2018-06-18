@@ -118,10 +118,5 @@ libtool --silent --tag=CXX --mode=link c++ -std=c++0x -fPIC -g -O2 -Wno-unknown-
 
 
 
-elif [ "$1" = "memaslap_combine_cpp" ]
-then
-rm -f clients/memaslap
-libtool --silent --tag=CXX --mode=link c++ -std=c++0x -fPIC -g -O2 -lpthread -o clients/memaslap clients/memaslap.o clients/ms_conn.o clients/ms_setting.o clients/ms_sigsegv.o clients/ms_stats.o clients/ms_task.o clients/ms_thread.o clients/generator.o clients/execute.o -levent clients/libutilities.la libmemcached/libmemcached.la
-
 
 fi
