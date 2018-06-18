@@ -3366,6 +3366,24 @@ $(srcdir)/mem_config.in:  $(am__configure_deps)
 	rm -f stamp-h1
 	touch $@
 
+distclean-hdr:
+	-rm -f mem_config.h stamp-h1
+libhashkit/hashkitcon.h: $(top_builddir)/config.status $(top_srcdir)/libhashkit/hashkitcon.h.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+libhashkit-1.0/configure.h: $(top_builddir)/config.status $(top_srcdir)/libhashkit-1.0/configure.h.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+libtest/version.h: $(top_builddir)/config.status $(top_srcdir)/libtest/version.h.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+libtest/yatlcon.h: $(top_builddir)/config.status $(top_srcdir)/libtest/yatlcon.h.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+docs/conf.py: $(top_builddir)/config.status $(top_srcdir)/docs/conf.py.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+libmemcached-1.0/configure.h: $(top_builddir)/config.status $(top_srcdir)/libmemcached-1.0/configure.h.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+support/libmemcached.pc: $(top_builddir)/config.status $(top_srcdir)/support/libmemcached.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+support/libmemcached.spec: $(top_builddir)/config.status $(top_srcdir)/support/libmemcached.spec.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 clean-checkLTLIBRARIES:
 	-test -z "$(check_LTLIBRARIES)" || rm -f $(check_LTLIBRARIES)
