@@ -9709,18 +9709,13 @@ install-ps-am:
 
 installcheck-am:
 
-maintainer-clean: maintainer-clean-am
-	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
-	-rm -f Makefile
-maintainer-clean-am: distclean-am maintainer-clean-generic \
-	maintainer-clean-local
+maintainer-clean:
 
-mostlyclean: mostlyclean-am
+maintainer-clean-am:
 
-mostlyclean-am: mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool
+mostlyclean:
+
+mostlyclean-am:
 
 
 
@@ -9738,14 +9733,5 @@ mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	distdir distuninstallcheck dvi dvi-am html html-am html-local \
 	info info-am install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-html-local \
-	install-includeHEADERS install-info install-info-am \
-	install-libLTLIBRARIES install-man install-man1 install-man3 \
-	install-nobase_includeHEADERS install-pdf install-pdf-am \
-	install-pkgconfigDATA install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic maintainer-clean-local mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool
+	install-dvi install-dvi-am install-exec install-exec-am
 
-### chara
