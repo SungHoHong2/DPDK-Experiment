@@ -68,11 +68,9 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_task
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_thread.cc   memaslap_lite/
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/ms_memslap.h   memaslap_lite/
 
-rm -rf $FILENAME && cp -a memaslap_lite history/$FILENAME
+rm -rf history/$FILENAME && cp -a memaslap_lite history/$FILENAME
 git add .
 git commit -m 'memaslap_lite experiments'
 git push origin master
-
-
 
 fi
