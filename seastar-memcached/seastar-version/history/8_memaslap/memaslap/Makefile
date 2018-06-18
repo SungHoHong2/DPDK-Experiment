@@ -9578,6 +9578,12 @@ check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
+
+
+# chara this is the place where mem_config.h is created
+
+
+
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
 		mem_config.h
 install-binPROGRAMS: install-libLTLIBRARIES
@@ -9592,8 +9598,15 @@ install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
 
+
+
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+
+
+# this is the place where it is created
+
+
 
 installcheck: installcheck-am
 install-strip:
@@ -9606,45 +9619,7 @@ install-strip:
 	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
 	fi
-mostlyclean-generic:
-# 	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
-# 	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
-# 	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-#
-clean-generic:
-# 	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
-distclean-generic:
-# 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
-# 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-# 	-rm -f clients/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f clients/$(am__dirstamp)
-# 	-rm -f example/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f example/$(am__dirstamp)
-# 	-rm -f libhashkit/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libhashkit/$(am__dirstamp)
-# 	-rm -f libmemcached-1.0/t/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libmemcached-1.0/t/$(am__dirstamp)
-# 	-rm -f libmemcached/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libmemcached/$(am__dirstamp)
-# 	-rm -f libmemcached/csl/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libmemcached/csl/$(am__dirstamp)
-# 	-rm -f libmemcachedinternal/$(am__dirstamp)
-# 	-rm -f libmemcachedprotocol/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libmemcachedprotocol/$(am__dirstamp)
-# 	-rm -f libmemcachedutil/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libmemcachedutil/$(am__dirstamp)
-# 	-rm -f libtest/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libtest/$(am__dirstamp)
-# 	-rm -f libtest/exception/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f libtest/exception/$(am__dirstamp)
-# 	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f tests/$(am__dirstamp)
-# 	-rm -f tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f tests/libmemcached-1.0/$(am__dirstamp)
-# 	-rm -f util/$(DEPDIR)/$(am__dirstamp)
-# 	-rm -f util/$(am__dirstamp)
-# 	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 # 	@echo "This command is intended for maintainers to use"
@@ -9660,62 +9635,14 @@ clean-local:
 # 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
 # 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
 #
-distclean: distclean-am
-# 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-# 	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
-# 	-rm -f Makefile
-# distclean-am: clean-am distclean-compile distclean-generic \
-# 	distclean-hdr distclean-libtool distclean-tags
 
-dvi: dvi-am
-
-dvi-am:
-
-html:
-
-html-am:
-
-info:
-
-info-am:
 
 install-data-am: install-dist_aclocalDATA install-includeHEADERS \
 	install-man install-nobase_includeHEADERS \
 	install-pkgconfigDATA
 
-install-dvi: install-dvi-am
-
-install-dvi-am:
 
 install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
-
-install-html:
-
-install-html-am:
-
-install-info:
-
-install-info-am:
-
-install-man:
-
-install-pdf:
-
-install-pdf-am:
-
-install-ps:
-
-install-ps-am:
-
-installcheck-am:
-
-maintainer-clean:
-
-maintainer-clean-am:
-
-mostlyclean:
-
-mostlyclean-am:
 
 
 
@@ -9723,15 +9650,15 @@ mostlyclean-am:
 
 .PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
 	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
-	clean-checkPROGRAMS clean-cscope clean-generic \
+	clean-checkPROGRAMS clean-cscope \
 	clean-libLTLIBRARIES clean-libtool clean-local \
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile distclean-generic \
+	distcheck distclean distclean-compile \
 	distclean-hdr distclean-libtool distclean-tags distcleancheck \
-	distdir distuninstallcheck dvi dvi-am html html-am html-local \
-	info info-am install install-am install-binPROGRAMS \
+	distdir distuninstallcheck \
+	install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
-	install-dvi install-dvi-am install-exec install-exec-am
+	install-exec install-exec-am
 
