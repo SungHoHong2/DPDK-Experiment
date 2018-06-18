@@ -1,4 +1,4 @@
-FILENAME=8_memaslap
+FILENAME=9_memaslap_lite
 
 if [ "$1" = "memcached_update" ]
 then
@@ -53,5 +53,18 @@ cp -a memaslap history/$FILENAME
 git add .
 git commit -m 'memaslap experiments'
 git push origin master
+
+
+elif [ "$1" = "memaslap_lite_import" ]
+then
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients_lite/make.sh  memaslap_lite/
+
+cp -a memaslap history/$FILENAME
+git add .
+git commit -m 'memaslap_lite experiments'
+git push origin master
+
+
+
 
 fi

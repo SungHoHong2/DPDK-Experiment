@@ -23,7 +23,7 @@ rm -f *.o
 # cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ /data1/sungho/libmemcached-1.0.18/
 elif [ "$HOST_NAME" = "c3n25" ]
 then
-  if [ "$1" = "make" ]
+  if [ "$1" = "memaslap_make" ]
   then
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/io.cc /data1/sungho/libmemcached-1.0.18/libmemcached/io.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/memaslap.c /data1/sungho/libmemcached-1.0.18/clients/memaslap.c
@@ -60,15 +60,22 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_t
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_conn.h  /data1/sungho/libmemcached-1.0.18/clients/
 
 
-
 cd /data1/sungho/libmemcached-1.0.18/
-# /data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
+/data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
 # make -j 16 -n && sudo make install -j 16
+rm -rf clients/*.o
 make -j 16 -n && sudo make install -j 16
 
-  else
+if [ "$1" = "memaslap_lite_make" ]
+then
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/make.sh   /data1/sungho/libmemcached-1.0.18/clients/make.sh
+
+else
 cd /data1/sungho/libmemcached-1.0.18/clients
 /data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
+
+
+
 
 fi
 
