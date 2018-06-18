@@ -784,6 +784,7 @@ int main(int argc, char *argv[])
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
+
   /* initialization */
   ms_setting_init_pre();
   ms_options_parse(argc, argv);
