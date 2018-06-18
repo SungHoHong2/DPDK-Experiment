@@ -623,7 +623,7 @@ int ms_setup_conn(ms_conn_t *c)
  */
 void ms_conn_free(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   if (c != NULL)
   {
     if (c->hdrbuf != NULL)
@@ -662,7 +662,7 @@ void ms_conn_free(ms_conn_t *c)
  */
 static void ms_conn_close(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   assert(c != NULL);
 
   /* delete the event, the socket and the connection */
@@ -906,7 +906,7 @@ static int ms_network_connect(ms_conn_t *c,
  */
 static int ms_reconn(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t srv_idx= 0;
   uint32_t srv_conn_cnt= 0;
 
@@ -1008,7 +1008,7 @@ static int ms_reconn(ms_conn_t *c)
  */
 int ms_reconn_socks(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t srv_idx= 0;
   int ret_sfd= 0;
   uint32_t srv_conn_cnt= 0;
