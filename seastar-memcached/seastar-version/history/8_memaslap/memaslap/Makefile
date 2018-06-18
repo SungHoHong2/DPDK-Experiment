@@ -9262,6 +9262,21 @@ install-strip:
 	fi
 
 
+maintainer-clean-generic:
+# 	@echo "This command is intended for maintainers to use"
+# 	@echo "it deletes files that may require special tools to rebuild."
+# 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+# 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+install-html-local:
+html-local:
+clean-local:
+# clean: clean-am
+#
+# clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
+# 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
+# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
+#
+
 
 install-data-am: install-dist_aclocalDATA install-includeHEADERS \
 	install-man install-nobase_includeHEADERS \
