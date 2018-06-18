@@ -7,7 +7,6 @@ cc -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2  -Wno-unknown-pragmas -Wno-
 # mv -f $depbase.Tpo $depbase.Po
 
 
-
 elif [ "$1" = "ms_conn" ]
 then
 depbase=`echo clients/ms_conn.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`;
