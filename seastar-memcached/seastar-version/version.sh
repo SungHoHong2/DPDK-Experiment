@@ -29,7 +29,6 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/Makefile.in         
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/Makefile.am             memaslap/Makefile.am
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/Makefile                memaslap/Makefile
 
-
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.cc     memaslap/memaslap.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.cc      memaslap/ms_conn.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_setting.cc   memaslap/ms_setting.cc
@@ -48,8 +47,7 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/protocol_bin
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/vbucket.h       memaslap/vbucket.h
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.h       memaslap/ms_conn.h
 
-
-cp -a memaslap history/$FILENAME
+rm -rf history/$FILENAME  && cp -a memaslap history/$FILENAME
 git add .
 git commit -m 'memaslap experiments'
 git push origin master

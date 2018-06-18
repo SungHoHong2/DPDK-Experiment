@@ -33,6 +33,9 @@
 #include "../clients/ms_thread.h"
 
 
+#define PROGRAM_NAME    "memslap"
+#define PROGRAM_DESCRIPTION \
+                        "Generates workload against memcached servers."
 
 #ifdef __sun
   /* For some odd reason the option struct on solaris defines the argument
@@ -42,6 +45,9 @@
 #else
 #define OPTIONSTRING const char*
 #endif
+
+
+
 
 
 /* global structure */
