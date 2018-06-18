@@ -44,6 +44,8 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_sigsegv.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_stats.c     memaslap/ms_stats.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.c      memaslap/ms_task.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c    memaslap/ms_thread.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/protocol_binary.h    memaslap/protocol_binary.h
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/vbucket.h    memaslap/vbucket.h
 
 
 

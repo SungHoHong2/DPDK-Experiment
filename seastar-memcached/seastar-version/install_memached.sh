@@ -37,7 +37,10 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/conf
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/Makefile.in /data1/sungho/libmemcached-1.0.18/Makefile.in
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/Makefile.am /data1/sungho/libmemcached-1.0.18/Makefile.am
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/Makefile /data1/sungho/libmemcached-1.0.18/Makefile
-cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/make.sh /data1/sungho/libmemcached-1.0.18/make.sh
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/make.sh /data1/sungho/libmemcached-1.0.18/clients/make.sh
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/make.sh /data1/sungho/libmemcached-1.0.18/clients/make.sh
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/protocol_binary.h /data1/sungho/libmemcached-1.0.18/clients/protocol_binary.h
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/vbucket.h /data1/sungho/libmemcached-1.0.18/clients/vbucket.h
 
 
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/memaslap.cc   /data1/sungho/libmemcached-1.0.18/clients/
@@ -54,6 +57,8 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_s
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_stats.c   /data1/sungho/libmemcached-1.0.18/clients/
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_task.c    /data1/sungho/libmemcached-1.0.18/clients/
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_thread.c  /data1/sungho/libmemcached-1.0.18/clients/
+
+
 
 cd /data1/sungho/libmemcached-1.0.18/
 # /data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
