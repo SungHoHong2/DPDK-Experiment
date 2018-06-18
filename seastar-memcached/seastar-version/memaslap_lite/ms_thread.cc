@@ -46,7 +46,7 @@ static void ms_create_worker(void *(*func)(void *), void *arg);
 static void ms_set_current_time()
 {
   struct timeval timer;
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
 
   gettimeofday(&timer, NULL);
   ms_thread->curr_time= (rel_time_t)timer.tv_sec;
@@ -59,7 +59,7 @@ static void ms_set_current_time()
  */
 static void ms_check_sock_timeout(void)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   ms_conn_t *c= NULL;
   int time_diff= 0;
 
@@ -91,7 +91,7 @@ static void ms_check_sock_timeout(void)
 /* if disconnect, the ever-1-second timer will call this function to reconnect */
 static void ms_reconn_thread_socks(void)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   for (uint32_t i= 0; i < ms_thread->thread_ctx->nconns; i++)
   {
     ms_reconn_socks(&ms_thread->conn[i]);
@@ -108,7 +108,7 @@ static void ms_reconn_thread_socks(void)
  */
 static void ms_clock_handler(const int fd, const short which, void *arg)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   struct timeval t=
   {
     .tv_sec= 1, .tv_usec= 0
@@ -267,7 +267,7 @@ exit(1);
   pthread_cond_signal(&ms_global.init_lock.cond);
   pthread_mutex_unlock(&ms_global.init_lock.lock);
 
-  ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread= (ms_thread_t*)pthread_getspecific(ms_thread_key);
   event_base_loop(ms_thread->base, 0);
 
   return NULL;
