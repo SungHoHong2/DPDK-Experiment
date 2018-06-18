@@ -9223,6 +9223,7 @@ check: $(BUILT_SOURCES)
 # chara this is the place where mem_config.h is created
 
 
+
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
 		mem_config.h
 install-binPROGRAMS: install-libLTLIBRARIES
@@ -9241,8 +9242,6 @@ uninstall: uninstall-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
-
-
 
 
 # this is the place where it is created
@@ -9295,7 +9294,7 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	clean-libLTLIBRARIES clean-libtool clean-local \
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	# dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile \
 	distdir distuninstallcheck \
 	install install-am install-binPROGRAMS \
