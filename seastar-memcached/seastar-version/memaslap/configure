@@ -37919,7 +37919,7 @@ _ACEOF
 
 cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 
-# Handling of arguments.
+# Handling of arguments.$depbase.Tpo
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
