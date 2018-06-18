@@ -69,7 +69,15 @@ make -j 16 -n && sudo make install -j 16
 
 elif [ "$1" = "memaslap_lite_make" ]
 then
-cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/make.sh   /data1/sungho/libmemcached-1.0.18/make.sh
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/make.sh          /data1/sungho/libmemcached-1.0.18/make.sh
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/memaslap.cc      /data1/sungho/libmemcached-1.0.18/memaslap.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_conn.cc       /data1/sungho/libmemcached-1.0.18/ms_conn.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_setting.cc    /data1/sungho/libmemcached-1.0.18/ms_setting.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_sigsegv.cc    /data1/sungho/libmemcached-1.0.18/ms_sigsegv.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_stats.cc      /data1/sungho/libmemcached-1.0.18/ms_stats.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_task.cc       /data1/sungho/libmemcached-1.0.18/ms_task.cc
+cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_thread.cc     /data1/sungho/libmemcached-1.0.18/ms_thread.cc
+
 
 else
 cd /data1/sungho/libmemcached-1.0.18/clients
