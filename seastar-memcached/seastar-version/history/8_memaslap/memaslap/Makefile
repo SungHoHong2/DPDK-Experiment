@@ -8714,7 +8714,8 @@ clean-libtool:
 	-rm -rf tests/.libs tests/_libs
 	-rm -rf tests/libmemcached-1.0/.libs tests/libmemcached-1.0/_libs
 
-
+distclean-libtool:
+	-rm -f libtool config.lt
 install-man1: $(dist_man_MANS) $(man_MANS)
 	@$(NORMAL_INSTALL)
 	@list1=''; \
@@ -8944,6 +8945,9 @@ cscopelist-am: $(am__tagged_files)
 	  fi; \
 	done >> $(top_builddir)/cscope.files
 
+distclean-tags:
+	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
+	-rm -f cscope.out cscope.in.out cscope.po.out cscope.files
 
 # Recover from deleted '.trs' file; this should ensure that
 # "rm -f foo.log; make foo.trs" re-run 'foo.test', and re-create
@@ -9213,6 +9217,15 @@ distuninstallcheck:
 	        fi ; \
 	        $(distuninstallcheck_listfiles) ; \
 	        exit 1; } >&2
+distcleancheck: distclean
+	@if test '$(srcdir)' = . ; then \
+	  echo "ERROR: distcleancheck can only run from a VPATH build" ; \
+	  exit 1 ; \
+	fi
+	@test `$(distcleancheck_listfiles) | wc -l` -eq 0 \
+	  || { echo "ERROR: files left in build directory after distclean:" ; \
+	       $(distcleancheck_listfiles) ; \
+	       exit 1; } >&2
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_LTLIBRARIES) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
@@ -9296,6 +9309,7 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile \
+	# distclean-hdr distclean-libtool distclean-tags distcleancheck \
 	distdir distuninstallcheck \
 	install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
