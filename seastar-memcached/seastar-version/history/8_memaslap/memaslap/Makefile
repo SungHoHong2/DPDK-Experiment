@@ -9607,65 +9607,65 @@ install-strip:
 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
 	fi
 mostlyclean-generic:
-	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
-	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
-	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-
+# 	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
+# 	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
+# 	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
+#
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+# 	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
-	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
-	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f clients/$(DEPDIR)/$(am__dirstamp)
-	-rm -f clients/$(am__dirstamp)
-	-rm -f example/$(DEPDIR)/$(am__dirstamp)
-	-rm -f example/$(am__dirstamp)
-	-rm -f libhashkit/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libhashkit/$(am__dirstamp)
-	-rm -f libmemcached-1.0/t/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached-1.0/t/$(am__dirstamp)
-	-rm -f libmemcached/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached/$(am__dirstamp)
-	-rm -f libmemcached/csl/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached/csl/$(am__dirstamp)
-	-rm -f libmemcachedinternal/$(am__dirstamp)
-	-rm -f libmemcachedprotocol/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcachedprotocol/$(am__dirstamp)
-	-rm -f libmemcachedutil/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcachedutil/$(am__dirstamp)
-	-rm -f libtest/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libtest/$(am__dirstamp)
-	-rm -f libtest/exception/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libtest/exception/$(am__dirstamp)
-	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
-	-rm -f tests/$(am__dirstamp)
-	-rm -f tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
-	-rm -f tests/libmemcached-1.0/$(am__dirstamp)
-	-rm -f util/$(DEPDIR)/$(am__dirstamp)
-	-rm -f util/$(am__dirstamp)
-	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+# 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+# 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+# 	-rm -f clients/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f clients/$(am__dirstamp)
+# 	-rm -f example/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f example/$(am__dirstamp)
+# 	-rm -f libhashkit/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libhashkit/$(am__dirstamp)
+# 	-rm -f libmemcached-1.0/t/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached-1.0/t/$(am__dirstamp)
+# 	-rm -f libmemcached/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached/$(am__dirstamp)
+# 	-rm -f libmemcached/csl/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached/csl/$(am__dirstamp)
+# 	-rm -f libmemcachedinternal/$(am__dirstamp)
+# 	-rm -f libmemcachedprotocol/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcachedprotocol/$(am__dirstamp)
+# 	-rm -f libmemcachedutil/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcachedutil/$(am__dirstamp)
+# 	-rm -f libtest/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libtest/$(am__dirstamp)
+# 	-rm -f libtest/exception/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libtest/exception/$(am__dirstamp)
+# 	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f tests/$(am__dirstamp)
+# 	-rm -f tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f tests/libmemcached-1.0/$(am__dirstamp)
+# 	-rm -f util/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f util/$(am__dirstamp)
+# 	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
-	@echo "This command is intended for maintainers to use"
-	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
-#install-html-local:
-#html-local:
-#clean-local:
-clean: clean-am
-
-clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
-	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
-	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
-
+# 	@echo "This command is intended for maintainers to use"
+# 	@echo "it deletes files that may require special tools to rebuild."
+# 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+# 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+install-html-local:
+html-local:
+clean-local:
+# clean: clean-am
+#
+# clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
+# 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
+# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
+#
 distclean: distclean-am
-	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
-	-rm -f Makefile
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-hdr distclean-libtool distclean-tags
+# 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
+# 	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
+# 	-rm -f Makefile
+# distclean-am: clean-am distclean-compile distclean-generic \
+# 	distclean-hdr distclean-libtool distclean-tags
 
 dvi: dvi-am
 
@@ -9759,502 +9759,6 @@ uninstall-man: uninstall-man1 uninstall-man3
 	install-pkgconfigDATA install-ps install-ps-am install-strip \
 	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic maintainer-clean-local mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am recheck tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
-	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-man1 uninstall-man3 \
-	uninstall-nobase_includeHEADERS uninstall-pkgconfigDATA
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool
 
-
-#includes additional rules from aminclude.am
-# include $(top_builddir)/aminclude.am
-
-#libmemcached/csl/parser.h: libmemcached/csl/parser.cc
-
-#libmemcached/csl/parser.cc: libmemcached/csl/parser.yy libmemcached/csl/scanner.l libmemcached/csl/scanner.h
-#	$(AM_V_YACC)$(am__skipyacc) $(YACC) $(YLFLAGS) $(AM_YFLAGS) -o $@ $<
-
-#libmemcached/csl/scanner.h: libmemcached/csl/scanner.cc
-
-#libmemcached/csl/scanner.cc: libmemcached/csl/scanner.l libmemcached/csl/parser.yy
-#	$(AM_V_GEN)$(LEX) $<
-
-#libmemcached/options.cc: libmemcached/csl/parser.h
-
-#libmemcached/dtrace_probes.h: libmemcached/libmemcached_probes.d
-#	$(DTRACE) $(DTRACEFLAGS) -h -o ${top_srcdir}/libmemcached/dtrace_probes.h -s ${top_srcdir}/libmemcached/libmemcached_probes.d
-
-#libmemcached/libmemcached_probes.o: libmemcached/libmemcached_probes.d ${libmemcached_libmemcached_la_OBJECTS}
-
-#.d.o:
-#	$(DTRACE) $(DTRACEFLAGS) -o $@ -G -s libmemcached/libmemcached_probes.d
-#
-# export LIBTOOL_COMMAND
-# export VALGRIND_COMMAND
-# export HELGRIND_COMMAND
-# export DRD_COMMAND
-# export SGCHECK_COMMAND
-# export GDB_COMMAND
-#
-# valgrind:
-# 	@echo make check LOG_COMPILER="\"$(VALGRIND_EXEC_COMMAND)\""
-#
-# sgcheck:
-# 	@echo make check LOG_COMPILER="\"$(SGCHECK_EXEC_COMMAND)\""
-#
-# valgrind-supressions:
-# 	@echo make check LOG_COMPILER="\"$(VALGRIND_SUPRESSION)\""
-#
-# gdb:
-# 	@echo make check LOG_COMPILER="\"$(GDB_COMMAND)\""
-#
-# helgrind:
-# 	@echo make check LOG_COMPILER="\"$(HELGRIND_COMMAND)\""
-#
-# drd:
-# 	@echo make check LOG_COMPILER="\"$(DRD_COMMAND)\""
-#
-# .PHONY: clean-libtest-check
-# clean-libtest-check:
-# 	-rm -rf tmp_chroot
-#
-# .PHONY: libtest_tmp_dir
-# libtest_tmp_dir: | $(TMP_DIR)
-#
-# $(TMP_DIR):
-# 	@$(mkdir_p) $(TMP_DIR)
-# test-unittest: libtest/unittest
-# 	@libtest/unittest
-#
-# valgrind-unittest: libtest/unittest
-# 	@$(VALGRIND_COMMAND) libtest/unittest
-#
-# gdb-unittest: libtest/unittest
-# 	@$(GDB_COMMAND) libtest/unittest
-#
-# helgrind-unittest: libtest/unittest
-# 	@$(HELGRIND_COMMAND) libtest/unittest
-#
-# drd-unittest: libtest/unittest
-# 	@$(DRD_COMMAND) libtest/unittest
-#
-# sgcheck-unittest: libtest/unittest
-# 	echo $(SGCHECK_COMMAND)
-# 	@$(SGCHECK_COMMAND) libtest/unittest
-#
-# test-skiptest: libtest/skiptest
-# 	@libtest/skiptest
-#
-# valgrind-skiptest: libtest/skiptest
-# 	@$(VALGRIND_COMMAND) libtest/skiptest
-#
-# helgrind-skiptest: libtest/skiptest
-# 	@$(HELGRIND_COMMAND) libtest/skiptest
-#
-# drd-skiptest: libtest/skiptest
-# 	@$(DRD_COMMAND) libtest/skiptest
-# test-backtrace: libtest/backtrace
-# 	@libtest/backtrace
-#
-# gdb-backtrace: libtest/backtrace
-# 	@$(GDB_COMMAND) libtest/backtrace
-#
-# test-start-server:
-# 	clients/memflush --servers=localhost
-# 	clients/memcp --servers=localhost /etc/services
-# 	clients/memcat --servers=localhost /etc/services
-# 	clients/memrm --servers=localhost /etc/services
-# 	clients/memstat --servers=localhost
-# 	clients/memslap --servers=localhost
-# 	clients/memslap --servers=localhost --concurrency=10
-# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
-# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
-# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
-# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
-# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
-#
-# client-valgrind:
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
-# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
-#
-# .PHONY: clean-docs-check
-# clean-docs-check:
-# 	-rm -rf docs/_build docs/doctrees man/.doctrees/
-#
-# .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest
-#
-# sphinx-help:
-# 	@echo "Please use \`make <target>' where <target> is one of"
-# 	@echo "  html       to make standalone HTML files"
-# 	@echo "  singlehtml to make a single large HTML file"
-# 	@echo "  pickle     to make pickle files"
-# 	@echo "  json       to make JSON files"
-# 	@echo "  htmlhelp   to make HTML files and a HTML help project"
-# 	@echo "  qthelp     to make HTML files and a qthelp project"
-# 	@echo "  devhelp    to make HTML files and a Devhelp project"
-# 	@echo "  epub       to make an epub"
-# 	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
-# 	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
-# 	@echo "  text       to make text files"
-# 	@echo "  man        to make manual pages"
-# 	@echo "  changes    to make an overview of all changed/added/deprecated items"
-# 	@echo "  linkcheck  to check all external links for integrity"
-# 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
-#
-# install-html-local: html-local
-# 	@$(MKDIR_P)  $(htmldir)/html
-# 	@cp -r ${top_builddir}/html $(htmldir)/
-#
-# html-local: docs/conf.py
-# 	@PYTHONPATH=${top_srcdir}/docs $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${top_builddir}/html
-#
-# singlehtml: html-local
-# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b singlehtml $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/singlehtml
-#
-# pickle: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/pickle
-# 	@echo
-# 	@echo "Build finished; now you can process the pickle files."
-#
-# json: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b json $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/json
-# 	@echo
-# 	@echo "Build finished; now you can process the JSON files."
-#
-# htmlhelp: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/htmlhelp
-# 	@echo
-# 	@echo "Build finished; now you can run HTML Help Workshop with the" \
-# 	      ".hhp project file in $(SPHINX_BUILDDIR)/htmlhelp."
-#
-# epub: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/epub
-# 	@echo
-# 	@echo "Build finished. The epub file is in $(SPHINX_BUILDDIR)/epub."
-#
-# latex: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
-# 	@echo
-# 	@echo "Build finished; the LaTeX files are in $(SPHINX_BUILDDIR)/latex."
-# 	@echo "Run \`make' in that directory to run these through (pdf)latex" \
-# 	      "(use \`make latexpdf' here to do that automatically)."
-#
-# latexpdf: latex
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
-# 	@echo "Running LaTeX files through pdflatex..."
-# 	make -C $(SPHINX_BUILDDIR)/latex all-pdf
-# 	@echo "pdflatex finished; the PDF files are in $(SPHINX_BUILDDIR)/latex."
-#
-# text: docs/conf.py
-# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/text
-#
-# man:
-# 	@PYTHONPATH=$(SPHINX_BUILDDIR)/docs  $(SPHINXBUILD) -b man $(ALLSPHINXOPTS) ${top_builddir}/man
-#
-# changes: docs/conf.py
-# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/changes
-#
-# linkcheck: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/linkcheck
-#
-# doctest: docs/conf.py
-# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/doctest
-# 	@echo "Testing of doctests in the sources finished, look at the " \
-# 	      "results in $(SPHINX_BUILDDIR)/doctest/output.txt."
-#
-# # Build rule for documentation
-# $(dist_man_MANS): $(top_srcdir)/configure.ac
-# 	$(MAKE) $(AM_MAKEFLAGS) man
-#
-# .NOTPARALLEL: $(dist_man_MANS)
-#
-# libmemcached/csl/parser.h: libmemcached/csl/parser.cc
-#
-# libmemcached/csl/parser.cc: libmemcached/csl/parser.yy libmemcached/csl/scanner.l libmemcached/csl/scanner.h
-# 	$(AM_V_YACC)$(am__skipyacc) $(YACC) $(YLFLAGS) $(AM_YFLAGS) -o $@ $<
-#
-# libmemcached/csl/scanner.h: libmemcached/csl/scanner.cc
-#
-# libmemcached/csl/scanner.cc: libmemcached/csl/scanner.l libmemcached/csl/parser.yy
-# 	$(AM_V_GEN)$(LEX) $<
-#
-# libmemcached/options.cc: libmemcached/csl/parser.h
-#
-# libmemcached/dtrace_probes.h: libmemcached/libmemcached_probes.d
-# 	$(DTRACE) $(DTRACEFLAGS) -h -o ${top_srcdir}/libmemcached/dtrace_probes.h -s ${top_srcdir}/libmemcached/libmemcached_probes.d
-#
-# libmemcached/libmemcached_probes.o: libmemcached/libmemcached_probes.d ${libmemcached_libmemcached_la_OBJECTS}
-#
-# .d.o:
-# 	$(DTRACE) $(DTRACEFLAGS) -o $@ -G -s libmemcached/libmemcached_probes.d
-#
-# $(RPM_BUILDDIR):
-# 	@
-#
-# $(DIST_ARCHIVES): $(DISTFILES)
-# 	$(MAKE) $(AM_MAKEFLAGS) dist-gzip
-#
-# $(RPM_SOURCE): | $(RPM_BUILDDIR) $(DIST_ARCHIVES)
-# 	@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_DIR)
-# 	@cp $(DIST_ARCHIVES) $(RPM_SOURCE)
-#
-# $(RPM_BUILD_TARGET): $(RPM_SOURCE) support/libmemcached.spec
-# 	@ -ba $(top_srcdir)/support/libmemcached.spec
-# 	@cp $(BUILD_RPMS) $(BUILD_SRPMS) .
-#
-# .PHONY: rpm-sign
-# rpm-sign: $(RPM_BUILD_TARGET)
-# 	@ --addsign $(RPM_DIST)
-# 	@ --checksig $(RPM_DIST)
-#
-# .PHONY: clean-rpm
-# clean-rpm:
-# 	-@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_SOURCE) $(BUILD_RPM_DIR) $(RPM_DIST)
-#
-# rpm: $(RPM_BUILD_TARGET)
-# dist-rpm: $(RPM_BUILD_TARGET)
-#
-# .PHONY: release
-# release: rpm rpm-sign
-#
-# .PHONY: auto-rpmbuild
-# auto-rpmbuild: support/libmemcached.spec
-# 	@auto-br-rpmbuild -ba $(top_srcdir)/support/libmemcached.spec
-#
-# test-internal: tests/libmemcached-1.0/internals
-# 	@tests/testplus
-#
-# test-socket: tests/libmemcached-1.0/testsocket
-# 	@tests/libmemcached-1.0/testsocket
-#
-# gdb-socket: tests/libmemcached-1.0/testsocket
-# 	@$(GDB_COMMAND) tests/libmemcached-1.0/testsocket
-#
-# test-sasl: tests/libmemcached-1.0/sasl
-# 	@tests/libmemcached-1.0/sasl
-#
-# gdb-sasl: tests/libmemcached-1.0/sasl
-# 	@$(GDB_COMMAND)  tests/libmemcached-1.0/sasl
-#
-# test-udp: tests/testudp
-# 	@tests/testudp
-#
-# test-plus: tests/testplus
-# 	@tests/testplus
-#
-# gdb-plus: tests/testplus
-# 	$(GDB_COMMAND) tests/testplus
-#
-# valgrind-plus: tests/testplus
-# 	@$(VALGRIND_COMMAND) tests/testplus
-#
-# helgrind-plus: tests/testplus
-# 	@$(HELGRIND_COMMAND) tests/testplus
-#
-# test-parser: tests/parser
-# 	@tests/parser
-#
-# valgrind-parser: tests/parser
-# 	@$(VALGRIND_COMMAND) tests/parser
-#
-# test-failure: tests/failure
-# 	@tests/failure
-#
-# gdb-failure: tests/failure
-# 	@$(GDB_COMMAND) tests/failure
-#
-# test-hash: tests/testhashkit
-# 	@tests/testhashkit
-#
-# test-memslap: tests/memslap
-# 	@tests/memslap
-#
-# gdb-memslap: tests/memslap
-# 	@$(GDB_COMMAND) tests/memslap
-#
-# test-memcp: tests/memcp
-# 	tests/memcp
-#
-# gdb-memcp: tests/memcp
-# 	@$(GDB_COMMAND) tests/memcp
-#
-# test-memstat: tests/memstat
-# 	tests/memstat
-#
-# test-memerror: tests/memerror
-# 	tests/memerror
-#
-# test-memtouch: tests/memtouch
-# 	tests/memtouch
-#
-# test-memping: tests/memping
-# 	tests/memping
-#
-# valgrind-memerror: tests/memerror
-# 	 @$(VALGRIND_COMMAND) tests/memerror
-#
-# valgrind-memtouch: tests/memtouch
-# 	 @$(VALGRIND_COMMAND) tests/memtouch
-#
-# test-memdump: tests/memdump
-# 	tests/memdump
-#
-# gdb-memdump: tests/memdump
-# 	@$(GDB_COMMAND) tests/memdump
-#
-# valgrind-memdump: tests/memdump
-# 	 @$(VALGRIND_COMMAND) tests/memdump
-#
-# test: check
-#
-# test-mem: tests/libmemcached-1.0/testapp
-# 	@tests/libmemcached-1.0/testapp
-#
-# test-atom: tests/atomsmasher
-# 	@tests/atomsmasher
-#
-# test-hashplus: tests/hash_plus
-# 	@tests/hash_plus
-#
-# test-cycle: tests/cycle
-# 	@tests/cycle
-#
-# test-memcapable: tests/memcapable
-# 	@tests/memcapable
-#
-# valgrind-memcapable: tests/memcapable
-# 	$(VALGRIND_COMMAND) tests/memcapable
-#
-# pahole-mem: tests/testapp
-# 	@$(PAHOLE_COMMAND)  tests/testapp
-#
-# pahole-hash: tests/testhashkit
-# 	@$(PAHOLE_COMMAND)  tests/testhashkit
-#
-# gdb-mem: tests/libmemcached-1.0/testapp
-# 	@$(GDB_COMMAND)  tests/libmemcached-1.0/testapp
-#
-# gdb-atom: tests/atomsmasher
-# 	@$(GDB_COMMAND) tests/atomsmasher
-#
-# gdb-hash: tests/testhashkit
-# 	@$(GDB_COMMAND) tests/testhashkit
-#
-# gdb-hashplus: tests/hash_plus
-# 	@$(GDB_COMMAND) tests/hash_plus
-#
-# gdb-cycle: tests/cycle
-# 	@$(GDB_COMMAND) tests/cycle
-#
-# valgrind-cycle: tests/cycle
-# 	$(VALGRIND_COMMAND) tests/cycle
-#
-# valgrind-mem: tests/libmemcached-1.0/testapp
-# 	@$(VALGRIND_COMMAND) tests/libmemcached-1.0/testapp
-#
-# valgrind-failure: tests/failure
-# 	@$(VALGRIND_COMMAND) tests/failure
-#
-# valgrind-atom: tests/atomsmasher
-# 	$(VALGRIND_COMMAND) tests/atomsmasher
-#
-# valgrind-sasl: tests/sasl
-# 	@$(VALGRIND_COMMAND) tests/sasl
-#
-# valgrind-hash: tests/testhashkit
-# 	@$(VALGRIND_COMMAND) tests/testhashkit
-#
-# valgrind-hashplus: tests/hash_plus
-# 	@$(VALGRIND_COMMAND) tests/hash_plus
-#
-# helgrind-cycle: tests/cycle
-# 	@$(HELGRIND_COMMAND) tests/cycle
-#
-# helgrind-mem: tests/libmemcached-1.0/testapp
-# 	@$(HELGRIND_COMMAND) tests/libmemcached-1.0/testapp
-#
-# helgrind-atom: tests/atomsmasher
-# 	@$(HELGRIND_COMMAND) tests/atomsmasher
-#
-# helgrind-hash: tests/testhashkit
-# 	@$(HELGRIND_COMMAND) tests/testhashkit
-#
-# helgrind-hashplus: tests/hash_plus
-# 	@$(HELGRIND_COMMAND) tests/hash_plus
-#
-# drd-mem: tests/libmemcached-1.0/testapp
-# 	@$(DRD_COMMAND) tests/libmemcached-1.0/testapp
-#
-# drd-cycle: tests/cycle
-# 	@$(DRD_COMMAND) tests/cycle
-#
-# merge-clean:
-# 	@find ./ | $(GREP) \.gcda | xargs rm -f
-# 	@find ./ | $(GREP) \.gcno | xargs rm -f
-# 	@find ./ | $(GREP) \.gz | xargs rm -f
-# 	@find ./ | $(GREP) \.moved | xargs rm -r -f
-# 	@find ./ | $(GREP) \\.orig | xargs rm -f
-# 	@find ./ | $(GREP) \.rej | xargs rm -f
-# 	@find ./ | $(GREP) \.THIS | xargs rm -f
-# 	@find ./ | $(GREP) \.OTHER | xargs rm -f
-# 	@find ./ | $(GREP) \.BASE | xargs rm -f
-# 	@find ./ | $(GREP) \~$$ | xargs rm -f
-# 	@echo "Files that need to be either removed or checked in:"
-# 	@bzr unknowns
-#
-# clean-local: clean-libtest-check clean-docs-check clean-rpm
-#
-# lcov: lcov-clean check
-# 	@echo
-# 	@echo "	------------------------------------------------------"
-# 	@echo "Make sure ./configure was run with '--enable-coverage'"
-# 	@echo "------------------------------------------------------"
-# 	@echo
-# 	@cd libmemcached && lcov --capture --directory . --base-directory .. --output-file lcov.out
-# 	@genhtml -o lcov --function-coverage -t libmemcached libmemcached/lcov.out
-
-# lcov-clean: clean
-# 	@rm -rf lcov */lcov.out
-# 	@find . -name '*.gcno' | xargs rm -f
-# 	@find . -name '*.gcda' | xargs rm -f
-#
-# maintainer-clean-local:
-# 	find . -type f -name '*~' -exec rm -f '{}' \;
-# 	-rm -f man/*.1
-# 	-rm -f man/*.3
-# 	-rm -f man/*.8
-# 	-rm -rf man/.doctrees/
-# 	-rm -f Makefile.in
-# 	-rm -f aclocal.m4
-# 	-rm -f build-aux/compile
-# 	-rm -f build-aux/config.guess
-# 	-rm -f build-aux/config.sub
-# 	-rm -f build-aux/depcomp
-# 	-rm -f build-aux/install-sh
-# 	-rm -f build-aux/ltmain.sh
-# 	-rm -f build-aux/missing
-# 	-rm -f build-aux/test-driver
-# 	-rm -f build-aux/ylwrap
-# 	-rm -f mem_config.in
-# 	-rm -f config.log
-# 	-rm -f config.status
-# 	-rm -f configure
-# 	-rm -f m4/libtool.m4
-# 	-rm -f m4/ltoptions.m4
-# 	-rm -f m4/ltsugar.m4
-# 	-rm -f m4/ltversion.m4
-# 	-rm -f m4/lt~obsolete.m4
-# 	-rm -f m4/test-driver
-# 	-rmdir build-aux
-# 	-rm -rf ${top_builddir}/html
-# 	-rm -f $(DIST_ARCHIVES)
-#
-# # Tell versions [3.59,3.63) of GNU make to not export all variables.
-# # Otherwise a system limit (for SysV at least) may be exceeded.
-# .NOEXPORT:
+### chara
