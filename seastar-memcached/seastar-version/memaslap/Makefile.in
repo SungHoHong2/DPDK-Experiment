@@ -3411,11 +3411,11 @@ dist_aclocal_DATA = $(am__append_74)
 $(info CLIENT MISSED PART this part causes the makefile)
 
 
-@BUILD_WIN32_FALSE@clients_memaslap_SOURCES = clients/memaslap.c \
-@BUILD_WIN32_FALSE@	clients/ms_conn.c clients/ms_setting.c \
-@BUILD_WIN32_FALSE@	clients/ms_sigsegv.c clients/ms_stats.c \
-@BUILD_WIN32_FALSE@	clients/ms_task.c clients/ms_thread.c \
-@BUILD_WIN32_FALSE@	clients/generator.c clients/execute.c
+@BUILD_WIN32_FALSE@clients_memaslap_SOURCES = clients/memaslap.cc \
+@BUILD_WIN32_FALSE@	clients/ms_conn.cc clients/ms_setting.cc \
+@BUILD_WIN32_FALSE@	clients/ms_sigsegv.cc clients/ms_stats.cc \
+@BUILD_WIN32_FALSE@	clients/ms_task.cc clients/ms_thread.cc \
+@BUILD_WIN32_FALSE@	clients/generator.cc clients/execute.cc
 
 
 $(info CLIENT MISSED PART this part causes the makefile)
