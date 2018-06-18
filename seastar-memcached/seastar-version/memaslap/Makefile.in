@@ -5150,6 +5150,235 @@ tests/libmemcached-1.0/tests_libmemcached_1_0_testapp-virtual_buckets.$(OBJEXT):
 	tests/libmemcached-1.0/$(am__dirstamp) \
 	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
 
+tests/libmemcached-1.0/testapp$(EXEEXT): $(tests_libmemcached_1_0_testapp_OBJECTS) $(tests_libmemcached_1_0_testapp_DEPENDENCIES) $(EXTRA_tests_libmemcached_1_0_testapp_DEPENDENCIES) tests/libmemcached-1.0/$(am__dirstamp)
+	@rm -f tests/libmemcached-1.0/testapp$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_libmemcached_1_0_testapp_LINK) $(tests_libmemcached_1_0_testapp_OBJECTS) $(tests_libmemcached_1_0_testapp_LDADD) $(LIBS)
+clients/tests_libmemcached_1_0_testsocket-execute.$(OBJEXT):  \
+	clients/$(am__dirstamp) clients/$(DEPDIR)/$(am__dirstamp)
+clients/tests_libmemcached_1_0_testsocket-generator.$(OBJEXT):  \
+	clients/$(am__dirstamp) clients/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-all_tests_socket.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-basic.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-callback_counter.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-callbacks.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-debug.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-deprecated.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-dump.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-encoding_key.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-error_conditions.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-exist.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-fetch_all_results.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-generate.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-haldenbrand.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-ketama.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-mem_functions.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-memcached_get.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-namespace.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-parser.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-pool.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-print.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-replication.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-server_add.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-setup_and_teardowns.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-stat.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-touch.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_libmemcached_1_0_testsocket-virtual_buckets.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+
+tests/libmemcached-1.0/testsocket$(EXEEXT): $(tests_libmemcached_1_0_testsocket_OBJECTS) $(tests_libmemcached_1_0_testsocket_DEPENDENCIES) $(EXTRA_tests_libmemcached_1_0_testsocket_DEPENDENCIES) tests/libmemcached-1.0/$(am__dirstamp)
+	@rm -f tests/libmemcached-1.0/testsocket$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_libmemcached_1_0_testsocket_LINK) $(tests_libmemcached_1_0_testsocket_OBJECTS) $(tests_libmemcached_1_0_testsocket_LDADD) $(LIBS)
+tests/tests_memcapable-memcapable.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memcapable$(EXEEXT): $(tests_memcapable_OBJECTS) $(tests_memcapable_DEPENDENCIES) $(EXTRA_tests_memcapable_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memcapable$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memcapable_LINK) $(tests_memcapable_OBJECTS) $(tests_memcapable_LDADD) $(LIBS)
+tests/tests_memcat-memcat.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memcat$(EXEEXT): $(tests_memcat_OBJECTS) $(tests_memcat_DEPENDENCIES) $(EXTRA_tests_memcat_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memcat$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memcat_LINK) $(tests_memcat_OBJECTS) $(tests_memcat_LDADD) $(LIBS)
+tests/tests_memcp-memcp.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memcp$(EXEEXT): $(tests_memcp_OBJECTS) $(tests_memcp_DEPENDENCIES) $(EXTRA_tests_memcp_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memcp$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memcp_LINK) $(tests_memcp_OBJECTS) $(tests_memcp_LDADD) $(LIBS)
+tests/tests_memdump-memdump.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memdump$(EXEEXT): $(tests_memdump_OBJECTS) $(tests_memdump_DEPENDENCIES) $(EXTRA_tests_memdump_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memdump$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memdump_LINK) $(tests_memdump_OBJECTS) $(tests_memdump_LDADD) $(LIBS)
+tests/tests_memerror-memerror.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memerror$(EXEEXT): $(tests_memerror_OBJECTS) $(tests_memerror_DEPENDENCIES) $(EXTRA_tests_memerror_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memerror$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memerror_LINK) $(tests_memerror_OBJECTS) $(tests_memerror_LDADD) $(LIBS)
+tests/tests_memexist-memexist.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memexist$(EXEEXT): $(tests_memexist_OBJECTS) $(tests_memexist_DEPENDENCIES) $(EXTRA_tests_memexist_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memexist$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memexist_LINK) $(tests_memexist_OBJECTS) $(tests_memexist_LDADD) $(LIBS)
+tests/tests_memflush-memflush.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memflush$(EXEEXT): $(tests_memflush_OBJECTS) $(tests_memflush_DEPENDENCIES) $(EXTRA_tests_memflush_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memflush$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memflush_LINK) $(tests_memflush_OBJECTS) $(tests_memflush_LDADD) $(LIBS)
+tests/tests_memping-memping.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memping$(EXEEXT): $(tests_memping_OBJECTS) $(tests_memping_DEPENDENCIES) $(EXTRA_tests_memping_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memping$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memping_LINK) $(tests_memping_OBJECTS) $(tests_memping_LDADD) $(LIBS)
+tests/tests_memrm-memrm.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memrm$(EXEEXT): $(tests_memrm_OBJECTS) $(tests_memrm_DEPENDENCIES) $(EXTRA_tests_memrm_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memrm$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memrm_LINK) $(tests_memrm_OBJECTS) $(tests_memrm_LDADD) $(LIBS)
+tests/tests_memslap-memslap.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memslap$(EXEEXT): $(tests_memslap_OBJECTS) $(tests_memslap_DEPENDENCIES) $(EXTRA_tests_memslap_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memslap$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memslap_LINK) $(tests_memslap_OBJECTS) $(tests_memslap_LDADD) $(LIBS)
+tests/tests_memstat-memstat.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memstat$(EXEEXT): $(tests_memstat_OBJECTS) $(tests_memstat_DEPENDENCIES) $(EXTRA_tests_memstat_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memstat$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memstat_LINK) $(tests_memstat_OBJECTS) $(tests_memstat_LDADD) $(LIBS)
+tests/tests_memtouch-memtouch.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/memtouch$(EXEEXT): $(tests_memtouch_OBJECTS) $(tests_memtouch_DEPENDENCIES) $(EXTRA_tests_memtouch_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/memtouch$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_memtouch_LINK) $(tests_memtouch_OBJECTS) $(tests_memtouch_LDADD) $(LIBS)
+tests/tests_parser-parser.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/parser$(EXEEXT): $(tests_parser_OBJECTS) $(tests_parser_DEPENDENCIES) $(EXTRA_tests_parser_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/parser$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_parser_LINK) $(tests_parser_OBJECTS) $(tests_parser_LDADD) $(LIBS)
+tests/hashkit_functions.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/testhashkit$(EXEEXT): $(tests_testhashkit_OBJECTS) $(tests_testhashkit_DEPENDENCIES) $(EXTRA_tests_testhashkit_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/testhashkit$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(tests_testhashkit_OBJECTS) $(tests_testhashkit_LDADD) $(LIBS)
+clients/tests_testplus-execute.$(OBJEXT): clients/$(am__dirstamp) \
+	clients/$(DEPDIR)/$(am__dirstamp)
+clients/tests_testplus-generator.$(OBJEXT): clients/$(am__dirstamp) \
+	clients/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_testplus-callback_counter.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_testplus-fetch_all_results.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_testplus-generate.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_testplus-plus.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+tests/libmemcached-1.0/tests_testplus-print.$(OBJEXT):  \
+	tests/libmemcached-1.0/$(am__dirstamp) \
+	tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+
+tests/testplus$(EXEEXT): $(tests_testplus_OBJECTS) $(tests_testplus_DEPENDENCIES) $(EXTRA_tests_testplus_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/testplus$(EXEEXT)
+	$(AM_V_CXXLD)$(tests_testplus_LINK) $(tests_testplus_OBJECTS) $(tests_testplus_LDADD) $(LIBS)
+tests/mem_udp.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/testudp$(EXEEXT): $(tests_testudp_OBJECTS) $(tests_testudp_DEPENDENCIES) $(EXTRA_tests_testudp_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/testudp$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(tests_testudp_OBJECTS) $(tests_testudp_LDADD) $(LIBS)
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT)
+	-rm -f clients/*.$(OBJEXT)
+	-rm -f clients/*.lo
+	-rm -f example/*.$(OBJEXT)
+	-rm -f libhashkit/*.$(OBJEXT)
+	-rm -f libhashkit/*.lo
+	-rm -f libmemcached-1.0/t/*.$(OBJEXT)
+	-rm -f libmemcached/*.$(OBJEXT)
+	-rm -f libmemcached/*.lo
+	-rm -f libmemcached/csl/*.$(OBJEXT)
+	-rm -f libmemcached/csl/*.lo
+	-rm -f libmemcachedprotocol/*.$(OBJEXT)
+	-rm -f libmemcachedprotocol/*.lo
+	-rm -f libmemcachedutil/*.$(OBJEXT)
+	-rm -f libmemcachedutil/*.lo
+	-rm -f libtest/*.$(OBJEXT)
+	-rm -f libtest/*.lo
+	-rm -f libtest/exception/*.$(OBJEXT)
+	-rm -f libtest/exception/*.lo
+	-rm -f tests/*.$(OBJEXT)
+	-rm -f tests/libmemcached-1.0/*.$(OBJEXT)
+	-rm -f util/*.$(OBJEXT)
+
+distclean-compile:
+	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@clients/$(DEPDIR)/clients_memcapable-memcapable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@clients/$(DEPDIR)/clients_memslap-execute.Po@am__quote@
