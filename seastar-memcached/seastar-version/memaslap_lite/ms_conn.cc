@@ -1392,7 +1392,7 @@ static int ms_try_read_line(ms_conn_t *c)
     if (c->rbytes == 0)
       return EXIT_SUCCESS;
 
-    el= memchr(c->rcurr, '\n', (size_t)c->rbytes);
+    el= (char *)memchr(c->rcurr, '\n', (size_t)c->rbytes);
     if (! el)
       return EXIT_SUCCESS;
 
@@ -1688,7 +1688,7 @@ static int ms_try_read_network(ms_conn_t *c)
   {
     if (c->rbytes >= c->rsize)
     {
-      char *new_rbuf= realloc(c->rbuf, (size_t)c->rsize * 2);
+      char *new_rbuf= (char *)realloc(c->rbuf, (size_t)c->rsize * 2);
       if (! new_rbuf)
       {
         fprintf(stderr, "Couldn't realloc input buffer.\n");
@@ -2047,8 +2047,7 @@ static int ms_add_msghdr(ms_conn_t *c)
 
   if (c->msgsize == c->msgused)
   {
-    msg=
-      realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
+    msg=(struct msghdr *)realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
     if (! msg)
       return -1;
 
@@ -2484,7 +2483,7 @@ static bool ms_update_event(ms_conn_t *c, const int new_flags)
  */
 static bool ms_need_yield(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   int64_t tps= 0;
   int64_t time_diff= 0;
   struct timeval curr_time;
