@@ -9295,8 +9295,8 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	# dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	# distcheck distclean distclean-compile \
-	# distdir distuninstallcheck \
+	distcheck distclean distclean-compile \
+	distdir distuninstallcheck \
 	install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
 	install-exec install-exec-am
