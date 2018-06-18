@@ -1586,7 +1586,7 @@ static int ms_udp_read(ms_conn_t *c, char *buf, int len)
   {
     if (c->rudpbytes + UDP_MAX_PAYLOAD_SIZE > c->rudpsize)
     {
-      char *new_rbuf= realloc(c->rudpbuf, (size_t)c->rudpsize * 2);
+      char *new_rbuf= (char *)realloc(c->rudpbuf, (size_t)c->rudpsize * 2);
       if (! new_rbuf)
       {
         fprintf(stderr, "Couldn't realloc input buffer.\n");
@@ -2047,7 +2047,7 @@ static int ms_add_msghdr(ms_conn_t *c)
 
   if (c->msgsize == c->msgused)
   {
-    msg=(struct msghdr *)realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
+    msg= (struct msghdr *)realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
     if (! msg)
       return -1;
 

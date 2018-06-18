@@ -22,7 +22,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_conn_cpp" ]
 then
 depbase=`echo clients/ms_conn.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x   -DHAVE_CONFIG_H -I. -fvisibility=hidden  -g -O2  -MT clients/ms_conn.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_conn.o clients/ms_conn.c
+c++ -std=c++0x   -DHAVE_CONFIG_H -I. -fvisibility=hidden  -g -O2  -MT clients/ms_conn.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_conn.o clients/ms_conn.cc
 mv -f $depbase.Tpo $depbase.Po
 
 
@@ -36,7 +36,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_setting_cpp" ]
 then
 depbase=`echo clients/ms_setting.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_setting.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_setting.o clients/ms_setting.c
+c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_setting.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_setting.o clients/ms_setting.cc
 mv -f $depbase.Tpo $depbase.Po
 
 
@@ -51,7 +51,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_sigsegv_cpp" ]
 then
 depbase=`echo clients/ms_sigsegv.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_sigsegv.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_sigsegv.o clients/ms_sigsegv.c
+c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_sigsegv.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_sigsegv.o clients/ms_sigsegv.cc
 mv -f $depbase.Tpo $depbase.Po
 
 
@@ -65,7 +65,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_stats_cpp" ]
 then
 depbase=`echo clients/ms_stats.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_stats.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_stats.o clients/ms_stats.c
+c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_stats.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_stats.o clients/ms_stats.cc
 mv -f $depbase.Tpo $depbase.Po
 
 elif [ "$1" = "ms_task" ]
@@ -78,7 +78,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_task_cpp" ]
 then
 depbase=`echo clients/ms_task.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_task.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_task.o clients/ms_task.c
+c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_task.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_task.o clients/ms_task.cc
 mv -f $depbase.Tpo $depbase.Po
 
 
@@ -92,7 +92,7 @@ mv -f $depbase.Tpo $depbase.Po
 elif [ "$1" = "ms_thread_cpp" ]
 then
 depbase=`echo clients/ms_thread.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_thread.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_thread.o clients/ms_thread.c
+c++ -std=c++0x  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_thread.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_thread.o clients/ms_thread.cc
 mv -f $depbase.Tpo $depbase.Po
 
 
