@@ -9251,8 +9251,10 @@ check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
 
 
-# chara this is the place where mem_config.h is created
 
+
+# chara this is the place where mem_config.h is created
+# make -j33  all-am
 
 
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
