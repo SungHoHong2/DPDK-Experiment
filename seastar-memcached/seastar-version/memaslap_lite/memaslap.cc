@@ -135,7 +135,7 @@ static __attribute__((noreturn)) void ms_help_command(const char *command_name, 
     printf("    -%c, --%s%c\n", long_options[x].val, long_options[x].name,
            long_options[x].has_arg ? '=' : ' ');
 
-    if ((help_message= (char *)ms_lookup_help(long_options[x].val)) != NULL)
+    if ((help_message= (char *)ms_lookup_help((ms_options_t)long_options[x].val)) != NULL)
     {
       printf("        %s\n", help_message);
     }
