@@ -9671,11 +9671,11 @@ dvi: dvi-am
 
 dvi-am:
 
-html: html-am
+html:
 
-html-am: html-local
+html-am:
 
-info: info-am
+info:
 
 info-am:
 
@@ -9689,21 +9689,21 @@ install-dvi-am:
 
 install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
-install-html: install-html-am
+install-html:
 
-install-html-am: install-html-local
+install-html-am:
 
-install-info: install-info-am
+install-info:
 
 install-info-am:
 
-install-man: install-man1 install-man3
+install-man:
 
-install-pdf: install-pdf-am
+install-pdf:
 
 install-pdf-am:
 
-install-ps: install-ps-am
+install-ps:
 
 install-ps-am:
 
@@ -9722,20 +9722,7 @@ mostlyclean: mostlyclean-am
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
 	mostlyclean-libtool
 
-pdf: pdf-am
 
-pdf-am:
-
-ps: ps-am
-
-ps-am:
-
-uninstall-am: uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
-	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-nobase_includeHEADERS \
-	uninstall-pkgconfigDATA
-
-uninstall-man: uninstall-man1 uninstall-man3
 
 .MAKE: all check check-am install install-am install-strip
 
