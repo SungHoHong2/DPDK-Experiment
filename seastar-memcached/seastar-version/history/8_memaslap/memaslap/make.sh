@@ -5,4 +5,4 @@ SOURCE_FILES="memaslap.c ms_conn.c ms_setting.c ms_sigsegv.c ms_stats.c ms_task.
 
 export PATH=~/data1/sungho/usr/bin:$PATH
 
-gcc -std=gnu++11 $SOURCE_FILES -o client -lpthread -lmemcached -lmemcachedutil
+gcc $SOURCE_FILES -o client -lpthread -lmemcached -lmemcachedutil
