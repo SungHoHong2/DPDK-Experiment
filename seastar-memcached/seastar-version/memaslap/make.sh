@@ -3,6 +3,6 @@
 SOURCE_FILES="memaslap.c ms_conn.c ms_setting.c ms_sigsegv.c ms_stats.c ms_task.c ms_thread.c "
 
 
-export PATH=~/data1/sungho/usr/bin:$PATH
+# export PATH=~/data1/sungho/usr/bin:$PATH
 
 gcc -g -O2 -lm -ldl $SOURCE_FILES -o client -lpthread -lmemcached -lmemcachedutil
