@@ -20,8 +20,8 @@
 #include <signal.h>
 #include <pthread.h>
 
-#include "ms_memslap.h"
-#include "ms_setting.h"
+#include "../clients/ms_memslap.h"
+#include "../clients/ms_setting.h"
 
 /* prototypes */
 int ms_setup_sigsegv(void);

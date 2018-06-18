@@ -19,9 +19,9 @@
 # include <time.h>
 #endif
 
-#include "ms_thread.h"
-#include "ms_setting.h"
-#include "ms_atomic.h"
+#include "../clients/ms_thread.h"
+#include "../clients/ms_setting.h"
+#include "../clients/ms_atomic.h"
 
 /* command distribution adjustment cycle */
 #define CMD_DISTR_ADJUST_CYCLE    1000

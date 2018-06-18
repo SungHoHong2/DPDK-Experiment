@@ -417,7 +417,7 @@ static void ms_warmup_num_init(ms_conn_t *c)
  */
 static int ms_item_win_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   int exp_cnt= 0;
 
   c->win_size= (int)ms_setting.win_size;
@@ -472,7 +472,7 @@ static int ms_item_win_init(ms_conn_t *c)
  */
 static int ms_conn_sock_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t i;
   int ret_sfd;
   uint32_t srv_idx= 0;
@@ -566,7 +566,7 @@ static int ms_conn_sock_init(ms_conn_t *c)
  */
 static int ms_conn_event_init(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   short event_flags= EV_WRITE | EV_PERSIST;
 
   event_set(&c->event, c->sfd, event_flags, ms_event_handler, (void *)c);
@@ -623,7 +623,7 @@ int ms_setup_conn(ms_conn_t *c)
  */
 void ms_conn_free(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   if (c != NULL)
   {
     if (c->hdrbuf != NULL)
@@ -662,7 +662,7 @@ void ms_conn_free(ms_conn_t *c)
  */
 static void ms_conn_close(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   assert(c != NULL);
 
   /* delete the event, the socket and the connection */
@@ -906,7 +906,7 @@ static int ms_network_connect(ms_conn_t *c,
  */
 static int ms_reconn(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t srv_idx= 0;
   uint32_t srv_conn_cnt= 0;
 
@@ -1008,7 +1008,7 @@ static int ms_reconn(ms_conn_t *c)
  */
 int ms_reconn_socks(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   uint32_t srv_idx= 0;
   int ret_sfd= 0;
   uint32_t srv_conn_cnt= 0;
@@ -1392,7 +1392,7 @@ static int ms_try_read_line(ms_conn_t *c)
     if (c->rbytes == 0)
       return EXIT_SUCCESS;
 
-    el= memchr(c->rcurr, '\n', (size_t)c->rbytes);
+    el= (char *)memchr(c->rcurr, '\n', (size_t)c->rbytes);
     if (! el)
       return EXIT_SUCCESS;
 
@@ -1586,7 +1586,7 @@ static int ms_udp_read(ms_conn_t *c, char *buf, int len)
   {
     if (c->rudpbytes + UDP_MAX_PAYLOAD_SIZE > c->rudpsize)
     {
-      char *new_rbuf= realloc(c->rudpbuf, (size_t)c->rudpsize * 2);
+      char *new_rbuf= (char *)realloc(c->rudpbuf, (size_t)c->rudpsize * 2);
       if (! new_rbuf)
       {
         fprintf(stderr, "Couldn't realloc input buffer.\n");
@@ -1688,7 +1688,7 @@ static int ms_try_read_network(ms_conn_t *c)
   {
     if (c->rbytes >= c->rsize)
     {
-      char *new_rbuf= realloc(c->rbuf, (size_t)c->rsize * 2);
+      char *new_rbuf= (char *)realloc(c->rbuf, (size_t)c->rsize * 2);
       if (! new_rbuf)
       {
         fprintf(stderr, "Couldn't realloc input buffer.\n");
@@ -2047,8 +2047,7 @@ static int ms_add_msghdr(ms_conn_t *c)
 
   if (c->msgsize == c->msgused)
   {
-    msg=
-      realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
+    msg= (struct msghdr *)realloc(c->msglist, (size_t)c->msgsize * 2 * sizeof(struct msghdr));
     if (! msg)
       return -1;
 
@@ -2484,7 +2483,7 @@ static bool ms_update_event(ms_conn_t *c, const int new_flags)
  */
 static bool ms_need_yield(ms_conn_t *c)
 {
-  ms_thread_t *ms_thread= pthread_getspecific(ms_thread_key);
+  ms_thread_t *ms_thread= (ms_thread_t *)pthread_getspecific(ms_thread_key);
   int64_t tps= 0;
   int64_t time_diff= 0;
   struct timeval curr_time;

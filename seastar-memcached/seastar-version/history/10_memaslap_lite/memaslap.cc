@@ -27,14 +27,12 @@
 # include <time.h>
 #endif
 
+#include "../clients/ms_memslap.h"
+#include "../clients/ms_sigsegv.h"
+#include "../clients/ms_setting.h"
+#include "../clients/ms_thread.h"
 
-#include "ms_sigsegv.h"
-#include "ms_setting.h"
-#include "ms_thread.h"
 
-#define PROGRAM_NAME    "memslap"
-#define PROGRAM_DESCRIPTION \
-                        "Generates workload against memcached servers."
 
 #ifdef __sun
   /* For some odd reason the option struct on solaris defines the argument
@@ -44,6 +42,17 @@
 #else
 #define OPTIONSTRING const char*
 #endif
+
+
+/* global structure */
+ms_global_t ms_global;
+
+/* global stats information structure */
+ms_stats_t ms_stats;
+
+/* global statistic structure */
+ms_statistic_t ms_statistic;
+
 
 /* options */
 static struct option long_options[]=
@@ -97,6 +106,10 @@ static struct option long_options[]=
   { 0, 0, 0, 0 },
 };
 
+
+
+
+
 /* Prototypes */
 static void ms_sync_lock_init(void);
 static void ms_sync_lock_destroy(void);
@@ -135,7 +148,7 @@ static __attribute__((noreturn)) void ms_help_command(const char *command_name, 
     printf("    -%c, --%s%c\n", long_options[x].val, long_options[x].name,
            long_options[x].has_arg ? '=' : ' ');
 
-    if ((help_message= (char *)ms_lookup_help(long_options[x].val)) != NULL)
+    if ((help_message= (char *)ms_lookup_help((ms_options_t)long_options[x].val)) != NULL)
     {
       printf("        %s\n", help_message);
     }

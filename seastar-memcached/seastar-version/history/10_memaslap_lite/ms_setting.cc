@@ -23,8 +23,8 @@
 
 
 
-#include "ms_setting.h"
-#include "ms_conn.h"
+#include "../clients/ms_setting.h"
+#include "../clients/ms_conn.h"
 
 #define MAX_EXEC_NUM               0x4000000000000000      /* 1 << 62 */
 #define ADDR_ALIGN(addr)    ((addr + 15) & ~(16 - 1))      /* 16 bytes aligned */
@@ -486,10 +486,8 @@ static void ms_parse_cfg_file(char *cfg_file)
           {
             continue;
           }
-          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_type=
-            cmd_type;
-          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_prop=
-            proportion;
+          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_type= (ms_cmd_type_t)cmd_type;
+          ms_setting.cmd_distr[ms_setting.cmd_used_count].cmd_prop= proportion;
           ms_setting.cmd_used_count++;
           continue;
         }
