@@ -66,7 +66,8 @@ cd /data1/sungho/libmemcached-1.0.18/
 rm -rf clients/*.o
 make -j 16 -n && sudo make install -j 16
 
-if [ "$1" = "memaslap_lite_make" ]
+
+elif [ "$1" = "memaslap_lite_make" ]
 then
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/make.sh   /data1/sungho/libmemcached-1.0.18/clients/make.sh
 
