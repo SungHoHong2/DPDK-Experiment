@@ -9288,7 +9288,7 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
 .MAKE: all check check-am install install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
+.PHONY: CTAGS GTAGS TAGS all all-am \ # am--refresh check check-TESTS \
 	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
 	clean-checkPROGRAMS clean-cscope \
 	clean-libLTLIBRARIES clean-libtool clean-local \
