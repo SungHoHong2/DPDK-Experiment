@@ -46,17 +46,15 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_s
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_task.cc    /data1/sungho/libmemcached-1.0.18/clients/
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap/ms_thread.cc  /data1/sungho/libmemcached-1.0.18/clients/
 
-
-
 cd /data1/sungho/libmemcached-1.0.18/
 # /data1/sungho/libmemcached-1.0.18/configure --enable-memaslap LDFLAGS=-lpthread --prefix=/data1/sungho/usr/local
 # make -j 16 -n && sudo make install -j 16
-make -j 16 --debug=j && sudo make install -j 16
+make -j 16 && sudo make install -j 16
 
-
-  fi
-
+  else
 cd /data1/sungho/libmemcached-1.0.18/clients
 /data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
+
+fi
 
 fi
