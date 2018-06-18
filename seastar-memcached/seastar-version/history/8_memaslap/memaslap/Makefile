@@ -3366,24 +3366,6 @@ $(srcdir)/mem_config.in:  $(am__configure_deps)
 	rm -f stamp-h1
 	touch $@
 
-distclean-hdr:
-	-rm -f mem_config.h stamp-h1
-libhashkit/hashkitcon.h: $(top_builddir)/config.status $(top_srcdir)/libhashkit/hashkitcon.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-libhashkit-1.0/configure.h: $(top_builddir)/config.status $(top_srcdir)/libhashkit-1.0/configure.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-libtest/version.h: $(top_builddir)/config.status $(top_srcdir)/libtest/version.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-libtest/yatlcon.h: $(top_builddir)/config.status $(top_srcdir)/libtest/yatlcon.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-docs/conf.py: $(top_builddir)/config.status $(top_srcdir)/docs/conf.py.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-libmemcached-1.0/configure.h: $(top_builddir)/config.status $(top_srcdir)/libmemcached-1.0/configure.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-support/libmemcached.pc: $(top_builddir)/config.status $(top_srcdir)/support/libmemcached.pc.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-support/libmemcached.spec: $(top_builddir)/config.status $(top_srcdir)/support/libmemcached.spec.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 clean-checkLTLIBRARIES:
 	-test -z "$(check_LTLIBRARIES)" || rm -f $(check_LTLIBRARIES)
@@ -8732,8 +8714,7 @@ clean-libtool:
 	-rm -rf tests/.libs tests/_libs
 	-rm -rf tests/libmemcached-1.0/.libs tests/libmemcached-1.0/_libs
 
-distclean-libtool:
-	-rm -f libtool config.lt
+
 install-man1: $(dist_man_MANS) $(man_MANS)
 	@$(NORMAL_INSTALL)
 	@list1=''; \
@@ -8963,9 +8944,6 @@ cscopelist-am: $(am__tagged_files)
 	  fi; \
 	done >> $(top_builddir)/cscope.files
 
-distclean-tags:
-	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
-	-rm -f cscope.out cscope.in.out cscope.po.out cscope.files
 
 # Recover from deleted '.trs' file; this should ensure that
 # "rm -f foo.log; make foo.trs" re-run 'foo.test', and re-create
@@ -9087,335 +9065,6 @@ $(TEST_SUITE_LOG): $(TEST_LOGS)
 	fi;								\
 	$$success || exit 1
 
-check-TESTS:
-	@list='$(RECHECK_LOGS)';           test -z "$$list" || rm -f $$list
-	@list='$(RECHECK_LOGS:.log=.trs)'; test -z "$$list" || rm -f $$list
-	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-	@set +e; $(am__set_TESTS_bases); \
-	log_list=`for i in $$bases; do echo $$i.log; done`; \
-	trs_list=`for i in $$bases; do echo $$i.trs; done`; \
-	log_list=`echo $$log_list`; trs_list=`echo $$trs_list`; \
-	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) TEST_LOGS="$$log_list"; \
-	exit $$?;
-recheck: all $(check_LTLIBRARIES) $(check_PROGRAMS)
-	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-	@set +e; $(am__set_TESTS_bases); \
-	bases=`for i in $$bases; do echo $$i; done \
-	         | $(am__list_recheck_tests)` || exit 1; \
-	log_list=`for i in $$bases; do echo $$i.log; done`; \
-	log_list=`echo $$log_list`; \
-	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) \
-	        am__force_recheck=am--force-recheck \
-	        TEST_LOGS="$$log_list"; \
-	exit $$?
-clients/memcapable.log: clients/memcapable$(EXEEXT)
-	@p='clients/memcapable$(EXEEXT)'; \
-	b='clients/memcapable'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memcat.log: clients/memcat$(EXEEXT)
-	@p='clients/memcat$(EXEEXT)'; \
-	b='clients/memcat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memcp.log: clients/memcp$(EXEEXT)
-	@p='clients/memcp$(EXEEXT)'; \
-	b='clients/memcp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memdump.log: clients/memdump$(EXEEXT)
-	@p='clients/memdump$(EXEEXT)'; \
-	b='clients/memdump'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memerror.log: clients/memerror$(EXEEXT)
-	@p='clients/memerror$(EXEEXT)'; \
-	b='clients/memerror'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memexist.log: clients/memexist$(EXEEXT)
-	@p='clients/memexist$(EXEEXT)'; \
-	b='clients/memexist'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memtouch.log: clients/memtouch$(EXEEXT)
-	@p='clients/memtouch$(EXEEXT)'; \
-	b='clients/memtouch'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memflush.log: clients/memflush$(EXEEXT)
-	@p='clients/memflush$(EXEEXT)'; \
-	b='clients/memflush'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memparse.log: clients/memparse$(EXEEXT)
-	@p='clients/memparse$(EXEEXT)'; \
-	b='clients/memparse'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memping.log: clients/memping$(EXEEXT)
-	@p='clients/memping$(EXEEXT)'; \
-	b='clients/memping'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memrm.log: clients/memrm$(EXEEXT)
-	@p='clients/memrm$(EXEEXT)'; \
-	b='clients/memrm'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memslap.log: clients/memslap$(EXEEXT)
-	@p='clients/memslap$(EXEEXT)'; \
-	b='clients/memslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memstat.log: clients/memstat$(EXEEXT)
-	@p='clients/memstat$(EXEEXT)'; \
-	b='clients/memstat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memaslap.log: clients/memaslap$(EXEEXT)
-	@p='clients/memaslap$(EXEEXT)'; \
-	b='clients/memaslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/c_test.log: libmemcached-1.0/t/c_test$(EXEEXT)
-	@p='libmemcached-1.0/t/c_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/c_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/c_sasl_test.log: libmemcached-1.0/t/c_sasl_test$(EXEEXT)
-	@p='libmemcached-1.0/t/c_sasl_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/c_sasl_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/cc_test.log: libmemcached-1.0/t/cc_test$(EXEEXT)
-	@p='libmemcached-1.0/t/cc_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/cc_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libtest/unittest.log: libtest/unittest$(EXEEXT)
-	@p='libtest/unittest$(EXEEXT)'; \
-	b='libtest/unittest'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libtest/skiptest.log: libtest/skiptest$(EXEEXT)
-	@p='libtest/skiptest$(EXEEXT)'; \
-	b='libtest/skiptest'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/cycle.log: tests/cycle$(EXEEXT)
-	@p='tests/cycle$(EXEEXT)'; \
-	b='tests/cycle'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/internals.log: tests/libmemcached-1.0/internals$(EXEEXT)
-	@p='tests/libmemcached-1.0/internals$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/internals'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/testapp.log: tests/libmemcached-1.0/testapp$(EXEEXT)
-	@p='tests/libmemcached-1.0/testapp$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/testapp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/testsocket.log: tests/libmemcached-1.0/testsocket$(EXEEXT)
-	@p='tests/libmemcached-1.0/testsocket$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/testsocket'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/sasl.log: tests/libmemcached-1.0/sasl$(EXEEXT)
-	@p='tests/libmemcached-1.0/sasl$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/sasl'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testudp.log: tests/testudp$(EXEEXT)
-	@p='tests/testudp$(EXEEXT)'; \
-	b='tests/testudp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testplus.log: tests/testplus$(EXEEXT)
-	@p='tests/testplus$(EXEEXT)'; \
-	b='tests/testplus'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/parser.log: tests/parser$(EXEEXT)
-	@p='tests/parser$(EXEEXT)'; \
-	b='tests/parser'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/failure.log: tests/failure$(EXEEXT)
-	@p='tests/failure$(EXEEXT)'; \
-	b='tests/failure'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testhashkit.log: tests/testhashkit$(EXEEXT)
-	@p='tests/testhashkit$(EXEEXT)'; \
-	b='tests/testhashkit'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/hash_plus.log: tests/hash_plus$(EXEEXT)
-	@p='tests/hash_plus$(EXEEXT)'; \
-	b='tests/hash_plus'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcapable.log: tests/memcapable$(EXEEXT)
-	@p='tests/memcapable$(EXEEXT)'; \
-	b='tests/memcapable'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memstat.log: tests/memstat$(EXEEXT)
-	@p='tests/memstat$(EXEEXT)'; \
-	b='tests/memstat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcp.log: tests/memcp$(EXEEXT)
-	@p='tests/memcp$(EXEEXT)'; \
-	b='tests/memcp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memflush.log: tests/memflush$(EXEEXT)
-	@p='tests/memflush$(EXEEXT)'; \
-	b='tests/memflush'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memrm.log: tests/memrm$(EXEEXT)
-	@p='tests/memrm$(EXEEXT)'; \
-	b='tests/memrm'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memexist.log: tests/memexist$(EXEEXT)
-	@p='tests/memexist$(EXEEXT)'; \
-	b='tests/memexist'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memtouch.log: tests/memtouch$(EXEEXT)
-	@p='tests/memtouch$(EXEEXT)'; \
-	b='tests/memtouch'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcat.log: tests/memcat$(EXEEXT)
-	@p='tests/memcat$(EXEEXT)'; \
-	b='tests/memcat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memping.log: tests/memping$(EXEEXT)
-	@p='tests/memping$(EXEEXT)'; \
-	b='tests/memping'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memerror.log: tests/memerror$(EXEEXT)
-	@p='tests/memerror$(EXEEXT)'; \
-	b='tests/memerror'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memslap.log: tests/memslap$(EXEEXT)
-	@p='tests/memslap$(EXEEXT)'; \
-	b='tests/memslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memdump.log: tests/memdump$(EXEEXT)
-	@p='tests/memdump$(EXEEXT)'; \
-	b='tests/memdump'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-.test.log:
-	@p='$<'; \
-	$(am__set_b); \
-	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-#.test$(EXEEXT).log:
-#	@p='$<'; \
-#	$(am__set_b); \
-#	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
-#	--log-file $$b.log --trs-file $$b.trs \
-#	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
-#	"$$tst" $(AM_TESTS_FD_REDIRECT)
 
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
@@ -9564,15 +9213,6 @@ distuninstallcheck:
 	        fi ; \
 	        $(distuninstallcheck_listfiles) ; \
 	        exit 1; } >&2
-distcleancheck: distclean
-	@if test '$(srcdir)' = . ; then \
-	  echo "ERROR: distcleancheck can only run from a VPATH build" ; \
-	  exit 1 ; \
-	fi
-	@test `$(distcleancheck_listfiles) | wc -l` -eq 0 \
-	  || { echo "ERROR: files left in build directory after distclean:" ; \
-	       $(distcleancheck_listfiles) ; \
-	       exit 1; } >&2
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_LTLIBRARIES) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
@@ -9654,10 +9294,9 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 	clean-libLTLIBRARIES clean-libtool clean-local \
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile \
-	distclean-hdr distclean-libtool distclean-tags distcleancheck \
-	distdir distuninstallcheck \
+	# dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+	# distcheck distclean distclean-compile \
+	# distdir distuninstallcheck \
 	install install-am install-binPROGRAMS \
 	install-data install-data-am install-dist_aclocalDATA \
 	install-exec install-exec-am
