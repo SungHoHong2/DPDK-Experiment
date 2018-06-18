@@ -8980,795 +8980,795 @@ distclean-tags:
 am--fnord $(TEST_LOGS) $(TEST_LOGS:.log=.trs): $(am__force_recheck)
 am--force-recheck:
 	@:
-
-$(TEST_SUITE_LOG): $(TEST_LOGS)
-	@$(am__set_TESTS_bases); \
-	am__f_ok () { test -f "$$1" && test -r "$$1"; }; \
-	redo_bases=`for i in $$bases; do \
-	              am__f_ok $$i.trs && am__f_ok $$i.log || echo $$i; \
-	            done`; \
-	if test -n "$$redo_bases"; then \
-	  redo_logs=`for i in $$redo_bases; do echo $$i.log; done`; \
-	  redo_results=`for i in $$redo_bases; do echo $$i.trs; done`; \
-	  if $(am__make_dryrun); then :; else \
-	    rm -f $$redo_logs && rm -f $$redo_results || exit 1; \
-	  fi; \
-	fi; \
-	if test -n "$$am__remaking_logs"; then \
-	  echo "fatal: making $(TEST_SUITE_LOG): possible infinite" \
-	       "recursion detected" >&2; \
-	else \
-	  am__remaking_logs=yes $(MAKE) $(AM_MAKEFLAGS) $$redo_logs; \
-	fi; \
-	if $(am__make_dryrun); then :; else \
-	  st=0;  \
-	  errmsg="fatal: making $(TEST_SUITE_LOG): failed to create"; \
-	  for i in $$redo_bases; do \
-	    test -f $$i.trs && test -r $$i.trs \
-	      || { echo "$$errmsg $$i.trs" >&2; st=1; }; \
-	    test -f $$i.log && test -r $$i.log \
-	      || { echo "$$errmsg $$i.log" >&2; st=1; }; \
-	  done; \
-	  test $$st -eq 0 || exit 1; \
-	fi
-	@$(am__sh_e_setup); $(am__tty_colors); $(am__set_TESTS_bases); \
-	ws='[ 	]'; \
-	results=`for b in $$bases; do echo $$b.trs; done`; \
-	test -n "$$results" || results=/dev/null; \
-	all=`  grep "^$$ws*:test-result:"           $$results | wc -l`; \
-	pass=` grep "^$$ws*:test-result:$$ws*PASS"  $$results | wc -l`; \
-	fail=` grep "^$$ws*:test-result:$$ws*FAIL"  $$results | wc -l`; \
-	skip=` grep "^$$ws*:test-result:$$ws*SKIP"  $$results | wc -l`; \
-	xfail=`grep "^$$ws*:test-result:$$ws*XFAIL" $$results | wc -l`; \
-	xpass=`grep "^$$ws*:test-result:$$ws*XPASS" $$results | wc -l`; \
-	error=`grep "^$$ws*:test-result:$$ws*ERROR" $$results | wc -l`; \
-	if test `expr $$fail + $$xpass + $$error` -eq 0; then \
-	  success=true; \
-	else \
-	  success=false; \
-	fi; \
-	br='==================='; br=$$br$$br$$br$$br; \
-	result_count () \
-	{ \
-	    if test x"$$1" = x"--maybe-color"; then \
-	      maybe_colorize=yes; \
-	    elif test x"$$1" = x"--no-color"; then \
-	      maybe_colorize=no; \
-	    else \
-	      echo "$@: invalid 'result_count' usage" >&2; exit 4; \
-	    fi; \
-	    shift; \
-	    desc=$$1 count=$$2; \
-	    if test $$maybe_colorize = yes && test $$count -gt 0; then \
-	      color_start=$$3 color_end=$$std; \
-	    else \
-	      color_start= color_end=; \
-	    fi; \
-	    echo "$${color_start}# $$desc $$count$${color_end}"; \
-	}; \
-	create_testsuite_report () \
-	{ \
-	  result_count $$1 "TOTAL:" $$all   "$$brg"; \
-	  result_count $$1 "PASS: " $$pass  "$$grn"; \
-	  result_count $$1 "SKIP: " $$skip  "$$blu"; \
-	  result_count $$1 "XFAIL:" $$xfail "$$lgn"; \
-	  result_count $$1 "FAIL: " $$fail  "$$red"; \
-	  result_count $$1 "XPASS:" $$xpass "$$red"; \
-	  result_count $$1 "ERROR:" $$error "$$mgn"; \
-	}; \
-	{								\
-	  echo "$(PACKAGE_STRING): $(subdir)/$(TEST_SUITE_LOG)" |	\
-	    $(am__rst_title);						\
-	  create_testsuite_report --no-color;				\
-	  echo;								\
-	  echo ".. contents:: :depth: 2";				\
-	  echo;								\
-	  for b in $$bases; do echo $$b; done				\
-	    | $(am__create_global_log);					\
-	} >$(TEST_SUITE_LOG).tmp || exit 1;				\
-	mv $(TEST_SUITE_LOG).tmp $(TEST_SUITE_LOG);			\
-	if $$success; then						\
-	  col="$$grn";							\
-	 else								\
-	  col="$$red";							\
-	  test x"$$VERBOSE" = x || cat $(TEST_SUITE_LOG);		\
-	fi;								\
-	echo "$${col}$$br$${std}"; 					\
-	echo "$${col}Testsuite summary for $(PACKAGE_STRING)$${std}";	\
-	echo "$${col}$$br$${std}"; 					\
-	create_testsuite_report --maybe-color;				\
-	echo "$$col$$br$$std";						\
-	if $$success; then :; else					\
-	  echo "$${col}See $(subdir)/$(TEST_SUITE_LOG)$${std}";		\
-	  if test -n "$(PACKAGE_BUGREPORT)"; then			\
-	    echo "$${col}Please report to $(PACKAGE_BUGREPORT)$${std}";	\
-	  fi;								\
-	  echo "$$col$$br$$std";					\
-	fi;								\
-	$$success || exit 1
-
-check-TESTS:
-	@list='$(RECHECK_LOGS)';           test -z "$$list" || rm -f $$list
-	@list='$(RECHECK_LOGS:.log=.trs)'; test -z "$$list" || rm -f $$list
-	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-	@set +e; $(am__set_TESTS_bases); \
-	log_list=`for i in $$bases; do echo $$i.log; done`; \
-	trs_list=`for i in $$bases; do echo $$i.trs; done`; \
-	log_list=`echo $$log_list`; trs_list=`echo $$trs_list`; \
-	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) TEST_LOGS="$$log_list"; \
-	exit $$?;
-recheck: all $(check_LTLIBRARIES) $(check_PROGRAMS)
-	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-	@set +e; $(am__set_TESTS_bases); \
-	bases=`for i in $$bases; do echo $$i; done \
-	         | $(am__list_recheck_tests)` || exit 1; \
-	log_list=`for i in $$bases; do echo $$i.log; done`; \
-	log_list=`echo $$log_list`; \
-	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) \
-	        am__force_recheck=am--force-recheck \
-	        TEST_LOGS="$$log_list"; \
-	exit $$?
-clients/memcapable.log: clients/memcapable$(EXEEXT)
-	@p='clients/memcapable$(EXEEXT)'; \
-	b='clients/memcapable'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memcat.log: clients/memcat$(EXEEXT)
-	@p='clients/memcat$(EXEEXT)'; \
-	b='clients/memcat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memcp.log: clients/memcp$(EXEEXT)
-	@p='clients/memcp$(EXEEXT)'; \
-	b='clients/memcp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memdump.log: clients/memdump$(EXEEXT)
-	@p='clients/memdump$(EXEEXT)'; \
-	b='clients/memdump'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memerror.log: clients/memerror$(EXEEXT)
-	@p='clients/memerror$(EXEEXT)'; \
-	b='clients/memerror'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memexist.log: clients/memexist$(EXEEXT)
-	@p='clients/memexist$(EXEEXT)'; \
-	b='clients/memexist'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memtouch.log: clients/memtouch$(EXEEXT)
-	@p='clients/memtouch$(EXEEXT)'; \
-	b='clients/memtouch'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memflush.log: clients/memflush$(EXEEXT)
-	@p='clients/memflush$(EXEEXT)'; \
-	b='clients/memflush'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memparse.log: clients/memparse$(EXEEXT)
-	@p='clients/memparse$(EXEEXT)'; \
-	b='clients/memparse'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memping.log: clients/memping$(EXEEXT)
-	@p='clients/memping$(EXEEXT)'; \
-	b='clients/memping'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memrm.log: clients/memrm$(EXEEXT)
-	@p='clients/memrm$(EXEEXT)'; \
-	b='clients/memrm'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memslap.log: clients/memslap$(EXEEXT)
-	@p='clients/memslap$(EXEEXT)'; \
-	b='clients/memslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memstat.log: clients/memstat$(EXEEXT)
-	@p='clients/memstat$(EXEEXT)'; \
-	b='clients/memstat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-clients/memaslap.log: clients/memaslap$(EXEEXT)
-	@p='clients/memaslap$(EXEEXT)'; \
-	b='clients/memaslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/c_test.log: libmemcached-1.0/t/c_test$(EXEEXT)
-	@p='libmemcached-1.0/t/c_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/c_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/c_sasl_test.log: libmemcached-1.0/t/c_sasl_test$(EXEEXT)
-	@p='libmemcached-1.0/t/c_sasl_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/c_sasl_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libmemcached-1.0/t/cc_test.log: libmemcached-1.0/t/cc_test$(EXEEXT)
-	@p='libmemcached-1.0/t/cc_test$(EXEEXT)'; \
-	b='libmemcached-1.0/t/cc_test'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libtest/unittest.log: libtest/unittest$(EXEEXT)
-	@p='libtest/unittest$(EXEEXT)'; \
-	b='libtest/unittest'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-libtest/skiptest.log: libtest/skiptest$(EXEEXT)
-	@p='libtest/skiptest$(EXEEXT)'; \
-	b='libtest/skiptest'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/cycle.log: tests/cycle$(EXEEXT)
-	@p='tests/cycle$(EXEEXT)'; \
-	b='tests/cycle'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/internals.log: tests/libmemcached-1.0/internals$(EXEEXT)
-	@p='tests/libmemcached-1.0/internals$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/internals'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/testapp.log: tests/libmemcached-1.0/testapp$(EXEEXT)
-	@p='tests/libmemcached-1.0/testapp$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/testapp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/testsocket.log: tests/libmemcached-1.0/testsocket$(EXEEXT)
-	@p='tests/libmemcached-1.0/testsocket$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/testsocket'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/libmemcached-1.0/sasl.log: tests/libmemcached-1.0/sasl$(EXEEXT)
-	@p='tests/libmemcached-1.0/sasl$(EXEEXT)'; \
-	b='tests/libmemcached-1.0/sasl'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testudp.log: tests/testudp$(EXEEXT)
-	@p='tests/testudp$(EXEEXT)'; \
-	b='tests/testudp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testplus.log: tests/testplus$(EXEEXT)
-	@p='tests/testplus$(EXEEXT)'; \
-	b='tests/testplus'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/parser.log: tests/parser$(EXEEXT)
-	@p='tests/parser$(EXEEXT)'; \
-	b='tests/parser'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/failure.log: tests/failure$(EXEEXT)
-	@p='tests/failure$(EXEEXT)'; \
-	b='tests/failure'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/testhashkit.log: tests/testhashkit$(EXEEXT)
-	@p='tests/testhashkit$(EXEEXT)'; \
-	b='tests/testhashkit'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/hash_plus.log: tests/hash_plus$(EXEEXT)
-	@p='tests/hash_plus$(EXEEXT)'; \
-	b='tests/hash_plus'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcapable.log: tests/memcapable$(EXEEXT)
-	@p='tests/memcapable$(EXEEXT)'; \
-	b='tests/memcapable'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memstat.log: tests/memstat$(EXEEXT)
-	@p='tests/memstat$(EXEEXT)'; \
-	b='tests/memstat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcp.log: tests/memcp$(EXEEXT)
-	@p='tests/memcp$(EXEEXT)'; \
-	b='tests/memcp'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memflush.log: tests/memflush$(EXEEXT)
-	@p='tests/memflush$(EXEEXT)'; \
-	b='tests/memflush'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memrm.log: tests/memrm$(EXEEXT)
-	@p='tests/memrm$(EXEEXT)'; \
-	b='tests/memrm'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memexist.log: tests/memexist$(EXEEXT)
-	@p='tests/memexist$(EXEEXT)'; \
-	b='tests/memexist'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memtouch.log: tests/memtouch$(EXEEXT)
-	@p='tests/memtouch$(EXEEXT)'; \
-	b='tests/memtouch'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memcat.log: tests/memcat$(EXEEXT)
-	@p='tests/memcat$(EXEEXT)'; \
-	b='tests/memcat'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memping.log: tests/memping$(EXEEXT)
-	@p='tests/memping$(EXEEXT)'; \
-	b='tests/memping'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memerror.log: tests/memerror$(EXEEXT)
-	@p='tests/memerror$(EXEEXT)'; \
-	b='tests/memerror'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memslap.log: tests/memslap$(EXEEXT)
-	@p='tests/memslap$(EXEEXT)'; \
-	b='tests/memslap'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-tests/memdump.log: tests/memdump$(EXEEXT)
-	@p='tests/memdump$(EXEEXT)'; \
-	b='tests/memdump'; \
-	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-.test.log:
-	@p='$<'; \
-	$(am__set_b); \
-	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
-	--log-file $$b.log --trs-file $$b.trs \
-	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
-	"$$tst" $(AM_TESTS_FD_REDIRECT)
-#.test$(EXEEXT).log:
-#	@p='$<'; \
-#	$(am__set_b); \
-#	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
-#	--log-file $$b.log --trs-file $$b.trs \
-#	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
-#	"$$tst" $(AM_TESTS_FD_REDIRECT)
-
-distdir: $(DISTFILES)
-	$(am__remove_distdir)
-	test -d "$(distdir)" || mkdir "$(distdir)"
-	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
-	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
-	list='$(DISTFILES)'; \
-	  dist_files=`for file in $$list; do echo $$file; done | \
-	  sed -e "s|^$$srcdirstrip/||;t" \
-	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
-	case $$dist_files in \
-	  */*) $(MKDIR_P) `echo "$$dist_files" | \
-			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
-			   sort -u` ;; \
-	esac; \
-	for file in $$dist_files; do \
-	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
-	  if test -d $$d/$$file; then \
-	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
-	    if test -d "$(distdir)/$$file"; then \
-	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
-	    fi; \
-	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
-	      cp -fpR $(srcdir)/$$file "$(distdir)$$dir" || exit 1; \
-	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
-	    fi; \
-	    cp -fpR $$d/$$file "$(distdir)$$dir" || exit 1; \
-	  else \
-	    test -f "$(distdir)/$$file" \
-	    || cp -p $$d/$$file "$(distdir)/$$file" \
-	    || exit 1; \
-	  fi; \
-	done
-	-test -n "$(am__skip_mode_fix)" \
-	|| find "$(distdir)" -type d ! -perm -755 \
-		-exec chmod u+rwx,go+rx {} \; -o \
-	  ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
-	  ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
-	  ! -type d ! -perm -444 -exec $(install_sh) -c -m a+r {} {} \; \
-	|| chmod -R a+r "$(distdir)"
-dist-gzip: distdir
-	tardir=$(distdir) && $(am__tar) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).tar.gz
-	$(am__post_remove_distdir)
-
-dist-bzip2: distdir
-	tardir=$(distdir) && $(am__tar) | BZIP2=$${BZIP2--9} bzip2 -c >$(distdir).tar.bz2
-	$(am__post_remove_distdir)
-
-dist-lzip: distdir
-	tardir=$(distdir) && $(am__tar) | lzip -c $${LZIP_OPT--9} >$(distdir).tar.lz
-	$(am__post_remove_distdir)
-
-dist-xz: distdir
-	tardir=$(distdir) && $(am__tar) | XZ_OPT=$${XZ_OPT--e} xz -c >$(distdir).tar.xz
-	$(am__post_remove_distdir)
-
-dist-tarZ: distdir
-	tardir=$(distdir) && $(am__tar) | compress -c >$(distdir).tar.Z
-	$(am__post_remove_distdir)
-
-dist-shar: distdir
-	shar $(distdir) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).shar.gz
-	$(am__post_remove_distdir)
-
-dist-zip: distdir
-	-rm -f $(distdir).zip
-	zip -rq $(distdir).zip $(distdir)
-	$(am__post_remove_distdir)
-
-dist dist-all:
-	$(MAKE) $(AM_MAKEFLAGS) $(DIST_TARGETS) am__post_remove_distdir='@:'
-	$(am__post_remove_distdir)
-
-# This target untars the dist file and tries a VPATH configuration.  Then
-# it guarantees that the distribution is self-contained by making another
-# tarfile.
-distcheck: dist
-	case '$(DIST_ARCHIVES)' in \
-	*.tar.gz*) \
-	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).tar.gz | $(am__untar) ;;\
-	*.tar.bz2*) \
-	  bzip2 -dc $(distdir).tar.bz2 | $(am__untar) ;;\
-	*.tar.lz*) \
-	  lzip -dc $(distdir).tar.lz | $(am__untar) ;;\
-	*.tar.xz*) \
-	  xz -dc $(distdir).tar.xz | $(am__untar) ;;\
-	*.tar.Z*) \
-	  uncompress -c $(distdir).tar.Z | $(am__untar) ;;\
-	*.shar.gz*) \
-	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).shar.gz | unshar ;;\
-	*.zip*) \
-	  unzip $(distdir).zip ;;\
-	esac
-	chmod -R a-w $(distdir)
-	chmod u+w $(distdir)
-	mkdir $(distdir)/_build $(distdir)/_inst
-	chmod a-w $(distdir)
-	test -d $(distdir)/_build || exit 0; \
-	dc_install_base=`$(am__cd) $(distdir)/_inst && pwd | sed -e 's,^[^:\\/]:[\\/],/,'` \
-	  && dc_destdir="$${TMPDIR-/tmp}/am-dc-$$$$/" \
-	  && am__cwd=`pwd` \
-	  && $(am__cd) $(distdir)/_build \
-	  && ../configure --srcdir=.. --prefix="$$dc_install_base" \
-	    $(AM_DISTCHECK_CONFIGURE_FLAGS) \
-	    $(DISTCHECK_CONFIGURE_FLAGS) \
-	  && $(MAKE) $(AM_MAKEFLAGS) \
-	  && $(MAKE) $(AM_MAKEFLAGS) dvi \
-	  && $(MAKE) $(AM_MAKEFLAGS) check \
-	  && $(MAKE) $(AM_MAKEFLAGS) install \
-	  && $(MAKE) $(AM_MAKEFLAGS) installcheck \
-	  && $(MAKE) $(AM_MAKEFLAGS) uninstall \
-	  && $(MAKE) $(AM_MAKEFLAGS) distuninstallcheck_dir="$$dc_install_base" \
-	        distuninstallcheck \
-	  && chmod -R a-w "$$dc_install_base" \
-	  && ({ \
-	       (cd ../.. && umask 077 && mkdir "$$dc_destdir") \
-	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" install \
-	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" uninstall \
-	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" \
-	            distuninstallcheck_dir="$$dc_destdir" distuninstallcheck; \
-	      } || { rm -rf "$$dc_destdir"; exit 1; }) \
-	  && rm -rf "$$dc_destdir" \
-	  && $(MAKE) $(AM_MAKEFLAGS) dist \
-	  && rm -rf $(DIST_ARCHIVES) \
-	  && $(MAKE) $(AM_MAKEFLAGS) distcleancheck \
-	  && cd "$$am__cwd" \
-	  || exit 1
-	$(am__post_remove_distdir)
-	@(echo "$(distdir) archives ready for distribution: "; \
-	  list='$(DIST_ARCHIVES)'; for i in $$list; do echo $$i; done) | \
-	  sed -e 1h -e 1s/./=/g -e 1p -e 1x -e '$$p' -e '$$x'
-distuninstallcheck:
-	@test -n '$(distuninstallcheck_dir)' || { \
-	  echo 'ERROR: trying to run $@ with an empty' \
-	       '$$(distuninstallcheck_dir)' >&2; \
-	  exit 1; \
-	}; \
-	$(am__cd) '$(distuninstallcheck_dir)' || { \
-	  echo 'ERROR: cannot chdir into $(distuninstallcheck_dir)' >&2; \
-	  exit 1; \
-	}; \
-	test `$(am__distuninstallcheck_listfiles) | wc -l` -eq 0 \
-	   || { echo "ERROR: files left after uninstall:" ; \
-	        if test -n "$(DESTDIR)"; then \
-	          echo "  (check DESTDIR support)"; \
-	        fi ; \
-	        $(distuninstallcheck_listfiles) ; \
-	        exit 1; } >&2
-distcleancheck: distclean
-	@if test '$(srcdir)' = . ; then \
-	  echo "ERROR: distcleancheck can only run from a VPATH build" ; \
-	  exit 1 ; \
-	fi
-	@test `$(distcleancheck_listfiles) | wc -l` -eq 0 \
-	  || { echo "ERROR: files left in build directory after distclean:" ; \
-	       $(distcleancheck_listfiles) ; \
-	       exit 1; } >&2
-check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_LTLIBRARIES) $(check_PROGRAMS)
-	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
-check: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) check-am
-all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
-		mem_config.h
-install-binPROGRAMS: install-libLTLIBRARIES
-
-installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)" "$(DESTDIR)$(includedir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
-install: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-am
-install-exec: install-exec-am
-install-data: install-data-am
-uninstall: uninstall-am
-
-install-am: all-am
-	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
-
-installcheck: installcheck-am
-install-strip:
-	if test -z '$(STRIP)'; then \
-	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
-	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
-	      install; \
-	else \
-	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
-	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
-	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
-	fi
-mostlyclean-generic:
-	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
-	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
-	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
-
-clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
-
-distclean-generic:
-	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
-	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
-	-rm -f clients/$(DEPDIR)/$(am__dirstamp)
-	-rm -f clients/$(am__dirstamp)
-	-rm -f example/$(DEPDIR)/$(am__dirstamp)
-	-rm -f example/$(am__dirstamp)
-	-rm -f libhashkit/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libhashkit/$(am__dirstamp)
-	-rm -f libmemcached-1.0/t/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached-1.0/t/$(am__dirstamp)
-	-rm -f libmemcached/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached/$(am__dirstamp)
-	-rm -f libmemcached/csl/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcached/csl/$(am__dirstamp)
-	-rm -f libmemcachedinternal/$(am__dirstamp)
-	-rm -f libmemcachedprotocol/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcachedprotocol/$(am__dirstamp)
-	-rm -f libmemcachedutil/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libmemcachedutil/$(am__dirstamp)
-	-rm -f libtest/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libtest/$(am__dirstamp)
-	-rm -f libtest/exception/$(DEPDIR)/$(am__dirstamp)
-	-rm -f libtest/exception/$(am__dirstamp)
-	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
-	-rm -f tests/$(am__dirstamp)
-	-rm -f tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
-	-rm -f tests/libmemcached-1.0/$(am__dirstamp)
-	-rm -f util/$(DEPDIR)/$(am__dirstamp)
-	-rm -f util/$(am__dirstamp)
-	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
-
-maintainer-clean-generic:
-	@echo "This command is intended for maintainers to use"
-	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
-#install-html-local:
-#html-local:
-#clean-local:
-clean: clean-am
-
-clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
-	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
-	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
-
-distclean: distclean-am
-	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
-	-rm -f Makefile
-distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-hdr distclean-libtool distclean-tags
-
-dvi: dvi-am
-
-dvi-am:
-
-html: html-am
-
-html-am: html-local
-
-info: info-am
-
-info-am:
-
-install-data-am: install-dist_aclocalDATA install-includeHEADERS \
-	install-man install-nobase_includeHEADERS \
-	install-pkgconfigDATA
-
-install-dvi: install-dvi-am
-
-install-dvi-am:
-
-install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
-
-install-html: install-html-am
-
-install-html-am: install-html-local
-
-install-info: install-info-am
-
-install-info-am:
-
-install-man: install-man1 install-man3
-
-install-pdf: install-pdf-am
-
-install-pdf-am:
-
-install-ps: install-ps-am
-
-install-ps-am:
-
-installcheck-am:
-
-maintainer-clean: maintainer-clean-am
-	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
-	-rm -f Makefile
-maintainer-clean-am: distclean-am maintainer-clean-generic \
-	maintainer-clean-local
-
-mostlyclean: mostlyclean-am
-
-mostlyclean-am: mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool
-
-pdf: pdf-am
-
-pdf-am:
-
-ps: ps-am
-
-ps-am:
-
-uninstall-am: uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
-	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-nobase_includeHEADERS \
-	uninstall-pkgconfigDATA
-
-uninstall-man: uninstall-man1 uninstall-man3
-
-.MAKE: all check check-am install install-am install-strip
-
-.PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
-	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
-	clean-checkPROGRAMS clean-cscope clean-generic \
-	clean-libLTLIBRARIES clean-libtool clean-local \
-	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
-	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile distclean-generic \
-	distclean-hdr distclean-libtool distclean-tags distcleancheck \
-	distdir distuninstallcheck dvi dvi-am html html-am html-local \
-	info info-am install install-am install-binPROGRAMS \
-	install-data install-data-am install-dist_aclocalDATA \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-html-local \
-	install-includeHEADERS install-info install-info-am \
-	install-libLTLIBRARIES install-man install-man1 install-man3 \
-	install-nobase_includeHEADERS install-pdf install-pdf-am \
-	install-pkgconfigDATA install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic maintainer-clean-local mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am recheck tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
-	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-man1 uninstall-man3 \
-	uninstall-nobase_includeHEADERS uninstall-pkgconfigDATA
+#
+# $(TEST_SUITE_LOG): $(TEST_LOGS)
+# 	@$(am__set_TESTS_bases); \
+# 	am__f_ok () { test -f "$$1" && test -r "$$1"; }; \
+# 	redo_bases=`for i in $$bases; do \
+# 	              am__f_ok $$i.trs && am__f_ok $$i.log || echo $$i; \
+# 	            done`; \
+# 	if test -n "$$redo_bases"; then \
+# 	  redo_logs=`for i in $$redo_bases; do echo $$i.log; done`; \
+# 	  redo_results=`for i in $$redo_bases; do echo $$i.trs; done`; \
+# 	  if $(am__make_dryrun); then :; else \
+# 	    rm -f $$redo_logs && rm -f $$redo_results || exit 1; \
+# 	  fi; \
+# 	fi; \
+# 	if test -n "$$am__remaking_logs"; then \
+# 	  echo "fatal: making $(TEST_SUITE_LOG): possible infinite" \
+# 	       "recursion detected" >&2; \
+# 	else \
+# 	  am__remaking_logs=yes $(MAKE) $(AM_MAKEFLAGS) $$redo_logs; \
+# 	fi; \
+# 	if $(am__make_dryrun); then :; else \
+# 	  st=0;  \
+# 	  errmsg="fatal: making $(TEST_SUITE_LOG): failed to create"; \
+# 	  for i in $$redo_bases; do \
+# 	    test -f $$i.trs && test -r $$i.trs \
+# 	      || { echo "$$errmsg $$i.trs" >&2; st=1; }; \
+# 	    test -f $$i.log && test -r $$i.log \
+# 	      || { echo "$$errmsg $$i.log" >&2; st=1; }; \
+# 	  done; \
+# 	  test $$st -eq 0 || exit 1; \
+# 	fi
+# 	@$(am__sh_e_setup); $(am__tty_colors); $(am__set_TESTS_bases); \
+# 	ws='[ 	]'; \
+# 	results=`for b in $$bases; do echo $$b.trs; done`; \
+# 	test -n "$$results" || results=/dev/null; \
+# 	all=`  grep "^$$ws*:test-result:"           $$results | wc -l`; \
+# 	pass=` grep "^$$ws*:test-result:$$ws*PASS"  $$results | wc -l`; \
+# 	fail=` grep "^$$ws*:test-result:$$ws*FAIL"  $$results | wc -l`; \
+# 	skip=` grep "^$$ws*:test-result:$$ws*SKIP"  $$results | wc -l`; \
+# 	xfail=`grep "^$$ws*:test-result:$$ws*XFAIL" $$results | wc -l`; \
+# 	xpass=`grep "^$$ws*:test-result:$$ws*XPASS" $$results | wc -l`; \
+# 	error=`grep "^$$ws*:test-result:$$ws*ERROR" $$results | wc -l`; \
+# 	if test `expr $$fail + $$xpass + $$error` -eq 0; then \
+# 	  success=true; \
+# 	else \
+# 	  success=false; \
+# 	fi; \
+# 	br='==================='; br=$$br$$br$$br$$br; \
+# 	result_count () \
+# 	{ \
+# 	    if test x"$$1" = x"--maybe-color"; then \
+# 	      maybe_colorize=yes; \
+# 	    elif test x"$$1" = x"--no-color"; then \
+# 	      maybe_colorize=no; \
+# 	    else \
+# 	      echo "$@: invalid 'result_count' usage" >&2; exit 4; \
+# 	    fi; \
+# 	    shift; \
+# 	    desc=$$1 count=$$2; \
+# 	    if test $$maybe_colorize = yes && test $$count -gt 0; then \
+# 	      color_start=$$3 color_end=$$std; \
+# 	    else \
+# 	      color_start= color_end=; \
+# 	    fi; \
+# 	    echo "$${color_start}# $$desc $$count$${color_end}"; \
+# 	}; \
+# 	create_testsuite_report () \
+# 	{ \
+# 	  result_count $$1 "TOTAL:" $$all   "$$brg"; \
+# 	  result_count $$1 "PASS: " $$pass  "$$grn"; \
+# 	  result_count $$1 "SKIP: " $$skip  "$$blu"; \
+# 	  result_count $$1 "XFAIL:" $$xfail "$$lgn"; \
+# 	  result_count $$1 "FAIL: " $$fail  "$$red"; \
+# 	  result_count $$1 "XPASS:" $$xpass "$$red"; \
+# 	  result_count $$1 "ERROR:" $$error "$$mgn"; \
+# 	}; \
+# 	{								\
+# 	  echo "$(PACKAGE_STRING): $(subdir)/$(TEST_SUITE_LOG)" |	\
+# 	    $(am__rst_title);						\
+# 	  create_testsuite_report --no-color;				\
+# 	  echo;								\
+# 	  echo ".. contents:: :depth: 2";				\
+# 	  echo;								\
+# 	  for b in $$bases; do echo $$b; done				\
+# 	    | $(am__create_global_log);					\
+# 	} >$(TEST_SUITE_LOG).tmp || exit 1;				\
+# 	mv $(TEST_SUITE_LOG).tmp $(TEST_SUITE_LOG);			\
+# 	if $$success; then						\
+# 	  col="$$grn";							\
+# 	 else								\
+# 	  col="$$red";							\
+# 	  test x"$$VERBOSE" = x || cat $(TEST_SUITE_LOG);		\
+# 	fi;								\
+# 	echo "$${col}$$br$${std}"; 					\
+# 	echo "$${col}Testsuite summary for $(PACKAGE_STRING)$${std}";	\
+# 	echo "$${col}$$br$${std}"; 					\
+# 	create_testsuite_report --maybe-color;				\
+# 	echo "$$col$$br$$std";						\
+# 	if $$success; then :; else					\
+# 	  echo "$${col}See $(subdir)/$(TEST_SUITE_LOG)$${std}";		\
+# 	  if test -n "$(PACKAGE_BUGREPORT)"; then			\
+# 	    echo "$${col}Please report to $(PACKAGE_BUGREPORT)$${std}";	\
+# 	  fi;								\
+# 	  echo "$$col$$br$$std";					\
+# 	fi;								\
+# 	$$success || exit 1
+#
+# check-TESTS:
+# 	@list='$(RECHECK_LOGS)';           test -z "$$list" || rm -f $$list
+# 	@list='$(RECHECK_LOGS:.log=.trs)'; test -z "$$list" || rm -f $$list
+# 	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
+# 	@set +e; $(am__set_TESTS_bases); \
+# 	log_list=`for i in $$bases; do echo $$i.log; done`; \
+# 	trs_list=`for i in $$bases; do echo $$i.trs; done`; \
+# 	log_list=`echo $$log_list`; trs_list=`echo $$trs_list`; \
+# 	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) TEST_LOGS="$$log_list"; \
+# 	exit $$?;
+# recheck: all $(check_LTLIBRARIES) $(check_PROGRAMS)
+# 	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
+# 	@set +e; $(am__set_TESTS_bases); \
+# 	bases=`for i in $$bases; do echo $$i; done \
+# 	         | $(am__list_recheck_tests)` || exit 1; \
+# 	log_list=`for i in $$bases; do echo $$i.log; done`; \
+# 	log_list=`echo $$log_list`; \
+# 	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) \
+# 	        am__force_recheck=am--force-recheck \
+# 	        TEST_LOGS="$$log_list"; \
+# 	exit $$?
+# clients/memcapable.log: clients/memcapable$(EXEEXT)
+# 	@p='clients/memcapable$(EXEEXT)'; \
+# 	b='clients/memcapable'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memcat.log: clients/memcat$(EXEEXT)
+# 	@p='clients/memcat$(EXEEXT)'; \
+# 	b='clients/memcat'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memcp.log: clients/memcp$(EXEEXT)
+# 	@p='clients/memcp$(EXEEXT)'; \
+# 	b='clients/memcp'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memdump.log: clients/memdump$(EXEEXT)
+# 	@p='clients/memdump$(EXEEXT)'; \
+# 	b='clients/memdump'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memerror.log: clients/memerror$(EXEEXT)
+# 	@p='clients/memerror$(EXEEXT)'; \
+# 	b='clients/memerror'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memexist.log: clients/memexist$(EXEEXT)
+# 	@p='clients/memexist$(EXEEXT)'; \
+# 	b='clients/memexist'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memtouch.log: clients/memtouch$(EXEEXT)
+# 	@p='clients/memtouch$(EXEEXT)'; \
+# 	b='clients/memtouch'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memflush.log: clients/memflush$(EXEEXT)
+# 	@p='clients/memflush$(EXEEXT)'; \
+# 	b='clients/memflush'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memparse.log: clients/memparse$(EXEEXT)
+# 	@p='clients/memparse$(EXEEXT)'; \
+# 	b='clients/memparse'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memping.log: clients/memping$(EXEEXT)
+# 	@p='clients/memping$(EXEEXT)'; \
+# 	b='clients/memping'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memrm.log: clients/memrm$(EXEEXT)
+# 	@p='clients/memrm$(EXEEXT)'; \
+# 	b='clients/memrm'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memslap.log: clients/memslap$(EXEEXT)
+# 	@p='clients/memslap$(EXEEXT)'; \
+# 	b='clients/memslap'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memstat.log: clients/memstat$(EXEEXT)
+# 	@p='clients/memstat$(EXEEXT)'; \
+# 	b='clients/memstat'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# clients/memaslap.log: clients/memaslap$(EXEEXT)
+# 	@p='clients/memaslap$(EXEEXT)'; \
+# 	b='clients/memaslap'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# libmemcached-1.0/t/c_test.log: libmemcached-1.0/t/c_test$(EXEEXT)
+# 	@p='libmemcached-1.0/t/c_test$(EXEEXT)'; \
+# 	b='libmemcached-1.0/t/c_test'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# libmemcached-1.0/t/c_sasl_test.log: libmemcached-1.0/t/c_sasl_test$(EXEEXT)
+# 	@p='libmemcached-1.0/t/c_sasl_test$(EXEEXT)'; \
+# 	b='libmemcached-1.0/t/c_sasl_test'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# libmemcached-1.0/t/cc_test.log: libmemcached-1.0/t/cc_test$(EXEEXT)
+# 	@p='libmemcached-1.0/t/cc_test$(EXEEXT)'; \
+# 	b='libmemcached-1.0/t/cc_test'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# libtest/unittest.log: libtest/unittest$(EXEEXT)
+# 	@p='libtest/unittest$(EXEEXT)'; \
+# 	b='libtest/unittest'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# libtest/skiptest.log: libtest/skiptest$(EXEEXT)
+# 	@p='libtest/skiptest$(EXEEXT)'; \
+# 	b='libtest/skiptest'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/cycle.log: tests/cycle$(EXEEXT)
+# 	@p='tests/cycle$(EXEEXT)'; \
+# 	b='tests/cycle'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/libmemcached-1.0/internals.log: tests/libmemcached-1.0/internals$(EXEEXT)
+# 	@p='tests/libmemcached-1.0/internals$(EXEEXT)'; \
+# 	b='tests/libmemcached-1.0/internals'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/libmemcached-1.0/testapp.log: tests/libmemcached-1.0/testapp$(EXEEXT)
+# 	@p='tests/libmemcached-1.0/testapp$(EXEEXT)'; \
+# 	b='tests/libmemcached-1.0/testapp'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/libmemcached-1.0/testsocket.log: tests/libmemcached-1.0/testsocket$(EXEEXT)
+# 	@p='tests/libmemcached-1.0/testsocket$(EXEEXT)'; \
+# 	b='tests/libmemcached-1.0/testsocket'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/libmemcached-1.0/sasl.log: tests/libmemcached-1.0/sasl$(EXEEXT)
+# 	@p='tests/libmemcached-1.0/sasl$(EXEEXT)'; \
+# 	b='tests/libmemcached-1.0/sasl'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/testudp.log: tests/testudp$(EXEEXT)
+# 	@p='tests/testudp$(EXEEXT)'; \
+# 	b='tests/testudp'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/testplus.log: tests/testplus$(EXEEXT)
+# 	@p='tests/testplus$(EXEEXT)'; \
+# 	b='tests/testplus'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/parser.log: tests/parser$(EXEEXT)
+# 	@p='tests/parser$(EXEEXT)'; \
+# 	b='tests/parser'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/failure.log: tests/failure$(EXEEXT)
+# 	@p='tests/failure$(EXEEXT)'; \
+# 	b='tests/failure'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/testhashkit.log: tests/testhashkit$(EXEEXT)
+# 	@p='tests/testhashkit$(EXEEXT)'; \
+# 	b='tests/testhashkit'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/hash_plus.log: tests/hash_plus$(EXEEXT)
+# 	@p='tests/hash_plus$(EXEEXT)'; \
+# 	b='tests/hash_plus'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memcapable.log: tests/memcapable$(EXEEXT)
+# 	@p='tests/memcapable$(EXEEXT)'; \
+# 	b='tests/memcapable'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memstat.log: tests/memstat$(EXEEXT)
+# 	@p='tests/memstat$(EXEEXT)'; \
+# 	b='tests/memstat'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memcp.log: tests/memcp$(EXEEXT)
+# 	@p='tests/memcp$(EXEEXT)'; \
+# 	b='tests/memcp'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memflush.log: tests/memflush$(EXEEXT)
+# 	@p='tests/memflush$(EXEEXT)'; \
+# 	b='tests/memflush'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memrm.log: tests/memrm$(EXEEXT)
+# 	@p='tests/memrm$(EXEEXT)'; \
+# 	b='tests/memrm'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memexist.log: tests/memexist$(EXEEXT)
+# 	@p='tests/memexist$(EXEEXT)'; \
+# 	b='tests/memexist'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memtouch.log: tests/memtouch$(EXEEXT)
+# 	@p='tests/memtouch$(EXEEXT)'; \
+# 	b='tests/memtouch'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memcat.log: tests/memcat$(EXEEXT)
+# 	@p='tests/memcat$(EXEEXT)'; \
+# 	b='tests/memcat'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memping.log: tests/memping$(EXEEXT)
+# 	@p='tests/memping$(EXEEXT)'; \
+# 	b='tests/memping'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memerror.log: tests/memerror$(EXEEXT)
+# 	@p='tests/memerror$(EXEEXT)'; \
+# 	b='tests/memerror'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memslap.log: tests/memslap$(EXEEXT)
+# 	@p='tests/memslap$(EXEEXT)'; \
+# 	b='tests/memslap'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# tests/memdump.log: tests/memdump$(EXEEXT)
+# 	@p='tests/memdump$(EXEEXT)'; \
+# 	b='tests/memdump'; \
+# 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# .test.log:
+# 	@p='$<'; \
+# 	$(am__set_b); \
+# 	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
+# 	--log-file $$b.log --trs-file $$b.trs \
+# 	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
+# 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+# #.test$(EXEEXT).log:
+# #	@p='$<'; \
+# #	$(am__set_b); \
+# #	$(am__check_pre) $(TEST_LOG_DRIVER) --test-name "$$f" \
+# #	--log-file $$b.log --trs-file $$b.trs \
+# #	$(am__common_driver_flags) $(AM_TEST_LOG_DRIVER_FLAGS) $(TEST_LOG_DRIVER_FLAGS) -- $(TEST_LOG_COMPILE) \
+# #	"$$tst" $(AM_TESTS_FD_REDIRECT)
+#
+# distdir: $(DISTFILES)
+# 	$(am__remove_distdir)
+# 	test -d "$(distdir)" || mkdir "$(distdir)"
+# 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+# 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+# 	list='$(DISTFILES)'; \
+# 	  dist_files=`for file in $$list; do echo $$file; done | \
+# 	  sed -e "s|^$$srcdirstrip/||;t" \
+# 	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
+# 	case $$dist_files in \
+# 	  */*) $(MKDIR_P) `echo "$$dist_files" | \
+# 			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
+# 			   sort -u` ;; \
+# 	esac; \
+# 	for file in $$dist_files; do \
+# 	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
+# 	  if test -d $$d/$$file; then \
+# 	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
+# 	    if test -d "$(distdir)/$$file"; then \
+# 	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
+# 	    fi; \
+# 	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
+# 	      cp -fpR $(srcdir)/$$file "$(distdir)$$dir" || exit 1; \
+# 	      find "$(distdir)/$$file" -type d ! -perm -700 -exec chmod u+rwx {} \;; \
+# 	    fi; \
+# 	    cp -fpR $$d/$$file "$(distdir)$$dir" || exit 1; \
+# 	  else \
+# 	    test -f "$(distdir)/$$file" \
+# 	    || cp -p $$d/$$file "$(distdir)/$$file" \
+# 	    || exit 1; \
+# 	  fi; \
+# 	done
+# 	-test -n "$(am__skip_mode_fix)" \
+# 	|| find "$(distdir)" -type d ! -perm -755 \
+# 		-exec chmod u+rwx,go+rx {} \; -o \
+# 	  ! -type d ! -perm -444 -links 1 -exec chmod a+r {} \; -o \
+# 	  ! -type d ! -perm -400 -exec chmod a+r {} \; -o \
+# 	  ! -type d ! -perm -444 -exec $(install_sh) -c -m a+r {} {} \; \
+# 	|| chmod -R a+r "$(distdir)"
+# dist-gzip: distdir
+# 	tardir=$(distdir) && $(am__tar) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).tar.gz
+# 	$(am__post_remove_distdir)
+#
+# dist-bzip2: distdir
+# 	tardir=$(distdir) && $(am__tar) | BZIP2=$${BZIP2--9} bzip2 -c >$(distdir).tar.bz2
+# 	$(am__post_remove_distdir)
+#
+# dist-lzip: distdir
+# 	tardir=$(distdir) && $(am__tar) | lzip -c $${LZIP_OPT--9} >$(distdir).tar.lz
+# 	$(am__post_remove_distdir)
+#
+# dist-xz: distdir
+# 	tardir=$(distdir) && $(am__tar) | XZ_OPT=$${XZ_OPT--e} xz -c >$(distdir).tar.xz
+# 	$(am__post_remove_distdir)
+#
+# dist-tarZ: distdir
+# 	tardir=$(distdir) && $(am__tar) | compress -c >$(distdir).tar.Z
+# 	$(am__post_remove_distdir)
+#
+# dist-shar: distdir
+# 	shar $(distdir) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).shar.gz
+# 	$(am__post_remove_distdir)
+#
+# dist-zip: distdir
+# 	-rm -f $(distdir).zip
+# 	zip -rq $(distdir).zip $(distdir)
+# 	$(am__post_remove_distdir)
+#
+# dist dist-all:
+# 	$(MAKE) $(AM_MAKEFLAGS) $(DIST_TARGETS) am__post_remove_distdir='@:'
+# 	$(am__post_remove_distdir)
+#
+# # This target untars the dist file and tries a VPATH configuration.  Then
+# # it guarantees that the distribution is self-contained by making another
+# # tarfile.
+# distcheck: dist
+# 	case '$(DIST_ARCHIVES)' in \
+# 	*.tar.gz*) \
+# 	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).tar.gz | $(am__untar) ;;\
+# 	*.tar.bz2*) \
+# 	  bzip2 -dc $(distdir).tar.bz2 | $(am__untar) ;;\
+# 	*.tar.lz*) \
+# 	  lzip -dc $(distdir).tar.lz | $(am__untar) ;;\
+# 	*.tar.xz*) \
+# 	  xz -dc $(distdir).tar.xz | $(am__untar) ;;\
+# 	*.tar.Z*) \
+# 	  uncompress -c $(distdir).tar.Z | $(am__untar) ;;\
+# 	*.shar.gz*) \
+# 	  GZIP=$(GZIP_ENV) gzip -dc $(distdir).shar.gz | unshar ;;\
+# 	*.zip*) \
+# 	  unzip $(distdir).zip ;;\
+# 	esac
+# 	chmod -R a-w $(distdir)
+# 	chmod u+w $(distdir)
+# 	mkdir $(distdir)/_build $(distdir)/_inst
+# 	chmod a-w $(distdir)
+# 	test -d $(distdir)/_build || exit 0; \
+# 	dc_install_base=`$(am__cd) $(distdir)/_inst && pwd | sed -e 's,^[^:\\/]:[\\/],/,'` \
+# 	  && dc_destdir="$${TMPDIR-/tmp}/am-dc-$$$$/" \
+# 	  && am__cwd=`pwd` \
+# 	  && $(am__cd) $(distdir)/_build \
+# 	  && ../configure --srcdir=.. --prefix="$$dc_install_base" \
+# 	    $(AM_DISTCHECK_CONFIGURE_FLAGS) \
+# 	    $(DISTCHECK_CONFIGURE_FLAGS) \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) dvi \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) check \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) install \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) installcheck \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) uninstall \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) distuninstallcheck_dir="$$dc_install_base" \
+# 	        distuninstallcheck \
+# 	  && chmod -R a-w "$$dc_install_base" \
+# 	  && ({ \
+# 	       (cd ../.. && umask 077 && mkdir "$$dc_destdir") \
+# 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" install \
+# 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" uninstall \
+# 	       && $(MAKE) $(AM_MAKEFLAGS) DESTDIR="$$dc_destdir" \
+# 	            distuninstallcheck_dir="$$dc_destdir" distuninstallcheck; \
+# 	      } || { rm -rf "$$dc_destdir"; exit 1; }) \
+# 	  && rm -rf "$$dc_destdir" \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) dist \
+# 	  && rm -rf $(DIST_ARCHIVES) \
+# 	  && $(MAKE) $(AM_MAKEFLAGS) distcleancheck \
+# 	  && cd "$$am__cwd" \
+# 	  || exit 1
+# 	$(am__post_remove_distdir)
+# 	@(echo "$(distdir) archives ready for distribution: "; \
+# 	  list='$(DIST_ARCHIVES)'; for i in $$list; do echo $$i; done) | \
+# 	  sed -e 1h -e 1s/./=/g -e 1p -e 1x -e '$$p' -e '$$x'
+# distuninstallcheck:
+# 	@test -n '$(distuninstallcheck_dir)' || { \
+# 	  echo 'ERROR: trying to run $@ with an empty' \
+# 	       '$$(distuninstallcheck_dir)' >&2; \
+# 	  exit 1; \
+# 	}; \
+# 	$(am__cd) '$(distuninstallcheck_dir)' || { \
+# 	  echo 'ERROR: cannot chdir into $(distuninstallcheck_dir)' >&2; \
+# 	  exit 1; \
+# 	}; \
+# 	test `$(am__distuninstallcheck_listfiles) | wc -l` -eq 0 \
+# 	   || { echo "ERROR: files left after uninstall:" ; \
+# 	        if test -n "$(DESTDIR)"; then \
+# 	          echo "  (check DESTDIR support)"; \
+# 	        fi ; \
+# 	        $(distuninstallcheck_listfiles) ; \
+# 	        exit 1; } >&2
+# distcleancheck: distclean
+# 	@if test '$(srcdir)' = . ; then \
+# 	  echo "ERROR: distcleancheck can only run from a VPATH build" ; \
+# 	  exit 1 ; \
+# 	fi
+# 	@test `$(distcleancheck_listfiles) | wc -l` -eq 0 \
+# 	  || { echo "ERROR: files left in build directory after distclean:" ; \
+# 	       $(distcleancheck_listfiles) ; \
+# 	       exit 1; } >&2
+# check-am: all-am
+# 	$(MAKE) $(AM_MAKEFLAGS) $(check_LTLIBRARIES) $(check_PROGRAMS)
+# 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
+# check: $(BUILT_SOURCES)
+# 	$(MAKE) $(AM_MAKEFLAGS) check-am
+# all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(MANS) $(DATA) $(HEADERS) \
+# 		mem_config.h
+# install-binPROGRAMS: install-libLTLIBRARIES
+#
+# installdirs:
+# 	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(aclocaldir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)" "$(DESTDIR)$(includedir)"; do \
+# 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+# 	done
+# install: $(BUILT_SOURCES)
+# 	$(MAKE) $(AM_MAKEFLAGS) install-am
+# install-exec: install-exec-am
+# install-data: install-data-am
+# uninstall: uninstall-am
+#
+# install-am: all-am
+# 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+#
+# installcheck: installcheck-am
+# install-strip:
+# 	if test -z '$(STRIP)'; then \
+# 	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+# 	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
+# 	      install; \
+# 	else \
+# 	  $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+# 	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
+# 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
+# 	fi
+# mostlyclean-generic:
+# 	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
+# 	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
+# 	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
+#
+# clean-generic:
+# 	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+#
+# distclean-generic:
+# 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+# 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+# 	-rm -f clients/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f clients/$(am__dirstamp)
+# 	-rm -f example/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f example/$(am__dirstamp)
+# 	-rm -f libhashkit/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libhashkit/$(am__dirstamp)
+# 	-rm -f libmemcached-1.0/t/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached-1.0/t/$(am__dirstamp)
+# 	-rm -f libmemcached/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached/$(am__dirstamp)
+# 	-rm -f libmemcached/csl/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcached/csl/$(am__dirstamp)
+# 	-rm -f libmemcachedinternal/$(am__dirstamp)
+# 	-rm -f libmemcachedprotocol/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcachedprotocol/$(am__dirstamp)
+# 	-rm -f libmemcachedutil/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libmemcachedutil/$(am__dirstamp)
+# 	-rm -f libtest/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libtest/$(am__dirstamp)
+# 	-rm -f libtest/exception/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f libtest/exception/$(am__dirstamp)
+# 	-rm -f tests/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f tests/$(am__dirstamp)
+# 	-rm -f tests/libmemcached-1.0/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f tests/libmemcached-1.0/$(am__dirstamp)
+# 	-rm -f util/$(DEPDIR)/$(am__dirstamp)
+# 	-rm -f util/$(am__dirstamp)
+# 	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+#
+# maintainer-clean-generic:
+# 	@echo "This command is intended for maintainers to use"
+# 	@echo "it deletes files that may require special tools to rebuild."
+# 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+# 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+# #install-html-local:
+# #html-local:
+# #clean-local:
+# clean: clean-am
+#
+# clean-am: clean-binPROGRAMS clean-checkLTLIBRARIES clean-checkPROGRAMS \
+# 	clean-generic clean-libLTLIBRARIES clean-libtool clean-local \
+# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS mostlyclean-am
+#
+# distclean: distclean-am
+# 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
+# 	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
+# 	-rm -f Makefile
+# distclean-am: clean-am distclean-compile distclean-generic \
+# 	distclean-hdr distclean-libtool distclean-tags
+#
+# dvi: dvi-am
+#
+# dvi-am:
+#
+# html: html-am
+#
+# html-am: html-local
+#
+# info: info-am
+#
+# info-am:
+#
+# install-data-am: install-dist_aclocalDATA install-includeHEADERS \
+# 	install-man install-nobase_includeHEADERS \
+# 	install-pkgconfigDATA
+#
+# install-dvi: install-dvi-am
+#
+# install-dvi-am:
+#
+# install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
+#
+# install-html: install-html-am
+#
+# install-html-am: install-html-local
+#
+# install-info: install-info-am
+#
+# install-info-am:
+#
+# install-man: install-man1 install-man3
+#
+# install-pdf: install-pdf-am
+#
+# install-pdf-am:
+#
+# install-ps: install-ps-am
+#
+# install-ps-am:
+#
+# installcheck-am:
+#
+# maintainer-clean: maintainer-clean-am
+# 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
+# 	-rm -rf $(top_srcdir)/autom4te.cache
+# 	-rm -rf clients/$(DEPDIR) example/$(DEPDIR) libhashkit/$(DEPDIR) libmemcached-1.0/t/$(DEPDIR) libmemcached/$(DEPDIR) libmemcached/csl/$(DEPDIR) libmemcachedprotocol/$(DEPDIR) libmemcachedutil/$(DEPDIR) libtest/$(DEPDIR) libtest/exception/$(DEPDIR) tests/$(DEPDIR) tests/libmemcached-1.0/$(DEPDIR) util/$(DEPDIR)
+# 	-rm -f Makefile
+# maintainer-clean-am: distclean-am maintainer-clean-generic \
+# 	maintainer-clean-local
+#
+# mostlyclean: mostlyclean-am
+#
+# mostlyclean-am: mostlyclean-compile mostlyclean-generic \
+# 	mostlyclean-libtool
+#
+# pdf: pdf-am
+#
+# pdf-am:
+#
+# ps: ps-am
+#
+# ps-am:
+#
+# uninstall-am: uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
+# 	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
+# 	uninstall-man uninstall-nobase_includeHEADERS \
+# 	uninstall-pkgconfigDATA
+#
+# uninstall-man: uninstall-man1 uninstall-man3
+#
+# .MAKE: all check check-am install install-am install-strip
+#
+# .PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
+# 	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
+# 	clean-checkPROGRAMS clean-cscope clean-generic \
+# 	clean-libLTLIBRARIES clean-libtool clean-local \
+# 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
+# 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+# 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+# 	distcheck distclean distclean-compile distclean-generic \
+# 	distclean-hdr distclean-libtool distclean-tags distcleancheck \
+# 	distdir distuninstallcheck dvi dvi-am html html-am html-local \
+# 	info info-am install install-am install-binPROGRAMS \
+# 	install-data install-data-am install-dist_aclocalDATA \
+# 	install-dvi install-dvi-am install-exec install-exec-am \
+# 	install-html install-html-am install-html-local \
+# 	install-includeHEADERS install-info install-info-am \
+# 	install-libLTLIBRARIES install-man install-man1 install-man3 \
+# 	install-nobase_includeHEADERS install-pdf install-pdf-am \
+# 	install-pkgconfigDATA install-ps install-ps-am install-strip \
+# 	installcheck installcheck-am installdirs maintainer-clean \
+# 	maintainer-clean-generic maintainer-clean-local mostlyclean \
+# 	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+# 	pdf pdf-am ps ps-am recheck tags tags-am uninstall \
+# 	uninstall-am uninstall-binPROGRAMS uninstall-dist_aclocalDATA \
+# 	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
+# 	uninstall-man uninstall-man1 uninstall-man3 \
+# 	uninstall-nobase_includeHEADERS uninstall-pkgconfigDATA
 
 
 #includes additional rules from aminclude.am
-include $(top_builddir)/aminclude.am
+# include $(top_builddir)/aminclude.am
 
 #libmemcached/csl/parser.h: libmemcached/csl/parser.cc
 
@@ -9789,472 +9789,472 @@ include $(top_builddir)/aminclude.am
 
 #.d.o:
 #	$(DTRACE) $(DTRACEFLAGS) -o $@ -G -s libmemcached/libmemcached_probes.d
-
-export LIBTOOL_COMMAND
-export VALGRIND_COMMAND
-export HELGRIND_COMMAND
-export DRD_COMMAND
-export SGCHECK_COMMAND
-export GDB_COMMAND
-
-valgrind:
-	@echo make check LOG_COMPILER="\"$(VALGRIND_EXEC_COMMAND)\""
-
-sgcheck:
-	@echo make check LOG_COMPILER="\"$(SGCHECK_EXEC_COMMAND)\""
-
-valgrind-supressions:
-	@echo make check LOG_COMPILER="\"$(VALGRIND_SUPRESSION)\""
-
-gdb:
-	@echo make check LOG_COMPILER="\"$(GDB_COMMAND)\""
-
-helgrind:
-	@echo make check LOG_COMPILER="\"$(HELGRIND_COMMAND)\""
-
-drd:
-	@echo make check LOG_COMPILER="\"$(DRD_COMMAND)\""
-
-.PHONY: clean-libtest-check
-clean-libtest-check:
-	-rm -rf tmp_chroot
-
-.PHONY: libtest_tmp_dir
-libtest_tmp_dir: | $(TMP_DIR)
-
-$(TMP_DIR):
-	@$(mkdir_p) $(TMP_DIR)
-test-unittest: libtest/unittest
-	@libtest/unittest
-
-valgrind-unittest: libtest/unittest
-	@$(VALGRIND_COMMAND) libtest/unittest
-
-gdb-unittest: libtest/unittest
-	@$(GDB_COMMAND) libtest/unittest
-
-helgrind-unittest: libtest/unittest
-	@$(HELGRIND_COMMAND) libtest/unittest
-
-drd-unittest: libtest/unittest
-	@$(DRD_COMMAND) libtest/unittest
-
-sgcheck-unittest: libtest/unittest
-	echo $(SGCHECK_COMMAND)
-	@$(SGCHECK_COMMAND) libtest/unittest
-
-test-skiptest: libtest/skiptest
-	@libtest/skiptest
-
-valgrind-skiptest: libtest/skiptest
-	@$(VALGRIND_COMMAND) libtest/skiptest
-
-helgrind-skiptest: libtest/skiptest
-	@$(HELGRIND_COMMAND) libtest/skiptest
-
-drd-skiptest: libtest/skiptest
-	@$(DRD_COMMAND) libtest/skiptest
-test-backtrace: libtest/backtrace
-	@libtest/backtrace
-
-gdb-backtrace: libtest/backtrace
-	@$(GDB_COMMAND) libtest/backtrace
-
-test-start-server:
-	clients/memflush --servers=localhost
-	clients/memcp --servers=localhost /etc/services
-	clients/memcat --servers=localhost /etc/services
-	clients/memrm --servers=localhost /etc/services
-	clients/memstat --servers=localhost
-	clients/memslap --servers=localhost
-	clients/memslap --servers=localhost --concurrency=10
-	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
-	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
-	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
-	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
-	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
-
-client-valgrind:
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
-	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
-
-.PHONY: clean-docs-check
-clean-docs-check:
-	-rm -rf docs/_build docs/doctrees man/.doctrees/
-
-.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest
-
-sphinx-help:
-	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  html       to make standalone HTML files"
-	@echo "  singlehtml to make a single large HTML file"
-	@echo "  pickle     to make pickle files"
-	@echo "  json       to make JSON files"
-	@echo "  htmlhelp   to make HTML files and a HTML help project"
-	@echo "  qthelp     to make HTML files and a qthelp project"
-	@echo "  devhelp    to make HTML files and a Devhelp project"
-	@echo "  epub       to make an epub"
-	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
-	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
-	@echo "  text       to make text files"
-	@echo "  man        to make manual pages"
-	@echo "  changes    to make an overview of all changed/added/deprecated items"
-	@echo "  linkcheck  to check all external links for integrity"
-	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
-
-install-html-local: html-local
-	@$(MKDIR_P)  $(htmldir)/html
-	@cp -r ${top_builddir}/html $(htmldir)/
-
-html-local: docs/conf.py
-	@PYTHONPATH=${top_srcdir}/docs $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${top_builddir}/html
-
-singlehtml: html-local
-	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b singlehtml $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/singlehtml
-
-pickle: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/pickle
-	@echo
-	@echo "Build finished; now you can process the pickle files."
-
-json: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b json $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/json
-	@echo
-	@echo "Build finished; now you can process the JSON files."
-
-htmlhelp: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/htmlhelp
-	@echo
-	@echo "Build finished; now you can run HTML Help Workshop with the" \
-	      ".hhp project file in $(SPHINX_BUILDDIR)/htmlhelp."
-
-epub: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/epub
-	@echo
-	@echo "Build finished. The epub file is in $(SPHINX_BUILDDIR)/epub."
-
-latex: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
-	@echo
-	@echo "Build finished; the LaTeX files are in $(SPHINX_BUILDDIR)/latex."
-	@echo "Run \`make' in that directory to run these through (pdf)latex" \
-	      "(use \`make latexpdf' here to do that automatically)."
-
-latexpdf: latex
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
-	@echo "Running LaTeX files through pdflatex..."
-	make -C $(SPHINX_BUILDDIR)/latex all-pdf
-	@echo "pdflatex finished; the PDF files are in $(SPHINX_BUILDDIR)/latex."
-
-text: docs/conf.py
-	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/text
-
-man:
-	@PYTHONPATH=$(SPHINX_BUILDDIR)/docs  $(SPHINXBUILD) -b man $(ALLSPHINXOPTS) ${top_builddir}/man
-
-changes: docs/conf.py
-	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/changes
-
-linkcheck: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/linkcheck
-
-doctest: docs/conf.py
-	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/doctest
-	@echo "Testing of doctests in the sources finished, look at the " \
-	      "results in $(SPHINX_BUILDDIR)/doctest/output.txt."
-
-# Build rule for documentation
-$(dist_man_MANS): $(top_srcdir)/configure.ac
-	$(MAKE) $(AM_MAKEFLAGS) man
-
-.NOTPARALLEL: $(dist_man_MANS)
-
-libmemcached/csl/parser.h: libmemcached/csl/parser.cc
-
-libmemcached/csl/parser.cc: libmemcached/csl/parser.yy libmemcached/csl/scanner.l libmemcached/csl/scanner.h
-	$(AM_V_YACC)$(am__skipyacc) $(YACC) $(YLFLAGS) $(AM_YFLAGS) -o $@ $<
-
-libmemcached/csl/scanner.h: libmemcached/csl/scanner.cc
-
-libmemcached/csl/scanner.cc: libmemcached/csl/scanner.l libmemcached/csl/parser.yy
-	$(AM_V_GEN)$(LEX) $<
-
-libmemcached/options.cc: libmemcached/csl/parser.h
-
-libmemcached/dtrace_probes.h: libmemcached/libmemcached_probes.d
-	$(DTRACE) $(DTRACEFLAGS) -h -o ${top_srcdir}/libmemcached/dtrace_probes.h -s ${top_srcdir}/libmemcached/libmemcached_probes.d
-
-libmemcached/libmemcached_probes.o: libmemcached/libmemcached_probes.d ${libmemcached_libmemcached_la_OBJECTS}
-
-.d.o:
-	$(DTRACE) $(DTRACEFLAGS) -o $@ -G -s libmemcached/libmemcached_probes.d
-
-$(RPM_BUILDDIR):
-	@
-
-$(DIST_ARCHIVES): $(DISTFILES)
-	$(MAKE) $(AM_MAKEFLAGS) dist-gzip
-
-$(RPM_SOURCE): | $(RPM_BUILDDIR) $(DIST_ARCHIVES)
-	@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_DIR)
-	@cp $(DIST_ARCHIVES) $(RPM_SOURCE)
-
-$(RPM_BUILD_TARGET): $(RPM_SOURCE) support/libmemcached.spec
-	@ -ba $(top_srcdir)/support/libmemcached.spec
-	@cp $(BUILD_RPMS) $(BUILD_SRPMS) .
-
-.PHONY: rpm-sign
-rpm-sign: $(RPM_BUILD_TARGET)
-	@ --addsign $(RPM_DIST)
-	@ --checksig $(RPM_DIST)
-
-.PHONY: clean-rpm
-clean-rpm:
-	-@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_SOURCE) $(BUILD_RPM_DIR) $(RPM_DIST)
-
-rpm: $(RPM_BUILD_TARGET)
-dist-rpm: $(RPM_BUILD_TARGET)
-
-.PHONY: release
-release: rpm rpm-sign
-
-.PHONY: auto-rpmbuild
-auto-rpmbuild: support/libmemcached.spec
-	@auto-br-rpmbuild -ba $(top_srcdir)/support/libmemcached.spec
-
-test-internal: tests/libmemcached-1.0/internals
-	@tests/testplus
-
-test-socket: tests/libmemcached-1.0/testsocket
-	@tests/libmemcached-1.0/testsocket
-
-gdb-socket: tests/libmemcached-1.0/testsocket
-	@$(GDB_COMMAND) tests/libmemcached-1.0/testsocket
-
-test-sasl: tests/libmemcached-1.0/sasl
-	@tests/libmemcached-1.0/sasl
-
-gdb-sasl: tests/libmemcached-1.0/sasl
-	@$(GDB_COMMAND)  tests/libmemcached-1.0/sasl
-
-test-udp: tests/testudp
-	@tests/testudp
-
-test-plus: tests/testplus
-	@tests/testplus
-
-gdb-plus: tests/testplus
-	$(GDB_COMMAND) tests/testplus
-
-valgrind-plus: tests/testplus
-	@$(VALGRIND_COMMAND) tests/testplus
-
-helgrind-plus: tests/testplus
-	@$(HELGRIND_COMMAND) tests/testplus
-
-test-parser: tests/parser
-	@tests/parser
-
-valgrind-parser: tests/parser
-	@$(VALGRIND_COMMAND) tests/parser
-
-test-failure: tests/failure
-	@tests/failure
-
-gdb-failure: tests/failure
-	@$(GDB_COMMAND) tests/failure
-
-test-hash: tests/testhashkit
-	@tests/testhashkit
-
-test-memslap: tests/memslap
-	@tests/memslap
-
-gdb-memslap: tests/memslap
-	@$(GDB_COMMAND) tests/memslap
-
-test-memcp: tests/memcp
-	tests/memcp
-
-gdb-memcp: tests/memcp
-	@$(GDB_COMMAND) tests/memcp
-
-test-memstat: tests/memstat
-	tests/memstat
-
-test-memerror: tests/memerror
-	tests/memerror
-
-test-memtouch: tests/memtouch
-	tests/memtouch
-
-test-memping: tests/memping
-	tests/memping
-
-valgrind-memerror: tests/memerror
-	 @$(VALGRIND_COMMAND) tests/memerror
-
-valgrind-memtouch: tests/memtouch
-	 @$(VALGRIND_COMMAND) tests/memtouch
-
-test-memdump: tests/memdump
-	tests/memdump
-
-gdb-memdump: tests/memdump
-	@$(GDB_COMMAND) tests/memdump
-
-valgrind-memdump: tests/memdump
-	 @$(VALGRIND_COMMAND) tests/memdump
-
-test: check
-
-test-mem: tests/libmemcached-1.0/testapp
-	@tests/libmemcached-1.0/testapp
-
-test-atom: tests/atomsmasher
-	@tests/atomsmasher
-
-test-hashplus: tests/hash_plus
-	@tests/hash_plus
-
-test-cycle: tests/cycle
-	@tests/cycle
-
-test-memcapable: tests/memcapable
-	@tests/memcapable
-
-valgrind-memcapable: tests/memcapable
-	$(VALGRIND_COMMAND) tests/memcapable
-
-pahole-mem: tests/testapp
-	@$(PAHOLE_COMMAND)  tests/testapp
-
-pahole-hash: tests/testhashkit
-	@$(PAHOLE_COMMAND)  tests/testhashkit
-
-gdb-mem: tests/libmemcached-1.0/testapp
-	@$(GDB_COMMAND)  tests/libmemcached-1.0/testapp
-
-gdb-atom: tests/atomsmasher
-	@$(GDB_COMMAND) tests/atomsmasher
-
-gdb-hash: tests/testhashkit
-	@$(GDB_COMMAND) tests/testhashkit
-
-gdb-hashplus: tests/hash_plus
-	@$(GDB_COMMAND) tests/hash_plus
-
-gdb-cycle: tests/cycle
-	@$(GDB_COMMAND) tests/cycle
-
-valgrind-cycle: tests/cycle
-	$(VALGRIND_COMMAND) tests/cycle
-
-valgrind-mem: tests/libmemcached-1.0/testapp
-	@$(VALGRIND_COMMAND) tests/libmemcached-1.0/testapp
-
-valgrind-failure: tests/failure
-	@$(VALGRIND_COMMAND) tests/failure
-
-valgrind-atom: tests/atomsmasher
-	$(VALGRIND_COMMAND) tests/atomsmasher
-
-valgrind-sasl: tests/sasl
-	@$(VALGRIND_COMMAND) tests/sasl
-
-valgrind-hash: tests/testhashkit
-	@$(VALGRIND_COMMAND) tests/testhashkit
-
-valgrind-hashplus: tests/hash_plus
-	@$(VALGRIND_COMMAND) tests/hash_plus
-
-helgrind-cycle: tests/cycle
-	@$(HELGRIND_COMMAND) tests/cycle
-
-helgrind-mem: tests/libmemcached-1.0/testapp
-	@$(HELGRIND_COMMAND) tests/libmemcached-1.0/testapp
-
-helgrind-atom: tests/atomsmasher
-	@$(HELGRIND_COMMAND) tests/atomsmasher
-
-helgrind-hash: tests/testhashkit
-	@$(HELGRIND_COMMAND) tests/testhashkit
-
-helgrind-hashplus: tests/hash_plus
-	@$(HELGRIND_COMMAND) tests/hash_plus
-
-drd-mem: tests/libmemcached-1.0/testapp
-	@$(DRD_COMMAND) tests/libmemcached-1.0/testapp
-
-drd-cycle: tests/cycle
-	@$(DRD_COMMAND) tests/cycle
-
-merge-clean:
-	@find ./ | $(GREP) \.gcda | xargs rm -f
-	@find ./ | $(GREP) \.gcno | xargs rm -f
-	@find ./ | $(GREP) \.gz | xargs rm -f
-	@find ./ | $(GREP) \.moved | xargs rm -r -f
-	@find ./ | $(GREP) \\.orig | xargs rm -f
-	@find ./ | $(GREP) \.rej | xargs rm -f
-	@find ./ | $(GREP) \.THIS | xargs rm -f
-	@find ./ | $(GREP) \.OTHER | xargs rm -f
-	@find ./ | $(GREP) \.BASE | xargs rm -f
-	@find ./ | $(GREP) \~$$ | xargs rm -f
-	@echo "Files that need to be either removed or checked in:"
-	@bzr unknowns
-
-clean-local: clean-libtest-check clean-docs-check clean-rpm
-
-lcov: lcov-clean check
-	@echo
-	@echo "	------------------------------------------------------"
-	@echo "Make sure ./configure was run with '--enable-coverage'"
-	@echo "------------------------------------------------------"
-	@echo
-	@cd libmemcached && lcov --capture --directory . --base-directory .. --output-file lcov.out
-	@genhtml -o lcov --function-coverage -t libmemcached libmemcached/lcov.out
-
-lcov-clean: clean
-	@rm -rf lcov */lcov.out
-	@find . -name '*.gcno' | xargs rm -f
-	@find . -name '*.gcda' | xargs rm -f
-
-maintainer-clean-local:
-	find . -type f -name '*~' -exec rm -f '{}' \;
-	-rm -f man/*.1
-	-rm -f man/*.3
-	-rm -f man/*.8
-	-rm -rf man/.doctrees/
-	-rm -f Makefile.in
-	-rm -f aclocal.m4
-	-rm -f build-aux/compile
-	-rm -f build-aux/config.guess
-	-rm -f build-aux/config.sub
-	-rm -f build-aux/depcomp
-	-rm -f build-aux/install-sh
-	-rm -f build-aux/ltmain.sh
-	-rm -f build-aux/missing
-	-rm -f build-aux/test-driver
-	-rm -f build-aux/ylwrap
-	-rm -f mem_config.in
-	-rm -f config.log
-	-rm -f config.status
-	-rm -f configure
-	-rm -f m4/libtool.m4
-	-rm -f m4/ltoptions.m4
-	-rm -f m4/ltsugar.m4
-	-rm -f m4/ltversion.m4
-	-rm -f m4/lt~obsolete.m4
-	-rm -f m4/test-driver
-	-rmdir build-aux
-	-rm -rf ${top_builddir}/html
-	-rm -f $(DIST_ARCHIVES)
-
-# Tell versions [3.59,3.63) of GNU make to not export all variables.
-# Otherwise a system limit (for SysV at least) may be exceeded.
-.NOEXPORT:
+#
+# export LIBTOOL_COMMAND
+# export VALGRIND_COMMAND
+# export HELGRIND_COMMAND
+# export DRD_COMMAND
+# export SGCHECK_COMMAND
+# export GDB_COMMAND
+#
+# valgrind:
+# 	@echo make check LOG_COMPILER="\"$(VALGRIND_EXEC_COMMAND)\""
+#
+# sgcheck:
+# 	@echo make check LOG_COMPILER="\"$(SGCHECK_EXEC_COMMAND)\""
+#
+# valgrind-supressions:
+# 	@echo make check LOG_COMPILER="\"$(VALGRIND_SUPRESSION)\""
+#
+# gdb:
+# 	@echo make check LOG_COMPILER="\"$(GDB_COMMAND)\""
+#
+# helgrind:
+# 	@echo make check LOG_COMPILER="\"$(HELGRIND_COMMAND)\""
+#
+# drd:
+# 	@echo make check LOG_COMPILER="\"$(DRD_COMMAND)\""
+#
+# .PHONY: clean-libtest-check
+# clean-libtest-check:
+# 	-rm -rf tmp_chroot
+#
+# .PHONY: libtest_tmp_dir
+# libtest_tmp_dir: | $(TMP_DIR)
+#
+# $(TMP_DIR):
+# 	@$(mkdir_p) $(TMP_DIR)
+# test-unittest: libtest/unittest
+# 	@libtest/unittest
+#
+# valgrind-unittest: libtest/unittest
+# 	@$(VALGRIND_COMMAND) libtest/unittest
+#
+# gdb-unittest: libtest/unittest
+# 	@$(GDB_COMMAND) libtest/unittest
+#
+# helgrind-unittest: libtest/unittest
+# 	@$(HELGRIND_COMMAND) libtest/unittest
+#
+# drd-unittest: libtest/unittest
+# 	@$(DRD_COMMAND) libtest/unittest
+#
+# sgcheck-unittest: libtest/unittest
+# 	echo $(SGCHECK_COMMAND)
+# 	@$(SGCHECK_COMMAND) libtest/unittest
+#
+# test-skiptest: libtest/skiptest
+# 	@libtest/skiptest
+#
+# valgrind-skiptest: libtest/skiptest
+# 	@$(VALGRIND_COMMAND) libtest/skiptest
+#
+# helgrind-skiptest: libtest/skiptest
+# 	@$(HELGRIND_COMMAND) libtest/skiptest
+#
+# drd-skiptest: libtest/skiptest
+# 	@$(DRD_COMMAND) libtest/skiptest
+# test-backtrace: libtest/backtrace
+# 	@libtest/backtrace
+#
+# gdb-backtrace: libtest/backtrace
+# 	@$(GDB_COMMAND) libtest/backtrace
+#
+# test-start-server:
+# 	clients/memflush --servers=localhost
+# 	clients/memcp --servers=localhost /etc/services
+# 	clients/memcat --servers=localhost /etc/services
+# 	clients/memrm --servers=localhost /etc/services
+# 	clients/memstat --servers=localhost
+# 	clients/memslap --servers=localhost
+# 	clients/memslap --servers=localhost --concurrency=10
+# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
+# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
+# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
+# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
+# 	clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
+#
+# client-valgrind:
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=get
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set
+# 	libtool --mode=execute valgrind --leak-check=yes --show-reachable=yes  clients/memslap --servers=localhost --concurrency=10 --initial-load=1000 --execute-number=10 --test=set --non-blocking
+#
+# .PHONY: clean-docs-check
+# clean-docs-check:
+# 	-rm -rf docs/_build docs/doctrees man/.doctrees/
+#
+# .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest
+#
+# sphinx-help:
+# 	@echo "Please use \`make <target>' where <target> is one of"
+# 	@echo "  html       to make standalone HTML files"
+# 	@echo "  singlehtml to make a single large HTML file"
+# 	@echo "  pickle     to make pickle files"
+# 	@echo "  json       to make JSON files"
+# 	@echo "  htmlhelp   to make HTML files and a HTML help project"
+# 	@echo "  qthelp     to make HTML files and a qthelp project"
+# 	@echo "  devhelp    to make HTML files and a Devhelp project"
+# 	@echo "  epub       to make an epub"
+# 	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
+# 	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
+# 	@echo "  text       to make text files"
+# 	@echo "  man        to make manual pages"
+# 	@echo "  changes    to make an overview of all changed/added/deprecated items"
+# 	@echo "  linkcheck  to check all external links for integrity"
+# 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
+#
+# install-html-local: html-local
+# 	@$(MKDIR_P)  $(htmldir)/html
+# 	@cp -r ${top_builddir}/html $(htmldir)/
+#
+# html-local: docs/conf.py
+# 	@PYTHONPATH=${top_srcdir}/docs $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ${top_builddir}/html
+#
+# singlehtml: html-local
+# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b singlehtml $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/singlehtml
+#
+# pickle: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/pickle
+# 	@echo
+# 	@echo "Build finished; now you can process the pickle files."
+#
+# json: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b json $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/json
+# 	@echo
+# 	@echo "Build finished; now you can process the JSON files."
+#
+# htmlhelp: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/htmlhelp
+# 	@echo
+# 	@echo "Build finished; now you can run HTML Help Workshop with the" \
+# 	      ".hhp project file in $(SPHINX_BUILDDIR)/htmlhelp."
+#
+# epub: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/epub
+# 	@echo
+# 	@echo "Build finished. The epub file is in $(SPHINX_BUILDDIR)/epub."
+#
+# latex: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
+# 	@echo
+# 	@echo "Build finished; the LaTeX files are in $(SPHINX_BUILDDIR)/latex."
+# 	@echo "Run \`make' in that directory to run these through (pdf)latex" \
+# 	      "(use \`make latexpdf' here to do that automatically)."
+#
+# latexpdf: latex
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/latex
+# 	@echo "Running LaTeX files through pdflatex..."
+# 	make -C $(SPHINX_BUILDDIR)/latex all-pdf
+# 	@echo "pdflatex finished; the PDF files are in $(SPHINX_BUILDDIR)/latex."
+#
+# text: docs/conf.py
+# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b text $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/text
+#
+# man:
+# 	@PYTHONPATH=$(SPHINX_BUILDDIR)/docs  $(SPHINXBUILD) -b man $(ALLSPHINXOPTS) ${top_builddir}/man
+#
+# changes: docs/conf.py
+# 	@PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/changes
+#
+# linkcheck: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/linkcheck
+#
+# doctest: docs/conf.py
+# 	PYTHONPATH=${top_srcdir}/docs  $(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(SPHINX_BUILDDIR)/doctest
+# 	@echo "Testing of doctests in the sources finished, look at the " \
+# 	      "results in $(SPHINX_BUILDDIR)/doctest/output.txt."
+#
+# # Build rule for documentation
+# $(dist_man_MANS): $(top_srcdir)/configure.ac
+# 	$(MAKE) $(AM_MAKEFLAGS) man
+#
+# .NOTPARALLEL: $(dist_man_MANS)
+#
+# libmemcached/csl/parser.h: libmemcached/csl/parser.cc
+#
+# libmemcached/csl/parser.cc: libmemcached/csl/parser.yy libmemcached/csl/scanner.l libmemcached/csl/scanner.h
+# 	$(AM_V_YACC)$(am__skipyacc) $(YACC) $(YLFLAGS) $(AM_YFLAGS) -o $@ $<
+#
+# libmemcached/csl/scanner.h: libmemcached/csl/scanner.cc
+#
+# libmemcached/csl/scanner.cc: libmemcached/csl/scanner.l libmemcached/csl/parser.yy
+# 	$(AM_V_GEN)$(LEX) $<
+#
+# libmemcached/options.cc: libmemcached/csl/parser.h
+#
+# libmemcached/dtrace_probes.h: libmemcached/libmemcached_probes.d
+# 	$(DTRACE) $(DTRACEFLAGS) -h -o ${top_srcdir}/libmemcached/dtrace_probes.h -s ${top_srcdir}/libmemcached/libmemcached_probes.d
+#
+# libmemcached/libmemcached_probes.o: libmemcached/libmemcached_probes.d ${libmemcached_libmemcached_la_OBJECTS}
+#
+# .d.o:
+# 	$(DTRACE) $(DTRACEFLAGS) -o $@ -G -s libmemcached/libmemcached_probes.d
+#
+# $(RPM_BUILDDIR):
+# 	@
+#
+# $(DIST_ARCHIVES): $(DISTFILES)
+# 	$(MAKE) $(AM_MAKEFLAGS) dist-gzip
+#
+# $(RPM_SOURCE): | $(RPM_BUILDDIR) $(DIST_ARCHIVES)
+# 	@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_DIR)
+# 	@cp $(DIST_ARCHIVES) $(RPM_SOURCE)
+#
+# $(RPM_BUILD_TARGET): $(RPM_SOURCE) support/libmemcached.spec
+# 	@ -ba $(top_srcdir)/support/libmemcached.spec
+# 	@cp $(BUILD_RPMS) $(BUILD_SRPMS) .
+#
+# .PHONY: rpm-sign
+# rpm-sign: $(RPM_BUILD_TARGET)
+# 	@ --addsign $(RPM_DIST)
+# 	@ --checksig $(RPM_DIST)
+#
+# .PHONY: clean-rpm
+# clean-rpm:
+# 	-@rm -f $(BUILD_RPMS) $(BUILD_SRPMS) $(BUILD_RPM_SOURCE) $(BUILD_RPM_DIR) $(RPM_DIST)
+#
+# rpm: $(RPM_BUILD_TARGET)
+# dist-rpm: $(RPM_BUILD_TARGET)
+#
+# .PHONY: release
+# release: rpm rpm-sign
+#
+# .PHONY: auto-rpmbuild
+# auto-rpmbuild: support/libmemcached.spec
+# 	@auto-br-rpmbuild -ba $(top_srcdir)/support/libmemcached.spec
+#
+# test-internal: tests/libmemcached-1.0/internals
+# 	@tests/testplus
+#
+# test-socket: tests/libmemcached-1.0/testsocket
+# 	@tests/libmemcached-1.0/testsocket
+#
+# gdb-socket: tests/libmemcached-1.0/testsocket
+# 	@$(GDB_COMMAND) tests/libmemcached-1.0/testsocket
+#
+# test-sasl: tests/libmemcached-1.0/sasl
+# 	@tests/libmemcached-1.0/sasl
+#
+# gdb-sasl: tests/libmemcached-1.0/sasl
+# 	@$(GDB_COMMAND)  tests/libmemcached-1.0/sasl
+#
+# test-udp: tests/testudp
+# 	@tests/testudp
+#
+# test-plus: tests/testplus
+# 	@tests/testplus
+#
+# gdb-plus: tests/testplus
+# 	$(GDB_COMMAND) tests/testplus
+#
+# valgrind-plus: tests/testplus
+# 	@$(VALGRIND_COMMAND) tests/testplus
+#
+# helgrind-plus: tests/testplus
+# 	@$(HELGRIND_COMMAND) tests/testplus
+#
+# test-parser: tests/parser
+# 	@tests/parser
+#
+# valgrind-parser: tests/parser
+# 	@$(VALGRIND_COMMAND) tests/parser
+#
+# test-failure: tests/failure
+# 	@tests/failure
+#
+# gdb-failure: tests/failure
+# 	@$(GDB_COMMAND) tests/failure
+#
+# test-hash: tests/testhashkit
+# 	@tests/testhashkit
+#
+# test-memslap: tests/memslap
+# 	@tests/memslap
+#
+# gdb-memslap: tests/memslap
+# 	@$(GDB_COMMAND) tests/memslap
+#
+# test-memcp: tests/memcp
+# 	tests/memcp
+#
+# gdb-memcp: tests/memcp
+# 	@$(GDB_COMMAND) tests/memcp
+#
+# test-memstat: tests/memstat
+# 	tests/memstat
+#
+# test-memerror: tests/memerror
+# 	tests/memerror
+#
+# test-memtouch: tests/memtouch
+# 	tests/memtouch
+#
+# test-memping: tests/memping
+# 	tests/memping
+#
+# valgrind-memerror: tests/memerror
+# 	 @$(VALGRIND_COMMAND) tests/memerror
+#
+# valgrind-memtouch: tests/memtouch
+# 	 @$(VALGRIND_COMMAND) tests/memtouch
+#
+# test-memdump: tests/memdump
+# 	tests/memdump
+#
+# gdb-memdump: tests/memdump
+# 	@$(GDB_COMMAND) tests/memdump
+#
+# valgrind-memdump: tests/memdump
+# 	 @$(VALGRIND_COMMAND) tests/memdump
+#
+# test: check
+#
+# test-mem: tests/libmemcached-1.0/testapp
+# 	@tests/libmemcached-1.0/testapp
+#
+# test-atom: tests/atomsmasher
+# 	@tests/atomsmasher
+#
+# test-hashplus: tests/hash_plus
+# 	@tests/hash_plus
+#
+# test-cycle: tests/cycle
+# 	@tests/cycle
+#
+# test-memcapable: tests/memcapable
+# 	@tests/memcapable
+#
+# valgrind-memcapable: tests/memcapable
+# 	$(VALGRIND_COMMAND) tests/memcapable
+#
+# pahole-mem: tests/testapp
+# 	@$(PAHOLE_COMMAND)  tests/testapp
+#
+# pahole-hash: tests/testhashkit
+# 	@$(PAHOLE_COMMAND)  tests/testhashkit
+#
+# gdb-mem: tests/libmemcached-1.0/testapp
+# 	@$(GDB_COMMAND)  tests/libmemcached-1.0/testapp
+#
+# gdb-atom: tests/atomsmasher
+# 	@$(GDB_COMMAND) tests/atomsmasher
+#
+# gdb-hash: tests/testhashkit
+# 	@$(GDB_COMMAND) tests/testhashkit
+#
+# gdb-hashplus: tests/hash_plus
+# 	@$(GDB_COMMAND) tests/hash_plus
+#
+# gdb-cycle: tests/cycle
+# 	@$(GDB_COMMAND) tests/cycle
+#
+# valgrind-cycle: tests/cycle
+# 	$(VALGRIND_COMMAND) tests/cycle
+#
+# valgrind-mem: tests/libmemcached-1.0/testapp
+# 	@$(VALGRIND_COMMAND) tests/libmemcached-1.0/testapp
+#
+# valgrind-failure: tests/failure
+# 	@$(VALGRIND_COMMAND) tests/failure
+#
+# valgrind-atom: tests/atomsmasher
+# 	$(VALGRIND_COMMAND) tests/atomsmasher
+#
+# valgrind-sasl: tests/sasl
+# 	@$(VALGRIND_COMMAND) tests/sasl
+#
+# valgrind-hash: tests/testhashkit
+# 	@$(VALGRIND_COMMAND) tests/testhashkit
+#
+# valgrind-hashplus: tests/hash_plus
+# 	@$(VALGRIND_COMMAND) tests/hash_plus
+#
+# helgrind-cycle: tests/cycle
+# 	@$(HELGRIND_COMMAND) tests/cycle
+#
+# helgrind-mem: tests/libmemcached-1.0/testapp
+# 	@$(HELGRIND_COMMAND) tests/libmemcached-1.0/testapp
+#
+# helgrind-atom: tests/atomsmasher
+# 	@$(HELGRIND_COMMAND) tests/atomsmasher
+#
+# helgrind-hash: tests/testhashkit
+# 	@$(HELGRIND_COMMAND) tests/testhashkit
+#
+# helgrind-hashplus: tests/hash_plus
+# 	@$(HELGRIND_COMMAND) tests/hash_plus
+#
+# drd-mem: tests/libmemcached-1.0/testapp
+# 	@$(DRD_COMMAND) tests/libmemcached-1.0/testapp
+#
+# drd-cycle: tests/cycle
+# 	@$(DRD_COMMAND) tests/cycle
+#
+# merge-clean:
+# 	@find ./ | $(GREP) \.gcda | xargs rm -f
+# 	@find ./ | $(GREP) \.gcno | xargs rm -f
+# 	@find ./ | $(GREP) \.gz | xargs rm -f
+# 	@find ./ | $(GREP) \.moved | xargs rm -r -f
+# 	@find ./ | $(GREP) \\.orig | xargs rm -f
+# 	@find ./ | $(GREP) \.rej | xargs rm -f
+# 	@find ./ | $(GREP) \.THIS | xargs rm -f
+# 	@find ./ | $(GREP) \.OTHER | xargs rm -f
+# 	@find ./ | $(GREP) \.BASE | xargs rm -f
+# 	@find ./ | $(GREP) \~$$ | xargs rm -f
+# 	@echo "Files that need to be either removed or checked in:"
+# 	@bzr unknowns
+#
+# clean-local: clean-libtest-check clean-docs-check clean-rpm
+#
+# lcov: lcov-clean check
+# 	@echo
+# 	@echo "	------------------------------------------------------"
+# 	@echo "Make sure ./configure was run with '--enable-coverage'"
+# 	@echo "------------------------------------------------------"
+# 	@echo
+# 	@cd libmemcached && lcov --capture --directory . --base-directory .. --output-file lcov.out
+# 	@genhtml -o lcov --function-coverage -t libmemcached libmemcached/lcov.out
+
+# lcov-clean: clean
+# 	@rm -rf lcov */lcov.out
+# 	@find . -name '*.gcno' | xargs rm -f
+# 	@find . -name '*.gcda' | xargs rm -f
+#
+# maintainer-clean-local:
+# 	find . -type f -name '*~' -exec rm -f '{}' \;
+# 	-rm -f man/*.1
+# 	-rm -f man/*.3
+# 	-rm -f man/*.8
+# 	-rm -rf man/.doctrees/
+# 	-rm -f Makefile.in
+# 	-rm -f aclocal.m4
+# 	-rm -f build-aux/compile
+# 	-rm -f build-aux/config.guess
+# 	-rm -f build-aux/config.sub
+# 	-rm -f build-aux/depcomp
+# 	-rm -f build-aux/install-sh
+# 	-rm -f build-aux/ltmain.sh
+# 	-rm -f build-aux/missing
+# 	-rm -f build-aux/test-driver
+# 	-rm -f build-aux/ylwrap
+# 	-rm -f mem_config.in
+# 	-rm -f config.log
+# 	-rm -f config.status
+# 	-rm -f configure
+# 	-rm -f m4/libtool.m4
+# 	-rm -f m4/ltoptions.m4
+# 	-rm -f m4/ltsugar.m4
+# 	-rm -f m4/ltversion.m4
+# 	-rm -f m4/lt~obsolete.m4
+# 	-rm -f m4/test-driver
+# 	-rmdir build-aux
+# 	-rm -rf ${top_builddir}/html
+# 	-rm -f $(DIST_ARCHIVES)
+#
+# # Tell versions [3.59,3.63) of GNU make to not export all variables.
+# # Otherwise a system limit (for SysV at least) may be exceeded.
+# .NOEXPORT:
