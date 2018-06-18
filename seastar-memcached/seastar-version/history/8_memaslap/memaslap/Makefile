@@ -9619,7 +9619,11 @@ install-strip:
 	    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
 	    "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'" install; \
 	fi
-
+mostlyclean-generic:
+# 	-test -z "$(TEST_LOGS)" || rm -f $(TEST_LOGS)
+# 	-test -z "$(TEST_LOGS:.log=.trs)" || rm -f $(TEST_LOGS:.log=.trs)
+# 	-test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
+#
 clean-generic:
 # 	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
@@ -9690,12 +9694,12 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 
 .PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
 	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
-	clean-checkPROGRAMS clean-cscope \
+	clean-checkPROGRAMS clean-cscope clean-generic \
 	clean-libLTLIBRARIES clean-libtool clean-local \
 	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
 	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile \
+	distcheck distclean distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags distcleancheck \
 	distdir distuninstallcheck \
 	install install-am install-binPROGRAMS \
