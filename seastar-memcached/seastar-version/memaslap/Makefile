@@ -9289,11 +9289,11 @@ install-exec-am: install-binPROGRAMS install-libLTLIBRARIES
 .MAKE: all check check-am install install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am \ # am--refresh check check-TESTS \
-	check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
-	clean-checkPROGRAMS clean-cscope \
-	clean-libLTLIBRARIES clean-libtool clean-local \
-	clean-noinstLTLIBRARIES clean-noinstPROGRAMS cscope \
-	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+	# check-am clean clean-binPROGRAMS clean-checkLTLIBRARIES \
+	# clean-checkPROGRAMS clean-cscope \
+	# clean-libLTLIBRARIES clean-libtool clean-local \
+	# clean-noinstLTLIBRARIES clean-noinstPROGRAMS
+	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
 	# dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
 	distcheck distclean distclean-compile \
 	distdir distuninstallcheck \
