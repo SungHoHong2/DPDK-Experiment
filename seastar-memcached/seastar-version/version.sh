@@ -37,16 +37,16 @@ cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_sigsegv.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_stats.cc     memaslap/ms_stats.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.cc      memaslap/ms_task.cc
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.cc    memaslap/ms_thread.cc
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.c     memaslap/memaslap.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.c      memaslap/ms_conn.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_setting.c   memaslap/ms_setting.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_sigsegv.c   memaslap/ms_sigsegv.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_stats.c     memaslap/ms_stats.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.c      memaslap/ms_task.c
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c    memaslap/ms_thread.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/memaslap.c      memaslap/memaslap.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.c       memaslap/ms_conn.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_setting.c    memaslap/ms_setting.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_sigsegv.c    memaslap/ms_sigsegv.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_stats.c      memaslap/ms_stats.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_task.c       memaslap/ms_task.c
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_thread.c     memaslap/ms_thread.c
 cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/protocol_binary.h    memaslap/protocol_binary.h
-cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/vbucket.h    memaslap/vbucket.h
-
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/vbucket.h       memaslap/vbucket.h
+cp /Users/sunghohong/Documents/Projects/libmemcached-1.0.18/clients/ms_conn.h       memaslap/ms_conn.h
 
 
 cp -a memaslap history/$FILENAME
