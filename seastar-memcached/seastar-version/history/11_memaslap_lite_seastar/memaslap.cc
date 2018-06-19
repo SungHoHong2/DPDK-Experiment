@@ -825,10 +825,10 @@ int main(int argc, char *argv[])
 
   pthread_t seastar_test, seastar_test2;
   pthread_create( &seastar_test, NULL, seastar_task, (void*) "seastar_task");
-  pthread_join(seastar_test,NULL);
+  // pthread_join(seastar_test,NULL);
 
   pthread_create( &seastar_test2, NULL, seastar_task, (void*) "seastar_task2");
-  pthread_join(seastar_test2,NULL);
+  // pthread_join(seastar_test2,NULL);
 
 
 
