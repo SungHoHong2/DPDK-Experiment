@@ -20,8 +20,8 @@
 #include <limits.h>
 
 #include "http/http_response_parser.hh"
-//#include "core/print.hh"
-//#include "core/reactor.hh"
+#include "core/print.hh"
+#include "core/reactor.hh"
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
@@ -803,9 +803,29 @@ static void ms_monitor_slap_mode()
 } /* ms_monitor_slap_mode */
 
 
+using namespace seastar;
+namespace bpo = boost::program_options;
+
+
 /* the main function */
 int main(int argc, char *argv[])
 {
+
+
+  app_template app;
+  app.add_options()
+          ("server,s", bpo::value<std::string>()->default_value("192.168.66.100:10000"), "Server address")
+          ("conn,c", bpo::value<unsigned>()->default_value(100), "total connections")
+          ("reqs,r", bpo::value<unsigned>()->default_value(0), "reqs per connection")
+          ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
+
+
+  return app.run(ac, av, [&app] () -> future<int> {
+      auto http_clients = new distributed<http_client>;
+      return make_ready_future<int>(0);
+  });
+  
+
 
   printf("C++ Memaslap BEGIN\n");
   srandom((unsigned int)time(NULL));
