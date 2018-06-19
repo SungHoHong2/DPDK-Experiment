@@ -39,19 +39,23 @@ $GCC_INSTALL  $SEASTAR_INSTALL
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_task.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-$GCC_INSTALL -DHAVE_CONFIG_H -I.  -fvisibility=hidden  -g -O2 -MT clients/ms_task.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_task.o clients/ms_task.cc
+$GCC_INSTALL $SEASTAR_INSTALL
+-DHAVE_CONFIG_H -I.  -fvisibility=hidden  -g -O2 -MT clients/ms_task.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_task.o clients/ms_task.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_thread.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-$GCC_INSTALL   -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2  -MT clients/ms_thread.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_thread.o clients/ms_thread.cc
+$GCC_INSTALL $SEASTAR_INSTALL
+-DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2  -MT clients/ms_thread.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_thread.o clients/ms_thread.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/generator.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-$GCC_INSTALL  -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/generator.o -MD -MP -MF $depbase.Tpo -c -o clients/generator.o clients/generator.cc
+$GCC_INSTALL $SEASTAR_INSTALL
+-DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/generator.o -MD -MP -MF $depbase.Tpo -c -o clients/generator.o clients/generator.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/execute.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
-$GCC_INSTALL  -DHAVE_CONFIG_H -I.   -fvisibility=hidden -fPIC -g -O2 -MT clients/execute.o -MD -MP -MF $depbase.Tpo -c -o clients/execute.o clients/execute.cc
+$GCC_INSTALL $SEASTAR_INSTALL
+-DHAVE_CONFIG_H -I.   -fvisibility=hidden -fPIC -g -O2 -MT clients/execute.o -MD -MP -MF $depbase.Tpo -c -o clients/execute.o clients/execute.cc
 mv -f $depbase.Tpo $depbase.Po
 
 rm -f clients/memaslap
