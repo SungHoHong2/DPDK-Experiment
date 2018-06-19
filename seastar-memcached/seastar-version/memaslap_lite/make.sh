@@ -52,4 +52,11 @@ mv -f $depbase.Tpo $depbase.Po
 rm -f clients/memaslap
 libtool --silent --tag=CXX --mode=link g++-5 -std=gnu++1y -fPIC -g -O2 -Wno-unknown-pragmas -Wno-pragmas -Wall -Wextra -Wno-attributes -Wvarargs -Waddress -Warray-bounds -Wchar-subscripts -Wcomment -Wctor-dtor-privacy -Wfloat-equal -Wformat=2 -Wformat-y2k -Wmaybe-uninitialized -Wmissing-field-initializers -Wlogical-op -Wnon-virtual-dtor -Wnormalized=id -Woverloaded-virtual -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-overflow=1 -Wswitch-enum -Wtrampolines -Wundef -Wunsafe-loop-optimizations -funsafe-loop-optimizations -Wc++11-compat -Wclobbered -Wunused -Wunused-result -Wunused-variable -Wunused-parameter -Wunused-local-typedefs -Wwrite-strings -Wformat-security -fwrapv -pipe -fPIE -pie -Wsizeof-pointer-memaccess -Wpacked  -lpthread -o clients/memaslap clients/memaslap.o clients/ms_conn.o clients/ms_setting.o clients/ms_sigsegv.o clients/ms_stats.o clients/ms_task.o clients/ms_thread.o clients/generator.o clients/execute.o -levent clients/libutilities.la libmemcached/libmemcached.la
 
+
+# sudocmd memcached_make_sh memaslap_run
+elif [ "$1" = "memaslap_run" ]
+then
+cd /data1/sungho/libmemcached-1.0.18/clients
+/data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
+
 fi

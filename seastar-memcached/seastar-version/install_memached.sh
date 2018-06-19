@@ -79,15 +79,6 @@ cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_task.cc       /data1/sungho/libmemcached-1.0.18/clients/ms_task.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_thread.cc     /data1/sungho/libmemcached-1.0.18/clients/ms_thread.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_memslap.h     /data1/sungho/libmemcached-1.0.18/clients/ms_memslap.h
-
-
-else
-cd /data1/sungho/libmemcached-1.0.18/clients
-/data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
-
-
-
-
 fi
 
 fi
