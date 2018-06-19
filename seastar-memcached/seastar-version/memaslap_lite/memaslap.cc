@@ -798,10 +798,21 @@ using namespace seastar;
 namespace bpo = boost::program_options;
 
 
+void *seastar_task(void *argument){
+  char* msg;
+  msg = (char*)argument;
+
+  while(1) {
+    sleep(1);
+    std::cout << msg << std::endl;
+  }
+}
+
+
+
 /* the main function */
 int main(int argc, char *argv[])
 {
-
 
   app_template app;
   app.add_options()
@@ -811,6 +822,12 @@ int main(int argc, char *argv[])
           ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
 
   printf("Seastar compiled Memaslap BEGIN\n");
+
+  pthread_t seastar_test;
+  pthread_create( &seastar_test, NULL, seastar_task, (void*) "seastar_task");
+  pthread_join(seastar_test,NULL);
+
+
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
