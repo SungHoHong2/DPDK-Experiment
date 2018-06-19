@@ -820,11 +820,11 @@ int main(int argc, char *argv[])
           ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
 
 
-  return app.run(ac, av, [&app] () -> future<int> {
+  return app.run([&app] () -> future<int> {
       auto http_clients = new distributed<http_client>;
       return make_ready_future<int>(0);
   });
-  
+
 
 
   printf("C++ Memaslap BEGIN\n");
