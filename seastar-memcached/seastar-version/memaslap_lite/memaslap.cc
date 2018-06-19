@@ -19,15 +19,15 @@
 #include <getopt.h>
 #include <limits.h>
 
-#include "http/http_response_parser.hh"
-#include "core/print.hh"
-#include "core/reactor.hh"
-#include "core/app-template.hh"
-#include "core/future-util.hh"
-#include "core/distributed.hh"
-#include "core/semaphore.hh"
-#include "core/future-util.hh"
-#include <chrono>
+//#include "http/http_response_parser.hh"
+//#include "core/print.hh"
+//#include "core/reactor.hh"
+//#include "core/app-template.hh"
+//#include "core/future-util.hh"
+//#include "core/distributed.hh"
+//#include "core/semaphore.hh"
+//#include "core/future-util.hh"
+//#include <chrono>
 
 #if defined(HAVE_SYS_TIME_H)
 # include <sys/time.h>
@@ -812,12 +812,12 @@ int main(int argc, char *argv[])
 {
 
 
-  app_template app;
-  app.add_options()
-          ("server,s", bpo::value<std::string>()->default_value("192.168.66.100:10000"), "Server address")
-          ("conn,c", bpo::value<unsigned>()->default_value(100), "total connections")
-          ("reqs,r", bpo::value<unsigned>()->default_value(0), "reqs per connection")
-          ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
+//  app_template app;
+//  app.add_options()
+//          ("server,s", bpo::value<std::string>()->default_value("192.168.66.100:10000"), "Server address")
+//          ("conn,c", bpo::value<unsigned>()->default_value(100), "total connections")
+//          ("reqs,r", bpo::value<unsigned>()->default_value(0), "reqs per connection")
+//          ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
 
 
   printf("Seastar Memaslap BEGIN\n");
