@@ -56,6 +56,7 @@ libtool --silent --tag=CXX --mode=link g++-5 -std=gnu++1y -fPIC -g -O2 -Wno-unkn
 # sudocmd memcached_make_sh memaslap_run
 elif [ "$1" = "memaslap_run" ]
 then
+echo "test"
 cd /data1/sungho/libmemcached-1.0.18/clients
 /data1/sungho/libmemcached-1.0.18/clients/memaslap -s 10.107.30.40:11211 -T 1 -S 1s -t 1s
 
