@@ -803,8 +803,8 @@ static void ms_monitor_slap_mode()
 } /* ms_monitor_slap_mode */
 
 
-using namespace seastar;
-namespace bpo = boost::program_options;
+//using namespace seastar;
+//namespace bpo = boost::program_options;
 
 
 /* the main function */
