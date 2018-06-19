@@ -823,11 +823,15 @@ int main(int argc, char *argv[])
 
   printf("Seastar compiled Memaslap BEGIN\n");
 
-  pthread_t seastar_test;
+  pthread_t seastar_test, seastar_test2;
   pthread_create( &seastar_test, NULL, seastar_task, (void*) "seastar_task");
   pthread_join(seastar_test,NULL);
 
-  
+  pthread_create( &seastar_test2, NULL, seastar_task, (void*) "seastar_task2");
+  pthread_join(seastar_test2,NULL);
+
+
+
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
