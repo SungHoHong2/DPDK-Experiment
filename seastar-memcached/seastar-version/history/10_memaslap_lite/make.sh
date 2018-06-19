@@ -2,7 +2,8 @@ if [ "$1" = "memaslap_seastar" ]
 then
 echo "test"
 
-if [ "$1" = "memaslap_original" ]
+elif [ "$1" = "memaslap_original" ]
+then
 depbase=`echo clients/memaslap.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
 echo $depbase
 c++ -std=c++0x  -DHAVE_CONFIG_H -I. -fvisibility=hidden  -g -O2 -Wno-unknown-pragmas -Wno-pragmas -Wall -Wextra -Wno-attributes -Wvarargs -Waddress -Warray-bounds -Wchar-subscripts -Wcomment -Wctor-dtor-privacy -Wfloat-equal -Wformat=2 -Wformat-y2k -Wmaybe-uninitialized -Wmissing-field-initializers -Wlogical-op -Wnon-virtual-dtor -Wnormalized=id -Woverloaded-virtual -Wpointer-arith -Wredundant-decls -Wshadow -Wsign-compare -Wstrict-overflow=1 -Wswitch-enum -Wtrampolines -Wundef -Wunsafe-loop-optimizations -funsafe-loop-optimizations -Wc++11-compat -Wclobbered -Wunused -Wunused-result -Wunused-variable -Wunused-parameter -Wunused-local-typedefs -Wwrite-strings -Wformat-security -fwrapv -pipe -fPIE -pie -Wsizeof-pointer-memaccess -Wpacked    -MT clients/memaslap.o -MD -MP -MF $depbase.Tpo -c -o clients/memaslap.o clients/memaslap.cc
