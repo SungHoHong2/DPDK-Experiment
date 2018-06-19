@@ -18,34 +18,42 @@ $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I. -fvisibility=hidden  -g -O2 -M
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_conn.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.  -fvisibility=hidden  -g -O2 -MT clients/ms_conn.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_conn.o clients/ms_conn.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_setting.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/ms_setting.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_setting.o clients/ms_setting.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_sigsegv.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.  -fvisibility=hidden  -g -O2 -MT clients/ms_sigsegv.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_sigsegv.o clients/ms_sigsegv.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_stats.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL  $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden -fPIC -g -O2 -MT clients/ms_stats.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_stats.o clients/ms_stats.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_task.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.  -fvisibility=hidden  -g -O2 -MT clients/ms_task.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_task.o clients/ms_task.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/ms_thread.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2  -MT clients/ms_thread.o -MD -MP -MF $depbase.Tpo -c -o clients/ms_thread.o clients/ms_thread.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/generator.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden  -g -O2 -MT clients/generator.o -MD -MP -MF $depbase.Tpo -c -o clients/generator.o clients/generator.cc
 mv -f $depbase.Tpo $depbase.Po
 
 depbase=`echo clients/execute.o | sed 's|[^/]*$|.deps/&|;s|\.o$||'`
+echo $depbase
 $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden -fPIC -g -O2 -MT clients/execute.o -MD -MP -MF $depbase.Tpo -c -o clients/execute.o clients/execute.cc
 mv -f $depbase.Tpo $depbase.Po
 
