@@ -70,6 +70,7 @@ make -j 16 -n && sudo make install -j 16
 # sudocmd seastar_memcached_exp memaslap_lite_make
 elif [ "$1" = "memaslap_lite_make" ]
 then
+echo "copying data to libmemcached-1.0"
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/make.sh          /data1/sungho/libmemcached-1.0.18/make.sh
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/memaslap.cc      /data1/sungho/libmemcached-1.0.18/clients/memaslap.cc
 cp /data1/sungho/DPDK-Experiment/seastar-memcached/seastar-version/memaslap_lite/ms_conn.cc       /data1/sungho/libmemcached-1.0.18/clients/ms_conn.cc
