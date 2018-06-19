@@ -58,7 +58,7 @@ $GCC_INSTALL $SEASTAR_INSTALL -DHAVE_CONFIG_H -I.   -fvisibility=hidden -fPIC -g
 mv -f $depbase.Tpo $depbase.Po
 
 rm -f clients/memaslap
-libtool --silent --tag=CXX --mode=link g++-5 -std=gnu++1y -fPIC -g -O2 -lpthread -o clients/memaslap clients/memaslap.o clients/ms_conn.o clients/ms_setting.o clients/ms_sigsegv.o clients/ms_stats.o clients/ms_task.o clients/ms_thread.o clients/generator.o clients/execute.o -levent clients/libutilities.la libmemcached/libmemcached.la
+libtool --silent --tag=CXX --mode=link $GCC_INSTALL $SEASTAR_INSTALL -fPIC -g -O2 -lpthread -o clients/memaslap clients/memaslap.o clients/ms_conn.o clients/ms_setting.o clients/ms_sigsegv.o clients/ms_stats.o clients/ms_task.o clients/ms_thread.o clients/generator.o clients/execute.o -levent clients/libutilities.la libmemcached/libmemcached.la
 
 
 # sudocmd memcached_make_sh memaslap_run
