@@ -794,8 +794,8 @@ static void ms_monitor_slap_mode()
 } /* ms_monitor_slap_mode */
 
 
-//using namespace seastar;
-//namespace bpo = boost::program_options;
+using namespace seastar;
+namespace bpo = boost::program_options;
 
 
 /* the main function */
@@ -803,15 +803,14 @@ int main(int argc, char *argv[])
 {
 
 
-//  app_template app;
-//  app.add_options()
-//          ("server,s", bpo::value<std::string>()->default_value("192.168.66.100:10000"), "Server address")
-//          ("conn,c", bpo::value<unsigned>()->default_value(100), "total connections")
-//          ("reqs,r", bpo::value<unsigned>()->default_value(0), "reqs per connection")
-//          ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
+  app_template app;
+  app.add_options()
+          ("server,s", bpo::value<std::string>()->default_value("192.168.66.100:10000"), "Server address")
+          ("conn,c", bpo::value<unsigned>()->default_value(100), "total connections")
+          ("reqs,r", bpo::value<unsigned>()->default_value(0), "reqs per connection")
+          ("duration,d", bpo::value<unsigned>()->default_value(10), "duration of the test in seconds)");
 
-
-  printf("Seastar Memaslap BEGIN\n");
+  printf("Seastar compiled Memaslap BEGIN\n");
   srandom((unsigned int)time(NULL));
   ms_global_struct_init();
 
@@ -835,6 +834,6 @@ int main(int argc, char *argv[])
   ms_global_struct_destroy();
   ms_setting_cleanup();
 
-  printf("Seastar Memaslap END\n");
+  printf("Seastar compiled Memaslap END\n");
   return EXIT_SUCCESS;
 } /* main */
