@@ -10,7 +10,6 @@
  */
 #ifndef MS_MEMSLAP_H
 #define MS_MEMSLAP_H
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -25,6 +24,16 @@
 #include <math.h>
 
 #include "ms_stats.h"
+
+#include "http/http_response_parser.hh"
+#include "core/print.hh"
+#include "core/reactor.hh"
+#include "core/app-template.hh"
+#include "core/future-util.hh"
+#include "core/distributed.hh"
+#include "core/semaphore.hh"
+#include "core/future-util.hh"
+#include <chrono>
 
 #ifdef __cplusplus
 extern "C" {

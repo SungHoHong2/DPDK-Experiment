@@ -19,15 +19,6 @@
 #include <getopt.h>
 #include <limits.h>
 
-#include "http/http_response_parser.hh"
-#include "core/print.hh"
-#include "core/reactor.hh"
-#include "core/app-template.hh"
-#include "core/future-util.hh"
-#include "core/distributed.hh"
-#include "core/semaphore.hh"
-#include "core/future-util.hh"
-#include <chrono>
 
 #if defined(HAVE_SYS_TIME_H)
 # include <sys/time.h>
