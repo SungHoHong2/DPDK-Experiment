@@ -20,8 +20,8 @@
 #include <limits.h>
 
 #include "http/http_response_parser.hh"
-#include "core/print.hh"
-#include "core/reactor.hh"
+//#include "core/print.hh"
+//#include "core/reactor.hh"
 #include "core/app-template.hh"
 #include "core/future-util.hh"
 #include "core/distributed.hh"
