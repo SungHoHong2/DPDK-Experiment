@@ -84,15 +84,21 @@ int main(int argc, char **argv){
 
   struct rte_mbuf *m = NULL;
   char *data;
-  m = rte_pktmbuf_alloc(pktmbuf_pool);
-  data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
-  memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
+  	m = rte_pktmbuf_alloc(pktmbuf_pool);
+  	data = rte_pktmbuf_append(m, MBUF_TEST_DATA_LEN);
+  	memset(data, '*', rte_pktmbuf_pkt_len(m)-1000);
 	printf("length of DPDK packet: %d\n", rte_pktmbuf_pkt_len(m)); // rte_pktmbuf_pkt_len(m): 1464
+
+	rte_pktmbuf_dump(stdout, m, 1024);
 
 	char *rtn;
 	rtn = rte_pktmbuf_mtod_offset(m, char *, sizeof(data));
 	printf("length of DPDK offset: %ld\n", strlen(rtn));  // lenght of the offset: 456
 	printf("data of DPDK offset: %s\n", rtn);  // lenght of the offset: 456
+
+
+
+
   rte_pktmbuf_free(m);
 
 
