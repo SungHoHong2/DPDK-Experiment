@@ -63,7 +63,7 @@ setup_queue_tbl(struct lcore_rx_queue *rxq, uint32_t lcore, uint32_t queue)
     nb_mbuf *= 1;
     nb_mbuf += nb_rxd + nb_txd;
 
-    if (transfer_pool[socket] == NULL) {
+    if (transfer_pool[lcore] == NULL) {
 
         snprintf(buf, sizeof(buf), "pool_recieve_%d", socket);
         receive_pool[socket] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, socket);

@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c64e9078-ee30-4098-8410-1003bed5d75a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini" beforeDir="false" afterPath="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini" beforeDir="false" afterPath="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dpdk-server-multi/dpdk_init.h" beforeDir="false" afterPath="$PROJECT_DIR$/dpdk-server-multi/dpdk_init.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,17 +24,35 @@
       <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/packet-experiment/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2147">
-              <caret line="113" selection-start-line="113" selection-end-line="113" />
+            <state relative-caret-position="-298">
+              <caret line="101" column="16" lean-forward="true" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="l2fwd_launch_one_lcore.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dpdk_init.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dpdk-server-multi/dpdk_init.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="376">
+              <caret line="65" column="39" lean-forward="true" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="l2fwd_launch_one_lcore.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pingpong-experiment/server/l2fwd_launch_one_lcore.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="26">
-              <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+              <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dpdk-server-multi/main.c">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
             </state>
           </provider>
         </entry>
@@ -44,8 +60,8 @@
       <file leaf-file-name="tcp-client.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-client.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="834">
-              <caret line="68" column="13" lean-forward="true" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+            <state relative-caret-position="1292">
+              <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -65,8 +81,8 @@
       <file leaf-file-name="config_client.ini" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="722">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -74,8 +90,8 @@
       <file leaf-file-name="fstack-client.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/fstack-client.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="99" column="46" lean-forward="true" selection-start-line="99" selection-start-column="46" selection-end-line="99" selection-end-column="46" />
+            <state relative-caret-position="1881">
+              <caret line="99" column="46" selection-start-line="99" selection-start-column="46" selection-end-line="99" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -83,35 +99,15 @@
       <file leaf-file-name="config_server.ini" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+            <state relative-caret-position="589">
+              <caret line="31" column="19" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="tcp-server.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-server.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-339" />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="l2fwd_launch_one_lcore.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pingpong-experiment/client/l2fwd_launch_one_lcore.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1197">
-              <caret line="63" column="32" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/pkt-craft/main.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1862">
-              <caret line="98" selection-start-line="98" selection-end-line="98" />
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -119,6 +115,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>tshark</find>
+      <find>pool</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -135,6 +132,7 @@
         <option value="$PROJECT_DIR$/pingpong-experiment/client/l2fwd_launch_one_lcore.h" />
         <option value="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini" />
         <option value="$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini" />
+        <option value="$PROJECT_DIR$/dpdk-server-multi/dpdk_init.h" />
       </list>
     </option>
   </component>
@@ -169,43 +167,7 @@
             <path>
               <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
               <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="f-stack-experiment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="f-stack-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="latency-experiment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="f-stack-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="latency-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="f-stack-tcp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="f-stack-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="latency-lab" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="pingpong-experiment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="pingpong-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DPDK-Experiment" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DPDK-Experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="pingpong-experiment" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="dpdk-server-multi" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -219,6 +181,11 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -246,11 +213,12 @@
       <workItem from="1532635136544" duration="341000" />
       <workItem from="1535340732877" duration="1709000" />
       <workItem from="1535484067433" duration="1043000" />
+      <workItem from="1541447506125" duration="113000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3959000" />
+    <option name="totallyTimeSpent" value="4072000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="756" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -262,7 +230,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -281,6 +249,75 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/packet-experiment/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2147">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-client.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="68" column="13" lean-forward="true" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="152">
+            <caret line="8" column="35" selection-start-line="8" selection-end-line="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/fstack-client.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1881">
+          <caret line="99" column="46" lean-forward="true" selection-start-line="99" selection-start-column="46" selection-end-line="99" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-server.c">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pingpong-experiment/client/l2fwd_launch_one_lcore.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1197">
+          <caret line="63" column="32" selection-start-line="63" selection-start-column="32" selection-end-line="63" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/pkt-craft/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1862">
+          <caret line="98" selection-start-line="98" selection-end-line="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pingpong-experiment/server/l2fwd_launch_one_lcore.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="779">
+          <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/packet-experiment/main.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2147">
@@ -358,13 +395,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packet-experiment/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2147">
-          <caret line="113" selection-start-line="113" selection-end-line="113" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pingpong-experiment/client/l2fwd_launch_one_lcore.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1197">
@@ -373,9 +403,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-server.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-339" />
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -389,36 +417,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/fstack-client.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="99" column="46" lean-forward="true" selection-start-line="99" selection-start-column="46" selection-end-line="99" selection-end-column="46" />
+        <state relative-caret-position="1881">
+          <caret line="99" column="46" selection-start-line="99" selection-start-column="46" selection-end-line="99" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_server.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+        <state relative-caret-position="589">
+          <caret line="31" column="19" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/config_client.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="722">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/f-stack-experiment/latency-experiment/f-stack-tcp/tcp-client.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="68" column="13" lean-forward="true" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        <state relative-caret-position="1292">
+          <caret line="68" column="13" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dpdk-server-multi/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="98" lean-forward="true" selection-start-line="98" selection-end-line="98" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pingpong-experiment/server/l2fwd_launch_one_lcore.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
-          <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+          <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packet-experiment/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-298">
+          <caret line="101" column="16" lean-forward="true" selection-start-line="101" selection-start-column="16" selection-end-line="101" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dpdk-server-multi/dpdk_init.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="65" column="39" lean-forward="true" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
         </state>
       </provider>
     </entry>
