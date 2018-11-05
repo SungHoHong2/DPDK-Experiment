@@ -66,16 +66,16 @@ setup_queue_tbl(struct lcore_rx_queue *rxq, uint32_t lcore, uint32_t queue)
     if (transfer_pool[lcore] == NULL) {
 
         snprintf(buf, sizeof(buf), "pool_recieve_%d", socket);
-        receive_pool[socket] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, socket);
+        receive_pool[lcore] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, socket);
 
         snprintf(buf, sizeof(buf), "pool_transfer_%d", socket);
-        transfer_pool[socket] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, PKT_SIZE + 128, socket);
+        transfer_pool[lcore] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, PKT_SIZE + 128, socket);
 
         snprintf(buf, sizeof(buf), "pool_direct_%d", socket);
-        direct_pool[socket] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, socket);
+        direct_pool[lcore] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, RTE_MBUF_DEFAULT_BUF_SIZE, socket);
 
         snprintf(buf, sizeof(buf), "pool_indirect_%d", socket);
-        indirect_pool[socket] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, 0, socket);
+        indirect_pool[lcore] = rte_pktmbuf_pool_create(buf, nb_mbuf, MEMPOOL_CACHE_SIZE, 0, 0, socket);
     }
 
     snprintf(buf, sizeof(buf), "mbuf_rx_ring_%d", lcore);
